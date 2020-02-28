@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Notepadium</title>
-    <link>/</link>
-    <description>Recent content on Notepadium</description>
+    <title>Htmls on Notepadium</title>
+    <link>/html/</link>
+    <description>Recent content in Htmls on Notepadium</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2019 Notepadium.</copyright>
     <lastBuildDate>Mon, 01 Sep 2014 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/html/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Posts</title>
-      <link>/posts/</link>
-      <pubDate>Fri, 28 Feb 2020 23:20:35 +0800</pubDate>
-      
-      <guid>/posts/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Hello Hugo!</title>
-      <link>/git_testa/</link>
+      <link>/html/git_testa/</link>
       <pubDate>Mon, 01 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>/git_testa/</guid>
+      <guid>/html/git_testa/</guid>
       <description>Gits pub&amp;amp;ppk SSH 客户端 Putty(.ppk) 和 OpenSSH(.pub) 相互转换： Git 中输入 ssh-keygen 生成密钥到 .ssh 目录中，其中 id_rsa 为私钥，id_rsa.pub 为公钥，文本打开 id_rsa.pub，复制到云服</description>
     </item>
     
     <item>
-      <title>Htmls</title>
-      <link>/html/</link>
-      <pubDate>Mon, 01 Sep 2014 00:00:00 +0000</pubDate>
+      <title></title>
+      <link>/html/hello-hugo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/html/</guid>
+      <guid>/html/hello-hugo/</guid>
       <description></description>
     </item>
     

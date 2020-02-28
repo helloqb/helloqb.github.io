@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
-    <loc>https://example.com/categories/</loc></url><url>
-    <loc>https://example.com/</loc></url><url>
-    <loc>https://example.com/tags/</loc></url></urlset>
+    <loc>https://example.com/tags/blog/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/categories/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/posts/data_test/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/tags/example/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/categories/example/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/categories/hello/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/posts/git_test/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/tags/hugo/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/posts/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/tags/</loc><lastmod>2020-02-28T23:20:35+08:00</lastmod></url><url>
+    <loc>https://example.com/git_testa/</loc><lastmod>2014-09-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/html/git_testa/</loc><lastmod>2014-09-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/posts/test/</loc><lastmod>2014-09-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/html/</loc><lastmod>2014-09-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/</loc><lastmod>2014-09-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/html/hello-hugo/</loc></url></urlset>
