@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Notepadium</title>
+    <title>Categories on 哲学家</title>
     <link>/categories/</link>
-    <description>Recent content in Categories on Notepadium</description>
+    <description>Recent content in Categories on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <copyright>©2019 Notepadium.</copyright>
-    <lastBuildDate>Fri, 28 Feb 2020 23:20:35 +0800</lastBuildDate>
+    <copyright>©2019 Helloqb.</copyright>
+    <lastBuildDate>Fri, 28 Feb 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>example</title>
-      <link>/categories/example/</link>
-      <pubDate>Fri, 28 Feb 2020 23:20:35 +0800</pubDate>
+      <title>category1</title>
+      <link>/categories/category1/</link>
+      <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/example/</guid>
+      <guid>/categories/category1/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>hello</title>
-      <link>/categories/hello/</link>
-      <pubDate>Fri, 28 Feb 2020 23:20:35 +0800</pubDate>
+      <title>category2</title>
+      <link>/categories/category2/</link>
+      <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/hello/</guid>
+      <guid>/categories/category2/</guid>
       <description></description>
     </item>
     

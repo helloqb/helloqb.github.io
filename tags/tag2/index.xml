@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>哲学家</title>
-    <link>/</link>
-    <description>Recent content on 哲学家</description>
+    <title>tag2 on 哲学家</title>
+    <link>/tags/tag2/</link>
+    <description>Recent content in tag2 on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2019 Helloqb.</copyright>
     <lastBuildDate>Fri, 28 Feb 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/tag2/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>2020s</title>
-      <link>/2020/</link>
+      <title>Hello Hugo!</title>
+      <link>/2020/hugo/</link>
       <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/</guid>
-      <description></description>
+      <guid>/2020/hugo/</guid>
+      <description>&lt;p&gt;之前的内容会自动作为页面摘要。&lt;/p&gt;</description>
     </item>
     
   </channel>
