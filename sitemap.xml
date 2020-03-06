@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
-    <loc>https://example.com/2020/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
-    <loc>https://example.com/categories/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/2020/</loc><lastmod>2020-03-04T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/categories/</loc><lastmod>2020-03-04T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/categories/java/</loc><lastmod>2020-03-04T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/tags/springmvc/</loc><lastmod>2020-03-04T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/2020/0304_java/</loc><lastmod>2020-03-04T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/tags/</loc><lastmod>2020-03-04T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/tags/webapi/</loc><lastmod>2020-03-04T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/categories/git/</loc><lastmod>2020-03-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/tags/note/</loc><lastmod>2020-03-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/tags/sourcetree/</loc><lastmod>2020-03-01T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/2020/0301_git/</loc><lastmod>2020-03-01T00:00:00+00:00</lastmod></url><url>
     <loc>https://example.com/categories/category1/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
     <loc>https://example.com/categories/category2/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
-    <loc>https://example.com/2020/hugo/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
+    <loc>https://example.com/hugo/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
     <loc>https://example.com/tags/tag1/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
     <loc>https://example.com/tags/tag2/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
     <loc>https://example.com/tags/tag3/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
-    <loc>https://example.com/tags/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url><url>
     <loc>https://example.com/</loc><lastmod>2020-02-28T00:00:00+00:00</lastmod></url></urlset>

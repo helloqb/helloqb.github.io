@@ -15,10 +15,19 @@
     <item>
       <title>2020s</title>
       <link>/2020/</link>
-      <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/2020/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Hello Hugo!</title>
+      <link>/hugo/</link>
+      <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/hugo/</guid>
+      <description>&lt;p&gt;之前的内容会自动作为页面摘要。&lt;/p&gt;</description>
     </item>
     
   </channel>
