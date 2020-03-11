@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Smartisan on 哲学家</title>
+    <link>/tags/smartisan/</link>
+    <description>Recent content in Smartisan on 哲学家</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©2019 Helloqb.</copyright>
+    <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="/tags/smartisan/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>锤子阅读文章搜索</title>
+      <link>/2020/0311_python/</link>
+      <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/0311_python/</guid>
+      <description>&lt;p&gt;根据锤子阅读APP提供的接口编写的 Python 脚本，支持文章搜索，供学习交流，&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
