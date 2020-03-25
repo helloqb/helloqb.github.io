@@ -7,27 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2019 Helloqb.</copyright>
-    <lastBuildDate>Fri, 28 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>2020s</title>
-      <link>/2020/</link>
+      <title>Posts</title>
+      <link>/post/</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/</guid>
+      <guid>/post/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>Hello Hugo!</title>
-      <link>/hugo/</link>
-      <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/hugo/</guid>
-      <description>&lt;p&gt;之前的内容会自动作为页面摘要。&lt;/p&gt;</description>
     </item>
     
   </channel>

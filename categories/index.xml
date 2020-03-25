@@ -39,23 +39,5 @@
       <description></description>
     </item>
     
-    <item>
-      <title>category1</title>
-      <link>/categories/category1/</link>
-      <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/category1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>category2</title>
-      <link>/categories/category2/</link>
-      <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/category2/</guid>
-      <description></description>
-    </item>
-    
   </channel>
 </rss>

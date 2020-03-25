@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tag3 on 哲学家</title>
-    <link>/tags/tag3/</link>
-    <description>Recent content in tag3 on 哲学家</description>
+    <title>tag3 on johndoe</title>
+    <link>http://www.example.com/tags/tag3/</link>
+    <description>Recent content in tag3 on johndoe</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>©2019 Helloqb.</copyright>
+    <language>en</language>
     <lastBuildDate>Fri, 28 Feb 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/tag3/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.example.com/tags/tag3/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hello Hugo!</title>
-      <link>/hugo/</link>
+      <link>http://www.example.com/hugo/</link>
       <pubDate>Fri, 28 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/hugo/</guid>
+      <guid>http://www.example.com/hugo/</guid>
       <description>&lt;p&gt;之前的内容会自动作为页面摘要。&lt;/p&gt;</description>
     </item>
     

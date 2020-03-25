@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.65.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>个人笔记 - Git&nbsp;&ndash;&nbsp;哲学家</title><link rel="stylesheet" href="/css/core.min.851f5181448e7e5e2219717b346282751186a92327b3dda2d30c3d7116596593cc943005e2ba64b04182b458c20b9e04.css" integrity="sha384-hR9RgUSOfl4iGXF7NGKCdRGGqSMns92i0ww9cRZZZZPMlDAF4rpksEGCtFjCC54E"><body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">哲学家</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo.io/"target="_blank">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">信誓旦旦</span></div></section><div id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">个人笔记 - Git</h1><p class="article date">Sunday, March 1, 2020</p></section><article class="article markdown-body"><p>个人使用 Git 时遇到的坑和使用的技巧梳理。</p>
+<h2 id="ssh-客户端-putty-和-openssh-的互相转换">SSH 客户端 Putty 和 OpenSSH 的互相转换</h2>
+<p>原本只需要用 <code>ssh-keygen</code> 生成密钥到 <code>.ssh</code> 目录，然后打开 <code>id_rsa.pub</code> 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。</p>
+<center><img src="https://2mo7ng.dm.files.1drv.com/y4m2zS4N31r_4feXiRfpaAjXBceJRLLXJrr5i_-HDrOUPwc74UiW4eRtEIfezlfU9EfoYRV9vZcmvhyJ13FJpaLrgZcmLjoOqpQO29QKMmd4NcpkrrpObc5DV06idlGQyroNuVgdAWYiE8Jrl5_PAcfnQ4_iiLtD6MisopG1FixVe8RMmSfCDdIK_SjXh3YJLIjlkrZMBOevRV2MIFRgsThCQ?width=660&height=628&cropmode=none" height="300" /></center>
+<p><strong>1. 使用 puTTY 生成 Key</strong></p>
+<ol>
+<li>打开生成器，点击 <code>Generate</code>，成功后点击 <code>Save private key</code> 生成后缀名为 <code>.ppk</code> 的文件；</li>
+<li>Pageant 客户端（通常在托管图标里）点击 <code>Add Key</code> 导入刚才生成的 ppk 文件；</li>
+<li>同时将生成器页面上的 Key 复制到云服务器上即可。</li>
+</ol>
+<p><strong>2. 使用已有的 id_rsa 导入到 puTTY</strong></p>
+<ol>
+<li>打开生成器，点击状态栏 <code>Conversions</code> 中 <code>Import Key</code> 导入私钥 <code>.id_rsa</code> 文件；</li>
+<li>同上 <code>Save private key</code> 然后导入。</li>
+</ol>
+<p>参考：
+<a href="https://blog.csdn.net/caoshiying/article/details/80131761">https://blog.csdn.net/caoshiying/article/details/80131761</a></p>
+<h2 id="查看单个文件提交历史">查看单个文件提交历史</h2>
+<p>两种情况：</p>
+<ul>
+<li>选定项目的变更历史，即 <code>git log &lt;path&gt;</code>。</li>
+<li>按行审阅选定项目，即 <code>git blame &lt;path&gt;</code>。</li>
+</ul>
+<p>在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</p>
+<p>之前想要查看某个文件还要去提交记录里翻，有时要翻很久，后来想到个方法，先改下这个文件，它就会出现在暂存区里，右击即可。</p>
+<img src="https://0cmgkg.dm.files.1drv.com/y4mHSMt5I6XZ8e_ZT_HyQnzo5wiFZ3GX57b3tTE_57jNKhJpBFHE2awJC87ANX1Mx26r4uqChbeGsB7lpqsYiwTpz-XaBH8mGZ1fsgUPPMVbKOHcfbu9pKTS_or-Ng1hOcwvtQaDM0hbnR0H-RtFsblP4y5XtInnmv0s-7Y5r731-B8F49y16OSCnb75CWW4P52fZzYQjI1XL6CxMm77pQiCg?width=860&height=419&cropmode=none"/>
+<p>变更历史：</p>
+<p><img src="https://0smgkg.dm.files.1drv.com/y4msY4FENDEH4BxVtKldHkQNpjc1Dpp4Ai-qa9xC0bitKHKfBY1vuzAdh8HHg22qWmUjXNdZuaiQj_saDD14P7jQ6o4iFelQBMY_v70ZPzfhUn_HBdSkUdoz8JPW2AgvykmKS13g-m4vvkIEX3_oRNesn4pcbuZglbZj9_9MVHGoBBu9HGnPYkvfk7KrKFtBOomxRc-5Yrr_Afb8tRpct_ZBQ?width=1004&height=553&cropmode=none" /></p>
+<p>按行审阅：</p>
+<p><img src="https://08mgkg.dm.files.1drv.com/y4m04sDXLzN1qQf133--6BcjbXj-NmtB1ruTRgUqZbo59qKNjxV4-GeeKy7JQutIviGYFLqmJnPcMU6y__T_ixTffBdE-dv615O5g0ERTt8PyuUjNyWytWe_BQW93YCx1mALOefbr-xT46jg_HsAnoRMTCLdPPgrhJjPvN7RodxUhMwz59euow2Etdc2wDGTwSudI0yspcZVk0C0DODjlHyjQ?width=915&height=484&cropmode=none" /></p>
+<h2 id="本地项目到远程仓库">本地项目到远程仓库</h2>
+<p>步骤：</p>
+<ol>
+<li><code>git init</code>  命令将项目变成仓库</li>
+<li>远程创建空的仓库</li>
+<li>将本地连接到远程
+<code>git remote add origin url</code>
+<code>git push -u origin master</code></li>
+</ol>
+<p>注：
+远程创建的为非空仓库（会有README.txt）则需要 <code>git pull --rebase origin master</code>，之后再 push。</p></article><section class="article labels"><a class="category" href=/categories/git/>Git</a><a class="tag" href=/tags/sourcetree/>Sourcetree</a><a class="tag" href=/tags/note/>Note</a></section></div><section class="article navigation"><p><a class="link" href="/post/2020/0304_java/"><span class="li">&larr;</span>SpringMVC 下载文本实现边转码边下载</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2019 Helloqb.</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section></div>
+</body>
+
+</html>
