@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Script on 哲学家</title>
-    <link>/tags/script/</link>
+    <link>https://example.com/tags/script/</link>
     <description>Recent content in Script on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2019 Helloqb.</copyright>
     <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/script/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://example.com/tags/script/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>锤子阅读文章搜索</title>
-      <link>/post/2020/0311_python/</link>
+      <link>https://example.com/post/2020/0311_python/</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020/0311_python/</guid>
+      <guid>https://example.com/post/2020/0311_python/</guid>
       <description>缘由 之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。 锤子阅</description>
-      
     </item>
     
   </channel>

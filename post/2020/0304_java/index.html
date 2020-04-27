@@ -1,12 +1,375 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.69.2" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>SpringMVC 下载文本实现边转码边下载&nbsp;&ndash;&nbsp;哲学家</title><link rel="stylesheet" href="/css/core.min.7c7aae38046e8bae5bfc04a43ce9e8b735c188c9b04fbed67826122643463705c2b2042839886338515acd4ceb01d077.css" integrity="sha384-fHquOARui65b/ASkPOnotzXBiMmwT77WeCYSJkNGNwXCsgQoOYhjOFFazUzrAdB3"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="SpringMVC 下载文本实现边转码边下载" /><body>
-    <div class="base-body"><section id="header" class="site header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">哲学家</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo.io/"target="_blank">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">信誓旦旦</span></div></section><div id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">SpringMVC 下载文本实现边转码边下载</h1><p class="article date">Wednesday, March 4, 2020</p></section><article class="article markdown-body"><h1 id="方案一-printwriter--characterencoding">方案一： PrintWriter + CharacterEncoding</h1>
+<html><head>
+<title>SpringMVC 下载文本实现边转码边下载</title>
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+
+<link rel="stylesheet" href="https://example.com/scss/journal.min.56b67b8b01d7cd1015ed14414fd2fc33ebfb2e8413dcbc47c5cd734544c92cd7.css" integrity="sha256-VrZ7iwHXzRAV7RRBT9L8M&#43;v7LoQT3LxHxc1zRUTJLNc=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://example.com/scss/dark-mode.min.5a2bbd1758c83affd639a91fbfd5cc681b1a5574df99442825c444dd40504b13.css" integrity="sha256-Wiu9F1jIOv/WOakfv9XMaBsaVXTfmUQoJcRE3UBQSxM=" media="screen">
+
+
+<script src="https://example.com/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+<script src="https://example.com/js/table.js"></script>
+
+
+
+
+<script src="https://example.com/js/toc.js"></script>
+
+
+
+
+
+
+
+
+</head><body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://example.com">
+    
+        <div class="nav-title">
+            哲学家
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©2019 Helloqb.
+	
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%80-printwriter--characterencoding" v-on:click="closeDrawer" id="方案一-printwriter--characterencoding-nav">
+										 方案一： PrintWriter &#43; CharacterEncoding
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%96%b9%e6%a1%88%e4%ba%8cservletoutputstream--outputstreamwriter" v-on:click="closeDrawer" id="方案二servletoutputstream--outputstreamwriter-nav">
+										 方案二：ServletOutputStream &#43; OutputStreamWriter
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%89servletoutputstream--getbytes" v-on:click="closeDrawer" id="方案三servletoutputstream--getbytes-nav">
+										 方案三：ServletOutputStream &#43; getBytes
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e7%a0%81%e7%9a%84%e5%86%99%e6%b3%95" v-on:click="closeDrawer" id="无需转码的写法-nav">
+										 无需转码的写法
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div><div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%80-printwriter--characterencoding" v-on:click="closeDrawer" id="方案一-printwriter--characterencoding-nav">
+										 方案一： PrintWriter &#43; CharacterEncoding
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%96%b9%e6%a1%88%e4%ba%8cservletoutputstream--outputstreamwriter" v-on:click="closeDrawer" id="方案二servletoutputstream--outputstreamwriter-nav">
+										 方案二：ServletOutputStream &#43; OutputStreamWriter
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%89servletoutputstream--getbytes" v-on:click="closeDrawer" id="方案三servletoutputstream--getbytes-nav">
+										 方案三：ServletOutputStream &#43; getBytes
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e7%a0%81%e7%9a%84%e5%86%99%e6%b3%95" v-on:click="closeDrawer" id="无需转码的写法-nav">
+										 无需转码的写法
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://example.com">
+            哲学家
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://example.com">
+        <div class="single-column-header-title">哲学家</div>
+        
+
+    </a>
+</div>
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    SpringMVC 下载文本实现边转码边下载
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2020-03-04 00:00
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/">[Java]</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/springmvc">SpringMVC</a>
+                                &nbsp;
+                            
+                                <a href="/tags/webapi">Webapi</a>
+                                &nbsp;
+                            
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <h1 id="方案一-printwriter--characterencoding">方案一： PrintWriter + CharacterEncoding</h1>
 <p>SpringMVC 框架的接口中 Response 有 <code>ServletOutputStream</code> 和 <code>PrintWriter</code> 两种输出，还有一个 <code>setCharacterEncoding</code> 方法。</p>
 <p>OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 <code>setCharacterEncoding</code> 无效。所以先采用 <code>PrintWriter</code> 搭配 <code>setCharacterEncoding</code> 方法。</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/downloadFile1&#34;</span><span class="o">)</span>
@@ -124,12 +487,53 @@
 </code></pre></div><p>补充：</p>
 <ul>
 <li>使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。</li>
-</ul></article><section class="article labels"><a class="category" href=/categories/java/>Java</a><a class="tag" href=/tags/springmvc/>SpringMVC</a><a class="tag" href=/tags/webapi/>Webapi</a></section></div><section class="article navigation"><p><a class="link" href="/post/2020/0311_python/"><span class="li">&larr;</span>锤子阅读文章搜索</a></p><p><a class="link" href="/post/2020/0301_git/"><span class="li">&rarr;</span>个人笔记 - Git</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
-    <p class="copyright">©2019 Helloqb.</p>
-    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
-        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank">Notepadium</a></p>
-</div></section></div>
-</body>
+</ul>
+                    
+                    <HR width="100%" id="EOF">
+                    <p style="color:#777;">Last modified on 2020-03-04</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
 
+                
+                <a class="newer-posts" href="https://example.com/post/2020/0311_python/">
+                    Next<br>锤子阅读文章搜索
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://example.com/post/2020/0301_git/">
+                    Previous<br>个人笔记 - Git
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©2019 Helloqb.
+	</div>
+    	</div>
+    <script src="https://example.com/js/journal.js"></script>
+    </body>
 </html>

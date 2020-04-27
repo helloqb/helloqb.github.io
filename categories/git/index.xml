@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Git on 哲学家</title>
-    <link>/categories/git/</link>
+    <link>https://example.com/categories/git/</link>
     <description>Recent content in Git on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2019 Helloqb.</copyright>
     <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/categories/git/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://example.com/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>个人笔记 - Git</title>
-      <link>/post/2020/0301_git/</link>
+      <link>https://example.com/post/2020/0301_git/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020/0301_git/</guid>
+      <guid>https://example.com/post/2020/0301_git/</guid>
       <description>SSH 客户端 Putty 和 OpenSSH 的互相转换 原本只需要用 ssh-keygen 生成密钥到 .ssh 目录，然后打开 id_rsa.pub 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。 **1.</description>
-      
     </item>
     
   </channel>
