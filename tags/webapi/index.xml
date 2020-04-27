@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Webapi on 哲学家</title>
-    <link>/tags/webapi/</link>
-    <description>Recent content in Webapi on 哲学家</description>
+    <title>Webapi on DRay</title>
+    <link>http://example.org/tags/webapi/</link>
+    <description>Recent content in Webapi on DRay</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <copyright>©2019 Helloqb.</copyright>
+    <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
     <lastBuildDate>Wed, 04 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/webapi/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://example.org/tags/webapi/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>SpringMVC 下载文本实现边转码边下载</title>
-      <link>/post/2020/0304_java/</link>
+      <link>http://example.org/post/2020/0304_java/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020/0304_java/</guid>
-      <description>&lt;p&gt;SpringMVC 框架的接口中 Response 有 &lt;code&gt;ServletOutputStream&lt;/code&gt; 和 &lt;code&gt;PrintWriter&lt;/code&gt; 两种输出，还有一个 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;</description>
+      <guid>http://example.org/post/2020/0304_java/</guid>
+      <description></description>
     </item>
     
   </channel>

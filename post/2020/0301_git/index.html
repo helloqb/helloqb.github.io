@@ -1,20 +1,449 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.65.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>个人笔记 - Git&nbsp;&ndash;&nbsp;哲学家</title><link rel="stylesheet" href="/css/core.min.851f5181448e7e5e2219717b346282751186a92327b3dda2d30c3d7116596593cc943005e2ba64b04182b458c20b9e04.css" integrity="sha384-hR9RgUSOfl4iGXF7NGKCdRGGqSMns92i0ww9cRZZZZPMlDAF4rpksEGCtFjCC54E"><body>
-    <div class="base-body"><section id="header" class="site header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">哲学家</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo.io/"target="_blank">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">信誓旦旦</span></div></section><div id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">个人笔记 - Git</h1><p class="article date">Sunday, March 1, 2020</p></section><article class="article markdown-body"><p>个人使用 Git 时遇到的坑和使用的技巧梳理。</p>
-<h2 id="ssh-客户端-putty-和-openssh-的互相转换">SSH 客户端 Putty 和 OpenSSH 的互相转换</h2>
+<html><head>
+<title>个人笔记 - Git</title>
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="个人使用 Git 时遇到的坑和使用的技巧梳理。">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+
+<link rel="stylesheet" href="http://example.org/scss/journal.min.56b67b8b01d7cd1015ed14414fd2fc33ebfb2e8413dcbc47c5cd734544c92cd7.css" integrity="sha256-VrZ7iwHXzRAV7RRBT9L8M&#43;v7LoQT3LxHxc1zRUTJLNc=" media="screen">
+
+
+
+<link rel="stylesheet" href="http://example.org/scss/dark-mode.min.5a2bbd1758c83affd639a91fbfd5cc681b1a5574df99442825c444dd40504b13.css" integrity="sha256-Wiu9F1jIOv/WOakfv9XMaBsaVXTfmUQoJcRE3UBQSxM=" media="screen">
+
+
+<script src="http://example.org//js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+<script src="http://example.org//js/table.js"></script>
+
+
+
+
+<script src="http://example.org//js/toc.js"></script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: 'your client id',
+  clientSecret: 'your cli ent secret',
+  repo: 'repo name',
+  owner: 'user',
+  admin: ['user'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+</head><body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://example.org/">
+    
+        <div class="nav-title">
+            DRay
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/post">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS Feed
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#ssh-%e5%ae%a2%e6%88%b7%e7%ab%af-putty-%e5%92%8c-openssh-%e7%9a%84%e4%ba%92%e7%9b%b8%e8%bd%ac%e6%8d%a2" v-on:click="closeDrawer" id="ssh-客户端-putty-和-openssh-的互相转换-nav">
+										 SSH 客户端 Putty 和 OpenSSH 的互相转换
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%9f%a5%e7%9c%8b%e5%8d%95%e4%b8%aa%e6%96%87%e4%bb%b6%e6%8f%90%e4%ba%a4%e5%8e%86%e5%8f%b2" v-on:click="closeDrawer" id="查看单个文件提交历史-nav">
+										 查看单个文件提交历史
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%9c%ac%e5%9c%b0%e9%a1%b9%e7%9b%ae%e5%88%b0%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93" v-on:click="closeDrawer" id="本地项目到远程仓库-nav">
+										 本地项目到远程仓库
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div><div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/post">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS Feed
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#ssh-%e5%ae%a2%e6%88%b7%e7%ab%af-putty-%e5%92%8c-openssh-%e7%9a%84%e4%ba%92%e7%9b%b8%e8%bd%ac%e6%8d%a2" v-on:click="closeDrawer" id="ssh-客户端-putty-和-openssh-的互相转换-nav">
+										 SSH 客户端 Putty 和 OpenSSH 的互相转换
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%9f%a5%e7%9c%8b%e5%8d%95%e4%b8%aa%e6%96%87%e4%bb%b6%e6%8f%90%e4%ba%a4%e5%8e%86%e5%8f%b2" v-on:click="closeDrawer" id="查看单个文件提交历史-nav">
+										 查看单个文件提交历史
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#%e6%9c%ac%e5%9c%b0%e9%a1%b9%e7%9b%ae%e5%88%b0%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93" v-on:click="closeDrawer" id="本地项目到远程仓库-nav">
+										 本地项目到远程仓库
+									</a>
+								</li>
+						
+							</ul>
+						
+					
+				
+			
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="http://example.org/">
+            DRay
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://example.org/">
+        <div class="single-column-header-title">DRay</div>
+        
+
+    </a>
+</div>
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    个人笔记 - Git
+                    
+                    <div class="post-subtitle">
+                        个人使用 Git 时遇到的坑和使用的技巧梳理。
+                    </div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2020-03-01 00:00
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/">[Git]</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/sourcetree">Sourcetree</a>
+                                &nbsp;
+                            
+                                <a href="/tags/note">Note</a>
+                                &nbsp;
+                            
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <h1 id="ssh-客户端-putty-和-openssh-的互相转换">SSH 客户端 Putty 和 OpenSSH 的互相转换</h1>
 <p>原本只需要用 <code>ssh-keygen</code> 生成密钥到 <code>.ssh</code> 目录，然后打开 <code>id_rsa.pub</code> 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。</p>
 <center><img src="https://2mo7ng.dm.files.1drv.com/y4m2zS4N31r_4feXiRfpaAjXBceJRLLXJrr5i_-HDrOUPwc74UiW4eRtEIfezlfU9EfoYRV9vZcmvhyJ13FJpaLrgZcmLjoOqpQO29QKMmd4NcpkrrpObc5DV06idlGQyroNuVgdAWYiE8Jrl5_PAcfnQ4_iiLtD6MisopG1FixVe8RMmSfCDdIK_SjXh3YJLIjlkrZMBOevRV2MIFRgsThCQ?width=660&height=628&cropmode=none" height="300" /></center>
-<p><strong>1. 使用 puTTY 生成 Key</strong></p>
-<ol>
-<li>打开生成器，点击 <code>Generate</code>，成功后点击 <code>Save private key</code> 生成后缀名为 <code>.ppk</code> 的文件；</li>
-<li>Pageant 客户端（通常在托管图标里）点击 <code>Add Key</code> 导入刚才生成的 ppk 文件；</li>
-<li>同时将生成器页面上的 Key 复制到云服务器上即可。</li>
-</ol>
+**1. 使用 puTTY 生成 Key**
+1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；
+2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；
+3. 同时将生成器页面上的 Key 复制到云服务器上即可。
 <p><strong>2. 使用已有的 id_rsa 导入到 puTTY</strong></p>
 <ol>
 <li>打开生成器，点击状态栏 <code>Conversions</code> 中 <code>Import Key</code> 导入私钥 <code>.id_rsa</code> 文件；</li>
@@ -22,7 +451,7 @@
 </ol>
 <p>参考：
 <a href="https://blog.csdn.net/caoshiying/article/details/80131761">https://blog.csdn.net/caoshiying/article/details/80131761</a></p>
-<h2 id="查看单个文件提交历史">查看单个文件提交历史</h2>
+<h1 id="查看单个文件提交历史">查看单个文件提交历史</h1>
 <p>两种情况：</p>
 <ul>
 <li>选定项目的变更历史，即 <code>git log &lt;path&gt;</code>。</li>
@@ -35,7 +464,7 @@
 <p><img src="https://0smgkg.dm.files.1drv.com/y4msY4FENDEH4BxVtKldHkQNpjc1Dpp4Ai-qa9xC0bitKHKfBY1vuzAdh8HHg22qWmUjXNdZuaiQj_saDD14P7jQ6o4iFelQBMY_v70ZPzfhUn_HBdSkUdoz8JPW2AgvykmKS13g-m4vvkIEX3_oRNesn4pcbuZglbZj9_9MVHGoBBu9HGnPYkvfk7KrKFtBOomxRc-5Yrr_Afb8tRpct_ZBQ?width=1004&height=553&cropmode=none" /></p>
 <p>按行审阅：</p>
 <p><img src="https://08mgkg.dm.files.1drv.com/y4m04sDXLzN1qQf133--6BcjbXj-NmtB1ruTRgUqZbo59qKNjxV4-GeeKy7JQutIviGYFLqmJnPcMU6y__T_ixTffBdE-dv615O5g0ERTt8PyuUjNyWytWe_BQW93YCx1mALOefbr-xT46jg_HsAnoRMTCLdPPgrhJjPvN7RodxUhMwz59euow2Etdc2wDGTwSudI0yspcZVk0C0DODjlHyjQ?width=915&height=484&cropmode=none" /></p>
-<h2 id="本地项目到远程仓库">本地项目到远程仓库</h2>
+<h1 id="本地项目到远程仓库">本地项目到远程仓库</h1>
 <p>步骤：</p>
 <ol>
 <li><code>git init</code>  命令将项目变成仓库</li>
@@ -45,12 +474,56 @@
 <code>git push -u origin master</code></li>
 </ol>
 <p>注：
-远程创建的为非空仓库（会有README.txt）则需要 <code>git pull --rebase origin master</code>，之后再 push。</p></article><section class="article labels"><a class="category" href=/categories/git/>Git</a><a class="tag" href=/tags/sourcetree/>Sourcetree</a><a class="tag" href=/tags/note/>Note</a></section></div><section class="article navigation"><p><a class="link" href="/post/2020/0304_java/"><span class="li">&larr;</span>SpringMVC 下载文本实现边转码边下载</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
-    <p class="copyright">©2019 Helloqb.</p>
-    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
-        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank">Notepadium</a></p>
-</div></section></div>
-</body>
+远程创建的为非空仓库（会有README.txt）则需要 <code>git pull --rebase origin master</code>，之后再 push。</p>
 
+                    
+                    <HR width="100%" id="EOF">
+                    <p style="color:#777;">Last modified on 2020-03-01</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="http://example.org/post/2020/0304_java/">
+                    Next<br>SpringMVC 下载文本实现边转码边下载
+                </a>
+                
+                
+                
+                <a class="older-posts" href="http://example.org/post/2020/0101_hugo/">
+                    Previous<br>Hugo 上手
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	</div>
+    	</div>
+    <script src="http://example.org//js/journal.js"></script>
+    </body>
 </html>
