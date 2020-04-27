@@ -3,97 +3,97 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://example.com/categories/</loc>
+    <loc>/categories/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/post/</loc>
+    <loc>/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/categories/python/</loc>
+    <loc>/post/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/script/</loc>
+    <loc>/categories/python/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/smartisan/</loc>
+    <loc>/tags/script/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/</loc>
+    <loc>/tags/smartisan/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/</loc>
+    <loc>/tags/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/post/2020/0311_python/</loc>
+    <loc>/post/2020/0311_python/</loc>
     <lastmod>2020-03-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/categories/java/</loc>
+    <loc>/categories/java/</loc>
     <lastmod>2020-03-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/springmvc/</loc>
+    <loc>/tags/springmvc/</loc>
     <lastmod>2020-03-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/post/2020/0304_java/</loc>
+    <loc>/post/2020/0304_java/</loc>
     <lastmod>2020-03-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/webapi/</loc>
+    <loc>/tags/webapi/</loc>
     <lastmod>2020-03-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/categories/git/</loc>
+    <loc>/categories/git/</loc>
     <lastmod>2020-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/note/</loc>
+    <loc>/tags/note/</loc>
     <lastmod>2020-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/sourcetree/</loc>
+    <loc>/tags/sourcetree/</loc>
     <lastmod>2020-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/post/2020/0301_git/</loc>
+    <loc>/post/2020/0301_git/</loc>
     <lastmod>2020-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/categories/hugo/</loc>
+    <loc>/categories/hugo/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/post/2020/0101_hugo/</loc>
+    <loc>/post/2020/0101_hugo/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://example.com/tags/%E5%88%9D%E8%A7%81/</loc>
+    <loc>/tags/%E5%88%9D%E8%A7%81/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
