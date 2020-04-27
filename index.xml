@@ -427,7 +427,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/gohugoio/hugo/releases&#34;&gt;下载&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://gohugo.io/getting-started/installing&#34;&gt;安装&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/&#34;&gt;Github 自动托管&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/&#34;&gt;Github 自动托管&lt;/a&gt;：先删除public文件再运行脚本&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;测试成功：&lt;code&gt;hugo version&lt;/code&gt;, &lt;code&gt;hugo help&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;其他操作有：&lt;/p&gt;
@@ -435,7 +435,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 &lt;li&gt;&lt;code&gt;hugo server&lt;/code&gt; 本地调试&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;hugo server -D&lt;/code&gt; 本地调试（显示隐藏文件）&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;hugo server -t theme&lt;/code&gt; 指定主题调试&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;hugo&lt;/code&gt; 正式生成&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hugo&lt;/code&gt; 生成静态文件&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h1 id=&#34;主题下载&#34;&gt;主题下载&lt;/h1&gt;
 &lt;p&gt;喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor&lt;/p&gt;

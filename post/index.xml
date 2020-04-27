@@ -54,9 +54,9 @@ import requestsimport sysimport getoptPAGE_SIZE = 100TEMP_FILE = &amp;#39;re
       <guid>http://example.org/post/2020/0101_hugo/</guid>
       <description>下载运行 主要操作：文件下载解压，添加环境变量即可。
 文档链接
- 下载 安装 Github 自动托管  测试成功：hugo version, hugo help
+ 下载 安装 Github 自动托管：先删除public文件再运行脚本  测试成功：hugo version, hugo help
 其他操作有：
- hugo server 本地调试 hugo server -D 本地调试（显示隐藏文件） hugo server -t theme 指定主题调试 hugo 正式生成  主题下载 喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor
+ hugo server 本地调试 hugo server -D 本地调试（显示隐藏文件） hugo server -t theme 指定主题调试 hugo 生成静态文件  主题下载 喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor
 git submodule 方式下载主题
  拉取主题 git submodule add url themes/diary 更新主题：进入子模块 git pull 或者 git submodule update --remote --merge  配置 支持 html 标签
 [markup.goldmark.renderer]unsafe = true # enable raw HTML in Markdown 元数据 通常元数据包括如下：
