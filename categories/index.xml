@@ -1,51 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Categories on DRay</title>
-    <link>http://example.org/categories/</link>
-    <description>Recent content in Categories on DRay</description>
+    <title>Categories on 哲学家</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
+    <copyright>©2019 Helloqb.</copyright>
     <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Python</title>
-      <link>http://example.org/categories/python/</link>
+      <link>/categories/python/</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/categories/python/</guid>
+      <guid>/categories/python/</guid>
       <description></description>
+      
     </item>
     
     <item>
       <title>Java</title>
-      <link>http://example.org/categories/java/</link>
+      <link>/categories/java/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/categories/java/</guid>
+      <guid>/categories/java/</guid>
       <description></description>
+      
     </item>
     
     <item>
       <title>Git</title>
-      <link>http://example.org/categories/git/</link>
+      <link>/categories/git/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/categories/git/</guid>
+      <guid>/categories/git/</guid>
       <description></description>
+      
     </item>
     
     <item>
       <title>Hugo</title>
-      <link>http://example.org/categories/hugo/</link>
+      <link>/categories/hugo/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/categories/hugo/</guid>
+      <guid>/categories/hugo/</guid>
       <description></description>
+      
     </item>
     
   </channel>

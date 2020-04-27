@@ -1,643 +1,135 @@
 <!DOCTYPE html>
-<html><head>
-<title>SpringMVC 下载文本实现边转码边下载</title>
-
-<meta charset="utf-8">
-<meta name="X-UA-Compatible" content="IE=edge">
-<meta name="google-site-verification" content="">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<meta content="telephone=no" name="format-detection">
-<meta name="description" content="">
-<meta name="renderer" content="webkit">
-<meta name="theme-color" content="#ffffff">
-
-
-
-
-<script src="/vendor/js/jquery.min.js" ></script>
-<script src="/vendor/js/popper.min.js" ></script>
-<script src="/vendor/js/bootstrap.min.js" ></script>
-<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
-
-
-
-
-<link rel="stylesheet" href="http://example.org/scss/journal.min.56b67b8b01d7cd1015ed14414fd2fc33ebfb2e8413dcbc47c5cd734544c92cd7.css" integrity="sha256-VrZ7iwHXzRAV7RRBT9L8M&#43;v7LoQT3LxHxc1zRUTJLNc=" media="screen">
-
-
-
-<link rel="stylesheet" href="http://example.org/scss/dark-mode.min.5a2bbd1758c83affd639a91fbfd5cc681b1a5574df99442825c444dd40504b13.css" integrity="sha256-Wiu9F1jIOv/WOakfv9XMaBsaVXTfmUQoJcRE3UBQSxM=" media="screen">
-
-
-<script src="http://example.org//js/loadCSS.js"></script>
-<script>
-  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
-</script>
-
-<script src="http://example.org//js/table.js"></script>
-
-
-
-
-<script src="http://example.org//js/toc.js"></script>
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="/vendor/js/md5.min.js"></script>
-<script>
-  var gitalk = new Gitalk({
-  clientID: 'your client id',
-  clientSecret: 'your cli ent secret',
-  repo: 'repo name',
-  owner: 'user',
-  admin: ['user'],
-  id: md5(location.pathname),
-  distractionFreeMode: 'false'
-  });
-  window.onload = function () {
-        gitalk.render('gitalk-container')
-  }
-</script>
-
-
-
-
-
-
-</head><body>
-    	<div id="app"><div ref="sideContainer" class="side-container">
-    
-    <a class="a-block nav-head false" href="http://example.org/">
-    
-        <div class="nav-title">
-            DRay
-        </div>
-        
-    </a>
-
-    <div class="nav-link-list">
-        
-        
-            
-            
-            
-                
-            
-            
-            
-            <a class="a-block nav-link-item active" href="/post">
-                Archive
-            </a>
-            
-        
-            
-            
-            
-            
-            
-            <a class="a-block nav-link-item false" href="/categories">
-                Categories
-            </a>
-            
-        
-            
-            
-            
-            
-            
-            <a class="a-block nav-link-item false" href="/tags">
-                Tags
-            </a>
-            
-        
-            
-            
-            
-            
-            
-            <a class="a-block nav-link-item false" href="/index.xml">
-                RSS Feed
-            </a>
-            
-        
-    </div>
-
-    
-
-    <div class="nav-footer">
-        
-Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
-<br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
-<br>
-
-&copy;
-	
-	©DRay. 本站遵循 CC-BY-NC 4.0 协议
-	
-    </div>
-    
-</div><div ref="extraContainer" class="extra-container">
-    
-    
-    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
-
-
-	<div class="toc-content">
-	
-		
-		
-		
-		<center>- CATALOG -</center>
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%80-printwriter--characterencoding" v-on:click="closeDrawer" id="方案一-printwriter--characterencoding-nav">
-										 方案一： PrintWriter &#43; CharacterEncoding
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%96%b9%e6%a1%88%e4%ba%8cservletoutputstream--outputstreamwriter" v-on:click="closeDrawer" id="方案二servletoutputstream--outputstreamwriter-nav">
-										 方案二：ServletOutputStream &#43; OutputStreamWriter
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%89servletoutputstream--getbytes" v-on:click="closeDrawer" id="方案三servletoutputstream--getbytes-nav">
-										 方案三：ServletOutputStream &#43; getBytes
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e7%a0%81%e7%9a%84%e5%86%99%e6%b3%95" v-on:click="closeDrawer" id="无需转码的写法-nav">
-										 无需转码的写法
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-	</div>
-
-</div>
-    
-    <div class="pagination">
-        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
-            <i class="material-icons pagination-action-icon">
-                keyboard_arrow_up
-            </i>
-        </a>
-        
-        <a class="pagination-action" v-on:click="toggleDarkMode">
-            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
-                brightness_4
-            </i>
-            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
-                brightness_7
-            </i>
-        </a>
-        
-        
-    </div>
-</div><div class="single-column-drawer-container" ref="drawer"
-     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
-    <div class="drawer-content">
-        <div class="drawer-menu">
-            
-            
-            
-                
-                
-                
-                    
-                
-                
-                
-                <a class="a-block drawer-menu-item active" href="/post">
-                    Archive
-                </a>
-                
-            
-                
-                
-                
-                
-                
-                <a class="a-block drawer-menu-item false" href="/categories">
-                    Categories
-                </a>
-                
-            
-                
-                
-                
-                
-                
-                <a class="a-block drawer-menu-item false" href="/tags">
-                    Tags
-                </a>
-                
-            
-                
-                
-                
-                
-                
-                <a class="a-block drawer-menu-item false" href="/index.xml">
-                    RSS Feed
-                </a>
-                
-            
-            
-            <div class="toc">
-
-
-	<div class="toc-content">
-	
-		
-		
-		
-		<center>- CATALOG -</center>
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%80-printwriter--characterencoding" v-on:click="closeDrawer" id="方案一-printwriter--characterencoding-nav">
-										 方案一： PrintWriter &#43; CharacterEncoding
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%96%b9%e6%a1%88%e4%ba%8cservletoutputstream--outputstreamwriter" v-on:click="closeDrawer" id="方案二servletoutputstream--outputstreamwriter-nav">
-										 方案二：ServletOutputStream &#43; OutputStreamWriter
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%96%b9%e6%a1%88%e4%b8%89servletoutputstream--getbytes" v-on:click="closeDrawer" id="方案三servletoutputstream--getbytes-nav">
-										 方案三：ServletOutputStream &#43; getBytes
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-				
-				
-					
-						
-						
-							<ul>
-						
-						
-								<li>
-				 					<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e7%a0%81%e7%9a%84%e5%86%99%e6%b3%95" v-on:click="closeDrawer" id="无需转码的写法-nav">
-										 无需转码的写法
-									</a>
-								</li>
-						
-							</ul>
-						
-					
-				
-			
-	</div>
-
-</div>
-            
-        </div>
-    </div>
-</div>
-<transition name="fade">
-    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
-</transition>
-<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
-    <div ref="navBackground" class="nav-background"></div>
-    <div class="container container-narrow nav-content">
-        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
-            <i class="material-icons">
-                menu
-            </i>
-        </button>
-        <a ref="navTitle" class="navbar-brand" href="http://example.org/">
-            DRay
-        </a>
-        
-        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
-            <i class="material-icons" v-if="isDarkMode">
-                brightness_4
-            </i>
-            <i class="material-icons" v-else="isDarkMode">
-                brightness_7
-            </i>
-        </button>
-        
-    </div>
-</nav>
-<div class="single-column-header-container" ref="pageHead"
-     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-    <a href="http://example.org/">
-        <div class="single-column-header-title">DRay</div>
-        
-
-    </a>
-</div>
-            <div id="content">
-<div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                 style="background-image: url('/')">
-                <div class="post-title">
-                    SpringMVC 下载文本实现边转码边下载
-                    
-                    <div class="post-meta">
-                        
-                        <time itemprop="datePublished">
-                            2020-03-04 00:00
-                        </time>
-                        
-
-                        
-                            <i class="material-icons" style="">folder</i>
-                                <a href="/categories/">[Java]</a>
-                                &nbsp;
-                        
-
-                        
-                            <i class="material-icons" style="">label</i>
-                            
-                                <a href="/tags/springmvc">SpringMVC</a>
-                                &nbsp;
-                            
-                                <a href="/tags/webapi">Webapi</a>
-                                &nbsp;
-                            
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <div class="post-body-wrapper">
-                <div class="post-body">
-                    <h1 id="方案一-printwriter--characterencoding">方案一： PrintWriter + CharacterEncoding</h1>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.69.2" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>SpringMVC 下载文本实现边转码边下载&nbsp;&ndash;&nbsp;哲学家</title><link rel="stylesheet" href="/css/core.min.7c7aae38046e8bae5bfc04a43ce9e8b735c188c9b04fbed67826122643463705c2b2042839886338515acd4ceb01d077.css" integrity="sha384-fHquOARui65b/ASkPOnotzXBiMmwT77WeCYSJkNGNwXCsgQoOYhjOFFazUzrAdB3"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="SpringMVC 下载文本实现边转码边下载" /><body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">哲学家</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo.io/"target="_blank">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">信誓旦旦</span></div></section><div id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">SpringMVC 下载文本实现边转码边下载</h1><p class="article date">Wednesday, March 4, 2020</p></section><article class="article markdown-body"><h1 id="方案一-printwriter--characterencoding">方案一： PrintWriter + CharacterEncoding</h1>
 <p>SpringMVC 框架的接口中 Response 有 <code>ServletOutputStream</code> 和 <code>PrintWriter</code> 两种输出，还有一个 <code>setCharacterEncoding</code> 方法。</p>
 <p>OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 <code>setCharacterEncoding</code> 无效。所以先采用 <code>PrintWriter</code> 搭配 <code>setCharacterEncoding</code> 方法。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/downloadFile1&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">downloadFile1</span><span style="color:#f92672">(</span>HttpServletResponse response<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/downloadFile1&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">downloadFile1</span><span class="o">(</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
 
-    <span style="color:#75715e">//读取本地文件
-</span><span style="color:#75715e"></span>    File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>LOCAL_FILE_PATH<span style="color:#f92672">);</span>
-    BufferedReader bufferedReader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedReader<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> InputStreamReader<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">),</span> <span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">));</span>
+    <span class="c1">//读取本地文件
+</span><span class="c1"></span>    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">LOCAL_FILE_PATH</span><span class="o">);</span>
+    <span class="n">BufferedReader</span> <span class="n">bufferedReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">),</span> <span class="s">&#34;UTF-8&#34;</span><span class="o">));</span>
 
-    <span style="color:#75715e">//设置下载
-</span><span style="color:#75715e"></span>    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setHeader</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Content-Disposition&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;attachment;filename=file.csv&#34;</span><span style="color:#f92672">);</span>
-    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setContentType</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;application/octet-stream&#34;</span><span style="color:#f92672">);</span>
-    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setCharacterEncoding</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;GB2312&#34;</span><span style="color:#f92672">);</span>
+    <span class="c1">//设置下载
+</span><span class="c1"></span>    <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Content-Disposition&#34;</span><span class="o">,</span> <span class="s">&#34;attachment;filename=file.csv&#34;</span><span class="o">);</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;application/octet-stream&#34;</span><span class="o">);</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&#34;GB2312&#34;</span><span class="o">);</span>
 
-    <span style="color:#75715e">//传输
-</span><span style="color:#75715e"></span>    BufferedWriter bufferedWriter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedWriter<span style="color:#f92672">(</span>response<span style="color:#f92672">.</span><span style="color:#a6e22e">getWriter</span><span style="color:#f92672">());</span>
-    String line<span style="color:#f92672">;</span>
-    <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>line <span style="color:#f92672">=</span> bufferedReader<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">())</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        bufferedWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>line <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\r\n&#34;</span><span style="color:#f92672">);</span>
-        bufferedWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
-    <span style="color:#f92672">}</span>
-    bufferedReader<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-    bufferedWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span class="c1">//传输
+</span><span class="c1"></span>    <span class="n">BufferedWriter</span> <span class="n">bufferedWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedWriter</span><span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">getWriter</span><span class="o">());</span>
+    <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">bufferedReader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">bufferedWriter</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">line</span> <span class="o">+</span> <span class="s">&#34;\r\n&#34;</span><span class="o">);</span>
+        <span class="n">bufferedWriter</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">bufferedReader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="n">bufferedWriter</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
 
-<span style="color:#f92672">}</span>
+<span class="o">}</span>
 </code></pre></div><p>无用，没有仔细研究，应该 <code>setCharacterEncoding</code> 只是告诉浏览器是什么编码，没有解码功能。</p>
 <h1 id="方案二servletoutputstream--outputstreamwriter">方案二：ServletOutputStream + OutputStreamWriter</h1>
 <p>将 <code>response.getOutputStream()</code> 获取到的流用 <code>OutputStreamWriter</code> 包装。结果可行。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/downloadFile2&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">downloadFile2</span><span style="color:#f92672">(</span>HttpServletResponse response<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/downloadFile2&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">downloadFile2</span><span class="o">(</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
 
-    <span style="color:#75715e">//读取本地文件
-</span><span style="color:#75715e"></span>    File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>LOCAL_FILE_PATH<span style="color:#f92672">);</span>
-    BufferedReader bufferedReader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedReader<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> InputStreamReader<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">),</span> <span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">));</span>
+    <span class="c1">//读取本地文件
+</span><span class="c1"></span>    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">LOCAL_FILE_PATH</span><span class="o">);</span>
+    <span class="n">BufferedReader</span> <span class="n">bufferedReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">),</span> <span class="s">&#34;UTF-8&#34;</span><span class="o">));</span>
 
-    <span style="color:#75715e">//设置下载
-</span><span style="color:#75715e"></span>    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setHeader</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Content-Disposition&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;attachment;filename=file.csv&#34;</span><span style="color:#f92672">);</span>
-    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setContentType</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;application/octet-stream&#34;</span><span style="color:#f92672">);</span>
+    <span class="c1">//设置下载
+</span><span class="c1"></span>    <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Content-Disposition&#34;</span><span class="o">,</span> <span class="s">&#34;attachment;filename=file.csv&#34;</span><span class="o">);</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;application/octet-stream&#34;</span><span class="o">);</span>
 
-    <span style="color:#75715e">//传输
-</span><span style="color:#75715e"></span>    OutputStreamWriter writerStream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OutputStreamWriter<span style="color:#f92672">(</span>response<span style="color:#f92672">.</span><span style="color:#a6e22e">getOutputStream</span><span style="color:#f92672">(),</span><span style="color:#e6db74">&#34;GBK&#34;</span><span style="color:#f92672">);</span>
-    String line<span style="color:#f92672">;</span>
-    <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>line <span style="color:#f92672">=</span> bufferedReader<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">())</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        writerStream<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>line <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\r\n&#34;</span><span style="color:#f92672">);</span>
-        writerStream<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
-    <span style="color:#f92672">}</span>
-    bufferedReader<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-    writerStream<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span class="c1">//传输
+</span><span class="c1"></span>    <span class="n">OutputStreamWriter</span> <span class="n">writerStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OutputStreamWriter</span><span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">(),</span><span class="s">&#34;GBK&#34;</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">bufferedReader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">writerStream</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">line</span> <span class="o">+</span> <span class="s">&#34;\r\n&#34;</span><span class="o">);</span>
+        <span class="n">writerStream</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">bufferedReader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="n">writerStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
 
-<span style="color:#f92672">}</span>
+<span class="o">}</span>
 </code></pre></div><h1 id="方案三servletoutputstream--getbytes">方案三：ServletOutputStream + getBytes</h1>
 <p>在按行写入字符串时，使用 <code>getBytes</code> 方法将字符串转换为想要输出的编码格式。结果可行。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/downloadFile3&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">downloadFile3</span><span style="color:#f92672">(</span>HttpServletResponse response<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/downloadFile3&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">downloadFile3</span><span class="o">(</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
 
-    <span style="color:#75715e">//读取本地文件
-</span><span style="color:#75715e"></span>    File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>LOCAL_FILE_PATH<span style="color:#f92672">);</span>
-    BufferedReader bufferedReader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedReader<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> InputStreamReader<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">),</span> <span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">));</span>
+    <span class="c1">//读取本地文件
+</span><span class="c1"></span>    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">LOCAL_FILE_PATH</span><span class="o">);</span>
+    <span class="n">BufferedReader</span> <span class="n">bufferedReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">),</span> <span class="s">&#34;UTF-8&#34;</span><span class="o">));</span>
 
-    <span style="color:#75715e">//设置下载
-</span><span style="color:#75715e"></span>    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setHeader</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Content-Disposition&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;attachment;filename=file.csv&#34;</span><span style="color:#f92672">);</span>
-    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setContentType</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;application/octet-stream&#34;</span><span style="color:#f92672">);</span>
+    <span class="c1">//设置下载
+</span><span class="c1"></span>    <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Content-Disposition&#34;</span><span class="o">,</span> <span class="s">&#34;attachment;filename=file.csv&#34;</span><span class="o">);</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;application/octet-stream&#34;</span><span class="o">);</span>
 
-    <span style="color:#75715e">//传输
-</span><span style="color:#75715e"></span>    OutputStream outputStream <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span><span style="color:#a6e22e">getOutputStream</span><span style="color:#f92672">();</span>
-    String line<span style="color:#f92672">;</span>
-    <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>line <span style="color:#f92672">=</span> bufferedReader<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">())</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        outputStream<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">((</span>line <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\r\n&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;GB2312&#34;</span><span style="color:#f92672">));</span>
-        outputStream<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
-    <span style="color:#f92672">}</span>
-    bufferedReader<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-    outputStream<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-<span style="color:#f92672">}</span>
+    <span class="c1">//传输
+</span><span class="c1"></span>    <span class="n">OutputStream</span> <span class="n">outputStream</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">bufferedReader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">outputStream</span><span class="o">.</span><span class="na">write</span><span class="o">((</span><span class="n">line</span> <span class="o">+</span> <span class="s">&#34;\r\n&#34;</span><span class="o">).</span><span class="na">getBytes</span><span class="o">(</span><span class="s">&#34;GB2312&#34;</span><span class="o">));</span>
+        <span class="n">outputStream</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">bufferedReader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="n">outputStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre></div><h1 id="无需转码的写法">无需转码的写法</h1>
 <p>若不需要转码的话，就很简短了，用字节流就行了。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/downloadFile4&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">downloadFile4</span><span style="color:#f92672">(</span>HttpServletResponse response<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/downloadFile4&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">downloadFile4</span><span class="o">(</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
 
-    <span style="color:#75715e">//读取本地文件
-</span><span style="color:#75715e"></span>    File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>LOCAL_FILE_PATH<span style="color:#f92672">);</span>
-    FileInputStream fis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">);</span>
+    <span class="c1">//读取本地文件
+</span><span class="c1"></span>    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">LOCAL_FILE_PATH</span><span class="o">);</span>
+    <span class="n">FileInputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
 
-    <span style="color:#75715e">//设置下载
-</span><span style="color:#75715e"></span>    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setHeader</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Content-Disposition&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;attachment;filename=file.csv&#34;</span><span style="color:#f92672">);</span>
-    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setContentType</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;application/octet-stream&#34;</span><span style="color:#f92672">);</span>
+    <span class="c1">//设置下载
+</span><span class="c1"></span>    <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Content-Disposition&#34;</span><span class="o">,</span> <span class="s">&#34;attachment;filename=file.csv&#34;</span><span class="o">);</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;application/octet-stream&#34;</span><span class="o">);</span>
 
-    <span style="color:#75715e">//传输
-</span><span style="color:#75715e"></span>    OutputStream os <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span><span style="color:#a6e22e">getOutputStream</span><span style="color:#f92672">();</span>
-    <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> buffer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4096<span style="color:#f92672">];</span>
-    <span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span>
-    <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>b <span style="color:#f92672">=</span> fis<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>buffer<span style="color:#f92672">))</span> <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        os<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>buffer<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> b<span style="color:#f92672">);</span>
-    <span style="color:#f92672">}</span>
-    fis<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-    os<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
-<span style="color:#f92672">}</span>
+    <span class="c1">//传输
+</span><span class="c1"></span>    <span class="n">OutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+    <span class="kt">byte</span><span class="o">[]</span> <span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">4096</span><span class="o">];</span>
+    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">((</span><span class="n">b</span> <span class="o">=</span> <span class="n">fis</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">))</span> <span class="o">!=</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">os</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">buffer</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">fis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="n">os</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre></div><p>简写的话可以用第三方包。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.springframework.util.FileCopyUtils<span style="color:#f92672">;</span>
-<span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/downloadFile5&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">downloadFile5</span><span style="color:#f92672">(</span>HttpServletResponse response<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.springframework.util.FileCopyUtils</span><span class="o">;</span>
+<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/downloadFile5&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">downloadFile5</span><span class="o">(</span><span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
 
-    <span style="color:#75715e">//读取本地文件
-</span><span style="color:#75715e"></span>    File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>LOCAL_FILE_PATH<span style="color:#f92672">);</span>
-    InputStream inputStream<span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedInputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">));</span>
+    <span class="c1">//读取本地文件
+</span><span class="c1"></span>    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">LOCAL_FILE_PATH</span><span class="o">);</span>
+    <span class="n">InputStream</span> <span class="n">inputStream</span><span class="o">=</span> <span class="k">new</span> <span class="n">BufferedInputStream</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">));</span>
 
-    <span style="color:#75715e">//设置下载
-</span><span style="color:#75715e"></span>    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setHeader</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Content-Disposition&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;attachment;filename=file.csv&#34;</span><span style="color:#f92672">);</span>
-    response<span style="color:#f92672">.</span><span style="color:#a6e22e">setContentType</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;application/octet-stream&#34;</span><span style="color:#f92672">);</span>
+    <span class="c1">//设置下载
+</span><span class="c1"></span>    <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Content-Disposition&#34;</span><span class="o">,</span> <span class="s">&#34;attachment;filename=file.csv&#34;</span><span class="o">);</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;application/octet-stream&#34;</span><span class="o">);</span>
 
-    <span style="color:#75715e">//传输
-</span><span style="color:#75715e"></span>    FileCopyUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">copy</span><span style="color:#f92672">(</span>inputStream<span style="color:#f92672">,</span> response<span style="color:#f92672">.</span><span style="color:#a6e22e">getOutputStream</span><span style="color:#f92672">());</span>
+    <span class="c1">//传输
+</span><span class="c1"></span>    <span class="n">FileCopyUtils</span><span class="o">.</span><span class="na">copy</span><span class="o">(</span><span class="n">inputStream</span><span class="o">,</span> <span class="n">response</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
 
 
-<span style="color:#f92672">}</span>
+<span class="o">}</span>
 </code></pre></div><p>补充：</p>
 <ul>
 <li>使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。</li>
-</ul>
-                    
-                    <HR width="100%" id="EOF">
-                    <p style="color:#777;">Last modified on 2020-03-04</p>
-                    
-                </div>
-            </div>
-            
-            
-            <nav class="post-pagination">
+</ul></article><section class="article labels"><a class="category" href=/categories/java/>Java</a><a class="tag" href=/tags/springmvc/>SpringMVC</a><a class="tag" href=/tags/webapi/>Webapi</a></section></div><section class="article navigation"><p><a class="link" href="/post/2020/0311_python/"><span class="li">&larr;</span>锤子阅读文章搜索</a></p><p><a class="link" href="/post/2020/0301_git/"><span class="li">&rarr;</span>个人笔记 - Git</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2019 Helloqb.</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section></div>
+</body>
 
-                
-                <a class="newer-posts" href="http://example.org/post/2020/0311_python/">
-                    Next<br>锤子阅读文章搜索
-                </a>
-                
-                
-                
-                <a class="older-posts" href="http://example.org/post/2020/0301_git/">
-                    Previous<br>个人笔记 - Git
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-<div id="gitalk-container"></div>
-
-
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-            </div><div id="single-column-footer">
-Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
-<br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
-<br>
-
-&copy;
-	
-	©DRay. 本站遵循 CC-BY-NC 4.0 协议
-	</div>
-    	</div>
-    <script src="http://example.org//js/journal.js"></script>
-    </body>
 </html>
