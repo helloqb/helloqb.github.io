@@ -605,18 +605,18 @@ TEMP_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main_by_args</span>(site, keyword, num, match_level, output):
 
-    <span style="color:#75715e"># 查找订阅号site_id</span>
+    <span style="color:#75715e"># 查找订阅号site_id</span>
     site_id, site_name <span style="color:#f92672">=</span> search_site(site)
     <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> site_id:
         <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;订阅号不存在&#34;</span>)
         exit(<span style="color:#ae81ff">0</span>)
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;正在搜索 {} 的文章&#39;</span><span style="color:#f92672">.</span>format(site_name))
 
-    <span style="color:#75715e"># 获取当前订阅号文章总数，计算遍历最高次数</span>
+    <span style="color:#75715e"># 获取当前订阅号文章总数，计算遍历最高次数</span>
     count <span style="color:#f92672">=</span> get_article_count(site_id)
     range_count <span style="color:#f92672">=</span> int(count <span style="color:#f92672">/</span> PAGE_SIZE) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
 
-    <span style="color:#75715e"># 遍历查找</span>
+    <span style="color:#75715e"># 遍历查找</span>
     search_list <span style="color:#f92672">=</span> []
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(range_count):
         titles <span style="color:#f92672">=</span> search_titles(site_id, i, PAGE_SIZE, keyword, match_level)
@@ -624,7 +624,7 @@ TEMP_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;
         <span style="color:#66d9ef">if</span> len(search_list) <span style="color:#f92672">&gt;</span> num:
             <span style="color:#66d9ef">break</span>
 
-    <span style="color:#75715e"># 输出</span>
+    <span style="color:#75715e"># 输出</span>
     <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> search_list:
         <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;无搜索结果&#34;</span>)
         exit(<span style="color:#ae81ff">0</span>)
@@ -648,7 +648,7 @@ TEMP_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;
 
 
 <span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    <span style="color:#75715e"># main_by_args(&#39;大象公会&#39;, &#39;同性恋&#39;, 10, 1, 1)  # debug</span>
+    <span style="color:#75715e"># main_by_args(&#39;大象公会&#39;, &#39;同性恋&#39;, 10, 1, 1)  # debug</span>
     main()
 
 </code></pre></div>

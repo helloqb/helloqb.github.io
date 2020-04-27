@@ -186,18 +186,18 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 
 &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main_by_args&lt;/span&gt;(site, keyword, num, match_level, output):
 
-    &lt;span style=&#34;color:#75715e&#34;&gt;# 查找订阅号site_id&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 查找订阅号site_id&lt;/span&gt;
     site_id, site_name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; search_site(site)
     &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;not&lt;/span&gt; site_id:
         &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;订阅号不存在&amp;#34;&lt;/span&gt;)
         exit(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
     &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;正在搜索 {} 的文章&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;format(site_name))
 
-    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取当前订阅号文章总数，计算遍历最高次数&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取当前订阅号文章总数，计算遍历最高次数&lt;/span&gt;
     count &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; get_article_count(site_id)
     range_count &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(count &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; PAGE_SIZE) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
 
-    &lt;span style=&#34;color:#75715e&#34;&gt;# 遍历查找&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 遍历查找&lt;/span&gt;
     search_list &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; []
     &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(range_count):
         titles &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; search_titles(site_id, i, PAGE_SIZE, keyword, match_level)
@@ -205,7 +205,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
         &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; len(search_list) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; num:
             &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
 
-    &lt;span style=&#34;color:#75715e&#34;&gt;# 输出&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 输出&lt;/span&gt;
     &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;not&lt;/span&gt; search_list:
         &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;无搜索结果&amp;#34;&lt;/span&gt;)
         exit(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
@@ -229,7 +229,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 
 
 &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-    &lt;span style=&#34;color:#75715e&#34;&gt;# main_by_args(&amp;#39;大象公会&amp;#39;, &amp;#39;同性恋&amp;#39;, 10, 1, 1)  # debug&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# main_by_args(&amp;#39;大象公会&amp;#39;, &amp;#39;同性恋&amp;#39;, 10, 1, 1)  # debug&lt;/span&gt;
     main()
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- http://example.org/post/2020/0311_python/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
@@ -447,16 +447,16 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 &lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;支持 html 标签&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;markup&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;goldmark&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;renderer&lt;/span&gt;]
-&lt;span style=&#34;color:#a6e22e&#34;&gt;unsafe&lt;/span&gt; = &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;unsafe&lt;/span&gt; = &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;元数据&#34;&gt;元数据&lt;/h1&gt;
 &lt;p&gt;通常元数据包括如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;---
 &lt;span style=&#34;color:#66d9ef&#34;&gt;title&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;个人笔记 - Git&amp;#34;&lt;/span&gt;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;&lt;/span&gt;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;date&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2020-03-01&amp;#34;&lt;/span&gt;
-categories:
+&lt;span style=&#34;color:#66d9ef&#34;&gt;categories&lt;/span&gt;:
   - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Git&amp;#34;&lt;/span&gt;
-tags:
+&lt;span style=&#34;color:#66d9ef&#34;&gt;tags&lt;/span&gt;:
   - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Sourcetree&amp;#34;&lt;/span&gt;
   - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Note&amp;#34;&lt;/span&gt;
 ---
