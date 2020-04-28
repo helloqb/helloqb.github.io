@@ -2,49 +2,49 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on DRay</title>
-    <link>/categories/</link>
+    <link>https://helloqb.xyz/categories/</link>
     <description>Recent content in Categories on DRay</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
     <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://helloqb.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Python</title>
-      <link>/categories/python/</link>
+      <link>https://helloqb.xyz/categories/python/</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/python/</guid>
+      <guid>https://helloqb.xyz/categories/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Java</title>
-      <link>/categories/java/</link>
+      <link>https://helloqb.xyz/categories/java/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/java/</guid>
+      <guid>https://helloqb.xyz/categories/java/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Git</title>
-      <link>/categories/git/</link>
+      <link>https://helloqb.xyz/categories/git/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/git/</guid>
+      <guid>https://helloqb.xyz/categories/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hugo</title>
-      <link>/categories/hugo/</link>
+      <link>https://helloqb.xyz/categories/hugo/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/hugo/</guid>
+      <guid>https://helloqb.xyz/categories/hugo/</guid>
       <description></description>
     </item>
     
