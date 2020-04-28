@@ -464,6 +464,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;draft: true&lt;/code&gt; 视为草稿&lt;/li&gt;
 &lt;li&gt;有的主题文章列表会展示文章的开头，有标签会很乱，用 &lt;code&gt;&amp;lt; !--more--&amp;gt;&lt;/code&gt; 会强制展示此节点之前的内容&lt;/li&gt;
+&lt;li&gt;baseURL 没有注释掉会没有被渲染&lt;/li&gt;
 &lt;/ul&gt;
 - /post/2020/0101_hugo/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
