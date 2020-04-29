@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>DRay</title>
+    <title>哲学家</title>
     <link>https://helloqb.xyz/</link>
-    <description>Recent content on DRay</description>
+    <description>Recent content on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -18,7 +18,7 @@
         <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2020/0311_python/</guid>
-        <description>DRay https://helloqb.xyz/post/2020/0311_python/ -&lt;h1 id=&#34;缘由&#34;&gt;缘由&lt;/h1&gt;
+        <description>哲学家 https://helloqb.xyz/post/2020/0311_python/ -&lt;h1 id=&#34;缘由&#34;&gt;缘由&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。&lt;/li&gt;
 &lt;li&gt;锤子阅读不支持文章搜索，有时候想要找个文章难。&lt;/li&gt;
@@ -243,7 +243,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
         <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2020/0304_java/</guid>
-        <description>DRay https://helloqb.xyz/post/2020/0304_java/ -&lt;h1 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h1&gt;
+        <description>哲学家 https://helloqb.xyz/post/2020/0304_java/ -&lt;h1 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h1&gt;
 &lt;p&gt;SpringMVC 框架的接口中 Response 有 &lt;code&gt;ServletOutputStream&lt;/code&gt; 和 &lt;code&gt;PrintWriter&lt;/code&gt; 两种输出，还有一个 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
 &lt;p&gt;OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 无效。所以先采用 &lt;code&gt;PrintWriter&lt;/code&gt; 搭配 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
@@ -372,7 +372,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
         <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
-        <description>DRay https://helloqb.xyz/post/2020/0301_git/ -&lt;h1 id=&#34;ssh-客户端-putty-和-openssh-的互相转换&#34;&gt;SSH 客户端 Putty 和 OpenSSH 的互相转换&lt;/h1&gt;
+        <description>哲学家 https://helloqb.xyz/post/2020/0301_git/ -&lt;h1 id=&#34;ssh-客户端-putty-和-openssh-的互相转换&#34;&gt;SSH 客户端 Putty 和 OpenSSH 的互相转换&lt;/h1&gt;
 &lt;p&gt;原本只需要用 &lt;code&gt;ssh-keygen&lt;/code&gt; 生成密钥到 &lt;code&gt;.ssh&lt;/code&gt; 目录，然后打开 &lt;code&gt;id_rsa.pub&lt;/code&gt; 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。&lt;/p&gt;
 &lt;center&gt;&lt;img src=&#34;https://2mo7ng.dm.files.1drv.com/y4m2zS4N31r_4feXiRfpaAjXBceJRLLXJrr5i_-HDrOUPwc74UiW4eRtEIfezlfU9EfoYRV9vZcmvhyJ13FJpaLrgZcmLjoOqpQO29QKMmd4NcpkrrpObc5DV06idlGQyroNuVgdAWYiE8Jrl5_PAcfnQ4_iiLtD6MisopG1FixVe8RMmSfCDdIK_SjXh3YJLIjlkrZMBOevRV2MIFRgsThCQ?width=660&amp;height=628&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;
 **1. 使用 puTTY 生成 Key**
@@ -421,7 +421,7 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
         <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2020/0101_hugo/</guid>
-        <description>DRay https://helloqb.xyz/post/2020/0101_hugo/ -&lt;h1 id=&#34;下载运行&#34;&gt;下载运行&lt;/h1&gt;
+        <description>哲学家 https://helloqb.xyz/post/2020/0101_hugo/ -&lt;h1 id=&#34;下载运行&#34;&gt;下载运行&lt;/h1&gt;
 &lt;p&gt;主要操作：文件下载解压，添加环境变量即可。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;文档链接&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -464,9 +464,29 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;draft: true&lt;/code&gt; 视为草稿&lt;/li&gt;
 &lt;li&gt;有的主题文章列表会展示文章的开头，有标签会很乱，用 &lt;code&gt;&amp;lt; !--more--&amp;gt;&lt;/code&gt; 会强制展示此节点之前的内容&lt;/li&gt;
-&lt;li&gt;baseURL 没有注释掉会没有被渲染&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0101_hugo/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>自我介绍</title>
+        <link>https://helloqb.xyz/about/</link>
+        <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/about/</guid>
+        <description>哲学家 https://helloqb.xyz/about/ -&lt;h1 id=&#34;个人&#34;&gt;个人&lt;/h1&gt;
+&lt;p&gt;自我定位中。。。&lt;/p&gt;
+&lt;h1 id=&#34;喜好&#34;&gt;喜好&lt;/h1&gt;
+&lt;h2 id=&#34;影视&#34;&gt;影视&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;导演&lt;/strong&gt;：&lt;a href=&#34;https://movie.douban.com/celebrity/1000304/&#34;&gt;马丁·麦克唐纳&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;美剧&lt;/strong&gt;：&lt;a href=&#34;https://www.imdb.com/title/tt1586680/?ref_=fn_al_tt_1&#34;&gt;无耻之徒&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;妹子&#34;&gt;妹子&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;新垣结衣&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;其他标签&#34;&gt;其他标签&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;锤友（渐渐脱粉中）&lt;/strong&gt;&lt;/p&gt;
+- https://helloqb.xyz/about/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

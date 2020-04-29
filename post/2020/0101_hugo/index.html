@@ -74,7 +74,11 @@
     <a class="a-block nav-head false" href="https://helloqb.xyz/">
     
         <div class="nav-title">
-            DRay
+            哲学家
+        </div>
+        
+        <div class="nav-subtitle">
+            怕什么真理无穷，进一寸有进一寸的欢喜
         </div>
         
     </a>
@@ -90,7 +94,7 @@
             
             
             <a class="a-block nav-link-item active" href="/post">
-                Archive
+                归档
             </a>
             
         
@@ -100,7 +104,7 @@
             
             
             <a class="a-block nav-link-item false" href="/categories">
-                Categories
+                分类
             </a>
             
         
@@ -110,7 +114,7 @@
             
             
             <a class="a-block nav-link-item false" href="/tags">
-                Tags
+                标签
             </a>
             
         
@@ -119,8 +123,8 @@
             
             
             
-            <a class="a-block nav-link-item false" href="/index.xml">
-                RSS Feed
+            <a class="a-block nav-link-item false" href="/about">
+                关于
             </a>
             
         
@@ -267,7 +271,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 
                 <a class="a-block drawer-menu-item active" href="/post">
-                    Archive
+                    归档
                 </a>
                 
             
@@ -277,7 +281,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 
                 <a class="a-block drawer-menu-item false" href="/categories">
-                    Categories
+                    分类
                 </a>
                 
             
@@ -287,7 +291,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 
                 <a class="a-block drawer-menu-item false" href="/tags">
-                    Tags
+                    标签
                 </a>
                 
             
@@ -296,8 +300,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/index.xml">
-                    RSS Feed
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
                 </a>
                 
             
@@ -407,7 +411,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             </i>
         </button>
         <a ref="navTitle" class="navbar-brand" href="https://helloqb.xyz/">
-            DRay
+            哲学家
         </a>
         
         <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
@@ -424,7 +428,9 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <div class="single-column-header-container" ref="pageHead"
      v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
     <a href="https://helloqb.xyz/">
-        <div class="single-column-header-title">DRay</div>
+        <div class="single-column-header-title">哲学家</div>
+        
+        <div class="single-column-header-subtitle">怕什么真理无穷，进一寸有进一寸的欢喜</div>
         
 
     </a>
@@ -513,7 +519,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <ul>
 <li><code>draft: true</code> 视为草稿</li>
 <li>有的主题文章列表会展示文章的开头，有标签会很乱，用 <code>&lt; !--more--&gt;</code> 会强制展示此节点之前的内容</li>
-<li>baseURL 没有注释掉会没有被渲染</li>
 </ul>
 
                     
@@ -533,8 +538,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 
                 
-                <a class="older-posts">
-                    Previous<br>No older posts.
+                <a class="older-posts" href="https://helloqb.xyz/about/">
+                    Previous<br>自我介绍
                 </a>
                 
             </nav>
