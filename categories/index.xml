@@ -2,49 +2,49 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on 哲学家</title>
-    <link>https://www.helloqb.xyz/categories/</link>
+    <link>http://www.helloqb.xyz/categories/</link>
     <description>Recent content in Categories on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
     <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://www.helloqb.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.helloqb.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Python</title>
-      <link>https://www.helloqb.xyz/categories/python/</link>
+      <link>http://www.helloqb.xyz/categories/python/</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://www.helloqb.xyz/categories/python/</guid>
+      <guid>http://www.helloqb.xyz/categories/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Java</title>
-      <link>https://www.helloqb.xyz/categories/java/</link>
+      <link>http://www.helloqb.xyz/categories/java/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://www.helloqb.xyz/categories/java/</guid>
+      <guid>http://www.helloqb.xyz/categories/java/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Git</title>
-      <link>https://www.helloqb.xyz/categories/git/</link>
+      <link>http://www.helloqb.xyz/categories/git/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://www.helloqb.xyz/categories/git/</guid>
+      <guid>http://www.helloqb.xyz/categories/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hugo</title>
-      <link>https://www.helloqb.xyz/categories/hugo/</link>
+      <link>http://www.helloqb.xyz/categories/hugo/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://www.helloqb.xyz/categories/hugo/</guid>
+      <guid>http://www.helloqb.xyz/categories/hugo/</guid>
       <description></description>
     </item>
     
