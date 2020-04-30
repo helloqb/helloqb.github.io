@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hugo on 哲学家</title>
-    <link>http://www.helloqb.xyz/categories/hugo/</link>
+    <link>https://helloqb.github.io/categories/hugo/</link>
     <description>Recent content in Hugo on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
     <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://www.helloqb.xyz/categories/hugo/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://helloqb.github.io/categories/hugo/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hugo 上手</title>
-      <link>http://www.helloqb.xyz/post/2020/0101_hugo/</link>
+      <link>https://helloqb.github.io/post/2020/0101_hugo/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://www.helloqb.xyz/post/2020/0101_hugo/</guid>
+      <guid>https://helloqb.github.io/post/2020/0101_hugo/</guid>
       <description>下载运行 主要操作：文件下载解压，添加环境变量即可。
 文档链接
  下载 安装 Github 自动托管：先删除public文件再运行脚本  测试成功：hugo version, hugo help
