@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sourcetree on 哲学家</title>
-    <link>https://helloqb.xyz/tags/sourcetree/</link>
+    <link>https://www.helloqb.xyz/tags/sourcetree/</link>
     <description>Recent content in Sourcetree on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
     <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://helloqb.xyz/tags/sourcetree/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.helloqb.xyz/tags/sourcetree/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>个人笔记 - Git</title>
-      <link>https://helloqb.xyz/post/2020/0301_git/</link>
+      <link>https://www.helloqb.xyz/post/2020/0301_git/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
+      <guid>https://www.helloqb.xyz/post/2020/0301_git/</guid>
       <description>SSH 客户端 Putty 和 OpenSSH 的互相转换 原本只需要用 ssh-keygen 生成密钥到 .ssh 目录，然后打开 id_rsa.pub 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。
 **1. 使用 puTTY 生成 Key**1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；3. 同时将生成器页面上的 Key 复制到云服务器上即可。2. 使用已有的 id_rsa 导入到 puTTY
  打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。  参考： https://blog.csdn.net/caoshiying/article/details/80131761

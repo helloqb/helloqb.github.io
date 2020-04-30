@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Smartisan on 哲学家</title>
-    <link>https://helloqb.xyz/tags/smartisan/</link>
+    <link>https://www.helloqb.xyz/tags/smartisan/</link>
     <description>Recent content in Smartisan on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
     <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://helloqb.xyz/tags/smartisan/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.helloqb.xyz/tags/smartisan/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>锤子阅读文章搜索</title>
-      <link>https://helloqb.xyz/post/2020/0311_python/</link>
+      <link>https://www.helloqb.xyz/post/2020/0311_python/</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0311_python/</guid>
+      <guid>https://www.helloqb.xyz/post/2020/0311_python/</guid>
       <description>缘由  之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。 锤子阅读不支持文章搜索，有时候想要找个文章难。 划水好无聊。  脚本调用 使用 Python3 编写，单个文件，无第三方库。结果有命令行和文本两种输出方式，具体参数如下：
  -h 帮助文档 -s 订阅号名称 -k 搜索关键词，不填返回最新的文章 -n 返回文章数，默认10 -m 搜索匹配等级，默认1匹配标题 2匹配标题和摘要 -o 输出方式， 默认1命令行输出 2写入本地文件到当前目录  代码 就 200 行代码，直接贴出来了，不放到 Github 上了。
 附锤子阅读APP下载 链接

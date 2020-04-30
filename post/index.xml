@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 哲学家</title>
-    <link>https://helloqb.xyz/post/</link>
+    <link>https://www.helloqb.xyz/post/</link>
     <description>Recent content in Posts on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
     <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>锤子阅读文章搜索</title>
-      <link>https://helloqb.xyz/post/2020/0311_python/</link>
+      <link>https://www.helloqb.xyz/post/2020/0311_python/</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0311_python/</guid>
+      <guid>https://www.helloqb.xyz/post/2020/0311_python/</guid>
       <description>缘由  之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。 锤子阅读不支持文章搜索，有时候想要找个文章难。 划水好无聊。  脚本调用 使用 Python3 编写，单个文件，无第三方库。结果有命令行和文本两种输出方式，具体参数如下：
  -h 帮助文档 -s 订阅号名称 -k 搜索关键词，不填返回最新的文章 -n 返回文章数，默认10 -m 搜索匹配等级，默认1匹配标题 2匹配标题和摘要 -o 输出方式， 默认1命令行输出 2写入本地文件到当前目录  代码 就 200 行代码，直接贴出来了，不放到 Github 上了。
 附锤子阅读APP下载 链接
@@ -26,19 +26,19 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
     
     <item>
       <title>SpringMVC 下载文本实现边转码边下载</title>
-      <link>https://helloqb.xyz/post/2020/0304_java/</link>
+      <link>https://www.helloqb.xyz/post/2020/0304_java/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0304_java/</guid>
+      <guid>https://www.helloqb.xyz/post/2020/0304_java/</guid>
       <description></description>
     </item>
     
     <item>
       <title>个人笔记 - Git</title>
-      <link>https://helloqb.xyz/post/2020/0301_git/</link>
+      <link>https://www.helloqb.xyz/post/2020/0301_git/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
+      <guid>https://www.helloqb.xyz/post/2020/0301_git/</guid>
       <description>SSH 客户端 Putty 和 OpenSSH 的互相转换 原本只需要用 ssh-keygen 生成密钥到 .ssh 目录，然后打开 id_rsa.pub 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。
 **1. 使用 puTTY 生成 Key**1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；3. 同时将生成器页面上的 Key 复制到云服务器上即可。2. 使用已有的 id_rsa 导入到 puTTY
  打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。  参考： https://blog.csdn.net/caoshiying/article/details/80131761
@@ -48,10 +48,10 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
     
     <item>
       <title>Hugo 上手</title>
-      <link>https://helloqb.xyz/post/2020/0101_hugo/</link>
+      <link>https://www.helloqb.xyz/post/2020/0101_hugo/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0101_hugo/</guid>
+      <guid>https://www.helloqb.xyz/post/2020/0101_hugo/</guid>
       <description>下载运行 主要操作：文件下载解压，添加环境变量即可。
 文档链接
  下载 安装 Github 自动托管：先删除public文件再运行脚本  测试成功：hugo version, hugo help
