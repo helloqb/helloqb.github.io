@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Photoshop on 哲学家</title>
+    <link>https://helloqb.xyz/categories/photoshop/</link>
+    <description>Recent content in Photoshop on 哲学家</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
+    <lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://helloqb.xyz/categories/photoshop/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>四宫格办公壁纸制作</title>
+      <link>https://helloqb.xyz/post/2020/0603_ps/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0603_ps/</guid>
+      <description>介绍 以 Windows 自带纯色壁纸为基础，效果如下：
+流程 1. 用 Photoshop 打开壁纸
+个人喜欢纯色壁纸，Windows10 上可通过背景设置为纯色壁纸后截屏得到。
+2. 新建图层并填充为白色
+操作： 图层（菜单栏）-&amp;gt; 新建 -&amp;gt; 图层 -&amp;gt; 编辑（菜单栏）-&amp;gt; 填充 -&amp;gt; 背景色
+3. 缩小一半长宽比
+操作：编辑（菜单栏）-&amp;gt; 自由变换 -&amp;gt; W:49% H:49%
+4. 切割图层
+以变换后的图层作为选区，分别左上、左下、右上、右下复制图层。
+操作：
+ 对齐：选中两个图层，点击菜单栏图层里的对齐，左对齐，然后再顶部对齐； 载入选区：按住 Ctrl，并点击白色图层的缩略图； 复制图层：点击背景图层，点击 Ctrl + J，将所选区域复制到新图层中； 同样方式左下、右上、右下生成另外三个图层；  5. 增加图层样式
+操作：
+ 双击图层打开图层样式，选择投影，距离和大小设置为 20 像素； 右键图层拷贝图层样式，然后复制到另外三个图层中；  大功告成，当然可根据自己喜好修改相关参数，添加相关文字。</description>
+    </item>
+    
+  </channel>
+</rss>
