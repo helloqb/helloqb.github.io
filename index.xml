@@ -13,6 +13,374 @@
     
     
         <item>
+        <title>四宫格办公壁纸制作</title>
+        <link>https://helloqb.xyz/post/2020/0603_ps/</link>
+        <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0603_ps/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0603_ps/ -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+&lt;p&gt;以 Windows 自带纯色壁纸为基础，效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://31fnqa.dm.files.1drv.com/y4mPFyoM3lP_9rd-Vg1cstN75iwI2bXFcYyD5EMT5aYeMND199Uhbo3TvKSX3El_yT2DiiMLWbIDIJE5dg-IwNhjllVzxi97yPpFr7Zx9P_lczOSDYxdcnQ77ncpsezH6ITvxZtrdWUaYA7nyfZz2kr9dExDSJEmVKtPtg0TZdkmBCfHZzlHd4aPegP-keRBvZM6Tls9In5rRGjGrhjDGxzBA?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;流程&#34;&gt;流程&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;1. 用 ps 打开壁纸&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;个人喜欢纯色壁纸，Windows10 上可通过背景设置为纯色壁纸后截屏得到。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://21hota.dm.files.1drv.com/y4mPZtvaCaLpHRBmtv3Dp5g0aNBFwpE3svq99M08Fa71_52A_4Kj2p3EpbDuzidrBnEsCOPUPXczsofo3HBsbmkv-ErqUB99uuM2HugEpfxNiaGTgiZG_FP5Maja1ass_fzQraojiYrduDrx7RaXv3eieRoVRlrKCTkDdX2IFipPEeexA4NdZbbqzVxoJw237bpqfqgmqHIUT3tOT2s1vqFvQ?width=1920&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 新建图层并填充为白色&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;操作： 图层（菜单栏）-&amp;gt; 新建 -&amp;gt; 图层 -&amp;gt; 编辑（菜单栏）-&amp;gt; 填充 -&amp;gt; 背景色&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3fhota.dm.files.1drv.com/y4meK5ev_0gzQVGaO-s8pRyhSqRaLkuHZegnssv6K68sWs1r1lZ_wW9OXu7xO9zSaHe-kTG-mvcHMn8bGYOP28ZlOfEKCBFALcgP_50f0n5y-DQLuTTG6-I_zDvqnBWD_jCOVYTjZcseoEtpq-HIMxw0G4AloLnhk9dMe6LJ4JkOhPqm2dTV5lffC-NQ-H4WJ55fpEJWAZw2AiIsThnRoPfIQ?width=1914&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 缩小一半长宽比&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;操作：编辑（菜单栏）-&amp;gt; 自由变换 -&amp;gt; W:49% H:49%&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3vhota.dm.files.1drv.com/y4mdd-w-RhQf8xV47ASDL01uDZ7wgQD_232jOUsAEyOxD1LIMeFo-0x-2ZGjS2ifpZKdVe7R3DNNe9TZxysD47udWnW-sqdrx4sC03UHddtx39yTOmG5rGm7NTg5UpaQ4ADzbkYMADlDHj0Z2btDus7ULMk2zn4vuvZxzNpRwJxwjO_1PrFduCGrslPWa09qrOghIIUDhb4Ik4OlhqHpkWY4A?width=1920&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 切割图层&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以变换后的图层作为选区，分别左上、左下、右上、右下复制图层。&lt;/p&gt;
+&lt;p&gt;操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对齐：选中两个图层，点击菜单栏图层里的对齐，左对齐，然后再顶部对齐；&lt;/li&gt;
+&lt;li&gt;载入选区：按住 &lt;code&gt;Ctrl&lt;/code&gt;，并点击白色图层的缩略图；&lt;/li&gt;
+&lt;li&gt;复制图层：点击背景图层，点击 &lt;code&gt;Ctrl + J&lt;/code&gt;，将所选区域复制到新图层中；&lt;/li&gt;
+&lt;li&gt;同样方式左下、右上、右下生成另外三个图层；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://5lhota.dm.files.1drv.com/y4mSmzC0rmXrJCRQGZKM7DCF7vmmcw9iVQnjYp-d82IPsChzBX-aWqOW4DbUt2EHjROM6x9p4fsOo2lGs1FNX5-bMxGn6q2muR5C8kr1O7xoAg1pTni4YGDYjQkinxFT2nLoTRaxlXn90wEq9V9Dqf4AyXlim0zkKXqLkKoYjZCLtVGkIxTPTFgw-ZCTJgVJAuy0hr7rt7oULJkVzLNsR8ELw?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. 增加图层样式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;双击图层打开图层样式，选择投影，距离和大小设置为 20 像素；&lt;/li&gt;
+&lt;li&gt;右键图层拷贝图层样式，然后复制到另外三个图层中；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://51hota.dm.files.1drv.com/y4m5etRuVzlJgeR9p7lFrGdFuTvyPjAyaJvx50_mmJhYBXwq6qD87LfDvLnAY24Lb7eUvhqv9E0EVuJL1PZxIgqlsHiPjOUt7oQfmzs3Dwwzxe7pzgL1YhIFCs1eQmwLkgPVwkwwNSNUuCOJx55bLCpVADcF0xryHRgVQYTucl8vFB5tt6-W2g-Pk1xKz9BcFmWSuRE__6WUuSxKbAVGVZVXQ?width=1919&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;大功告成，当然可根据自己喜好修改相关参数，添加相关文字。&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0603_ps/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>Spring 定时任务</title>
+        <link>https://helloqb.xyz/post/2020/0602_cron/</link>
+        <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0602_cron/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0602_cron/ -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+&lt;p&gt;本文主要记录下 cron 表达式的用法，方便下次使用。&lt;/p&gt;
+&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
+&lt;p&gt;程序主入口添加 &lt;code&gt;@SpringBootApplication&lt;/code&gt; 和 &lt;code&gt;@EnableScheduling&lt;/code&gt; 注解以启动定时任务。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; org.springframework.boot.SpringApplication&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; org.springframework.boot.autoconfigure.SpringBootApplication&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; org.springframework.scheduling.annotation.EnableScheduling&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;@SpringBootApplication&lt;/span&gt;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;@EnableScheduling&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;SchedulingTasksApplication&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+		SpringApplication&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SchedulingTasksApplication&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后方法上添加 &lt;code&gt;@Scheduled&lt;/code&gt; 注解就行了。当然类注解 &lt;code&gt;@Component&lt;/code&gt; 也必不可少。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 5000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;reportCurrentTime&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Date&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;定时调度&#34;&gt;定时调度&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;fixedDelay&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;毫秒单位，以上一个调用的完成时间开始计算
+如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+    LocalDateTime localDateTime &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+    System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;start &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; localDateTime&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        Thread&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;sleep&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;2000&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        e&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+    System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;end &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;start 2020-06-02T15:49:59.650
+end 2020-06-02T15:50:01.651
+start 2020-06-02T15:50:04.653
+end 2020-06-02T15:50:06.653
+start 2020-06-02T15:50:09.654
+end 2020-06-02T15:50:11.655
+start 2020-06-02T15:50:14.657
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;fixedRate&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;需要固定速率，则使用 &lt;code&gt;fixedRate&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fixedRate &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+    LocalDateTime localDateTime &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+    System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;start &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; localDateTime&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        Thread&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;sleep&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;2000&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        e&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+    System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;end &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;start 2020-06-02T15:58:03.563
+end 2020-06-02T15:58:05.563
+start 2020-06-02T15:58:06.563
+end 2020-06-02T15:58:08.563
+start 2020-06-02T15:58:09.563
+end 2020-06-02T15:58:11.563
+start 2020-06-02T15:58:12.563
+end 2020-06-02T15:58:14.563
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是若上个任务耗时超过间隔，则下一次也需要在等待，等到结束后下一次立刻执行。&lt;/p&gt;
+&lt;p&gt;如等待 7 秒后结果如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;start 2020-06-02T16:02:37.726
+end 2020-06-02T16:02:44.727
+start 2020-06-02T16:02:44.727
+end 2020-06-02T16:02:51.727
+start 2020-06-02T16:02:51.727
+end 2020-06-02T16:02:58.727
+start 2020-06-02T16:02:58.727
+end 2020-06-02T16:03:05.728
+start 2020-06-02T16:03:05.728
+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;initialDelay&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;默认项目启动立即执行定时任务，若想要延迟，使用 &lt;code&gt;initialDelay&lt;/code&gt; 参数。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;initialDelay &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 10000&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; fixedRate &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2020-06-02 16:09:00.487 [main] INFO  com.jztdata.label.LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
+start 2020-06-02T16:09:10.467
+end 2020-06-02T16:09:15.468
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;cron 表达式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;用法太多了，每次项目用到就记一下吧。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1 2 3 * * ? *&lt;/td&gt;
+&lt;td&gt;每天 3 点 2 分 1 秒执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1 2 3 L * ? *&lt;/td&gt;
+&lt;td&gt;每月最后一天 3 点 2 分 1 秒执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1 2 3 4 * ? *&lt;/td&gt;
+&lt;td&gt;每月 4 号 3 点 2 分 1 秒执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0 0 12 ? * WED&lt;/td&gt;
+&lt;td&gt;每周三执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+- https://helloqb.xyz/post/2020/0602_cron/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>RabbitMQ 实现跨语言通信</title>
+        <link>https://helloqb.xyz/post/2020/0515_rabbitmq/</link>
+        <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0515_rabbitmq/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0515_rabbitmq/ -&lt;h1 id=&#34;需求场景&#34;&gt;需求场景&lt;/h1&gt;
+&lt;p&gt;做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。&lt;/p&gt;
+&lt;p&gt;其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。&lt;/p&gt;
+&lt;h1 id=&#34;三种方式的实现&#34;&gt;三种方式的实现&lt;/h1&gt;
+&lt;h2 id=&#34;1-直接调用&#34;&gt;1. 直接调用&lt;/h2&gt;
+&lt;p&gt;有 &lt;code&gt;ProcessBuilder&lt;/code&gt; 和 &lt;code&gt;Runtime.exec()&lt;/code&gt; 两种方法，用法差不多，都可以传一个字符串数组。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String&lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt; command &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; String&lt;span style=&#34;color:#f92672&#34;&gt;[]{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;};&lt;/span&gt;
+proc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Runtime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getRuntime&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;exec&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 执行py文件
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;ProcessBuilder&lt;/code&gt; 可以是列表，官方推荐 &lt;code&gt;ProcessBuilder&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;List&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; command &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; ArrayList&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+command&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+command&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+ProcessBuilder pb &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; ProcessBuilder&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+proc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Process&lt;/code&gt; 提供 &lt;code&gt;InputStream&lt;/code&gt; 和 &lt;code&gt;ErrorStream&lt;/code&gt; 接收返回结果；为方便起见，可以将错误流重定向到输入流。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;redirectErrorStream&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//错误流重定向
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;BufferedReader in &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;proc&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getInputStream&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;若需要立即获取其返回结果，需要用 &lt;code&gt;waitFor()&lt;/code&gt; 方法。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;code &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; proc&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;waitFor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。&lt;/li&gt;
+&lt;li&gt;作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。&lt;/li&gt;
+&lt;li&gt;返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。&lt;/li&gt;
+&lt;li&gt;目前只尝试了 Java 调用 Python，反过来感觉很难。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;完整代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Test&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;java2pythonTest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; code &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+  Process proc&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// Runtime.getRuntime()
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//			String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;};
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//      proc = Runtime.getRuntime().exec(command);// 执行py文件
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+    List&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; command &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; ArrayList&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+    command&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    command&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    ProcessBuilder pb &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; ProcessBuilder&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;redirectErrorStream&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//错误流重定向
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    proc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;//用输入输出流来截取结果
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    BufferedReader in &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;proc&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getInputStream&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(),&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;gbk&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;));&lt;/span&gt;
+    String line &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; in&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+      System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;python&amp;gt; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; line&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+    in&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    code &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; proc&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;waitFor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+    System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;python&amp;gt; wait for code: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; code&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;IOException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    e&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    e&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-通过api通信&#34;&gt;2. 通过API通信&lt;/h2&gt;
+&lt;p&gt;两端都启动为一个 Web 项目，Java 端可以采用 &lt;code&gt;Springboot&lt;/code&gt; 框架，Python 端用 &lt;code&gt;Flask&lt;/code&gt; 框架。然后通过 &lt;code&gt;Spring Cloud&lt;/code&gt; 来连接。&lt;/p&gt;
+&lt;p&gt;由于 &lt;code&gt;Spring Cloud&lt;/code&gt; 非本人搭建，就不讲了。当然，你也没必要非要使用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;两端通信频繁的情况下，相对于第一种方案更好些&lt;/li&gt;
+&lt;li&gt;开发有点烦，尤其是数据传输，如果用 &lt;code&gt;Spring Cloud&lt;/code&gt; 会好些&lt;/li&gt;
+&lt;li&gt;不适用于等待的情况，如 Python 端计算量大，没法立刻给出结果。Api 嘛，时间长肯定不太好&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-rabbitmq-消息队列&#34;&gt;3. RabbitMQ 消息队列&lt;/h2&gt;
+&lt;p&gt;因为实际公司开发中，Python 端计算量很大，需要等待很久，所以方法二也不太适用，后面有同事提出用消息队列的方式，可以不必等待，正好满足我的情况。&lt;/p&gt;
+&lt;p&gt;RabbitMQ 不仅要有接收端、发送端，还需要安装管理器。&lt;/p&gt;
+&lt;h3 id=&#34;管理系统&#34;&gt;管理系统&lt;/h3&gt;
+&lt;p&gt;管理系统各平台都有，也有 docker 镜像。具体不赘述，看官网就行了。&lt;/p&gt;
+&lt;p&gt;安装后会有 Web 端图形界面，使用很方便，不需要命令行就可以完成。&lt;/p&gt;
+&lt;p&gt;大概介绍下用到的一些概念，后续深入的话再补充。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Virtual Hosts&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;相当于 Mysql 的库，相互独立，exchange、queue、message 不能互通。需要账户管理员权限。Web 端操作如下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://4fhota.dm.files.1drv.com/y4m8ssy6_IOEEMM-61Xim9dXVPqGXAFr3Z_RoNVyZLoNzHN9PQhwzZj8-3AcYN8cRrF4T5aTQ7oFlKNyeNwyoG0jAxkWBbszJdGw2HGVFlxkvVyiPM8fazvGt7I6X4QM0JpdCQj9q4U2Vd057K-Lr79wHjloJGyOEVpf3fgbgfClyrMb3Is40we--Ynuirt4zKuWXPW0tDyQJSZNrnu2uTVcg?width=1901&amp;height=583&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Queue&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;队列，基本通信模块，相当于一个消息缓冲区，消息进到队列里，再被发送出去。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://4vhota.dm.files.1drv.com/y4mHDkl9htpAR-UW-uVpdqrn3kaunkMdLUY9A6WiphfaJH3abuSMwSV1Io_w2BOpUcVNnn1HW1qQfNqilH5e9w4kLZHf-Alq4RrEtLkS1PaTHgJwwuZSqdWdgYODKNeNDunP2GRtRuoO16LLg3DklXZeePT-xvjIGB1OqR01Zj0tqrRnf_0bjAZ_T_0OsYPFfui4in6-_nrw-X8zNKw88oHAw?width=1898&amp;height=716&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exchange&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;生产者发送消息时由 Exchange 来决定要给哪个 Queue。具体有 Direct、Fanout、Topic、Headers 四种类型，我用默认的一对一也就没有仔细了解。&lt;/p&gt;
+&lt;h3 id=&#34;java-端实现&#34;&gt;Java 端实现&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;配置&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我采用 &lt;code&gt;Springboot&lt;/code&gt; 框架，自带 &lt;code&gt;Spring AMQP&lt;/code&gt; 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;spring&lt;/span&gt;:
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;rabbitmq&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;192.168.0.102&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;port&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;5672&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;username&lt;/span&gt;: admin
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;password&lt;/span&gt;: admin
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;virtual-host&lt;/span&gt;: test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;发送消息&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;AmqpTemplate 类用于发送消息，我写了个定时 3 秒发送时间：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Component&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TestScheduled&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;//rabbitMQ Queue
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; String PYTHON2JAVA &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;python2java&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; String JAVA2PYTHON &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;java2python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;@Autowired&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; AmqpTemplate rabbitTemplate&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+        String now &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        String content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;java2python and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; now&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+        System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;content&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+        rabbitTemplate&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;convertAndSend&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;JAVA2PYTHON&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; content&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果没有客户端接收的话，会一直在队列中，Web 页面下可以看到：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://2lhota.dm.files.1drv.com/y4mJzu23NfL92LZyK4mv2xfcPaF1I41GtqfFnGK9bHFXt7oiYN3IdXhY2PtTqBZ4OwZH7eJECqQrB5BgiQONGxYGUGfgDl4Zuax9aLTfAfK8gE0jbDihMJRGmkarzl5Fubt-Uw9sEPqfrTzblJ3uYm8z8u_Ety07JT6qrwERGA858juJE8A5gqq75UPXL-JNIeNDfq5SK-DzQEz8xJMV21Fuw?width=1873&amp;height=805&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;接收消息&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;接收消息也非常简单，只需要添加 &lt;code&gt;@RabbitListener&lt;/code&gt; 注解即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;queues &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; PYTHON2JAVA&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;listen&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;String message&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;message&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;python-端实现&#34;&gt;Python 端实现&lt;/h3&gt;
+&lt;p&gt;Python 端需要安装第三方库 &lt;code&gt;pika&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;建立连接&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;get_connect&lt;/span&gt;():
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    连接
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    :return: 
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    config_pika_username &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;admin&amp;#34;&lt;/span&gt;
+    cofig_pika_password &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;admin&amp;#34;&lt;/span&gt;
+    config_pika_host &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;192.168.0.102&amp;#34;&lt;/span&gt;
+    config_pika_port &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5672&lt;/span&gt;
+    config_pika_virtual_host &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
+    cred &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pika&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;PlainCredentials(config_pika_username, cofig_pika_password)
+    connection &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pika&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;BlockingConnection(
+        pika&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ConnectionParameters(
+            host&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;config_pika_host,
+            port&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;config_pika_port,
+            virtual_host&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;config_pika_virtual_host,
+            credentials&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;cred,
+            heartbeat&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+        ))
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; connection
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;定义回调函数&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;callback&lt;/span&gt;(ch, method, properties, body):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(body)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;等待接收&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;运行此方法，等待接收。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;build&lt;/span&gt;():
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    start_consuming
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    :return: 
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    channel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; get_connect()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;channel()
+    channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;queue_declare(queue&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;java2python&amp;#39;&lt;/span&gt;, durable&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True)
+    channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;basic_consume(queue&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;java2python&amp;#39;&lt;/span&gt;,
+                          auto_ack&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True,
+                          on_message_callback&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;callback)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; consumer_start&amp;#39;&lt;/span&gt;)
+    channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start_consuming()
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    build()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;发送消息&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;producer&lt;/span&gt;():
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    生产者
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    :param rabbit_body: 发送内容
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 创建通道&lt;/span&gt;
+    connection &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; get_connect()
+    channel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;channel()
+    channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;queue_declare(queue&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;python2java&amp;#39;&lt;/span&gt;, durable&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 发送内容&lt;/span&gt;
+    message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;python2java and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; str(datetime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;now())
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(message)
+    channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;basic_publish(exchange&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, routing_key&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;python2java&amp;#39;&lt;/span&gt;, body&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;message)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;非长连接方式，效率相对接口方式更高。&lt;/li&gt;
+&lt;li&gt;如果项目所用框架如 &lt;code&gt;Springboot&lt;/code&gt; 已经集成的话，开发会很方便。&lt;/li&gt;
+&lt;li&gt;有担心长时间没有消息队列会断开连接的情况，也有遇到，但好像都已解决。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
+&lt;p&gt;只是简单介绍用到的类和方法，流于表面，后续如果频繁使用的话，需要深入了解。&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0515_rabbitmq/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
         <title>油猴脚本初探</title>
         <link>https://helloqb.xyz/post/2020/0507_monkey/</link>
         <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>

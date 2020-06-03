@@ -1,30 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Java on 哲学家</title>
-    <link>https://helloqb.xyz/categories/java/</link>
-    <description>Recent content in Java on 哲学家</description>
+    <title>RabbitMQ on 哲学家</title>
+    <link>https://helloqb.xyz/tags/rabbitmq/</link>
+    <description>Recent content in RabbitMQ on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 02 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://helloqb.xyz/categories/java/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://helloqb.xyz/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Spring 定时任务</title>
-      <link>https://helloqb.xyz/post/2020/0602_cron/</link>
-      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2020/0602_cron/</guid>
-      <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
-配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
-import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。
-@Scheduled(fixedDelay = 5000) public void reportCurrentTime() { System.out.println(new Date()); } 定时调度 fixedDelay
-毫秒单位，以上一个调用的完成时间开始计算 如间隔 3 秒，每个任务耗时 2 秒：
-@Scheduled(fixedDelay = 3000) public void errorSpiderRerun(){ LocalDateTime localDateTime = LocalDateTime.now(); System.out.println(&amp;#34;start &amp;#34; + localDateTime); try { Thread.</description>
-    </item>
     
     <item>
       <title>RabbitMQ 实现跨语言通信</title>
@@ -40,15 +26,6 @@ List&amp;lt;String&amp;gt; command = new ArrayList&amp;lt;&amp;gt;(); command.ad
 pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream())); 若需要立即获取其返回结果，需要用 waitFor() 方法。
 //导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止 code = proc.waitFor(); 坑不坑：
  Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。 作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。 返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。 目前只尝试了 Java 调用 Python，反过来感觉很难。  完整代码如下：</description>
-    </item>
-    
-    <item>
-      <title>SpringMVC 下载文本实现边转码边下载</title>
-      <link>https://helloqb.xyz/post/2020/0304_java/</link>
-      <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2020/0304_java/</guid>
-      <description></description>
     </item>
     
   </channel>
