@@ -230,8 +230,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 								<li>
-				 					<a href="#2-%e9%80%9a%e8%bf%87api%e9%80%9a%e4%bf%a1" v-on:click="closeDrawer" id="2-通过api通信-nav">
-										 2. 通过API通信
+				 					<a href="#2-%e9%80%9a%e8%bf%87-api-%e9%80%9a%e4%bf%a1" v-on:click="closeDrawer" id="2-通过-api-通信-nav">
+										 2. 通过 API 通信
 									</a>
 								</li>
 						
@@ -519,8 +519,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 								<li>
-				 					<a href="#2-%e9%80%9a%e8%bf%87api%e9%80%9a%e4%bf%a1" v-on:click="closeDrawer" id="2-通过api通信-nav">
-										 2. 通过API通信
+				 					<a href="#2-%e9%80%9a%e8%bf%87-api-%e9%80%9a%e4%bf%a1" v-on:click="closeDrawer" id="2-通过-api-通信-nav">
+										 2. 通过 API 通信
 									</a>
 								</li>
 						
@@ -798,8 +798,8 @@ proc <span style="color:#f92672">=</span> pb<span style="color:#f92672">.</span>
     e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
   <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><h2 id="2-通过api通信">2. 通过API通信</h2>
-<p>两端都启动为一个 Web 项目，Java 端可以采用 <code>Springboot</code> 框架，Python 端用 <code>Flask</code> 框架。然后通过 <code>Spring Cloud</code> 来连接。</p>
+</code></pre></div><h2 id="2-通过-api-通信">2. 通过 API 通信</h2>
+<p>两端都启动为一个 Web 项目，Java 端可以采用 <code>Spring Boot</code> 框架，Python 端用 <code>Flask</code> 框架。然后通过 <code>Spring Cloud</code> 来连接。</p>
 <p>由于 <code>Spring Cloud</code> 非本人搭建，就不讲了。当然，你也没必要非要使用。</p>
 <p><strong>坑不坑：</strong></p>
 <ul>
@@ -824,7 +824,7 @@ proc <span style="color:#f92672">=</span> pb<span style="color:#f92672">.</span>
 <p>生产者发送消息时由 Exchange 来决定要给哪个 Queue。具体有 Direct、Fanout、Topic、Headers 四种类型，我用默认的一对一也就没有仔细了解。</p>
 <h3 id="java-端实现">Java 端实现</h3>
 <p><strong>配置</strong></p>
-<p>我采用 <code>Springboot</code> 框架，自带 <code>Spring AMQP</code> 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。</p>
+<p>我采用 <code>Spring Boot</code> 框架，自带 <code>Spring AMQP</code> 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">spring</span>:
   <span style="color:#66d9ef">rabbitmq</span>:
     <span style="color:#66d9ef">host</span>: <span style="color:#ae81ff">192.168.0.102</span>
@@ -921,7 +921,7 @@ proc <span style="color:#f92672">=</span> pb<span style="color:#f92672">.</span>
 </code></pre></div><p><strong>坑不坑：</strong></p>
 <ul>
 <li>非长连接方式，效率相对接口方式更高。</li>
-<li>如果项目所用框架如 <code>Springboot</code> 已经集成的话，开发会很方便。</li>
+<li>如果项目所用框架如 <code>Spring Boot</code> 已经集成的话，开发会很方便。</li>
 <li>有担心长时间没有消息队列会断开连接的情况，也有遇到，但好像都已解决。</li>
 </ul>
 <h1 id="后续">后续</h1>

@@ -254,8 +254,8 @@ proc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pb&lt;span style=&
     e&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
   &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-通过api通信&#34;&gt;2. 通过API通信&lt;/h2&gt;
-&lt;p&gt;两端都启动为一个 Web 项目，Java 端可以采用 &lt;code&gt;Springboot&lt;/code&gt; 框架，Python 端用 &lt;code&gt;Flask&lt;/code&gt; 框架。然后通过 &lt;code&gt;Spring Cloud&lt;/code&gt; 来连接。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-通过-api-通信&#34;&gt;2. 通过 API 通信&lt;/h2&gt;
+&lt;p&gt;两端都启动为一个 Web 项目，Java 端可以采用 &lt;code&gt;Spring Boot&lt;/code&gt; 框架，Python 端用 &lt;code&gt;Flask&lt;/code&gt; 框架。然后通过 &lt;code&gt;Spring Cloud&lt;/code&gt; 来连接。&lt;/p&gt;
 &lt;p&gt;由于 &lt;code&gt;Spring Cloud&lt;/code&gt; 非本人搭建，就不讲了。当然，你也没必要非要使用。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -280,7 +280,7 @@ proc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pb&lt;span style=&
 &lt;p&gt;生产者发送消息时由 Exchange 来决定要给哪个 Queue。具体有 Direct、Fanout、Topic、Headers 四种类型，我用默认的一对一也就没有仔细了解。&lt;/p&gt;
 &lt;h3 id=&#34;java-端实现&#34;&gt;Java 端实现&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;配置&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我采用 &lt;code&gt;Springboot&lt;/code&gt; 框架，自带 &lt;code&gt;Spring AMQP&lt;/code&gt; 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。&lt;/p&gt;
+&lt;p&gt;我采用 &lt;code&gt;Spring Boot&lt;/code&gt; 框架，自带 &lt;code&gt;Spring AMQP&lt;/code&gt; 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;spring&lt;/span&gt;:
   &lt;span style=&#34;color:#66d9ef&#34;&gt;rabbitmq&lt;/span&gt;:
     &lt;span style=&#34;color:#66d9ef&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;192.168.0.102&lt;/span&gt;
@@ -377,7 +377,7 @@ proc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pb&lt;span style=&
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;非长连接方式，效率相对接口方式更高。&lt;/li&gt;
-&lt;li&gt;如果项目所用框架如 &lt;code&gt;Springboot&lt;/code&gt; 已经集成的话，开发会很方便。&lt;/li&gt;
+&lt;li&gt;如果项目所用框架如 &lt;code&gt;Spring Boot&lt;/code&gt; 已经集成的话，开发会很方便。&lt;/li&gt;
 &lt;li&gt;有担心长时间没有消息队列会断开连接的情况，也有遇到，但好像都已解决。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
