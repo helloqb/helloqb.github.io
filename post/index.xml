@@ -7,10 +7,58 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>EXCEL 技巧之 - VLOOKUP 函数</title>
+      <link>https://helloqb.xyz/post/2020/0604_vlookup/</link>
+      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
+      <description>VLOOKUP 可以实现类似数据库的 LEFT JOIN 操作。
+官方文档 VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：
+  要查找的值，也被称为查阅值。
+  查阅值所在的区域。 请记住，查阅值应该始终位于所在区域的第一列，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。
+  区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。
+  （可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。
+  实现 如下表格，想要知道左边哪些是已婚人士。
+1. 输入 VLOOKUP
+在上表 2B 单元格内输入 =VLOOKUP(。
+2. 选择查找值
+括号后第一个参数选中 2A，然后输入英文逗号。
+3. 选择查找区域
+括号后第二个参数选中 F:G 列，然后输入英文逗号。
+如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。
+全选时注意首行会不会影响结果。
+4. 其他参数
+第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。
+最后整个公式为 =VLOOKUP(A2,F:G,1,FALSE)。
+5. 复制公式</description>
+    </item>
+    
+    <item>
+      <title>EXCEL 技巧之 - 相同单元格合并</title>
+      <link>https://helloqb.xyz/post/2020/0604_merge/</link>
+      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0604_merge/</guid>
+      <description>需求 需求其实很简单，就是合并单元格，行数少的情况下一个一个点就行了，但是行数多的情况下就麻烦了，秉承着重复性工作一定能被计算机代替的想法，翻阅很久找到了方法，在此分享。
+实现 1. 数据（菜单栏） -&amp;gt; 分类汇总
+其中：
+ 分类字段：需要合并的列，本例中为身份； 汇总方式：无关，默认即可； 选定汇总项：同分类字段； 替换当前分类汇总：无关，默认即可； 每组数据分页：不选； 汇总结果显示在数据下方：选中  2. 汇总列合并空值单元格
+对生成的汇总列进行空值定位，并合并空值单元格。操作如下：
+汇总列第一行填 1 -&amp;gt; 选中汇总列 -&amp;gt; 开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：空值 -&amp;gt; 合并后居中
+3. 间隔一行（非必须）
+如果想要每一类间隔一行的话，使用操作 2 的步骤定位合并列（定位条件：数值）然后插入工作表行就行了。
+提一下这个是觉得定位这个功能很强大的样子，类似于编辑器中的多光标选择。
+4. 格式刷合并列
+将汇总列格式刷到合并列。
+4. 删除分类汇总
+数据（菜单栏） -&amp;gt; 分类汇总 -&amp;gt; 全部删除。</description>
+    </item>
     
     <item>
       <title>四宫格办公壁纸制作</title>

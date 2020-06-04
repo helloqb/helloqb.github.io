@@ -13,6 +13,95 @@
     
     
         <item>
+        <title>EXCEL 技巧之 - VLOOKUP 函数</title>
+        <link>https://helloqb.xyz/post/2020/0604_vlookup/</link>
+        <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0604_vlookup/ -&lt;p&gt;VLOOKUP 可以实现类似数据库的 &lt;code&gt;LEFT JOIN&lt;/code&gt; 操作。&lt;/p&gt;
+&lt;h1 id=&#34;官方文档&#34;&gt;官方文档&lt;/h1&gt;
+&lt;p&gt;VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;要查找的值，也被称为查阅值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查阅值所在的区域。 请记住，查阅值应该始终&lt;em&gt;&lt;strong&gt;位于所在区域的第一列&lt;/strong&gt;&lt;/em&gt;，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;（可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
+&lt;p&gt;如下表格，想要知道左边哪些是已婚人士。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://21fnqa.dm.files.1drv.com/y4mxHOexyJpSInaOXFQ-H74qmhCXFiBSSZhKeDcOsl9Az95dc0BGgwvQaDCMNjqzbUMZNhwYclDPKYUtaKfBbRjomBuDLL1zQNtY1WchbEey-5TQVzERl9HPTXPUBDSx6yYgnUdqV7Z2JlL-wNTMX7o_lBmzW23zVifaXUS6S0RSsYDMhfmzOZ3eJOGLyXn7DX4M02UvjS1dV-xeHpDuYlUxg?width=612&amp;height=291&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 输入 VLOOKUP&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在上表 2B 单元格内输入 &lt;code&gt;=VLOOKUP(&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 选择查找值&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;括号后第一个参数选中 2A，然后输入英文逗号。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3ffnqa.dm.files.1drv.com/y4mNWqmpXbuJknhmxYTy_6wlJyY9U13gY1WfQ0K7IUBk67ok4Y9U9lKKXGLMeJsNtuZfrxlBkXgcixQA4uDIZ28cO5WvIg1ao_nZ9XlsLEoZH52wsl0AcvPrzWWx_STSMIB4aRTUSI7SZdBOz-HLVjecHAMkgpyhnvt4jTL8RqianLgZXNdsu8uDIgja_E4m6P2lwZtMzS_6S9AQFG6I6QqAg?width=612&amp;height=297&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 选择查找区域&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;括号后第二个参数选中 F:G 列，然后输入英文逗号。&lt;/p&gt;
+&lt;p&gt;如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。&lt;/p&gt;
+&lt;p&gt;全选时注意首行会不会影响结果。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3vfnqa.dm.files.1drv.com/y4m4xJvHy47-M1nmcu3d0c8PIOeuhzo-PFvKCjN9rcvxHRMMdJVLFb49TWk6aaDd2w23xWBBop85GmvfLRFs0HdWn8mnTTI8TGect2__N1zLMF2uTGQcCWSkVGNX9aYngUMK2tyRiY2DC7Quh9NYHzwk_4cT8L_VVNo-MpGJJFW13UvEUSpHzfaFZwFYmPjnIACoTBC1BDAAc8cfjr3vfOGRg?width=611&amp;height=302&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 其他参数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。&lt;/p&gt;
+&lt;p&gt;最后整个公式为 &lt;code&gt;=VLOOKUP(A2,F:G,1,FALSE)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. 复制公式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;此时只是第一个单元格的结果，采用下拉拖动方式或者复制粘贴方式将公式复制到列中其他的单元格中。这两种方式粘贴的公式都会行自动变化。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://5lfnqa.dm.files.1drv.com/y4mmnfyHw_FLNQj4R4aZvCCz1zo5gm_tUTISAXTtyrtCBOn6BB-OsJ_N7XDgvtn_E92SQUNP5p6mHfOrOQ48qJQZl5f1-nw63LF78eq2oXFfF-2QHXfXEosGmFmYqwQt7OuJqYrI4vWXacKAFwG9sep5O2D1uerTu8ztzsAKl6POmj94eap3T2BDN5wpF91CC02TKjwwqcwoc-nRUz7dpP0VQ?width=617&amp;height=303&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. 获取其他单元格&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;第二列数据改下第三个参数为 2 就行了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://51fnqa.dm.files.1drv.com/y4m5hJfOGKRBm0nH7DWHQ0k_OJdmD7urFWDHjBE_eGtteA258Il5XP8L6MObW1uiYnQ1sDBDg6emSnoEapzZJqUmewielL1VawozZqR0G301koXwa0ayLyF6EoOczHQ6MhePa8l8Pv4wjggDm_siB9Z2vB4B99-Wev7R-Z07tec4pDokMVm_aP3fp0uOIFTkNl088UcDi1DAwcdOmbB-Vnosg?width=617&amp;height=301&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0604_vlookup/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>EXCEL 技巧之 - 相同单元格合并</title>
+        <link>https://helloqb.xyz/post/2020/0604_merge/</link>
+        <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0604_merge/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0604_merge/ -&lt;h1 id=&#34;需求&#34;&gt;需求&lt;/h1&gt;
+&lt;p&gt;需求其实很简单，就是合并单元格，行数少的情况下一个一个点就行了，但是行数多的情况下就麻烦了，秉承着重复性工作一定能被计算机代替的想法，翻阅很久找到了方法，在此分享。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://31gyyw.dm.files.1drv.com/y4miPbLToyX_QudE2Tuhmf-khEmDqEgh9fO4pFq0SYcisR1bTjfqH2aCXLjOFDh-HL1TmNx2iNtba7qxK0yPJJJlK-KTQXTu9gdsI7hWYyDTIbKiiG6yKNge3h3DeJ-Iv9uhRPIJBC4KuEOCYUsq_KugpmcsbB36lc5TWJCluEdkX9QNSsSzcqJMrsYzP3etq3SxIOtrSmUsKYb16JKfo8EHQ?width=418&amp;height=251&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;1. 数据（菜单栏） -&amp;gt; 分类汇总&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;分类字段：需要合并的列，本例中为身份；&lt;/li&gt;
+&lt;li&gt;汇总方式：无关，默认即可；&lt;/li&gt;
+&lt;li&gt;选定汇总项：同分类字段；&lt;/li&gt;
+&lt;li&gt;替换当前分类汇总：无关，默认即可；&lt;/li&gt;
+&lt;li&gt;每组数据分页：不选；&lt;/li&gt;
+&lt;li&gt;汇总结果显示在数据下方：选中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://4fgyyw.dm.files.1drv.com/y4mdpA_mKe7ja74RTuqL3uh6TVetdvqyrTMtmia7YX4_6nUZPEvw_OgFgcWhFuEVsruWR0_56NWOATP2D7Ypv_lWI82CKo-FzQYNn167XegYxcwzls21vwln0Vzea-OPHYCEmLZK9II7Zlzw1SlXn4cMZO_BQ6sVTZk3TIN6Sh1rFirSuM-FrBgIc0YTQtB9X8vcgP-F5z1FzLuqLw88McQNA?width=433&amp;height=312&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 汇总列合并空值单元格&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对生成的汇总列进行空值定位，并合并空值单元格。操作如下：&lt;/p&gt;
+&lt;p&gt;汇总列第一行填 1 -&amp;gt; 选中汇总列 -&amp;gt; 开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：空值 -&amp;gt; 合并后居中&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://4vgyyw.dm.files.1drv.com/y4mz2_puQ_ai1GR6rARu-HVgdPFj_4ceRrcYzlFjRhqwCEfPeEAEwCa3hs1eeEUbZdYurpF9uHtVgb3I8J48mL0DKeJXLfdk52LyTYC2HZSmDBjPJ4uapvMYEjQTTJKWoa3pXCAp5JLm2EB-j1wbf-8m0xJBQcqw2ovTefKKMGsOvmYw_PfMiAQbS7T_qXDbfYM0CDZraANizNt4e3ML7Gl_A?width=407&amp;height=310&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 间隔一行（非必须）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果想要每一类间隔一行的话，使用操作 2 的步骤定位合并列（定位条件：数值）然后插入工作表行就行了。&lt;/p&gt;
+&lt;p&gt;提一下这个是觉得定位这个功能很强大的样子，类似于编辑器中的多光标选择。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 格式刷合并列&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将汇总列格式刷到合并列。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://2lgyyw.dm.files.1drv.com/y4mGGjq5crcBI8VL6sKd_ziCMDNdO2PE40DtdIu7xmTb3N6oILfZPXOgy5Hyjlnw_ZIQUZYbBiIUzTQuDCpmO7yokxxpO_XN7E64ci08ry0w_zN4VRAXJ1RRub8YXV1xpng9rc9237_sIpkQ7S30n64ZT7NgvtmciVXMDjZHwKGMi8OLoyw7IwDDftrMHxDCoa8_fZauumwWM2KQ5mn3oQsfg?width=400&amp;height=297&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 删除分类汇总&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;数据（菜单栏） -&amp;gt; 分类汇总 -&amp;gt; 全部删除。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://21gyyw.dm.files.1drv.com/y4munMdjMvbfIdvLd7d35jz9kCrHmlhQtr3nUkUM6rjiSIbxzP8vn8Hn2ZL-Nxfz9HAvno1zWdG50vFVEMzZuEfvpOM0d0x72_DH7t-wnmGeGJRgTI-pT0tn7ll3olFqYWoA0pUCC_8DZjDC__A5gcEq3MiK4FkbTYswFrSe3JuREKe35ty_mJO2sSTSwpq0B9Nuv7gsYpheOZcVlsRHE2vFg?width=289&amp;height=240&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0604_merge/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
         <title>四宫格办公壁纸制作</title>
         <link>https://helloqb.xyz/post/2020/0603_ps/</link>
         <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
@@ -986,27 +1075,6 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 &lt;li&gt;有的主题文章列表会展示文章的开头，有标签会很乱，用 &lt;code&gt;&amp;lt; !--more--&amp;gt;&lt;/code&gt; 会强制展示此节点之前的内容&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0101_hugo/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>自我介绍</title>
-        <link>https://helloqb.xyz/about/</link>
-        <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/about/</guid>
-        <description>哲学家 https://helloqb.xyz/about/ -&lt;h1 id=&#34;个人&#34;&gt;个人&lt;/h1&gt;
-&lt;p&gt;自我定位中。。。&lt;/p&gt;
-&lt;h1 id=&#34;喜好&#34;&gt;喜好&lt;/h1&gt;
-&lt;h2 id=&#34;影视&#34;&gt;影视&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;导演&lt;/strong&gt;：&lt;a href=&#34;https://movie.douban.com/celebrity/1000304/&#34;&gt;马丁·麦克唐纳&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;美剧&lt;/strong&gt;：&lt;a href=&#34;https://www.imdb.com/title/tt1586680/?ref_=fn_al_tt_1&#34;&gt;无耻之徒&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;妹子&#34;&gt;妹子&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;新垣结衣&lt;/strong&gt;&lt;/p&gt;
-&lt;h1 id=&#34;其他标签&#34;&gt;其他标签&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;锤友（渐渐脱粉中）&lt;/strong&gt;&lt;/p&gt;
-- https://helloqb.xyz/about/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
