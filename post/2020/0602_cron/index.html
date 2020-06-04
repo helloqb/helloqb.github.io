@@ -215,6 +215,98 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 					
 				
 			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#fixeddelay" v-on:click="closeDrawer" id="fixeddelay-nav">
+										 fixedDelay
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#fixedrate" v-on:click="closeDrawer" id="fixedrate-nav">
+										 fixedRate
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#initialdelay" v-on:click="closeDrawer" id="initialdelay-nav">
+										 initialDelay
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#cron-%e8%a1%a8%e8%be%be%e5%bc%8f" v-on:click="closeDrawer" id="cron-表达式-nav">
+										 cron 表达式
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
 	</div>
 
 </div>
@@ -354,6 +446,98 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 					
 				
 			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#fixeddelay" v-on:click="closeDrawer" id="fixeddelay-nav">
+										 fixedDelay
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#fixedrate" v-on:click="closeDrawer" id="fixedrate-nav">
+										 fixedRate
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#initialdelay" v-on:click="closeDrawer" id="initialdelay-nav">
+										 initialDelay
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
+				
+				
+					
+						
+						
+							<ul>
+						
+							<ul>
+						
+						
+								<li>
+				 					<a href="#cron-%e8%a1%a8%e8%be%be%e5%bc%8f" v-on:click="closeDrawer" id="cron-表达式-nav">
+										 cron 表达式
+									</a>
+								</li>
+						
+							</ul>
+						
+							</ul>
+						
+					
+				
+			
 	</div>
 
 </div>
@@ -426,10 +610,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                         
                             <i class="material-icons" style="">label</i>
                             
-                                <a href="/tags/schedule">Schedule</a>
-                                &nbsp;
-                            
-                                <a href="/tags/springboot">Springboot</a>
+                                <a href="/tags/spring">Spring</a>
                                 &nbsp;
                             
                         
@@ -461,7 +642,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
   System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Date<span style="color:#f92672">());</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><h1 id="定时调度">定时调度</h1>
-<p><strong>fixedDelay</strong></p>
+<h2 id="fixeddelay">fixedDelay</h2>
 <p>毫秒单位，以上一个调用的完成时间开始计算
 如间隔 3 秒，每个任务耗时 2 秒：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>fixedDelay <span style="color:#f92672">=</span> 3000<span style="color:#f92672">)</span>
@@ -483,7 +664,7 @@ end 2020-06-02T15:50:06.653
 start 2020-06-02T15:50:09.654
 end 2020-06-02T15:50:11.655
 start 2020-06-02T15:50:14.657
-</code></pre><p><strong>fixedRate</strong></p>
+</code></pre><h2 id="fixedrate">fixedRate</h2>
 <p>需要固定速率，则使用 <code>fixedRate</code>。</p>
 <p>如间隔 3 秒，每个任务耗时 2 秒：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>fixedRate <span style="color:#f92672">=</span> 3000<span style="color:#f92672">)</span>
@@ -518,14 +699,14 @@ start 2020-06-02T16:02:58.727
 end 2020-06-02T16:03:05.728
 start 2020-06-02T16:03:05.728
 
-</code></pre><p><strong>initialDelay</strong></p>
+</code></pre><h2 id="initialdelay">initialDelay</h2>
 <p>默认项目启动立即执行定时任务，若想要延迟，使用 <code>initialDelay</code> 参数。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>initialDelay <span style="color:#f92672">=</span> 10000<span style="color:#f92672">,</span> fixedRate <span style="color:#f92672">=</span> 3000<span style="color:#f92672">)</span>
 </code></pre></div><p>结果如下：</p>
 <pre><code>2020-06-02 16:09:00.487 [main] INFO  com.jztdata.label.LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
 start 2020-06-02T16:09:10.467
 end 2020-06-02T16:09:15.468
-</code></pre><p><strong>cron 表达式</strong></p>
+</code></pre><h2 id="cron-表达式">cron 表达式</h2>
 <p>用法太多了，每次项目用到就记一下吧。</p>
 <table>
 <thead>

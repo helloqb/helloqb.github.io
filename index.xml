@@ -30,14 +30,21 @@
 &lt;p&gt;&lt;img src=&#34;https://3fhota.dm.files.1drv.com/y4meK5ev_0gzQVGaO-s8pRyhSqRaLkuHZegnssv6K68sWs1r1lZ_wW9OXu7xO9zSaHe-kTG-mvcHMn8bGYOP28ZlOfEKCBFALcgP_50f0n5y-DQLuTTG6-I_zDvqnBWD_jCOVYTjZcseoEtpq-HIMxw0G4AloLnhk9dMe6LJ4JkOhPqm2dTV5lffC-NQ-H4WJ55fpEJWAZw2AiIsThnRoPfIQ?width=1914&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;3. 缩小一半长宽比&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;操作：编辑（菜单栏）-&amp;gt; 自由变换 -&amp;gt; W:49% H:49%&lt;/p&gt;
+&lt;p&gt;49% 也就是留了 2% 的缝隙，可根据自己喜好修改。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://3vhota.dm.files.1drv.com/y4mdd-w-RhQf8xV47ASDL01uDZ7wgQD_232jOUsAEyOxD1LIMeFo-0x-2ZGjS2ifpZKdVe7R3DNNe9TZxysD47udWnW-sqdrx4sC03UHddtx39yTOmG5rGm7NTg5UpaQ4ADzbkYMADlDHj0Z2btDus7ULMk2zn4vuvZxzNpRwJxwjO_1PrFduCGrslPWa09qrOghIIUDhb4Ik4OlhqHpkWY4A?width=1920&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;4. 切割图层&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;以变换后的图层作为选区，分别左上、左下、右上、右下复制图层。&lt;/p&gt;
 &lt;p&gt;操作：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;对齐：选中两个图层，点击菜单栏图层里的对齐，左对齐，然后再顶部对齐；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://4ffnqa.dm.files.1drv.com/y4mlbXCFCPRabp5uAMcIbDFM4Refu91x1X6PhlMS_xW7rT8VLgZPdVJr2446AKpxC1IyOyBy3xKYj3Y0lYdcpzTo-n5gpy2Gnvq1VfYlosOWJSI3U9HKM_lq9c6eDxeS9P4gAY_2Tew34suApC9UJCrDMa3PFjkcDA4eMLP2DCSzItZQid_LlBR8AOe0RQGLfMM_5KqEcsxA_OvccOWFTxe2Q?width=1920&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;载入选区：按住 &lt;code&gt;Ctrl&lt;/code&gt;，并点击白色图层的缩略图；&lt;/li&gt;
 &lt;li&gt;复制图层：点击背景图层，点击 &lt;code&gt;Ctrl + J&lt;/code&gt;，将所选区域复制到新图层中；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://4vfnqa.dm.files.1drv.com/y4mebgrRn4sXRat0i8ikv7xk8sTkINQmXcAHgYoPs5COlZfnMgtXebQYDCzdZlju-C7fJNKpEw4MkViU46Tjr7W8A6hbJSWkiUVPDw-uWD17hOw0S8GTG5FnaUn21S9WlJ0cY9WhFMtyU9PFv6Lb_nA8jJbTwguMpjEKzHRqeoblBr-iUyq9_uyZeGTKToSvL96H9kF-sX2gIZuptCC2oqECg?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
 &lt;li&gt;同样方式左下、右上、右下生成另外三个图层；&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;img src=&#34;https://5lhota.dm.files.1drv.com/y4mSmzC0rmXrJCRQGZKM7DCF7vmmcw9iVQnjYp-d82IPsChzBX-aWqOW4DbUt2EHjROM6x9p4fsOo2lGs1FNX5-bMxGn6q2muR5C8kr1O7xoAg1pTni4YGDYjQkinxFT2nLoTRaxlXn90wEq9V9Dqf4AyXlim0zkKXqLkKoYjZCLtVGkIxTPTFgw-ZCTJgVJAuy0hr7rt7oULJkVzLNsR8ELw?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
@@ -47,8 +54,8 @@
 &lt;li&gt;双击图层打开图层样式，选择投影，距离和大小设置为 20 像素；&lt;/li&gt;
 &lt;li&gt;右键图层拷贝图层样式，然后复制到另外三个图层中；&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;大功告成，当然可根据自己喜好选择样式，添加相关文字等。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://51hota.dm.files.1drv.com/y4m5etRuVzlJgeR9p7lFrGdFuTvyPjAyaJvx50_mmJhYBXwq6qD87LfDvLnAY24Lb7eUvhqv9E0EVuJL1PZxIgqlsHiPjOUt7oQfmzs3Dwwzxe7pzgL1YhIFCs1eQmwLkgPVwkwwNSNUuCOJx55bLCpVADcF0xryHRgVQYTucl8vFB5tt6-W2g-Pk1xKz9BcFmWSuRE__6WUuSxKbAVGVZVXQ?width=1919&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;大功告成，当然可根据自己喜好修改相关参数，添加相关文字。&lt;/p&gt;
 - https://helloqb.xyz/post/2020/0603_ps/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
@@ -82,7 +89,7 @@
   System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Date&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;定时调度&#34;&gt;定时调度&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;fixedDelay&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;fixeddelay&#34;&gt;fixedDelay&lt;/h2&gt;
 &lt;p&gt;毫秒单位，以上一个调用的完成时间开始计算
 如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
@@ -104,7 +111,7 @@ end 2020-06-02T15:50:06.653
 start 2020-06-02T15:50:09.654
 end 2020-06-02T15:50:11.655
 start 2020-06-02T15:50:14.657
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;fixedRate&lt;/strong&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;fixedrate&#34;&gt;fixedRate&lt;/h2&gt;
 &lt;p&gt;需要固定速率，则使用 &lt;code&gt;fixedRate&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fixedRate &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
@@ -139,14 +146,14 @@ start 2020-06-02T16:02:58.727
 end 2020-06-02T16:03:05.728
 start 2020-06-02T16:03:05.728
 
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;initialDelay&lt;/strong&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;initialdelay&#34;&gt;initialDelay&lt;/h2&gt;
 &lt;p&gt;默认项目启动立即执行定时任务，若想要延迟，使用 &lt;code&gt;initialDelay&lt;/code&gt; 参数。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;initialDelay &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 10000&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; fixedRate &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;2020-06-02 16:09:00.487 [main] INFO  com.jztdata.label.LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
 start 2020-06-02T16:09:10.467
 end 2020-06-02T16:09:15.468
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;cron 表达式&lt;/strong&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;cron-表达式&#34;&gt;cron 表达式&lt;/h2&gt;
 &lt;p&gt;用法太多了，每次项目用到就记一下吧。&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
