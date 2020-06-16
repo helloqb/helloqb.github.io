@@ -7,17 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://helloqb.xyz/categories/note/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>个人笔记 - Jupyter 笔记汇总</title>
-      <link>https://helloqb.xyz/post/2020/0616_jupyter/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      <link>https://helloqb.xyz/post/2020/0615_jupyter/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0616_jupyter/</guid>
+      <guid>https://helloqb.xyz/post/2020/0615_jupyter/</guid>
       <description>Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。
  Difference between map, applymap and apply methods in Pandas. &amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;  </description>
     </item>
