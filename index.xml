@@ -39,7 +39,7 @@
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;jupyter-版&#34;&gt;Jupyter 版&lt;/h1&gt;
 &lt;p&gt;例子在 Jupyter Notebook 中展示更清晰些，所以就直接上传了 Jupyter 版本的。&lt;a href=&#34;https://helloqb.xyz/post/ipynb/0605_regex.ipynb.html&#34;&gt;&amp;lt;html版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0605_regex.ipynb&#34;&gt;&amp;lt;原始版本&amp;gt;&lt;/a&gt;&lt;/p&gt;
-&lt;iframe src=&#34;https://helloqb.xyz/post/ipynb/0605_regex_ipynb.html&#34; style=&#34;width:100%;height:600px;border:0px&#34;&gt;这是A&lt;/iframe&gt;
+&lt;iframe src=&#34;https://helloqb.xyz/post/ipynb/0605_regex.ipynb.html&#34; style=&#34;width:100%;height:600px;border:0px&#34;&gt;这是A&lt;/iframe&gt;
 &lt;h1 id=&#34;用法&#34;&gt;用法&lt;/h1&gt;
 &lt;h2 id=&#34;文本编辑器替换&#34;&gt;文本编辑器替换&lt;/h2&gt;
 &lt;p&gt;使用 &lt;code&gt;$1&lt;/code&gt; 代替某一组。&lt;/p&gt;
