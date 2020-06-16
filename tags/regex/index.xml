@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Regex on 哲学家</title>
+    <link>https://helloqb.xyz/tags/regex/</link>
+    <description>Recent content in Regex on 哲学家</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
+    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://helloqb.xyz/tags/regex/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>个人笔记 - 正则表达式</title>
+      <link>https://helloqb.xyz/post/2020/0605_regex/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0605_regex/</guid>
+      <description>介绍  正则表达式（Regex）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。 &amp;ndash; 维基百科
+ Jupyter 版 例子在 Jupyter Notebook 中展示更清晰些，所以就直接上传了 Jupyter 版本的。&amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;
+这是A用法 文本编辑器替换 使用 $1 代替某一组。
+如替换隐藏手机号中间四位，查找正则为 (\d{3})(\d*)(\d{4})，替换为 $1****$3。
+Java 端也采用此方法。
+// 手机号隐藏中间4位： public static String hidePhone(String phone){ return phone.replaceAll(&amp;#34;(\\d{3})(\\d*)(\\d{4})&amp;#34;, &amp;#34;$1****$3&amp;#34;); } 常用正则表达式 中文：[\u4e00-\u9fa5]
+匹配某个字符在最后一次出现的位置：[^字符]+$
+匹配不在引号里的逗号：,(?=([^\&amp;quot;&#39;]*[\&amp;quot;&#39;][^\&amp;quot;&#39;]*[\&amp;quot;&#39;])*[^\&amp;quot;&#39;]*$)
+概括字符集    字符 含义     \d [0-9]   \D [^0-9]   \w [A-Za-z0-9_]   \W [^A-Za-z0-9_]   \s 空白字符   \S 非空白字符   .</description>
+    </item>
+    
+  </channel>
+</rss>

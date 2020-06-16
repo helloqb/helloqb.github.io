@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>个人笔记 - Jupyter 笔记汇总</title>
+      <link>https://helloqb.xyz/post/2020/0616_jupyter/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0616_jupyter/</guid>
+      <description>Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。
+ Difference between map, applymap and apply methods in Pandas. &amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;  </description>
+    </item>
+    
+    <item>
+      <title>个人笔记 - 正则表达式</title>
+      <link>https://helloqb.xyz/post/2020/0605_regex/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0605_regex/</guid>
+      <description>介绍  正则表达式（Regex）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。 &amp;ndash; 维基百科
+ Jupyter 版 例子在 Jupyter Notebook 中展示更清晰些，所以就直接上传了 Jupyter 版本的。&amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;
+这是A用法 文本编辑器替换 使用 $1 代替某一组。
+如替换隐藏手机号中间四位，查找正则为 (\d{3})(\d*)(\d{4})，替换为 $1****$3。
+Java 端也采用此方法。
+// 手机号隐藏中间4位： public static String hidePhone(String phone){ return phone.replaceAll(&amp;#34;(\\d{3})(\\d*)(\\d{4})&amp;#34;, &amp;#34;$1****$3&amp;#34;); } 常用正则表达式 中文：[\u4e00-\u9fa5]
+匹配某个字符在最后一次出现的位置：[^字符]+$
+匹配不在引号里的逗号：,(?=([^\&amp;quot;&#39;]*[\&amp;quot;&#39;][^\&amp;quot;&#39;]*[\&amp;quot;&#39;])*[^\&amp;quot;&#39;]*$)
+概括字符集    字符 含义     \d [0-9]   \D [^0-9]   \w [A-Za-z0-9_]   \W [^A-Za-z0-9_]   \s 空白字符   \S 非空白字符   .</description>
+    </item>
     
     <item>
       <title>EXCEL 技巧之 - VLOOKUP 函数</title>
@@ -91,7 +118,8 @@
       <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
 配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
 import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。
-@Scheduled(fixedDelay = 5000) public void reportCurrentTime() { System.out.println(new Date()); } 定时调度 fixedDelay 毫秒单位，以上一个调用的完成时间开始计算 如间隔 3 秒，每个任务耗时 2 秒：
+@Scheduled(fixedDelay = 5000) public void reportCurrentTime() { System.out.println(new Date()); } 定时调度 fixedDelay 毫秒单位，以上一个调用的完成时间开始计算。
+如间隔 3 秒，每个任务耗时 2 秒：
 @Scheduled(fixedDelay = 3000) public void errorSpiderRerun(){ LocalDateTime localDateTime = LocalDateTime.now(); System.out.println(&amp;#34;start &amp;#34; + localDateTime); try { Thread.</description>
     </item>
     

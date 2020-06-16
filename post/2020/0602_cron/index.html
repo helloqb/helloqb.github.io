@@ -643,8 +643,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#f92672">}</span>
 </code></pre></div><h1 id="定时调度">定时调度</h1>
 <h2 id="fixeddelay">fixedDelay</h2>
-<p>毫秒单位，以上一个调用的完成时间开始计算
-如间隔 3 秒，每个任务耗时 2 秒：</p>
+<p>毫秒单位，以上一个调用的完成时间开始计算。</p>
+<p>如间隔 3 秒，每个任务耗时 2 秒：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>fixedDelay <span style="color:#f92672">=</span> 3000<span style="color:#f92672">)</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">errorSpiderRerun</span><span style="color:#f92672">(){</span>
     LocalDateTime localDateTime <span style="color:#f92672">=</span> LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">();</span>

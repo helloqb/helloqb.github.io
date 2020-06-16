@@ -13,6 +13,97 @@
     
     
         <item>
+        <title>个人笔记 - Jupyter 笔记汇总</title>
+        <link>https://helloqb.xyz/post/2020/0616_jupyter/</link>
+        <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0616_jupyter/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0616_jupyter/ -&lt;p&gt;Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Difference between map, applymap and apply methods in Pandas.&lt;/strong&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.ipynb.html&#34;&gt;&amp;lt;html版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.ipynb&#34;&gt;&amp;lt;原始版本&amp;gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2020/0616_jupyter/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>个人笔记 - 正则表达式</title>
+        <link>https://helloqb.xyz/post/2020/0605_regex/</link>
+        <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0605_regex/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0605_regex/ -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;正则表达式（Regex）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。 &amp;ndash; &lt;a href=&#34;https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F&#34;&gt;维基百科&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;jupyter-版&#34;&gt;Jupyter 版&lt;/h1&gt;
+&lt;p&gt;例子在 Jupyter Notebook 中展示更清晰些，所以就直接上传了 Jupyter 版本的。&lt;a href=&#34;https://helloqb.xyz/post/ipynb/0605_regex.ipynb.html&#34;&gt;&amp;lt;html版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0605_regex.ipynb&#34;&gt;&amp;lt;原始版本&amp;gt;&lt;/a&gt;&lt;/p&gt;
+&lt;iframe src=&#34;https://helloqb.xyz/post/ipynb/0605_regex_ipynb.html&#34; style=&#34;width:100%;height:600px;border:0px&#34;&gt;这是A&lt;/iframe&gt;
+&lt;h1 id=&#34;用法&#34;&gt;用法&lt;/h1&gt;
+&lt;h2 id=&#34;文本编辑器替换&#34;&gt;文本编辑器替换&lt;/h2&gt;
+&lt;p&gt;使用 &lt;code&gt;$1&lt;/code&gt; 代替某一组。&lt;/p&gt;
+&lt;p&gt;如替换隐藏手机号中间四位，查找正则为 &lt;code&gt;(\d{3})(\d*)(\d{4})&lt;/code&gt;，替换为 &lt;code&gt;$1****$3&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;Java 端也采用此方法。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 手机号隐藏中间4位：
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; String &lt;span style=&#34;color:#a6e22e&#34;&gt;hidePhone&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;String phone&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; phone&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;replaceAll&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(\\d{3})(\\d*)(\\d{4})&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;$1****$3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;常用正则表达式&#34;&gt;常用正则表达式&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;中文&lt;/strong&gt;：&lt;code&gt;[\u4e00-\u9fa5]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;匹配某个字符在最后一次出现的位置&lt;/strong&gt;：&lt;code&gt;[^字符]+$&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;匹配不在引号里的逗号&lt;/strong&gt;：&lt;code&gt;,(?=([^\&amp;quot;&#39;]*[\&amp;quot;&#39;][^\&amp;quot;&#39;]*[\&amp;quot;&#39;])*[^\&amp;quot;&#39;]*$)&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;概括字符集&#34;&gt;概括字符集&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字符&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;[0-9]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\D&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;[^0-9]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\w&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;[A-Za-z0-9_]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\W&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;[^A-Za-z0-9_]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;空白字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\S&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;非空白字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;. &lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配除换行符&lt;code&gt;\n&lt;/code&gt;之外其他所有字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;\t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配 TAB 键&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&#34;推荐&#34;&gt;推荐&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://regexper.com/&#34;&gt;regexper&lt;/a&gt; 这个网站可以帮助你更直观的展示正则表达式的逻辑。&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0605_regex/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
         <title>EXCEL 技巧之 - VLOOKUP 函数</title>
         <link>https://helloqb.xyz/post/2020/0604_vlookup/</link>
         <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
@@ -179,8 +270,8 @@
 &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;定时调度&#34;&gt;定时调度&lt;/h1&gt;
 &lt;h2 id=&#34;fixeddelay&#34;&gt;fixedDelay&lt;/h2&gt;
-&lt;p&gt;毫秒单位，以上一个调用的完成时间开始计算
-如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
+&lt;p&gt;毫秒单位，以上一个调用的完成时间开始计算。&lt;/p&gt;
+&lt;p&gt;如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
     LocalDateTime localDateTime &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
@@ -971,110 +1062,6 @@ TEMP_FILE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span styl
 &lt;ul&gt;
 &lt;li&gt;使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。&lt;/li&gt;
 &lt;/ul&gt;- https://helloqb.xyz/post/2020/0304_java/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>个人笔记 - Git</title>
-        <link>https://helloqb.xyz/post/2020/0301_git/</link>
-        <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0301_git/ -&lt;h1 id=&#34;ssh-客户端-putty-和-openssh-的互相转换&#34;&gt;SSH 客户端 Putty 和 OpenSSH 的互相转换&lt;/h1&gt;
-&lt;p&gt;原本只需要用 &lt;code&gt;ssh-keygen&lt;/code&gt; 生成密钥到 &lt;code&gt;.ssh&lt;/code&gt; 目录，然后打开 &lt;code&gt;id_rsa.pub&lt;/code&gt; 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://2mo7ng.dm.files.1drv.com/y4m2zS4N31r_4feXiRfpaAjXBceJRLLXJrr5i_-HDrOUPwc74UiW4eRtEIfezlfU9EfoYRV9vZcmvhyJ13FJpaLrgZcmLjoOqpQO29QKMmd4NcpkrrpObc5DV06idlGQyroNuVgdAWYiE8Jrl5_PAcfnQ4_iiLtD6MisopG1FixVe8RMmSfCDdIK_SjXh3YJLIjlkrZMBOevRV2MIFRgsThCQ?width=660&amp;height=628&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;
-**1. 使用 puTTY 生成 Key**
-1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；
-2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；
-3. 同时将生成器页面上的 Key 复制到云服务器上即可。
-&lt;p&gt;&lt;strong&gt;2. 使用已有的 id_rsa 导入到 puTTY&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;打开生成器，点击状态栏 &lt;code&gt;Conversions&lt;/code&gt; 中 &lt;code&gt;Import Key&lt;/code&gt; 导入私钥 &lt;code&gt;.id_rsa&lt;/code&gt; 文件；&lt;/li&gt;
-&lt;li&gt;同上 &lt;code&gt;Save private key&lt;/code&gt; 然后导入。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;参考：
-&lt;a href=&#34;https://blog.csdn.net/caoshiying/article/details/80131761&#34;&gt;https://blog.csdn.net/caoshiying/article/details/80131761&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;查看单个文件提交历史&#34;&gt;查看单个文件提交历史&lt;/h1&gt;
-&lt;p&gt;两种情况：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;选定项目的变更历史，即 &lt;code&gt;git log &amp;lt;path&amp;gt;&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;按行审阅选定项目，即 &lt;code&gt;git blame &amp;lt;path&amp;gt;&lt;/code&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。&lt;/p&gt;
-&lt;p&gt;之前想要查看某个文件还要去提交记录里翻，有时要翻很久，后来想到个方法，先改下这个文件，它就会出现在暂存区里，右击即可。&lt;/p&gt;
-&lt;img src=&#34;https://0cmgkg.dm.files.1drv.com/y4mHSMt5I6XZ8e_ZT_HyQnzo5wiFZ3GX57b3tTE_57jNKhJpBFHE2awJC87ANX1Mx26r4uqChbeGsB7lpqsYiwTpz-XaBH8mGZ1fsgUPPMVbKOHcfbu9pKTS_or-Ng1hOcwvtQaDM0hbnR0H-RtFsblP4y5XtInnmv0s-7Y5r731-B8F49y16OSCnb75CWW4P52fZzYQjI1XL6CxMm77pQiCg?width=860&amp;height=419&amp;cropmode=none&#34;/&gt;
-&lt;p&gt;变更历史：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://0smgkg.dm.files.1drv.com/y4msY4FENDEH4BxVtKldHkQNpjc1Dpp4Ai-qa9xC0bitKHKfBY1vuzAdh8HHg22qWmUjXNdZuaiQj_saDD14P7jQ6o4iFelQBMY_v70ZPzfhUn_HBdSkUdoz8JPW2AgvykmKS13g-m4vvkIEX3_oRNesn4pcbuZglbZj9_9MVHGoBBu9HGnPYkvfk7KrKFtBOomxRc-5Yrr_Afb8tRpct_ZBQ?width=1004&amp;height=553&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;按行审阅：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://08mgkg.dm.files.1drv.com/y4m04sDXLzN1qQf133--6BcjbXj-NmtB1ruTRgUqZbo59qKNjxV4-GeeKy7JQutIviGYFLqmJnPcMU6y__T_ixTffBdE-dv615O5g0ERTt8PyuUjNyWytWe_BQW93YCx1mALOefbr-xT46jg_HsAnoRMTCLdPPgrhJjPvN7RodxUhMwz59euow2Etdc2wDGTwSudI0yspcZVk0C0DODjlHyjQ?width=915&amp;height=484&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;h1 id=&#34;本地项目到远程仓库&#34;&gt;本地项目到远程仓库&lt;/h1&gt;
-&lt;p&gt;步骤：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;git init&lt;/code&gt;  命令将项目变成仓库&lt;/li&gt;
-&lt;li&gt;远程创建空的仓库&lt;/li&gt;
-&lt;li&gt;将本地连接到远程
-&lt;code&gt;git remote add origin url&lt;/code&gt;
-&lt;code&gt;git push -u origin master&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;注：
-远程创建的为非空仓库（会有README.txt）则需要 &lt;code&gt;git pull --rebase origin master&lt;/code&gt;，之后再 push。&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0301_git/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Hugo 上手</title>
-        <link>https://helloqb.xyz/post/2020/0101_hugo/</link>
-        <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0101_hugo/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0101_hugo/ -&lt;h1 id=&#34;下载运行&#34;&gt;下载运行&lt;/h1&gt;
-&lt;p&gt;主要操作：文件下载解压，添加环境变量即可。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;文档链接&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/gohugoio/hugo/releases&#34;&gt;下载&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/getting-started/installing&#34;&gt;安装&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/&#34;&gt;Github 自动托管&lt;/a&gt;：先删除public文件再运行脚本&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;测试成功：&lt;code&gt;hugo version&lt;/code&gt;, &lt;code&gt;hugo help&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;其他操作有：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;hugo server&lt;/code&gt; 本地调试&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;hugo server -D&lt;/code&gt; 本地调试（显示隐藏文件）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;hugo server -t theme&lt;/code&gt; 指定主题调试&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;hugo&lt;/code&gt; 生成静态文件&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&#34;主题下载&#34;&gt;主题下载&lt;/h1&gt;
-&lt;p&gt;喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;git submodule 方式下载主题&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;拉取主题 &lt;code&gt;git submodule add url themes/diary&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;更新主题：进入子模块 &lt;code&gt;git pull&lt;/code&gt; 或者 &lt;code&gt;git submodule update --remote --merge&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;支持 html 标签&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;markup&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;goldmark&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;renderer&lt;/span&gt;]
-&lt;span style=&#34;color:#a6e22e&#34;&gt;unsafe&lt;/span&gt; = &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;元数据&#34;&gt;元数据&lt;/h1&gt;
-&lt;p&gt;通常元数据包括如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;---
-&lt;span style=&#34;color:#66d9ef&#34;&gt;title&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;个人笔记 - Git&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;date&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2020-03-01&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;categories&lt;/span&gt;:
-  - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Git&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;tags&lt;/span&gt;:
-  - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Sourcetree&amp;#34;&lt;/span&gt;
-  - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Note&amp;#34;&lt;/span&gt;
----
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其他的有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;draft: true&lt;/code&gt; 视为草稿&lt;/li&gt;
-&lt;li&gt;有的主题文章列表会展示文章的开头，有标签会很乱，用 &lt;code&gt;&amp;lt; !--more--&amp;gt;&lt;/code&gt; 会强制展示此节点之前的内容&lt;/li&gt;
-&lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0101_hugo/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

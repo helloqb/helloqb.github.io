@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://helloqb.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Note</title>
+      <link>https://helloqb.xyz/categories/note/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/categories/note/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>EXCEL</title>
@@ -54,15 +63,6 @@
       <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/categories/greasemonkey/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Git</title>
-      <link>https://helloqb.xyz/categories/git/</link>
-      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/categories/git/</guid>
       <description></description>
     </item>
     
