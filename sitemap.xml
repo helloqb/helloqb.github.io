@@ -3,8 +3,33 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://helloqb.xyz/tags/bigdecimal/</loc>
+    <lastmod>2020-07-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://helloqb.xyz/categories/</loc>
-    <lastmod>2020-06-15T00:00:00+00:00</lastmod>
+    <lastmod>2020-07-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/categories/java/</loc>
+    <lastmod>2020-07-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/post/</loc>
+    <lastmod>2020-07-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/tags/</loc>
+    <lastmod>2020-07-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/post/2020/0707_decimal/</loc>
+    <lastmod>2020-07-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -18,17 +43,7 @@
   </url>
   
   <url>
-    <loc>https://helloqb.xyz/post/</loc>
-    <lastmod>2020-06-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://helloqb.xyz/tags/python/</loc>
-    <lastmod>2020-06-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/tags/</loc>
     <lastmod>2020-06-15T00:00:00+00:00</lastmod>
   </url>
   
@@ -70,11 +85,6 @@
   <url>
     <loc>https://helloqb.xyz/post/2020/0603_ps/</loc>
     <lastmod>2020-06-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/categories/java/</loc>
-    <lastmod>2020-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>

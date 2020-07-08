@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 15 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://helloqb.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>BigDecimal</title>
+      <link>https://helloqb.xyz/tags/bigdecimal/</link>
+      <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/tags/bigdecimal/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Jupyter</title>
