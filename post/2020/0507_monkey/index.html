@@ -128,6 +128,16 @@
             </a>
             
         
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS Feed
+            </a>
+            
+        
     </div>
 
     
@@ -467,6 +477,16 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 <a class="a-block drawer-menu-item false" href="/about">
                     关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS Feed
                 </a>
                 
             
@@ -856,27 +876,27 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <ol>
 <li>简单粗暴的在页面上添加一个很丑很丑的按钮。</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">input</span><span style="color:#f92672">=</span>document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#34;input&#34;</span>);
-<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>;
-<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Custom Button&#34;</span>;
-<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;style&#34;</span>, <span style="color:#e6db74">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span>);
-document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">input</span>);
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#00a8c8">var</span> <span style="color:#75af00">input</span><span style="color:#f92672">=</span><span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">createElement</span><span style="color:#111">(</span><span style="color:#d88200">&#34;input&#34;</span><span style="color:#111">);</span>
+<span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">type</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;button&#34;</span><span style="color:#111">;</span>
+<span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">value</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;Custom Button&#34;</span><span style="color:#111">;</span>
+<span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">setAttribute</span><span style="color:#111">(</span><span style="color:#d88200">&#34;style&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span><span style="color:#111">);</span>
+<span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">body</span><span style="color:#111">.</span><span style="color:#75af00">appendChild</span><span style="color:#111">(</span><span style="color:#75af00">input</span><span style="color:#111">);</span>
 </code></pre></div><ol start="2">
 <li>然后为按钮添加点击事件。</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">skipFunc</span>;
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">onclick</span> <span style="color:#f92672">=</span> <span style="color:#75af00">skipFunc</span><span style="color:#111">;</span>
 
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">skipFunc</span>()
-{
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">info_hash</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>).<span style="color:#a6e22e">innerHTML</span>
-    window.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">info_hash</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#34;info_hash: &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>))
-}
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">skipFunc</span><span style="color:#111">()</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">info_hash</span> <span style="color:#f92672">=</span> <span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">querySelector</span><span style="color:#111">(</span><span style="color:#d88200">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span><span style="color:#111">).</span><span style="color:#75af00">innerHTML</span>
+    <span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">info_hash</span><span style="color:#111">.</span><span style="color:#75af00">replace</span><span style="color:#111">(</span><span style="color:#d88200">&#34;info_hash: &#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#111">))</span>
+<span style="color:#111">}</span>
 </code></pre></div><p>本示例中，需要获取 info_hash 内容，浏览器直接右键检查复制 Selector 选择器，用 <code>querySelector</code> 方法定位即可。</p>
 <p><img src="https://oep2tw.dm.files.1drv.com/y4mRJBSD9WJHd0CwRrDQhVP0ONFhdkWMYBehiV7rZjyvB3-sBXzqcryi1DDfzJMd4zmUi-AJX12sT1YT6ajvxyDwKhakGcMBBiAyyYJ3h2UJcfUdvgxvzBilqja0s0IxcrGstntjatrAlFqsB0zhiKsHCTw_9iPJCSvCumwrb_9ro6M0kCZe9ZdGSf1G4-ULs3uoQFpv_34xKnwHAt7HXtDCA?width=2440&height=1248&cropmode=none" /></p>
 <p>另外，<code>innerHTML</code>、<code>window.open</code> 等其他方法就不赘述了，最后展示如下图，点击会跳转至谷歌。</p>
 <p><img src="https://mup2tw.dm.files.1drv.com/y4mQQE9aEjU3z7R2DSA2BLQ2S37BNFaxSoxNyrfBaijR1lt5xhgEQL8S_KlaGt6LrMhbMSsjomvCRyV90Kqyzq268yqaYtiBag4GA2qSquOGsT5khQ5XdPAjnN0qJG0mGI-5kqHPfYSnhsxMLMWLvPQ5yPz-y937wDMwL-i3SOuhPIoudLAOW1k5rvleQRaz0iCL58o-MVqOFgrL3QDKgVvdw?width=2506&height=1260&cropmode=none" /></p>
 <p>丑哭了有没有。。整个用户脚本如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// ==UserScript==
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// ==UserScript==
 </span><span style="color:#75715e">// @name        New script - torrentz2.eu
 </span><span style="color:#75715e">// @namespace   Violentmonkey Scripts
 </span><span style="color:#75715e">// @match       *://torrentz2.eu/*
@@ -890,22 +910,22 @@ document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">app
 </span><span style="color:#75715e"></span>
 
 <span style="color:#75715e">// add button in top 
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">input</span><span style="color:#f92672">=</span>document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#34;input&#34;</span>);
-<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>;
-<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Button&#34;</span>;
-<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">showAlert</span>;
-<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;style&#34;</span>, <span style="color:#e6db74">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span>);
-document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">input</span>); 
+</span><span style="color:#75715e"></span><span style="color:#00a8c8">var</span> <span style="color:#75af00">input</span><span style="color:#f92672">=</span><span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">createElement</span><span style="color:#111">(</span><span style="color:#d88200">&#34;input&#34;</span><span style="color:#111">);</span>
+<span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">type</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;button&#34;</span><span style="color:#111">;</span>
+<span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">value</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;Button&#34;</span><span style="color:#111">;</span>
+<span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">onclick</span> <span style="color:#f92672">=</span> <span style="color:#75af00">showAlert</span><span style="color:#111">;</span>
+<span style="color:#75af00">input</span><span style="color:#111">.</span><span style="color:#75af00">setAttribute</span><span style="color:#111">(</span><span style="color:#d88200">&#34;style&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span><span style="color:#111">);</span>
+<span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">body</span><span style="color:#111">.</span><span style="color:#75af00">appendChild</span><span style="color:#111">(</span><span style="color:#75af00">input</span><span style="color:#111">);</span> 
  
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">showAlert</span>()
-{
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">info_hash</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>).<span style="color:#a6e22e">innerHTML</span>
-    window.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">info_hash</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#34;info_hash: &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>))
-}
+<span style="color:#00a8c8">function</span> <span style="color:#75af00">showAlert</span><span style="color:#111">()</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#75af00">info_hash</span> <span style="color:#f92672">=</span> <span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">querySelector</span><span style="color:#111">(</span><span style="color:#d88200">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span><span style="color:#111">).</span><span style="color:#75af00">innerHTML</span>
+    <span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">info_hash</span><span style="color:#111">.</span><span style="color:#75af00">replace</span><span style="color:#111">(</span><span style="color:#d88200">&#34;info_hash: &#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#111">))</span>
+<span style="color:#111">}</span>
 </code></pre></div><h2 id="方案二页面原有元素添加点击">方案二：页面原有元素添加点击</h2>
 <p>在 info_hash 文本上添加点击事件，点击文本会跳转至谷歌。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">infoHash</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>)
-<span style="color:#a6e22e">infoHash</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){window.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">infoHash</span>.<span style="color:#a6e22e">innerHTML</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#34;info_hash: &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>))}
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#00a8c8">var</span> <span style="color:#75af00">infoHash</span> <span style="color:#f92672">=</span> <span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">querySelector</span><span style="color:#111">(</span><span style="color:#d88200">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span><span style="color:#111">)</span>
+<span style="color:#75af00">infoHash</span><span style="color:#111">.</span><span style="color:#75af00">onclick</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">function</span><span style="color:#111">(){</span><span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">infoHash</span><span style="color:#111">.</span><span style="color:#75af00">innerHTML</span><span style="color:#111">.</span><span style="color:#75af00">replace</span><span style="color:#111">(</span><span style="color:#d88200">&#34;info_hash: &#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#111">))}</span>
 </code></pre></div><p>此方案完美隐藏，没有破坏原有页面。</p>
 <h2 id="方案三按钮嵌入至页面">方案三：按钮嵌入至页面</h2>
 <p>思路是在某一节点中，添加其子节点，以共用其子节点的样式。</p>
@@ -920,11 +940,11 @@ document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">app
 <ol start="3">
 <li><code>appendTo</code> 方法添加到父节点中</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">infoHash</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>)
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">infoHashText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">infoHash</span>.<span style="color:#a6e22e">innerHTML</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#34;info_hash: &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
-<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">`
-</span><span style="color:#e6db74">&lt;a href=&#34;https://www.google.com/search?q=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">infoHashText</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34; target=&#34;_blank&#34; &gt;Google&lt;/a&gt;
-</span><span style="color:#e6db74">`</span>).<span style="color:#a6e22e">appendTo</span>(document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#votebox &gt; span.replist&#34;</span>));
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#00a8c8">var</span> <span style="color:#75af00">infoHash</span> <span style="color:#f92672">=</span> <span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">querySelector</span><span style="color:#111">(</span><span style="color:#d88200">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">var</span> <span style="color:#75af00">infoHashText</span> <span style="color:#f92672">=</span> <span style="color:#75af00">infoHash</span><span style="color:#111">.</span><span style="color:#75af00">innerHTML</span><span style="color:#111">.</span><span style="color:#75af00">replace</span><span style="color:#111">(</span><span style="color:#d88200">&#34;info_hash: &#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+<span style="color:#75af00">$</span><span style="color:#111">(</span><span style="color:#d88200">`
+</span><span style="color:#d88200">&lt;a href=&#34;https://www.google.com/search?q=</span><span style="color:#d88200">${</span><span style="color:#75af00">infoHashText</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34; target=&#34;_blank&#34; &gt;Google&lt;/a&gt;
+</span><span style="color:#d88200">`</span><span style="color:#111">).</span><span style="color:#75af00">appendTo</span><span style="color:#111">(</span><span style="color:#111">document</span><span style="color:#111">.</span><span style="color:#75af00">querySelector</span><span style="color:#111">(</span><span style="color:#d88200">&#34;#votebox &gt; span.replist&#34;</span><span style="color:#111">));</span>
 </code></pre></div><p>如下，完美嵌入。</p>
 <p><img src="https://nep2tw.dm.files.1drv.com/y4mSwRdebaViBcA8QJYWi7p7VSERUEVDjw79nHi40kFO0UmUAULvTgAgvVhWAbrmyw0e35xIdVf6T5J9RBlwLsHXwCtRik3uZmzzOaDB3wmprrLMLZxtbAJvNeCZ9PE-bAhA7lyPe-ofR8lGoEzJGU_Qts4c7nqfATGJ_nXPlblQyAFH4selQBJzKmHRRn57PdKWFhmGT5VMB0AW2FH3Z1dkA?width=3146&height=1602&cropmode=none" /></p>
 <h1 id="推荐">推荐</h1>

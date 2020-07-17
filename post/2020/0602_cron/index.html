@@ -128,6 +128,16 @@
             </a>
             
         
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS Feed
+            </a>
+            
+        
     </div>
 
     
@@ -378,6 +388,16 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 </a>
                 
             
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS Feed
+                </a>
+                
+            
             
             <div class="toc">
 
@@ -624,37 +644,37 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p>本文主要记录下 cron 表达式的用法，方便下次使用。</p>
 <h1 id="配置">配置</h1>
 <p>程序主入口添加 <code>@SpringBootApplication</code> 和 <code>@EnableScheduling</code> 注解以启动定时任务。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.springframework.boot.SpringApplication<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> org.springframework.boot.autoconfigure.SpringBootApplication<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> org.springframework.scheduling.annotation.EnableScheduling<span style="color:#f92672">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#111">org.springframework.boot.SpringApplication</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> <span style="color:#111">org.springframework.boot.autoconfigure.SpringBootApplication</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> <span style="color:#111">org.springframework.scheduling.annotation.EnableScheduling</span><span style="color:#f92672">;</span>
 
-<span style="color:#a6e22e">@SpringBootApplication</span>
-<span style="color:#a6e22e">@EnableScheduling</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SchedulingTasksApplication</span> <span style="color:#f92672">{</span>
+<span style="color:#75af00">@SpringBootApplication</span>
+<span style="color:#75af00">@EnableScheduling</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">SchedulingTasksApplication</span> <span style="color:#f92672">{</span>
 
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-		SpringApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">(</span>SchedulingTasksApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+	<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+		<span style="color:#111">SpringApplication</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">(</span><span style="color:#111">SchedulingTasksApplication</span><span style="color:#f92672">.</span><span style="color:#75af00">class</span><span style="color:#f92672">);</span>
 	<span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>然后方法上添加 <code>@Scheduled</code> 注解就行了。当然类注解 <code>@Component</code> 也必不可少。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>fixedDelay <span style="color:#f92672">=</span> 5000<span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reportCurrentTime</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-  System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Date<span style="color:#f92672">());</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Scheduled</span><span style="color:#f92672">(</span><span style="color:#111">fixedDelay</span> <span style="color:#f92672">=</span> <span style="color:#111">5000</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">reportCurrentTime</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">Date</span><span style="color:#f92672">());</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><h1 id="定时调度">定时调度</h1>
 <h2 id="fixeddelay">fixedDelay</h2>
 <p>毫秒单位，以上一个调用的完成时间开始计算。</p>
 <p>如间隔 3 秒，每个任务耗时 2 秒：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>fixedDelay <span style="color:#f92672">=</span> 3000<span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">errorSpiderRerun</span><span style="color:#f92672">(){</span>
-    LocalDateTime localDateTime <span style="color:#f92672">=</span> LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">();</span>
-    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;start &#34;</span> <span style="color:#f92672">+</span> localDateTime<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-        Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>2000<span style="color:#f92672">);</span>
-    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Scheduled</span><span style="color:#f92672">(</span><span style="color:#111">fixedDelay</span> <span style="color:#f92672">=</span> <span style="color:#111">3000</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">errorSpiderRerun</span><span style="color:#f92672">(){</span>
+    <span style="color:#111">LocalDateTime</span> <span style="color:#111">localDateTime</span> <span style="color:#f92672">=</span> <span style="color:#111">LocalDateTime</span><span style="color:#f92672">.</span><span style="color:#75af00">now</span><span style="color:#f92672">();</span>
+    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;start &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">localDateTime</span><span style="color:#f92672">);</span>
+    <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">2000</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">InterruptedException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#75af00">printStackTrace</span><span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
-    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;end &#34;</span> <span style="color:#f92672">+</span> LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">());</span>
+    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;end &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">LocalDateTime</span><span style="color:#f92672">.</span><span style="color:#75af00">now</span><span style="color:#f92672">());</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>结果如下：</p>
 <pre><code>start 2020-06-02T15:49:59.650
@@ -667,16 +687,16 @@ start 2020-06-02T15:50:14.657
 </code></pre><h2 id="fixedrate">fixedRate</h2>
 <p>需要固定速率，则使用 <code>fixedRate</code>。</p>
 <p>如间隔 3 秒，每个任务耗时 2 秒：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>fixedRate <span style="color:#f92672">=</span> 3000<span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">errorSpiderRerun</span><span style="color:#f92672">(){</span>
-    LocalDateTime localDateTime <span style="color:#f92672">=</span> LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">();</span>
-    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;start &#34;</span> <span style="color:#f92672">+</span> localDateTime<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-        Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>2000<span style="color:#f92672">);</span>
-    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Scheduled</span><span style="color:#f92672">(</span><span style="color:#111">fixedRate</span> <span style="color:#f92672">=</span> <span style="color:#111">3000</span><span style="color:#f92672">)</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">errorSpiderRerun</span><span style="color:#f92672">(){</span>
+    <span style="color:#111">LocalDateTime</span> <span style="color:#111">localDateTime</span> <span style="color:#f92672">=</span> <span style="color:#111">LocalDateTime</span><span style="color:#f92672">.</span><span style="color:#75af00">now</span><span style="color:#f92672">();</span>
+    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;start &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">localDateTime</span><span style="color:#f92672">);</span>
+    <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">2000</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">InterruptedException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#75af00">printStackTrace</span><span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
-    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;end &#34;</span> <span style="color:#f92672">+</span> LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">());</span>
+    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;end &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">LocalDateTime</span><span style="color:#f92672">.</span><span style="color:#75af00">now</span><span style="color:#f92672">());</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>结果如下：</p>
 <pre><code>start 2020-06-02T15:58:03.563
@@ -701,7 +721,7 @@ start 2020-06-02T16:03:05.728
 
 </code></pre><h2 id="initialdelay">initialDelay</h2>
 <p>默认项目启动立即执行定时任务，若想要延迟，使用 <code>initialDelay</code> 参数。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Scheduled</span><span style="color:#f92672">(</span>initialDelay <span style="color:#f92672">=</span> 10000<span style="color:#f92672">,</span> fixedRate <span style="color:#f92672">=</span> 3000<span style="color:#f92672">)</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@Scheduled</span><span style="color:#f92672">(</span><span style="color:#111">initialDelay</span> <span style="color:#f92672">=</span> <span style="color:#111">10000</span><span style="color:#f92672">,</span> <span style="color:#111">fixedRate</span> <span style="color:#f92672">=</span> <span style="color:#111">3000</span><span style="color:#f92672">)</span>
 </code></pre></div><p>结果如下：</p>
 <pre><code>2020-06-02 16:09:00.487 [main] INFO  com.jztdata.label.LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
 start 2020-06-02T16:09:10.467

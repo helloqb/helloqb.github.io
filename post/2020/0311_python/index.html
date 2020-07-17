@@ -128,6 +128,16 @@
             </a>
             
         
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS Feed
+            </a>
+            
+        
     </div>
 
     
@@ -283,6 +293,16 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 <a class="a-block drawer-menu-item false" href="/about">
                     关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS Feed
                 </a>
                 
             
@@ -462,200 +482,200 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <h1 id="代码">代码</h1>
 <p>就 200 行代码，直接贴出来了，不放到 Github 上了。</p>
 <p><em>附锤子阅读APP下载 <a href="https://www.smartisan.com/apps/#/reader">链接</a></em></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
-<span style="color:#f92672">import</span> sys
-<span style="color:#f92672">import</span> getopt
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> <span style="color:#111">requests</span>
+<span style="color:#f92672">import</span> <span style="color:#111">sys</span>
+<span style="color:#f92672">import</span> <span style="color:#111">getopt</span>
 
-PAGE_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
-TEMP_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;result.md&#39;</span>
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">api_site_articles</span>(site_id, offset, page_size):
-    <span style="color:#e6db74">&#34;&#34;&#34;订阅号文章列表的接口json返回结果
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    :param site_id:
-</span><span style="color:#e6db74">    :param offset:
-</span><span style="color:#e6db74">    :param page_size:
-</span><span style="color:#e6db74">    :return:
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    params <span style="color:#f92672">=</span> {
-        <span style="color:#e6db74">&#39;site_id&#39;</span>: site_id,
-        <span style="color:#e6db74">&#39;offset&#39;</span>: offset,
-        <span style="color:#e6db74">&#39;page_size&#39;</span>: page_size
-    }
-    url <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;http://reader.smartisan.com/index.php?r=article/getList&#39;</span>
-    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, params)
-    <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>json()
+<span style="color:#111">PAGE_SIZE</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+<span style="color:#111">TEMP_FILE</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;result.md&#39;</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">api_search_site</span>(name, offset, page_size):
-    <span style="color:#e6db74">&#34;&#34;&#34;搜索订阅号的接口json返回结果
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    :param name:
-</span><span style="color:#e6db74">    :param offset:
-</span><span style="color:#e6db74">    :param page_size:
-</span><span style="color:#e6db74">    :return:
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    params <span style="color:#f92672">=</span> {
-        <span style="color:#e6db74">&#39;name&#39;</span>: name,
-        <span style="color:#e6db74">&#39;offset&#39;</span>: offset,
-        <span style="color:#e6db74">&#39;page_size&#39;</span>: page_size
-    }
-    url <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;http://reader.smartisan.com/index.php?r=site/search&#39;</span>
-    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, params)
-    <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>json()
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">api_site_articles</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">offset</span><span style="color:#111">,</span> <span style="color:#111">page_size</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;订阅号文章列表的接口json返回结果
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    :param site_id:
+</span><span style="color:#d88200">    :param offset:
+</span><span style="color:#d88200">    :param page_size:
+</span><span style="color:#d88200">    :return:
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+    <span style="color:#111">params</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+        <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">:</span> <span style="color:#111">site_id</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#39;offset&#39;</span><span style="color:#111">:</span> <span style="color:#111">offset</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#39;page_size&#39;</span><span style="color:#111">:</span> <span style="color:#111">page_size</span>
+    <span style="color:#111">}</span>
+    <span style="color:#111">url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">r</span><span style="color:#d88200">&#39;http://reader.smartisan.com/index.php?r=article/getList&#39;</span>
+    <span style="color:#111">response</span> <span style="color:#f92672">=</span> <span style="color:#111">requests</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">url</span><span style="color:#111">,</span> <span style="color:#111">params</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#111">json</span><span style="color:#111">()</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_site</span>(name):
-    <span style="color:#e6db74">&#34;&#34;&#34;订阅号搜索
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    有结果返回第一个，无结果返回空
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    :param name:
-</span><span style="color:#e6db74">    :return:
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    result <span style="color:#f92672">=</span> api_search_site(name, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>)
-    <span style="color:#66d9ef">if</span> result[<span style="color:#e6db74">&#39;data&#39;</span>][<span style="color:#e6db74">&#39;list&#39;</span>]:
-        site_json <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;data&#39;</span>][<span style="color:#e6db74">&#39;list&#39;</span>][<span style="color:#ae81ff">0</span>]
-        site_id <span style="color:#f92672">=</span> site_json[<span style="color:#e6db74">&#39;id&#39;</span>]
-        site_name <span style="color:#f92672">=</span> site_json[<span style="color:#e6db74">&#39;name&#39;</span>]
-        <span style="color:#66d9ef">return</span> site_id, site_name
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span> None, None
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">api_search_site</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">offset</span><span style="color:#111">,</span> <span style="color:#111">page_size</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;搜索订阅号的接口json返回结果
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    :param name:
+</span><span style="color:#d88200">    :param offset:
+</span><span style="color:#d88200">    :param page_size:
+</span><span style="color:#d88200">    :return:
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+    <span style="color:#111">params</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+        <span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">:</span> <span style="color:#111">name</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#39;offset&#39;</span><span style="color:#111">:</span> <span style="color:#111">offset</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#39;page_size&#39;</span><span style="color:#111">:</span> <span style="color:#111">page_size</span>
+    <span style="color:#111">}</span>
+    <span style="color:#111">url</span> <span style="color:#f92672">=</span> <span style="color:#d88200">r</span><span style="color:#d88200">&#39;http://reader.smartisan.com/index.php?r=site/search&#39;</span>
+    <span style="color:#111">response</span> <span style="color:#f92672">=</span> <span style="color:#111">requests</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">url</span><span style="color:#111">,</span> <span style="color:#111">params</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">response</span><span style="color:#f92672">.</span><span style="color:#111">json</span><span style="color:#111">()</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_titles</span>(site_id, offset, page_size, search_name, match_level):
-    <span style="color:#e6db74">&#34;&#34;&#34;根据搜索关键词返回文章
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    :param site_id:
-</span><span style="color:#e6db74">    :param offset:
-</span><span style="color:#e6db74">    :param page_size:
-</span><span style="color:#e6db74">    :param search_name:
-</span><span style="color:#e6db74">    :param match_level:
-</span><span style="color:#e6db74">    :return:
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    title_list <span style="color:#f92672">=</span> []
-    result <span style="color:#f92672">=</span> api_site_articles(site_id, offset, page_size)
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> result[<span style="color:#e6db74">&#39;data&#39;</span>][<span style="color:#e6db74">&#39;list&#39;</span>]:
-        <span style="color:#66d9ef">if</span> search_name:
-            <span style="color:#66d9ef">if</span> i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;title&#39;</span>)<span style="color:#f92672">.</span>find(search_name) <span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
-                title_list<span style="color:#f92672">.</span>append(i)
-            <span style="color:#66d9ef">elif</span> match_level <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
-                <span style="color:#66d9ef">if</span> i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;brief&#39;</span>)<span style="color:#f92672">.</span>find(search_name) <span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
-                    title_list<span style="color:#f92672">.</span>append(i)
-        <span style="color:#66d9ef">else</span>:
-            title_list<span style="color:#f92672">.</span>append(i)
-
-    <span style="color:#66d9ef">return</span> title_list
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">search_site</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;订阅号搜索
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    有结果返回第一个，无结果返回空
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    :param name:
+</span><span style="color:#d88200">    :return:
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+    <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">api_search_site</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">20</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">result</span><span style="color:#111">[</span><span style="color:#d88200">&#39;data&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;list&#39;</span><span style="color:#111">]:</span>
+        <span style="color:#111">site_json</span> <span style="color:#f92672">=</span> <span style="color:#111">result</span><span style="color:#111">[</span><span style="color:#d88200">&#39;data&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;list&#39;</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span>
+        <span style="color:#111">site_id</span> <span style="color:#f92672">=</span> <span style="color:#111">site_json</span><span style="color:#111">[</span><span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">]</span>
+        <span style="color:#111">site_name</span> <span style="color:#f92672">=</span> <span style="color:#111">site_json</span><span style="color:#111">[</span><span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">]</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">site_name</span>
+    <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">None</span><span style="color:#111">,</span> <span style="color:#111">None</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_article_count</span>(site_id):
-    <span style="color:#e6db74">&#34;&#34;&#34;返回当前订阅号的文章总数
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    :param site_id:
-</span><span style="color:#e6db74">    :return:
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    result <span style="color:#f92672">=</span> api_site_articles(site_id, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
-    count <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;data&#39;</span>][<span style="color:#e6db74">&#39;count&#39;</span>]
-    <span style="color:#66d9ef">return</span> int(count)
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">search_titles</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">offset</span><span style="color:#111">,</span> <span style="color:#111">page_size</span><span style="color:#111">,</span> <span style="color:#111">search_name</span><span style="color:#111">,</span> <span style="color:#111">match_level</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;根据搜索关键词返回文章
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    :param site_id:
+</span><span style="color:#d88200">    :param offset:
+</span><span style="color:#d88200">    :param page_size:
+</span><span style="color:#d88200">    :param search_name:
+</span><span style="color:#d88200">    :param match_level:
+</span><span style="color:#d88200">    :return:
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+    <span style="color:#111">title_list</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+    <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">api_site_articles</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">offset</span><span style="color:#111">,</span> <span style="color:#111">page_size</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">result</span><span style="color:#111">[</span><span style="color:#d88200">&#39;data&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;list&#39;</span><span style="color:#111">]:</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">search_name</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">i</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;title&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#111">search_name</span><span style="color:#111">)</span> <span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">:</span>
+                <span style="color:#111">title_list</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">)</span>
+            <span style="color:#00a8c8">elif</span> <span style="color:#111">match_level</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span><span style="color:#111">:</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#111">i</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;brief&#39;</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">find</span><span style="color:#111">(</span><span style="color:#111">search_name</span><span style="color:#111">)</span> <span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">:</span>
+                    <span style="color:#111">title_list</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+            <span style="color:#111">title_list</span><span style="color:#f92672">.</span><span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#111">)</span>
+
+    <span style="color:#00a8c8">return</span> <span style="color:#111">title_list</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_args</span>():
-    <span style="color:#e6db74">&#34;&#34;&#34;
-</span><span style="color:#e6db74">    编写此脚本的理由：
-</span><span style="color:#e6db74">        1. 锤子阅读不支持文章搜索功能
-</span><span style="color:#e6db74">        2. 锤子阅读的文章是经过转码的, 可能会在自己服务器上保留，可用于被封文章查询
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    参数定义：
-</span><span style="color:#e6db74">        -h    帮助文档
-</span><span style="color:#e6db74">        -s    订阅号名称
-</span><span style="color:#e6db74">        -k    搜索关键词，不填返回最新的文章
-</span><span style="color:#e6db74">        -n    返回文章数，默认10 
-</span><span style="color:#e6db74">        -m    搜索匹配等级，默认1匹配标题 2匹配标题和摘要
-</span><span style="color:#e6db74">        -o    输出方式， 默认1命令行输出 2写入本地文件到当前目录
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    返回：
-</span><span style="color:#e6db74">        文章标题和文章链接
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    附：
-</span><span style="color:#e6db74">        锤子阅读官网：https://www.smartisan.com/apps/#/reader
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-
-    site <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-    keyword <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-    num <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
-    match_level <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-    output <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-
-    <span style="color:#66d9ef">try</span>:
-        opts, args <span style="color:#f92672">=</span> getopt<span style="color:#f92672">.</span>getopt(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#39;hs:k:n:m:o:&#39;</span>, [<span style="color:#e6db74">&#39;help=&#39;</span>])
-    <span style="color:#66d9ef">except</span> getopt<span style="color:#f92672">.</span>GetoptError:
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Error ! Use -h or --help to show this help message&#39;</span>)
-        sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">2</span>)
-    <span style="color:#66d9ef">for</span> opt, arg <span style="color:#f92672">in</span> opts:
-        <span style="color:#66d9ef">if</span> opt <span style="color:#f92672">in</span> (<span style="color:#e6db74">&#39;-h&#39;</span>, <span style="color:#e6db74">&#39;--help&#39;</span>):
-            <span style="color:#66d9ef">print</span>(get_args<span style="color:#f92672">.</span>__doc__)
-            sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">0</span>)
-        <span style="color:#66d9ef">elif</span> opt <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;-s&#39;</span>:
-            site <span style="color:#f92672">=</span> arg
-        <span style="color:#66d9ef">elif</span> opt <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;-k&#39;</span>:
-            keyword <span style="color:#f92672">=</span> arg
-        <span style="color:#66d9ef">elif</span> opt <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;-n&#39;</span>:
-            num <span style="color:#f92672">=</span> int(arg)
-        <span style="color:#66d9ef">elif</span> opt <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;-m&#39;</span>:
-            match_level <span style="color:#f92672">=</span> int(arg)
-        <span style="color:#66d9ef">elif</span> opt <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;-o&#39;</span>:
-            output <span style="color:#f92672">=</span> int(arg)
-    <span style="color:#66d9ef">return</span> site, keyword, num, match_level, output
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">get_article_count</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">):</span>
+    <span style="color:#d88200">&#34;&#34;&#34;返回当前订阅号的文章总数
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    :param site_id:
+</span><span style="color:#d88200">    :return:
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+    <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">api_site_articles</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">)</span>
+    <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">result</span><span style="color:#111">[</span><span style="color:#d88200">&#39;data&#39;</span><span style="color:#111">][</span><span style="color:#d88200">&#39;count&#39;</span><span style="color:#111">]</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">int</span><span style="color:#111">(</span><span style="color:#111">count</span><span style="color:#111">)</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main_by_args</span>(site, keyword, num, match_level, output):
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">get_args</span><span style="color:#111">():</span>
+    <span style="color:#d88200">&#34;&#34;&#34;
+</span><span style="color:#d88200">    编写此脚本的理由：
+</span><span style="color:#d88200">        1. 锤子阅读不支持文章搜索功能
+</span><span style="color:#d88200">        2. 锤子阅读的文章是经过转码的, 可能会在自己服务器上保留，可用于被封文章查询
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    参数定义：
+</span><span style="color:#d88200">        -h    帮助文档
+</span><span style="color:#d88200">        -s    订阅号名称
+</span><span style="color:#d88200">        -k    搜索关键词，不填返回最新的文章
+</span><span style="color:#d88200">        -n    返回文章数，默认10 
+</span><span style="color:#d88200">        -m    搜索匹配等级，默认1匹配标题 2匹配标题和摘要
+</span><span style="color:#d88200">        -o    输出方式， 默认1命令行输出 2写入本地文件到当前目录
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    返回：
+</span><span style="color:#d88200">        文章标题和文章链接
+</span><span style="color:#d88200">
+</span><span style="color:#d88200">    附：
+</span><span style="color:#d88200">        锤子阅读官网：https://www.smartisan.com/apps/#/reader
+</span><span style="color:#d88200">    &#34;&#34;&#34;</span>
+
+    <span style="color:#111">site</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;&#39;</span>
+    <span style="color:#111">keyword</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;&#39;</span>
+    <span style="color:#111">num</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+    <span style="color:#111">match_level</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#111">output</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+    <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+        <span style="color:#111">opts</span><span style="color:#111">,</span> <span style="color:#111">args</span> <span style="color:#f92672">=</span> <span style="color:#111">getopt</span><span style="color:#f92672">.</span><span style="color:#111">getopt</span><span style="color:#111">(</span><span style="color:#111">sys</span><span style="color:#f92672">.</span><span style="color:#111">argv</span><span style="color:#111">[</span><span style="color:#ae81ff">1</span><span style="color:#111">:],</span> <span style="color:#d88200">&#39;hs:k:n:m:o:&#39;</span><span style="color:#111">,</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;help=&#39;</span><span style="color:#111">])</span>
+    <span style="color:#00a8c8">except</span> <span style="color:#111">getopt</span><span style="color:#f92672">.</span><span style="color:#111">GetoptError</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Error ! Use -h or --help to show this help message&#39;</span><span style="color:#111">)</span>
+        <span style="color:#111">sys</span><span style="color:#f92672">.</span><span style="color:#111">exit</span><span style="color:#111">(</span><span style="color:#ae81ff">2</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">for</span> <span style="color:#111">opt</span><span style="color:#111">,</span> <span style="color:#111">arg</span> <span style="color:#f92672">in</span> <span style="color:#111">opts</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">opt</span> <span style="color:#f92672">in</span> <span style="color:#111">(</span><span style="color:#d88200">&#39;-h&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;--help&#39;</span><span style="color:#111">):</span>
+            <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">get_args</span><span style="color:#f92672">.</span><span style="color:#111">__doc__</span><span style="color:#111">)</span>
+            <span style="color:#111">sys</span><span style="color:#f92672">.</span><span style="color:#111">exit</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">elif</span> <span style="color:#111">opt</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;-s&#39;</span><span style="color:#111">:</span>
+            <span style="color:#111">site</span> <span style="color:#f92672">=</span> <span style="color:#111">arg</span>
+        <span style="color:#00a8c8">elif</span> <span style="color:#111">opt</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;-k&#39;</span><span style="color:#111">:</span>
+            <span style="color:#111">keyword</span> <span style="color:#f92672">=</span> <span style="color:#111">arg</span>
+        <span style="color:#00a8c8">elif</span> <span style="color:#111">opt</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;-n&#39;</span><span style="color:#111">:</span>
+            <span style="color:#111">num</span> <span style="color:#f92672">=</span> <span style="color:#111">int</span><span style="color:#111">(</span><span style="color:#111">arg</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">elif</span> <span style="color:#111">opt</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;-m&#39;</span><span style="color:#111">:</span>
+            <span style="color:#111">match_level</span> <span style="color:#f92672">=</span> <span style="color:#111">int</span><span style="color:#111">(</span><span style="color:#111">arg</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">elif</span> <span style="color:#111">opt</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;-o&#39;</span><span style="color:#111">:</span>
+            <span style="color:#111">output</span> <span style="color:#f92672">=</span> <span style="color:#111">int</span><span style="color:#111">(</span><span style="color:#111">arg</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">site</span><span style="color:#111">,</span> <span style="color:#111">keyword</span><span style="color:#111">,</span> <span style="color:#111">num</span><span style="color:#111">,</span> <span style="color:#111">match_level</span><span style="color:#111">,</span> <span style="color:#111">output</span>
+
+
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">main_by_args</span><span style="color:#111">(</span><span style="color:#111">site</span><span style="color:#111">,</span> <span style="color:#111">keyword</span><span style="color:#111">,</span> <span style="color:#111">num</span><span style="color:#111">,</span> <span style="color:#111">match_level</span><span style="color:#111">,</span> <span style="color:#111">output</span><span style="color:#111">):</span>
 
     <span style="color:#75715e"># 查找订阅号site_id</span>
-    site_id, site_name <span style="color:#f92672">=</span> search_site(site)
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> site_id:
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;订阅号不存在&#34;</span>)
-        exit(<span style="color:#ae81ff">0</span>)
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;正在搜索 {} 的文章&#39;</span><span style="color:#f92672">.</span>format(site_name))
+    <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">site_name</span> <span style="color:#f92672">=</span> <span style="color:#111">search_site</span><span style="color:#111">(</span><span style="color:#111">site</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">site_id</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;订阅号不存在&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">exit</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;正在搜索 {} 的文章&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">site_name</span><span style="color:#111">))</span>
 
     <span style="color:#75715e"># 获取当前订阅号文章总数，计算遍历最高次数</span>
-    count <span style="color:#f92672">=</span> get_article_count(site_id)
-    range_count <span style="color:#f92672">=</span> int(count <span style="color:#f92672">/</span> PAGE_SIZE) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">get_article_count</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">)</span>
+    <span style="color:#111">range_count</span> <span style="color:#f92672">=</span> <span style="color:#111">int</span><span style="color:#111">(</span><span style="color:#111">count</span> <span style="color:#f92672">/</span> <span style="color:#111">PAGE_SIZE</span><span style="color:#111">)</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
 
     <span style="color:#75715e"># 遍历查找</span>
-    search_list <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(range_count):
-        titles <span style="color:#f92672">=</span> search_titles(site_id, i, PAGE_SIZE, keyword, match_level)
-        search_list<span style="color:#f92672">.</span>extend(titles)
-        <span style="color:#66d9ef">if</span> len(search_list) <span style="color:#f92672">&gt;</span> num:
-            <span style="color:#66d9ef">break</span>
+    <span style="color:#111">search_list</span> <span style="color:#f92672">=</span> <span style="color:#111">[]</span>
+    <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">range</span><span style="color:#111">(</span><span style="color:#111">range_count</span><span style="color:#111">):</span>
+        <span style="color:#111">titles</span> <span style="color:#f92672">=</span> <span style="color:#111">search_titles</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">i</span><span style="color:#111">,</span> <span style="color:#111">PAGE_SIZE</span><span style="color:#111">,</span> <span style="color:#111">keyword</span><span style="color:#111">,</span> <span style="color:#111">match_level</span><span style="color:#111">)</span>
+        <span style="color:#111">search_list</span><span style="color:#f92672">.</span><span style="color:#111">extend</span><span style="color:#111">(</span><span style="color:#111">titles</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#111">search_list</span><span style="color:#111">)</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">num</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">break</span>
 
     <span style="color:#75715e"># 输出</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> search_list:
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;无搜索结果&#34;</span>)
-        exit(<span style="color:#ae81ff">0</span>)
-    <span style="color:#66d9ef">else</span>:
-        search_list <span style="color:#f92672">=</span> search_list[:num]
-        <span style="color:#66d9ef">if</span> output <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> search_list:
-                <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;{0} {1}&#39;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;title&#39;</span>), i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;origin_url&#39;</span>)))
-        <span style="color:#66d9ef">elif</span> output <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
-            <span style="color:#66d9ef">with</span> open(TEMP_FILE, <span style="color:#e6db74">&#39;w&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>) <span style="color:#66d9ef">as</span> f:
-                <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> search_list:
-                    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;[{}]({})&#39;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;title&#39;</span>), i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;origin_url&#39;</span>)))
-                    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#39;</span>)
-                    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#39;</span>)
-            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;结果已成功写入 {} 中&#39;</span><span style="color:#f92672">.</span>format(TEMP_FILE))
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">search_list</span><span style="color:#111">:</span>
+        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;无搜索结果&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">exit</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
+        <span style="color:#111">search_list</span> <span style="color:#f92672">=</span> <span style="color:#111">search_list</span><span style="color:#111">[:</span><span style="color:#111">num</span><span style="color:#111">]</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">output</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">search_list</span><span style="color:#111">:</span>
+                <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;{0} {1}&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;title&#39;</span><span style="color:#111">),</span> <span style="color:#111">i</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;origin_url&#39;</span><span style="color:#111">)))</span>
+        <span style="color:#00a8c8">elif</span> <span style="color:#111">output</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span><span style="color:#111">:</span>
+            <span style="color:#00a8c8">with</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#111">TEMP_FILE</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;w&#39;</span><span style="color:#111">,</span> <span style="color:#111">encoding</span><span style="color:#f92672">=</span><span style="color:#d88200">&#39;utf-8&#39;</span><span style="color:#111">)</span> <span style="color:#00a8c8">as</span> <span style="color:#111">f</span><span style="color:#111">:</span>
+                <span style="color:#00a8c8">for</span> <span style="color:#111">i</span> <span style="color:#f92672">in</span> <span style="color:#111">search_list</span><span style="color:#111">:</span>
+                    <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#111">write</span><span style="color:#111">(</span><span style="color:#d88200">&#39;[{}]({})&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;title&#39;</span><span style="color:#111">),</span> <span style="color:#111">i</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#d88200">&#39;origin_url&#39;</span><span style="color:#111">)))</span>
+                    <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#111">write</span><span style="color:#111">(</span><span style="color:#d88200">&#39;</span><span style="color:#8045ff">\r\n</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+                    <span style="color:#111">f</span><span style="color:#f92672">.</span><span style="color:#111">write</span><span style="color:#111">(</span><span style="color:#d88200">&#39;</span><span style="color:#8045ff">\r\n</span><span style="color:#d88200">&#39;</span><span style="color:#111">)</span>
+            <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;结果已成功写入 {} 中&#39;</span><span style="color:#f92672">.</span><span style="color:#111">format</span><span style="color:#111">(</span><span style="color:#111">TEMP_FILE</span><span style="color:#111">))</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-    site, keyword, num, match_level, output <span style="color:#f92672">=</span> get_args()
-    main_by_args(site, keyword, num, match_level, output)
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">main</span><span style="color:#111">():</span>
+    <span style="color:#111">site</span><span style="color:#111">,</span> <span style="color:#111">keyword</span><span style="color:#111">,</span> <span style="color:#111">num</span><span style="color:#111">,</span> <span style="color:#111">match_level</span><span style="color:#111">,</span> <span style="color:#111">output</span> <span style="color:#f92672">=</span> <span style="color:#111">get_args</span><span style="color:#111">()</span>
+    <span style="color:#111">main_by_args</span><span style="color:#111">(</span><span style="color:#111">site</span><span style="color:#111">,</span> <span style="color:#111">keyword</span><span style="color:#111">,</span> <span style="color:#111">num</span><span style="color:#111">,</span> <span style="color:#111">match_level</span><span style="color:#111">,</span> <span style="color:#111">output</span><span style="color:#111">)</span>
 
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
     <span style="color:#75715e"># main_by_args(&#39;大象公会&#39;, &#39;同性恋&#39;, 10, 1, 1)  # debug</span>
-    main()
+    <span style="color:#111">main</span><span style="color:#111">()</span>
 
 </code></pre></div>
                     
