@@ -42,7 +42,7 @@
 git submodule 方式下载主题
  拉取主题 git submodule add url themes/diary 更新主题：进入子模块 git pull 或者 git submodule update --remote --merge  配置 支持 html 标签
 [markup.goldmark.renderer] unsafe = true # enable raw HTML in Markdown 元数据 通常元数据包括如下：
---- title: &amp;#34;个人笔记 - Git&amp;#34; description: &amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34; date: &amp;#34;2020-03-01&amp;#34; categories: - &amp;#34;Git&amp;#34; tags: - &amp;#34;Sourcetree&amp;#34; - &amp;#34;Note&amp;#34; --- 其他的有：</description>
+---title:&amp;#34;个人笔记 - Git&amp;#34;description:&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;date:&amp;#34;2020-03-01&amp;#34;categories:- &amp;#34;Git&amp;#34;tags:- &amp;#34;Sourcetree&amp;#34;- &amp;#34;Note&amp;#34;---其他的有：</description>
     </item>
     
   </channel>

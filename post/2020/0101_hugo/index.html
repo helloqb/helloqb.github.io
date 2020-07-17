@@ -142,16 +142,6 @@
             </a>
             
         
-            
-            
-            
-            
-            
-            <a class="a-block nav-link-item false" href="/index.xml">
-                RSS Feed
-            </a>
-            
-        
     </div>
 
     
@@ -327,16 +317,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 <a class="a-block drawer-menu-item false" href="/about">
                     关于
-                </a>
-                
-            
-                
-                
-                
-                
-                
-                <a class="a-block drawer-menu-item false" href="/index.xml">
-                    RSS Feed
                 </a>
                 
             
@@ -545,21 +525,21 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </ol>
 <h1 id="配置">配置</h1>
 <p><strong>支持 html 标签</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#111">[</span><span style="color:#75af00">markup</span><span style="color:#111">.</span><span style="color:#75af00">goldmark</span><span style="color:#111">.</span><span style="color:#75af00">renderer</span><span style="color:#111">]</span>
-<span style="color:#75af00">unsafe</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>  <span style="color:#75715e"># enable raw HTML in Markdown</span>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[markup.goldmark.renderer]
+unsafe = <span style="color:#069;font-weight:bold">true</span>  <span style="color:#09f;font-style:italic"># enable raw HTML in Markdown</span>
 </code></pre></div><h1 id="元数据">元数据</h1>
 <p>通常元数据包括如下：</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
-<span style="color:#00a8c8">title</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;个人笔记 - Git&#34;</span>
-<span style="color:#00a8c8">description</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&#34;</span>
-<span style="color:#00a8c8">date</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;2020-03-01&#34;</span>
-<span style="color:#00a8c8">categories</span><span style="color:#111">:</span>
-  - <span style="color:#d88200">&#34;Git&#34;</span>
-<span style="color:#00a8c8">tags</span><span style="color:#111">:</span>
-  - <span style="color:#d88200">&#34;Sourcetree&#34;</span>
-  - <span style="color:#d88200">&#34;Note&#34;</span>
----
-</code></pre></div><p>其他的有：</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#069;font-weight:bold">title</span>:<span style="color:#bbb"> </span><span style="color:#c30">&#34;个人笔记 - Git&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#069;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#c30">&#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#069;font-weight:bold">date</span>:<span style="color:#bbb"> </span><span style="color:#c30">&#34;2020-03-01&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#069;font-weight:bold">categories</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#c30">&#34;Git&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#069;font-weight:bold">tags</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#c30">&#34;Sourcetree&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#c30">&#34;Note&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>---<span style="color:#bbb">
+</span></code></pre></div><p>其他的有：</p>
 <ul>
 <li><code>draft: true</code> 视为草稿</li>
 <li>有的主题文章列表会展示文章的开头，有标签会很乱，用 <code>&lt; !--more--&gt;</code> 会强制展示此节点之前的内容</li>
