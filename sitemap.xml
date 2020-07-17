@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>https://helloqb.xyz/</loc>
+    <lastmod>2020-07-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://helloqb.xyz/categories/%E6%9D%82%E8%B0%88/</loc>
     <lastmod>2020-07-13T00:00:00+00:00</lastmod>
   </url>
@@ -194,11 +199,6 @@
   
   <url>
     <loc>https://helloqb.xyz/post/2020/0101_hugo/</loc>
-    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
