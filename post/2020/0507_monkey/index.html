@@ -826,56 +826,56 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <ol>
 <li>简单粗暴的在页面上添加一个很丑很丑的按钮。</li>
 </ol>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#069;font-weight:bold">var</span> input<span style="color:#555">=</span><span style="color:#366">document</span>.createElement(<span style="color:#c30">&#34;input&#34;</span>);
-input.type<span style="color:#555">=</span><span style="color:#c30">&#34;button&#34;</span>;
-input.value<span style="color:#555">=</span><span style="color:#c30">&#34;Custom Button&#34;</span>;
-input.setAttribute(<span style="color:#c30">&#34;style&#34;</span>, <span style="color:#c30">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span>);
-<span style="color:#366">document</span>.body.appendChild(input);
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">var</span> input<span style="color:#666">=</span><span style="color:#008000">document</span>.createElement(<span style="color:#ba2121">&#34;input&#34;</span>);
+input.type<span style="color:#666">=</span><span style="color:#ba2121">&#34;button&#34;</span>;
+input.value<span style="color:#666">=</span><span style="color:#ba2121">&#34;Custom Button&#34;</span>;
+input.setAttribute(<span style="color:#ba2121">&#34;style&#34;</span>, <span style="color:#ba2121">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span>);
+<span style="color:#008000">document</span>.body.appendChild(input);
 </code></pre></div><ol start="2">
 <li>然后为按钮添加点击事件。</li>
 </ol>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">input.onclick <span style="color:#555">=</span> skipFunc;
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">input.onclick <span style="color:#666">=</span> skipFunc;
 
-<span style="color:#069;font-weight:bold">function</span> skipFunc()
+<span style="color:#008000;font-weight:bold">function</span> skipFunc()
 {
-    <span style="color:#069;font-weight:bold">var</span> info_hash <span style="color:#555">=</span> <span style="color:#366">document</span>.querySelector(<span style="color:#c30">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>).innerHTML
-    <span style="color:#366">window</span>.open(<span style="color:#c30">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#555">+</span> info_hash.replace(<span style="color:#c30">&#34;info_hash: &#34;</span>, <span style="color:#c30">&#34;&#34;</span>))
+    <span style="color:#008000;font-weight:bold">var</span> info_hash <span style="color:#666">=</span> <span style="color:#008000">document</span>.querySelector(<span style="color:#ba2121">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>).innerHTML
+    <span style="color:#008000">window</span>.open(<span style="color:#ba2121">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#666">+</span> info_hash.replace(<span style="color:#ba2121">&#34;info_hash: &#34;</span>, <span style="color:#ba2121">&#34;&#34;</span>))
 }
 </code></pre></div><p>本示例中，需要获取 info_hash 内容，浏览器直接右键检查复制 Selector 选择器，用 <code>querySelector</code> 方法定位即可。</p>
 <p><img src="https://oep2tw.dm.files.1drv.com/y4mRJBSD9WJHd0CwRrDQhVP0ONFhdkWMYBehiV7rZjyvB3-sBXzqcryi1DDfzJMd4zmUi-AJX12sT1YT6ajvxyDwKhakGcMBBiAyyYJ3h2UJcfUdvgxvzBilqja0s0IxcrGstntjatrAlFqsB0zhiKsHCTw_9iPJCSvCumwrb_9ro6M0kCZe9ZdGSf1G4-ULs3uoQFpv_34xKnwHAt7HXtDCA?width=2440&height=1248&cropmode=none" /></p>
 <p>另外，<code>innerHTML</code>、<code>window.open</code> 等其他方法就不赘述了，最后展示如下图，点击会跳转至谷歌。</p>
 <p><img src="https://mup2tw.dm.files.1drv.com/y4mQQE9aEjU3z7R2DSA2BLQ2S37BNFaxSoxNyrfBaijR1lt5xhgEQL8S_KlaGt6LrMhbMSsjomvCRyV90Kqyzq268yqaYtiBag4GA2qSquOGsT5khQ5XdPAjnN0qJG0mGI-5kqHPfYSnhsxMLMWLvPQ5yPz-y937wDMwL-i3SOuhPIoudLAOW1k5rvleQRaz0iCL58o-MVqOFgrL3QDKgVvdw?width=2506&height=1260&cropmode=none" /></p>
 <p>丑哭了有没有。。整个用户脚本如下：</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#09f;font-style:italic">// ==UserScript==
-</span><span style="color:#09f;font-style:italic">// @name        New script - torrentz2.eu
-</span><span style="color:#09f;font-style:italic">// @namespace   Violentmonkey Scripts
-</span><span style="color:#09f;font-style:italic">// @match       *://torrentz2.eu/*
-</span><span style="color:#09f;font-style:italic">// @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
-</span><span style="color:#09f;font-style:italic">// @grant       none
-</span><span style="color:#09f;font-style:italic">// @run-at      document-idle
-</span><span style="color:#09f;font-style:italic">// @version     1.0
-</span><span style="color:#09f;font-style:italic">// @author      -
-</span><span style="color:#09f;font-style:italic">// @description 2020/5/9 下午4:13:37
-</span><span style="color:#09f;font-style:italic">// ==/UserScript==
-</span><span style="color:#09f;font-style:italic"></span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#408080;font-style:italic">// ==UserScript==
+</span><span style="color:#408080;font-style:italic">// @name        New script - torrentz2.eu
+</span><span style="color:#408080;font-style:italic">// @namespace   Violentmonkey Scripts
+</span><span style="color:#408080;font-style:italic">// @match       *://torrentz2.eu/*
+</span><span style="color:#408080;font-style:italic">// @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
+</span><span style="color:#408080;font-style:italic">// @grant       none
+</span><span style="color:#408080;font-style:italic">// @run-at      document-idle
+</span><span style="color:#408080;font-style:italic">// @version     1.0
+</span><span style="color:#408080;font-style:italic">// @author      -
+</span><span style="color:#408080;font-style:italic">// @description 2020/5/9 下午4:13:37
+</span><span style="color:#408080;font-style:italic">// ==/UserScript==
+</span><span style="color:#408080;font-style:italic"></span>
 
-<span style="color:#09f;font-style:italic">// add button in top 
-</span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">var</span> input<span style="color:#555">=</span><span style="color:#366">document</span>.createElement(<span style="color:#c30">&#34;input&#34;</span>);
-input.type<span style="color:#555">=</span><span style="color:#c30">&#34;button&#34;</span>;
-input.value<span style="color:#555">=</span><span style="color:#c30">&#34;Button&#34;</span>;
-input.onclick <span style="color:#555">=</span> showAlert;
-input.setAttribute(<span style="color:#c30">&#34;style&#34;</span>, <span style="color:#c30">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span>);
-<span style="color:#366">document</span>.body.appendChild(input); 
+<span style="color:#408080;font-style:italic">// add button in top 
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> input<span style="color:#666">=</span><span style="color:#008000">document</span>.createElement(<span style="color:#ba2121">&#34;input&#34;</span>);
+input.type<span style="color:#666">=</span><span style="color:#ba2121">&#34;button&#34;</span>;
+input.value<span style="color:#666">=</span><span style="color:#ba2121">&#34;Button&#34;</span>;
+input.onclick <span style="color:#666">=</span> showAlert;
+input.setAttribute(<span style="color:#ba2121">&#34;style&#34;</span>, <span style="color:#ba2121">&#34;font-size:18px;position:absolute;top:120px;right:40px;&#34;</span>);
+<span style="color:#008000">document</span>.body.appendChild(input); 
  
-<span style="color:#069;font-weight:bold">function</span> showAlert()
+<span style="color:#008000;font-weight:bold">function</span> showAlert()
 {
-    <span style="color:#069;font-weight:bold">var</span> info_hash <span style="color:#555">=</span> <span style="color:#366">document</span>.querySelector(<span style="color:#c30">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>).innerHTML
-    <span style="color:#366">window</span>.open(<span style="color:#c30">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#555">+</span> info_hash.replace(<span style="color:#c30">&#34;info_hash: &#34;</span>, <span style="color:#c30">&#34;&#34;</span>))
+    <span style="color:#008000;font-weight:bold">var</span> info_hash <span style="color:#666">=</span> <span style="color:#008000">document</span>.querySelector(<span style="color:#ba2121">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>).innerHTML
+    <span style="color:#008000">window</span>.open(<span style="color:#ba2121">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#666">+</span> info_hash.replace(<span style="color:#ba2121">&#34;info_hash: &#34;</span>, <span style="color:#ba2121">&#34;&#34;</span>))
 }
 </code></pre></div><h2 id="方案二页面原有元素添加点击">方案二：页面原有元素添加点击</h2>
 <p>在 info_hash 文本上添加点击事件，点击文本会跳转至谷歌。</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#069;font-weight:bold">var</span> infoHash <span style="color:#555">=</span> <span style="color:#366">document</span>.querySelector(<span style="color:#c30">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>)
-infoHash.onclick <span style="color:#555">=</span> <span style="color:#069;font-weight:bold">function</span>(){<span style="color:#366">window</span>.open(<span style="color:#c30">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#555">+</span> infoHash.innerHTML.replace(<span style="color:#c30">&#34;info_hash: &#34;</span>, <span style="color:#c30">&#34;&#34;</span>))}
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">var</span> infoHash <span style="color:#666">=</span> <span style="color:#008000">document</span>.querySelector(<span style="color:#ba2121">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>)
+infoHash.onclick <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(){<span style="color:#008000">window</span>.open(<span style="color:#ba2121">&#34;https://www.google.com/search?q=&#34;</span> <span style="color:#666">+</span> infoHash.innerHTML.replace(<span style="color:#ba2121">&#34;info_hash: &#34;</span>, <span style="color:#ba2121">&#34;&#34;</span>))}
 </code></pre></div><p>此方案完美隐藏，没有破坏原有页面。</p>
 <h2 id="方案三按钮嵌入至页面">方案三：按钮嵌入至页面</h2>
 <p>思路是在某一节点中，添加其子节点，以共用其子节点的样式。</p>
@@ -890,11 +890,11 @@ infoHash.onclick <span style="color:#555">=</span> <span style="color:#069;font-
 <ol start="3">
 <li><code>appendTo</code> 方法添加到父节点中</li>
 </ol>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#069;font-weight:bold">var</span> infoHash <span style="color:#555">=</span> <span style="color:#366">document</span>.querySelector(<span style="color:#c30">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>)
-<span style="color:#069;font-weight:bold">var</span> infoHashText <span style="color:#555">=</span> infoHash.innerHTML.replace(<span style="color:#c30">&#34;info_hash: &#34;</span>, <span style="color:#c30">&#34;&#34;</span>)
-$(<span style="color:#c30">`
-</span><span style="color:#c30">&lt;a href=&#34;https://www.google.com/search?q=</span><span style="color:#a00">${</span>infoHashText<span style="color:#a00">}</span><span style="color:#c30">&#34; target=&#34;_blank&#34; &gt;Google&lt;/a&gt;
-</span><span style="color:#c30">`</span>).appendTo(<span style="color:#366">document</span>.querySelector(<span style="color:#c30">&#34;#votebox &gt; span.replist&#34;</span>));
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">var</span> infoHash <span style="color:#666">=</span> <span style="color:#008000">document</span>.querySelector(<span style="color:#ba2121">&#34;#wrap &gt; div.trackersvotebox &gt; div.trackers &gt; div&#34;</span>)
+<span style="color:#008000;font-weight:bold">var</span> infoHashText <span style="color:#666">=</span> infoHash.innerHTML.replace(<span style="color:#ba2121">&#34;info_hash: &#34;</span>, <span style="color:#ba2121">&#34;&#34;</span>)
+$(<span style="color:#ba2121">`
+</span><span style="color:#ba2121">&lt;a href=&#34;https://www.google.com/search?q=</span><span style="color:#b68;font-weight:bold">${</span>infoHashText<span style="color:#b68;font-weight:bold">}</span><span style="color:#ba2121">&#34; target=&#34;_blank&#34; &gt;Google&lt;/a&gt;
+</span><span style="color:#ba2121">`</span>).appendTo(<span style="color:#008000">document</span>.querySelector(<span style="color:#ba2121">&#34;#votebox &gt; span.replist&#34;</span>));
 </code></pre></div><p>如下，完美嵌入。</p>
 <p><img src="https://nep2tw.dm.files.1drv.com/y4mSwRdebaViBcA8QJYWi7p7VSERUEVDjw79nHi40kFO0UmUAULvTgAgvVhWAbrmyw0e35xIdVf6T5J9RBlwLsHXwCtRik3uZmzzOaDB3wmprrLMLZxtbAJvNeCZ9PE-bAhA7lyPe-ofR8lGoEzJGU_Qts4c7nqfATGJ_nXPlblQyAFH4selQBJzKmHRRn57PdKWFhmGT5VMB0AW2FH3Z1dkA?width=3146&height=1602&cropmode=none" /></p>
 <h1 id="推荐">推荐</h1>

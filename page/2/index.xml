@@ -37,199 +37,199 @@
 &lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
 &lt;p&gt;就 200 行代码，直接贴出来了，不放到 Github 上了。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;附锤子阅读APP下载 &lt;a href=&#34;https://www.smartisan.com/apps/#/reader&#34;&gt;链接&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0cf;font-weight:bold&#34;&gt;requests&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0cf;font-weight:bold&#34;&gt;sys&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0cf;font-weight:bold&#34;&gt;getopt&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;sys&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;getopt&lt;/span&gt;
 
-PAGE_SIZE &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;100&lt;/span&gt;
-TEMP_FILE &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;result.md&amp;#39;&lt;/span&gt;
+PAGE_SIZE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;
+TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;result.md&amp;#39;&lt;/span&gt;
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;api_site_articles&lt;/span&gt;(site_id, offset, page_size):
-    &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;&amp;#34;&amp;#34;订阅号文章列表的接口json返回结果
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param site_id:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param offset:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param page_size:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :return:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    params &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; {
-        &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;site_id&amp;#39;&lt;/span&gt;: site_id,
-        &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;offset&amp;#39;&lt;/span&gt;: offset,
-        &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;page_size&amp;#39;&lt;/span&gt;: page_size
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;api_site_articles&lt;/span&gt;(site_id, offset, page_size):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;订阅号文章列表的接口json返回结果
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param site_id:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param offset:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param page_size:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    params &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;site_id&amp;#39;&lt;/span&gt;: site_id,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;offset&amp;#39;&lt;/span&gt;: offset,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;page_size&amp;#39;&lt;/span&gt;: page_size
     }
-    url &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;http://reader.smartisan.com/index.php?r=article/getList&amp;#39;&lt;/span&gt;
-    response &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(url, params)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;json()
+    url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;http://reader.smartisan.com/index.php?r=article/getList&amp;#39;&lt;/span&gt;
+    response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(url, params)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;json()
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;api_search_site&lt;/span&gt;(name, offset, page_size):
-    &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;&amp;#34;&amp;#34;搜索订阅号的接口json返回结果
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param name:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param offset:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param page_size:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :return:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    params &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; {
-        &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;: name,
-        &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;offset&amp;#39;&lt;/span&gt;: offset,
-        &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;page_size&amp;#39;&lt;/span&gt;: page_size
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;api_search_site&lt;/span&gt;(name, offset, page_size):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;搜索订阅号的接口json返回结果
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param name:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param offset:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param page_size:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    params &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;: name,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;offset&amp;#39;&lt;/span&gt;: offset,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;page_size&amp;#39;&lt;/span&gt;: page_size
     }
-    url &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;http://reader.smartisan.com/index.php?r=site/search&amp;#39;&lt;/span&gt;
-    response &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(url, params)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;json()
+    url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;http://reader.smartisan.com/index.php?r=site/search&amp;#39;&lt;/span&gt;
+    response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(url, params)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;json()
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;search_site&lt;/span&gt;(name):
-    &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;&amp;#34;&amp;#34;订阅号搜索
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    有结果返回第一个，无结果返回空
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param name:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :return:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    result &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; api_search_site(name, &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;20&lt;/span&gt;)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; result[&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;]:
-        site_json &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; result[&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;]
-        site_id &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; site_json[&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;]
-        site_name &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; site_json[&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;]
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; site_id, site_name
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;else&lt;/span&gt;:
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; None, None
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;search_site&lt;/span&gt;(name):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;订阅号搜索
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    有结果返回第一个，无结果返回空
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param name:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    result &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_search_site(name, &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#666&#34;&gt;20&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;]:
+        site_json &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;]
+        site_id &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; site_json[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;]
+        site_name &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; site_json[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;]
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; site_id, site_name
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; None, None
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;search_titles&lt;/span&gt;(site_id, offset, page_size, search_name, match_level):
-    &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;&amp;#34;&amp;#34;根据搜索关键词返回文章
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param site_id:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param offset:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param page_size:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param search_name:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param match_level:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :return:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    title_list &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; []
-    result &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; api_site_articles(site_id, offset, page_size)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; result[&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;]:
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; search_name:
-            &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; i&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;find(search_name) &lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;:
-                title_list&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;append(i)
-            &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;elif&lt;/span&gt; match_level &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;:
-                &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; i&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;brief&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;find(search_name) &lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;:
-                    title_list&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;append(i)
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;else&lt;/span&gt;:
-            title_list&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;append(i)
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;search_titles&lt;/span&gt;(site_id, offset, page_size, search_name, match_level):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;根据搜索关键词返回文章
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param site_id:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param offset:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param page_size:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param search_name:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param match_level:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    title_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+    result &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_site_articles(site_id, offset, page_size)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;]:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; search_name:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find(search_name) &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:
+                title_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i)
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; match_level &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;:
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;brief&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find(search_name) &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:
+                    title_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+            title_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i)
 
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; title_list
-
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;get_article_count&lt;/span&gt;(site_id):
-    &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;&amp;#34;&amp;#34;返回当前订阅号的文章总数
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :param site_id:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    :return:
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    result &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; api_site_articles(site_id, &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;)
-    count &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; result[&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;count&amp;#39;&lt;/span&gt;]
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(count)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; title_list
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;get_args&lt;/span&gt;():
-    &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    编写此脚本的理由：
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        1. 锤子阅读不支持文章搜索功能
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        2. 锤子阅读的文章是经过转码的, 可能会在自己服务器上保留，可用于被封文章查询
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    参数定义：
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        -h    帮助文档
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        -s    订阅号名称
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        -k    搜索关键词，不填返回最新的文章
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        -n    返回文章数，默认10 
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        -m    搜索匹配等级，默认1匹配标题 2匹配标题和摘要
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        -o    输出方式， 默认1命令行输出 2写入本地文件到当前目录
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    返回：
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        文章标题和文章链接
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    附：
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;        锤子阅读官网：https://www.smartisan.com/apps/#/reader
-&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-
-    site &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
-    keyword &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
-    num &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;10&lt;/span&gt;
-    match_level &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-    output &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;try&lt;/span&gt;:
-        opts, args &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; getopt&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;getopt(sys&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;argv[&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;:], &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;hs:k:n:m:o:&amp;#39;&lt;/span&gt;, [&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;help=&amp;#39;&lt;/span&gt;])
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;except&lt;/span&gt; getopt&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;GetoptError:
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;Error ! Use -h or --help to show this help message&amp;#39;&lt;/span&gt;)
-        sys&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; opt, arg &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; opts:
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; opt &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; (&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;--help&amp;#39;&lt;/span&gt;):
-            &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;print&lt;/span&gt;(get_args&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;__doc__)
-            sys&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;)
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;-s&amp;#39;&lt;/span&gt;:
-            site &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; arg
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;-k&amp;#39;&lt;/span&gt;:
-            keyword &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; arg
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;-n&amp;#39;&lt;/span&gt;:
-            num &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(arg)
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;-m&amp;#39;&lt;/span&gt;:
-            match_level &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(arg)
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;-o&amp;#39;&lt;/span&gt;:
-            output &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(arg)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; site, keyword, num, match_level, output
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;get_article_count&lt;/span&gt;(site_id):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;返回当前订阅号的文章总数
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param site_id:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    result &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_site_articles(site_id, &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+    count &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;count&amp;#39;&lt;/span&gt;]
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(count)
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;main_by_args&lt;/span&gt;(site, keyword, num, match_level, output):
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;get_args&lt;/span&gt;():
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    编写此脚本的理由：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        1. 锤子阅读不支持文章搜索功能
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        2. 锤子阅读的文章是经过转码的, 可能会在自己服务器上保留，可用于被封文章查询
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    参数定义：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -h    帮助文档
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -s    订阅号名称
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -k    搜索关键词，不填返回最新的文章
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -n    返回文章数，默认10 
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -m    搜索匹配等级，默认1匹配标题 2匹配标题和摘要
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -o    输出方式， 默认1命令行输出 2写入本地文件到当前目录
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    返回：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        文章标题和文章链接
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    附：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        锤子阅读官网：https://www.smartisan.com/apps/#/reader
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# 查找订阅号site_id&lt;/span&gt;
-    site_id, site_name &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; search_site(site)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;not&lt;/span&gt; site_id:
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;订阅号不存在&amp;#34;&lt;/span&gt;)
-        &lt;span style=&#34;color:#366&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;正在搜索 {} 的文章&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;format(site_name))
+    site &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+    keyword &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+    num &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;10&lt;/span&gt;
+    match_level &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;
+    output &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# 获取当前订阅号文章总数，计算遍历最高次数&lt;/span&gt;
-    count &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; get_article_count(site_id)
-    range_count &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(count &lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt; PAGE_SIZE) &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# 遍历查找&lt;/span&gt;
-    search_list &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; []
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;range&lt;/span&gt;(range_count):
-        titles &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; search_titles(site_id, i, PAGE_SIZE, keyword, match_level)
-        search_list&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;extend(titles)
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(search_list) &lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; num:
-            &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;break&lt;/span&gt;
-
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# 输出&lt;/span&gt;
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;not&lt;/span&gt; search_list:
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;无搜索结果&amp;#34;&lt;/span&gt;)
-        &lt;span style=&#34;color:#366&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;)
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;else&lt;/span&gt;:
-        search_list &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; search_list[:num]
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; output &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;:
-            &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
-                &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;{0} {1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
-        &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;elif&lt;/span&gt; output &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;:
-            &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;open&lt;/span&gt;(TEMP_FILE, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;w&amp;#39;&lt;/span&gt;, encoding&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;as&lt;/span&gt; f:
-                &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
-                    f&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;[{}]({})&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
-                    f&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#c30;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;&lt;/span&gt;)
-                    f&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#c30;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;&lt;/span&gt;)
-            &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;结果已成功写入 {} 中&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;format(TEMP_FILE))
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt;:
+        opts, args &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; getopt&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;getopt(sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;argv[&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:], &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;hs:k:n:m:o:&amp;#39;&lt;/span&gt;, [&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;help=&amp;#39;&lt;/span&gt;])
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;except&lt;/span&gt; getopt&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;GetoptError:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;Error ! Use -h or --help to show this help message&amp;#39;&lt;/span&gt;)
+        sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; opt, arg &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; opts:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; opt &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; (&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;--help&amp;#39;&lt;/span&gt;):
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(get_args&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;__doc__)
+            sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-s&amp;#39;&lt;/span&gt;:
+            site &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; arg
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-k&amp;#39;&lt;/span&gt;:
+            keyword &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; arg
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-n&amp;#39;&lt;/span&gt;:
+            num &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(arg)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-m&amp;#39;&lt;/span&gt;:
+            match_level &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(arg)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-o&amp;#39;&lt;/span&gt;:
+            output &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(arg)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; site, keyword, num, match_level, output
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;main&lt;/span&gt;():
-    site, keyword, num, match_level, output &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; get_args()
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main_by_args&lt;/span&gt;(site, keyword, num, match_level, output):
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 查找订阅号site_id&lt;/span&gt;
+    site_id, site_name &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_site(site)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;not&lt;/span&gt; site_id:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;订阅号不存在&amp;#34;&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;正在搜索 {} 的文章&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(site_name))
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取当前订阅号文章总数，计算遍历最高次数&lt;/span&gt;
+    count &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_article_count(site_id)
+    range_count &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(count &lt;span style=&#34;color:#666&#34;&gt;/&lt;/span&gt; PAGE_SIZE) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 遍历查找&lt;/span&gt;
+    search_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;range&lt;/span&gt;(range_count):
+        titles &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_titles(site_id, i, PAGE_SIZE, keyword, match_level)
+        search_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;extend(titles)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;len&lt;/span&gt;(search_list) &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; num:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;break&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 输出&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;not&lt;/span&gt; search_list:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;无搜索结果&amp;#34;&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+        search_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_list[:num]
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; output &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;{0} {1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; output &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;open&lt;/span&gt;(TEMP_FILE, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;w&amp;#39;&lt;/span&gt;, encoding&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;as&lt;/span&gt; f:
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
+                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;[{}]({})&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
+                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b62;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;)
+                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b62;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;)
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;结果已成功写入 {} 中&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(TEMP_FILE))
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main&lt;/span&gt;():
+    site, keyword, num, match_level, output &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_args()
     main_by_args(site, keyword, num, match_level, output)
 
 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# main_by_args(&amp;#39;大象公会&amp;#39;, &amp;#39;同性恋&amp;#39;, 10, 1, 1)  # debug&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# main_by_args(&amp;#39;大象公会&amp;#39;, &amp;#39;同性恋&amp;#39;, 10, 1, 1)  # debug&lt;/span&gt;
     main()
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://helloqb.xyz/post/2020/0311_python/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
@@ -246,118 +246,118 @@ TEMP_FILE &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&
         <description>哲学家 https://helloqb.xyz/post/2020/0304_java/ -&lt;h1 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h1&gt;
 &lt;p&gt;SpringMVC 框架的接口中 Response 有 &lt;code&gt;ServletOutputStream&lt;/code&gt; 和 &lt;code&gt;PrintWriter&lt;/code&gt; 两种输出，还有一个 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
 &lt;p&gt;OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 无效。所以先采用 &lt;code&gt;PrintWriter&lt;/code&gt; 搭配 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#99f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;downloadFile1&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile1&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    BufferedReader bufferedReader &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#555&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setCharacterEncoding&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setCharacterEncoding&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    BufferedWriter bufferedWriter &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedWriter&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;getWriter&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;());&lt;/span&gt;
-    String line&lt;span style=&#34;color:#555&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
-        bufferedWriter&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-        bufferedWriter&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
-    bufferedReader&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    bufferedWriter&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    BufferedWriter bufferedWriter &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedWriter&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getWriter&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
 
-&lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;无用，没有仔细研究，应该 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 只是告诉浏览器是什么编码，没有解码功能。&lt;/p&gt;
 &lt;h1 id=&#34;方案二servletoutputstream--outputstreamwriter&#34;&gt;方案二：ServletOutputStream + OutputStreamWriter&lt;/h1&gt;
 &lt;p&gt;将 &lt;code&gt;response.getOutputStream()&lt;/code&gt; 获取到的流用 &lt;code&gt;OutputStreamWriter&lt;/code&gt; 包装。结果可行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#99f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/downloadFile2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;downloadFile2&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile2&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    BufferedReader bufferedReader &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#555&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStreamWriter writerStream &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; OutputStreamWriter&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(),&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;GBK&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    String line&lt;span style=&#34;color:#555&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
-        writerStream&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-        writerStream&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
-    bufferedReader&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    writerStream&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStreamWriter writerStream &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; OutputStreamWriter&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GBK&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
 
-&lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;方案三servletoutputstream--getbytes&#34;&gt;方案三：ServletOutputStream + getBytes&lt;/h1&gt;
 &lt;p&gt;在按行写入字符串时，使用 &lt;code&gt;getBytes&lt;/code&gt; 方法将字符串转换为想要输出的编码格式。结果可行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#99f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/downloadFile3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;downloadFile3&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    BufferedReader bufferedReader &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#555&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream outputStream &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    String line&lt;span style=&#34;color:#555&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
-        outputStream&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;getBytes&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;));&lt;/span&gt;
-        outputStream&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
-    bufferedReader&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    outputStream&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-&lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream outputStream &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBytes&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+        outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;无需转码的写法&#34;&gt;无需转码的写法&lt;/h1&gt;
 &lt;p&gt;若不需要转码的话，就很简短了，用字节流就行了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#99f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/downloadFile4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;downloadFile4&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile4&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    FileInputStream fis &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    FileInputStream fis &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream os &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;[]&lt;/span&gt; buffer &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;[&lt;/span&gt;4096&lt;span style=&#34;color:#555&#34;&gt;];&lt;/span&gt;
-    &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; b &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#555&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;((&lt;/span&gt;b &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; fis&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;read&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#555&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
-        os&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; b&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
-    fis&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-    os&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-&lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream os &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; buffer &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;4096&lt;span style=&#34;color:#666&#34;&gt;];&lt;/span&gt;
+    &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; b &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;b &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; fis&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;read&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#666&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    fis&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简写的话可以用第三方包。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0cf;font-weight:bold&#34;&gt;org.springframework.util.FileCopyUtils&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#99f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/downloadFile5&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;downloadFile5&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.util.FileCopyUtils&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile5&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile5&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    InputStream inputStream&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedInputStream&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#555&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    InputStream inputStream&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    FileCopyUtils&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;copy&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;inputStream&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; response&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    FileCopyUtils&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;copy&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;inputStream&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
 
 
-&lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;补充：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。&lt;/li&gt;
@@ -446,19 +446,19 @@ TEMP_FILE &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&
 &lt;/ol&gt;
 &lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;支持 html 标签&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[markup.goldmark.renderer]
-unsafe = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[markup.goldmark.renderer]
+unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;元数据&#34;&gt;元数据&lt;/h1&gt;
 &lt;p&gt;通常元数据包括如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;title&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;个人笔记 - Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;description&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;date&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;2020-03-01&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;categories&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;tags&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Sourcetree&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Note&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;title&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人笔记 - Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;description&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;date&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2020-03-01&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;categories&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;tags&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Sourcetree&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Note&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其他的有：&lt;/p&gt;
 &lt;ul&gt;
