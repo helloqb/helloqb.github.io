@@ -6,9 +6,154 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 13 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>油猴脚本初探</title>
+        <link>https://helloqb.xyz/post/2020/0507_monkey/</link>
+        <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0507_monkey/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0507_monkey/ -&lt;h1 id=&#34;认识&#34;&gt;认识&lt;/h1&gt;
+&lt;p&gt;常言道，不装扩展的浏览器只能发挥它 40% 的能力。而扩展中不得不提的神器就是 &lt;strong&gt;油猴脚本&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;相对扩展来说，它更轻量，只作用于指定网站，占用内存少。所以在脚本和扩展实现相同功能的情况下，我都是优先选用脚本。&lt;/p&gt;
+&lt;p&gt;个人认为油猴脚本就是一串 Javascript 代码，因而前端工程师很容易上手。作为后端工程师的我。。。应该也比较容易上手吧。开干！&lt;/p&gt;
+&lt;h1 id=&#34;脚本编写&#34;&gt;脚本编写&lt;/h1&gt;
+&lt;h2 id=&#34;开发环境&#34;&gt;开发环境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Chrome：可以更方便的定位 DOM。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://violentmonkey.github.io/&#34;&gt;暴力猴&lt;/a&gt;：有个为此站点查找脚本的功能，很方便。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;需求&#34;&gt;需求&lt;/h2&gt;
+&lt;p&gt;如果你像我一样，只是想在某个页面添加一个按钮，实现快速跳转的功能。而自己又非前端，后面的内容应该会帮到你。示例 js 很简单，前端大神的话直接无视看下元数据块的内容就行了。&lt;/p&gt;
+&lt;p&gt;以 &lt;a href=&#34;https://torrentz2.eu/&#34;&gt;torrentz2&lt;/a&gt; 网站为例，该网站磁力链接无法跳转，现在实现点击某一按钮后跳转到谷歌或者弹出磁力链接。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://n0p2tw.dm.files.1drv.com/y4mwf-OEOC9M3hPuAM-cf25Kuwuv6zt5ylvqRo2epKZjLtA4T-g09hxwxwmkwUd8TmPDan_ZN3w5D19ZnXgCez_SHSTtCVxISYYkZxC7XOoW1XbQsOZ2j5rtJqWMehFYkvMOHNEEub1s7rISsqsfMEcLAWZyX9fufOKVcdMqfqR48NljJkC7Fm44ugpNmwi9KUFO8SJ2zIECjb-cWARSGuKOw?width=2850&amp;height=1566&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;元数据块metadata-block&#34;&gt;元数据块（Metadata Block）&lt;/h2&gt;
+&lt;p&gt;用暴力猴新建脚本时，会默认创建基础的元数据块。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// ==UserScript==
+// @name        New script - torrentz2.eu
+// @namespace   Violentmonkey Scripts
+// @match       *://torrentz2.eu/*
+// @grant       none
+// @version     1.0
+// @author      -
+// @description 2020/5/9 下午4:13:37
+// ==/UserScript==
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;name&lt;/code&gt;：名称&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;namespace&lt;/code&gt;：命名空间，正式发布时需要&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;match&lt;/code&gt;：脚本适用网站，另外有个 &lt;code&gt;include&lt;/code&gt; 用法差不多，官网说这个匹配规则更安全些&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;grant&lt;/code&gt;：控制特定 api 的使用，不常用，none 即可&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;version&lt;/code&gt;：版本&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;author&lt;/code&gt;：作者&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;description&lt;/code&gt;：描述&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其余我用到的有：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// ==UserScript==
+// @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
+// @run-at      document-idle
+// ==/UserScript==
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;require&lt;/code&gt;：加载第三方库，比如 jquery&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;run-at&lt;/code&gt;：控制脚本在页面哪个阶段运行，如 document-idle 为将在页面和所有资源加载之后运行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我只是将个人用到的介绍下，详细请参考 &lt;a href=&#34;https://wiki.greasespot.net/Metadata_Block&#34;&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;方案一额外添加按钮&#34;&gt;方案一：额外添加按钮&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;简单粗暴的在页面上添加一个很丑很丑的按钮。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; input&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.createElement(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;input&amp;#34;&lt;/span&gt;);
+input.type&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;button&amp;#34;&lt;/span&gt;;
+input.value&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Custom Button&amp;#34;&lt;/span&gt;;
+input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;font-size:18px;position:absolute;top:120px;right:40px;&amp;#34;&lt;/span&gt;);
+&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.body.appendChild(input);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;然后为按钮添加点击事件。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;input.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; skipFunc;
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; skipFunc()
+{
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; info_hash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;).innerHTML
+    &lt;span style=&#34;color:#008000&#34;&gt;window&lt;/span&gt;.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://www.google.com/search?q=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; info_hash.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;))
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;本示例中，需要获取 info_hash 内容，浏览器直接右键检查复制 Selector 选择器，用 &lt;code&gt;querySelector&lt;/code&gt; 方法定位即可。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://oep2tw.dm.files.1drv.com/y4mRJBSD9WJHd0CwRrDQhVP0ONFhdkWMYBehiV7rZjyvB3-sBXzqcryi1DDfzJMd4zmUi-AJX12sT1YT6ajvxyDwKhakGcMBBiAyyYJ3h2UJcfUdvgxvzBilqja0s0IxcrGstntjatrAlFqsB0zhiKsHCTw_9iPJCSvCumwrb_9ro6M0kCZe9ZdGSf1G4-ULs3uoQFpv_34xKnwHAt7HXtDCA?width=2440&amp;height=1248&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;另外，&lt;code&gt;innerHTML&lt;/code&gt;、&lt;code&gt;window.open&lt;/code&gt; 等其他方法就不赘述了，最后展示如下图，点击会跳转至谷歌。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://mup2tw.dm.files.1drv.com/y4mQQE9aEjU3z7R2DSA2BLQ2S37BNFaxSoxNyrfBaijR1lt5xhgEQL8S_KlaGt6LrMhbMSsjomvCRyV90Kqyzq268yqaYtiBag4GA2qSquOGsT5khQ5XdPAjnN0qJG0mGI-5kqHPfYSnhsxMLMWLvPQ5yPz-y937wDMwL-i3SOuhPIoudLAOW1k5rvleQRaz0iCL58o-MVqOFgrL3QDKgVvdw?width=2506&amp;height=1260&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;丑哭了有没有。。整个用户脚本如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// ==UserScript==
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @name        New script - torrentz2.eu
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @namespace   Violentmonkey Scripts
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @match       *://torrentz2.eu/*
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @grant       none
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @run-at      document-idle
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @version     1.0
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @author      -
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @description 2020/5/9 下午4:13:37
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// ==/UserScript==
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// add button in top 
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; input&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.createElement(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;input&amp;#34;&lt;/span&gt;);
+input.type&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;button&amp;#34;&lt;/span&gt;;
+input.value&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Button&amp;#34;&lt;/span&gt;;
+input.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; showAlert;
+input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;font-size:18px;position:absolute;top:120px;right:40px;&amp;#34;&lt;/span&gt;);
+&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.body.appendChild(input); 
+ 
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; showAlert()
+{
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; info_hash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;).innerHTML
+    &lt;span style=&#34;color:#008000&#34;&gt;window&lt;/span&gt;.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://www.google.com/search?q=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; info_hash.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;))
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方案二页面原有元素添加点击&#34;&gt;方案二：页面原有元素添加点击&lt;/h2&gt;
+&lt;p&gt;在 info_hash 文本上添加点击事件，点击文本会跳转至谷歌。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
+infoHash.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt;(){&lt;span style=&#34;color:#008000&#34;&gt;window&lt;/span&gt;.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://www.google.com/search?q=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; infoHash.innerHTML.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;))}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此方案完美隐藏，没有破坏原有页面。&lt;/p&gt;
+&lt;h2 id=&#34;方案三按钮嵌入至页面&#34;&gt;方案三：按钮嵌入至页面&lt;/h2&gt;
+&lt;p&gt;思路是在某一节点中，添加其子节点，以共用其子节点的样式。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;找到并复制兄弟节点的所有元素&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://mkp2tw.dm.files.1drv.com/y4mwJ-vDI3kdXN0d4tlY4NWG_7qCl1z_qNF6Dh2pwBCLqMFO11khPmuj5Td8meMFKrfhhlxbUfiE-M4o6DigxCRs04ryi2XFd97ZOUnZHUpizw5a6ual-L_aWX-l88sdjT3LxTWyljTqGr2J0crcF6V3gyJXNISzxIcF-ulrUeZIRarahXne7BG8mmpD7HH38N7wsyDCSraiiH3EzaVNVazFg?width=2694&amp;height=1120&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;找到父节点的 Selector 选择器&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://m0p2tw.dm.files.1drv.com/y4mv3MDuJh3PNL26ePCzDUQDiXFow1o2Oq4El5oqA90xemtOq30XCIp693BluvQ8xSaLrhFGiT1QknB3DIMSK9wu_CNBdTQZNJHvcsr8_Nt6dmKx4zlIk0IzlNRoehQbQxTf0pPbQFUCIdc0KqJuFS3TcF0CftGrKAnJPk11V1frDciHtUJ_Lz2z2A0JwwCag4iPLx0JbhCiwT8JlLhvkljyQ?width=2568&amp;height=1018&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;&lt;code&gt;appendTo&lt;/code&gt; 方法添加到父节点中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHashText &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; infoHash.innerHTML.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
+$(&lt;span style=&#34;color:#ba2121&#34;&gt;`
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;lt;a href=&amp;#34;https://www.google.com/search?q=&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;${&lt;/span&gt;infoHashText&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34; target=&amp;#34;_blank&amp;#34; &amp;gt;Google&amp;lt;/a&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;`&lt;/span&gt;).appendTo(&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#votebox &amp;gt; span.replist&amp;#34;&lt;/span&gt;));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如下，完美嵌入。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nep2tw.dm.files.1drv.com/y4mSwRdebaViBcA8QJYWi7p7VSERUEVDjw79nHi40kFO0UmUAULvTgAgvVhWAbrmyw0e35xIdVf6T5J9RBlwLsHXwCtRik3uZmzzOaDB3wmprrLMLZxtbAJvNeCZ9PE-bAhA7lyPe-ofR8lGoEzJGU_Qts4c7nqfATGJ_nXPlblQyAFH4selQBJzKmHRRn57PdKWFhmGT5VMB0AW2FH3Z1dkA?width=3146&amp;height=1602&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;推荐&#34;&gt;推荐&lt;/h1&gt;
+&lt;h2 id=&#34;网站链接&#34;&gt;网站链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://violentmonkey.github.io/&#34;&gt;暴力猴&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN&#34;&gt;Greasy Fork&lt;/a&gt;：脚本搜索&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sleazyfork.org/zh-CN&#34;&gt;Sleazy Fork&lt;/a&gt;：大人的 Greasy Fork&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.greasespot.net/Main_Page&#34;&gt;官方教程&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;自用脚本&#34;&gt;自用脚本&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN/scripts/329484-%E8%B1%86%E7%93%A3%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD%E5%A4%A7%E5%B8%88-1%E7%A7%92%E6%90%9E%E5%AE%9A%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1-%E9%9F%B3%E4%B9%90-%E5%9B%BE%E4%B9%A6%E4%B8%8B%E8%BD%BD&#34;&gt;豆瓣资源下载大师&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN/scripts/378351-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0-csdn%E9%A1%B5%E9%9D%A2%E6%B5%AE%E7%AA%97%E5%B9%BF%E5%91%8A%E5%AE%8C%E5%85%A8%E8%BF%87%E6%BB%A4%E5%87%80%E5%8C%96-%E5%87%80%E5%8C%96%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9-%E8%87%AA%E5%8A%A8%E5%B1%95%E5%BC%80-%E8%AE%A9%E4%BD%A0%E4%B8%93%E6%B3%A8%E4%BA%8E%E6%96%87%E7%AB%A0-%E4%B8%8D%E5%BD%B1%E5%93%8D%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8&#34;&gt;CSDN页面浮窗广告完全过滤净化&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2020/0507_monkey/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
