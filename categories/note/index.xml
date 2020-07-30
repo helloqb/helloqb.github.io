@@ -18,9 +18,9 @@
       <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2020/0615_jupyter/</guid>
-      <description>Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。
-函数 &amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;
- 返回 df2 按照 df1 的 id 排序 数据通用预处理  其他  Difference between map, applymap and apply methods in Pandas. &amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;  </description>
+      <description>Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。其中 html 版本 用于在线浏览，ipynb 版本 用于导出到 Jupyter 中运行。
+函数  加载 sklearn 公共数据集 返回 df2 按照 df1 的 id 排序 数据通用预处理  &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt;
+其他  Difference between map, applymap and apply methods in Pandas. &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt;  </description>
     </item>
     
     <item>

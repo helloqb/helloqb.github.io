@@ -355,16 +355,17 @@
         <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2020/0615_jupyter/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0615_jupyter/ -&lt;p&gt;Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。&lt;/p&gt;
+        <description>哲学家 https://helloqb.xyz/post/2020/0615_jupyter/ -&lt;p&gt;Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。其中 &lt;code&gt;html 版本&lt;/code&gt; 用于在线浏览，&lt;code&gt;ipynb 版本&lt;/code&gt; 用于导出到 Jupyter 中运行。&lt;/p&gt;
 &lt;h1 id=&#34;函数&#34;&gt;函数&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://helloqb.xyz/post/ipynb/0617_func.html&#34;&gt;&amp;lt;html版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0617_func.ipynb&#34;&gt;&amp;lt;原始版本&amp;gt;&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;加载 sklearn 公共数据集&lt;/li&gt;
 &lt;li&gt;返回 df2 按照 df1 的 id 排序&lt;/li&gt;
 &lt;li&gt;数据通用预处理&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://helloqb.xyz/post/ipynb/0617_func.html&#34;&gt;&amp;lt;html 版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0617_func.ipynb&#34;&gt;&amp;lt;ipynb 版本&amp;gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;其他&#34;&gt;其他&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Difference between map, applymap and apply methods in Pandas.&lt;/strong&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.html&#34;&gt;&amp;lt;html版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.ipynb&#34;&gt;&amp;lt;原始版本&amp;gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difference between map, applymap and apply methods in Pandas.&lt;/strong&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.html&#34;&gt;&amp;lt;html 版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.ipynb&#34;&gt;&amp;lt;ipynb 版本&amp;gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0615_jupyter/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
