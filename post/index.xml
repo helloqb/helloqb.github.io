@@ -7,10 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>模拟浏览器另存为下载图片</title>
+      <link>https://helloqb.xyz/post/2020/0805_selenium/</link>
+      <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0805_selenium/</guid>
+      <description>缘由 开发一个下载图片的爬虫，原网站时不时变动，导致爬虫经常会挂掉，尤其在最终下载图片的环节。想着模拟浏览器另存为的方式可能会更健壮些，不那么容易挂。另外也一直想学习下 Selenium。
+Selenium 1. 驱动和环境 使用的是 Python 环境，Selenium 的安装直接 pip install selenium 即可。
+浏览器使用的是 Firefox，驱动是 geckdriver。将下载后的文件放入到 Firefox 安装目录下，如 C:\Program Files\Mozilla Firefox。
+环境变量的配置也是 Firefox 安装目录，而不需要到文件。这里坑了好久，一直报找不到驱动的错误，原因是写成了 C:\Program Files\Mozilla Firefox\geckdriver.exe。
+2. 请求网站 以掘金网站博客 cxuan读者的外包面试之旅 为例。
+driver = webdriver.Firefox() driver.get(&amp;#34;https://juejin.im/post/6857394127064006663&amp;#34;) 此时没有问题的话，浏览器会自动打开网站。
+3. 滚动加载 此时若直接获取图片，只会获取获取到一两张。因为大多数网站采用 Ajax 方式，页面滚动到图片才加载，所有就需要模拟页面滚动了。execute_script 方法调用 js 可实现滚动操作。
+# 获取内容高度 all_height = driver.execute_script(&amp;#34;return document.body.scrollHeight&amp;#34;) # 循环往下滚动，每次滚1024高，间隔1秒 scroll_height = 1024 for i in range(int(all_height/scroll_height)): driver.execute_script(&amp;#34;window.scrollTo(0, {0});&amp;#34;.format(i*scroll_height)) time.sleep(1) 如果遇到无限加载的页面，可以参考 stackoverflow 的 回答。代码如下：
+SCROLL_PAUSE_TIME = 0.</description>
+    </item>
     
     <item>
       <title>进一步了解 RabbitMQ 跨语言通讯</title>
@@ -98,18 +115,16 @@ Java 端也采用此方法。
   区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。
   （可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。
   实现 如下表格，想要知道左边哪些是已婚人士。
-1. 输入 VLOOKUP
+1. 输入 VLOOKUP
 在上表 2B 单元格内输入 =VLOOKUP(。
 2. 选择查找值
 括号后第一个参数选中 2A，然后输入英文逗号。
-3. 选择查找区域
+3. 选择查找区域
 括号后第二个参数选中 F:G 列，然后输入英文逗号。
 如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。
 全选时注意首行会不会影响结果。
-4. 其他参数
-第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。
-最后整个公式为 =VLOOKUP(A2,F:G,1,FALSE)。
-5. 复制公式</description>
+4. 其他参数
+第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。</description>
     </item>
     
     <item>
@@ -229,7 +244,8 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
       
       <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
       <description>SSH 客户端 Putty 和 OpenSSH 的互相转换 原本只需要用 ssh-keygen 生成密钥到 .ssh 目录，然后打开 id_rsa.pub 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。
-**1. 使用 puTTY 生成 Key**1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；3. 同时将生成器页面上的 Key 复制到云服务器上即可。2. 使用已有的 id_rsa 导入到 puTTY
+
+**1. 使用 puTTY 生成 Key**1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；3. 同时将生成器页面上的 Key 复制到云服务器上即可。2. 使用已有的 id_rsa 导入到 puTTY
  打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。  参考： https://blog.csdn.net/caoshiying/article/details/80131761
 查看单个文件提交历史 两种情况：
  选定项目的变更历史，即 git log &amp;lt;path&amp;gt;。 按行审阅选定项目，即 git blame &amp;lt;path&amp;gt;。  在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</description>

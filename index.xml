@@ -6,9 +6,164 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Aug 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>模拟浏览器另存为下载图片</title>
+        <link>https://helloqb.xyz/post/2020/0805_selenium/</link>
+        <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0805_selenium/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0805_selenium/ -&lt;h1 id=&#34;缘由&#34;&gt;缘由&lt;/h1&gt;
+&lt;p&gt;开发一个下载图片的爬虫，原网站时不时变动，导致爬虫经常会挂掉，尤其在最终下载图片的环节。想着模拟浏览器另存为的方式可能会更健壮些，不那么容易挂。另外也一直想学习下 Selenium。&lt;/p&gt;
+&lt;h1 id=&#34;selenium&#34;&gt;Selenium&lt;/h1&gt;
+&lt;h2 id=&#34;1-驱动和环境&#34;&gt;1. 驱动和环境&lt;/h2&gt;
+&lt;p&gt;使用的是 Python 环境，Selenium 的安装直接 &lt;code&gt;pip install selenium&lt;/code&gt; 即可。&lt;/p&gt;
+&lt;p&gt;浏览器使用的是 Firefox，驱动是 &lt;a href=&#34;https://github.com/mozilla/geckodriver&#34;&gt;geckdriver&lt;/a&gt;。将下载后的文件放入到 Firefox 安装目录下，如 &lt;code&gt;C:\Program Files\Mozilla Firefox&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;环境变量的配置也是 Firefox 安装目录，而不需要到文件&lt;/strong&gt;&lt;/em&gt;。这里坑了好久，一直报找不到驱动的错误，原因是写成了 &lt;code&gt;C:\Program Files\Mozilla Firefox\geckdriver.exe&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;2-请求网站&#34;&gt;2. 请求网站&lt;/h2&gt;
+&lt;p&gt;以掘金网站博客 &lt;a href=&#34;https://juejin.im/post/6857394127064006663&#34;&gt;cxuan读者的外包面试之旅&lt;/a&gt; 为例。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;driver &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; webdriver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;Firefox()
+driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://juejin.im/post/6857394127064006663&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时没有问题的话，浏览器会自动打开网站。&lt;/p&gt;
+&lt;h2 id=&#34;3-滚动加载&#34;&gt;3. 滚动加载&lt;/h2&gt;
+&lt;p&gt;此时若直接获取图片，只会获取获取到一两张。因为大多数网站采用 Ajax 方式，页面滚动到图片才加载，所有就需要模拟页面滚动了。&lt;code&gt;execute_script&lt;/code&gt; 方法调用 js 可实现滚动操作。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取内容高度&lt;/span&gt;
+all_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 循环往下滚动，每次滚1024高，间隔1秒&lt;/span&gt;
+scroll_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1024&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(all_height&lt;span style=&#34;color:#666&#34;&gt;/&lt;/span&gt;scroll_height)):
+    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;window.scrollTo(0, {0});&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;scroll_height))
+    time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果遇到无限加载的页面，可以参考 stackoverflow 的 &lt;a href=&#34;https://stackoverflow.com/questions/20986631/how-can-i-scroll-a-web-page-using-selenium-webdriver-in-python&#34;&gt;回答&lt;/a&gt;。代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;SCROLL_PAUSE_TIME &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;0.5&lt;/span&gt;
+
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Get scroll height&lt;/span&gt;
+last_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; True:
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Scroll down to bottom&lt;/span&gt;
+    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;window.scrollTo(0, document.body.scrollHeight);&amp;#34;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Wait to load page&lt;/span&gt;
+    time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(SCROLL_PAUSE_TIME)
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Calculate new scroll height and compare with last scroll height&lt;/span&gt;
+    new_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; new_height &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; last_height:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;break&lt;/span&gt;
+    last_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; new_height
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-查找元素&#34;&gt;4. 查找元素&lt;/h2&gt;
+&lt;p&gt;图片加载完成后，就可以定位元素找到图片地址了。这里知识和之前学 Scrapy 的差不多。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 定位到文章节点&lt;/span&gt;
+image_content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_element_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;.article&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取文章内img标签&lt;/span&gt;
+image_elems &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; image_content&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_elements_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;img&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片链接存放到list中&lt;/span&gt;
+image_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_elems:
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# print(i.get_attribute(&amp;#34;src&amp;#34;))&lt;/span&gt;
+    image_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get_attribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;src&amp;#34;&lt;/span&gt;))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-调用右键&#34;&gt;5. 调用右键&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;ActionChains&lt;/code&gt; 方法可调用右键。右键之前需先定位到元素。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;driver &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; webdriver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;Firefox()
+driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://img-blog.csdnimg.cn/20191104151241389.png&amp;#34;&lt;/span&gt;)
+actionChains &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; ActionChains(driver)
+
+body &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_element_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;body &amp;gt; img&amp;#34;&lt;/span&gt;)
+actionChains&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;context_click(body)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;perform()
+
+time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;)
+driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后就没有然后了。&lt;/p&gt;
+&lt;p&gt;Selenium 好像对页面而无法右键菜单进行操作，网上也搜了好久，应该得联合 js 操作，感觉挺麻烦的。后来找到了 &lt;code&gt;PyAutoGUI&lt;/code&gt; 这个库。&lt;/p&gt;
+&lt;h1 id=&#34;pyautogui&#34;&gt;PyAutoGUI&lt;/h1&gt;
+&lt;p&gt;安装直接 &lt;code&gt;pip install pyautogui&lt;/code&gt; 即可。&lt;/p&gt;
+&lt;p&gt;使用超级简单：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;write()&lt;/code&gt; 写入字符&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;press()&lt;/code&gt; 按下按键，相当于 &lt;code&gt;keyDown()&lt;/code&gt; 和 &lt;code&gt;keyUp()&lt;/code&gt; 的包装&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hotkey()&lt;/code&gt; 可以传递几个键字符串，这些字符串将按顺序按下，然后以相反的顺序释放&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如火狐的另存为在第三个位置，只需要按方向键下三次，然后回车即可跳出保存对话框。代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;press([&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;enter&amp;#39;&lt;/span&gt;])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;由于是图片地址，本 DEMO 其实只需要键入 &lt;code&gt;Ctrl + s&lt;/code&gt; 就可以跳出保存对话框。代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 浏览器另存为保存图片&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_list:
+    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(i)
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片地址，直接 ctrl+s，不用另存为&lt;/span&gt;
+    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;hotkey(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;ctrl&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;s&amp;#39;&lt;/span&gt;)
+    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 采用时间戳命名，防止名称重复弹出确认框&lt;/span&gt;
+    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#008000&#34;&gt;str&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;time() &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1000&lt;/span&gt;)), interval&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0.1&lt;/span&gt;)
+    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;press(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;enter&amp;#39;&lt;/span&gt;)
+
+    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;整体代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;selenium&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; webdriver
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;selenium.webdriver.common.keys&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; Keys
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;selenium.webdriver&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; ActionChains
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;pyautogui&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;time&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;driver_JJ&lt;/span&gt;():
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 请求网站&lt;/span&gt;
+    driver &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; webdriver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;Firefox()
+    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://juejin.im/post/6857394127064006663&amp;#34;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取内容高度&lt;/span&gt;
+    all_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 循环往下滚动，每次滚1024高，间隔1秒&lt;/span&gt;
+    scroll_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1024&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(all_height&lt;span style=&#34;color:#666&#34;&gt;/&lt;/span&gt;scroll_height)):
+        driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;window.scrollTo(0, {0});&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;scroll_height))
+        time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 定位到文章节点&lt;/span&gt;
+    image_content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_element_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;.article&amp;#34;&lt;/span&gt;)
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取文章内img标签&lt;/span&gt;
+    image_elems &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; image_content&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_elements_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;img&amp;#34;&lt;/span&gt;)
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片链接存放到list中&lt;/span&gt;
+    image_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_elems:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get_attribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;src&amp;#34;&lt;/span&gt;))
+        image_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get_attribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;src&amp;#34;&lt;/span&gt;))
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 浏览器另存为保存图片&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_list:
+        driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(i)
+
+        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片地址，直接 ctrl+s，不用另存为&lt;/span&gt;
+        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;hotkey(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;ctrl&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;s&amp;#39;&lt;/span&gt;)
+        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 采用时间戳命名，防止名称重复弹出确认框&lt;/span&gt;
+        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#008000&#34;&gt;str&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;time() &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1000&lt;/span&gt;)), interval&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0.1&lt;/span&gt;)
+        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;press(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;enter&amp;#39;&lt;/span&gt;)
+
+        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+
+    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main&lt;/span&gt;():
+    driver_JJ()
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;关联阅读&#34;&gt;关联阅读&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://pyautogui.readthedocs.io/en/latest/keyboard.html&#34;&gt;PyAutoGUI文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://selenium-python-zh.readthedocs.io/en/latest/index.html#&#34;&gt;Selenium with Python中文翻译文档&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2020/0805_selenium/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -178,15 +333,15 @@
         <description>哲学家 https://helloqb.xyz/post/2020/0713_headphone/ -&lt;h1 id=&#34;入门穷烧&#34;&gt;入门穷烧&lt;/h1&gt;
 &lt;p&gt;大三，不知何事引起，对耳机产生兴趣，可能是看到论坛们一堆 &lt;em&gt;&lt;strong&gt;高音甜，中音准，低音沉&lt;/strong&gt;&lt;/em&gt; 的分析，感觉他们从里面获得了很大的满足，所以也想尝试一下。&lt;/p&gt;
 &lt;p&gt;鉴于一直以来耳机不都是十块钱的印象，只能将价位定位在了一两百。瞄准两款 &lt;code&gt;AKG420&lt;/code&gt; 和 &lt;code&gt;JVC HA-S500&lt;/code&gt;。&lt;code&gt;HA-S500&lt;/code&gt; 在网上的形容词是 &lt;em&gt;&lt;strong&gt;白菜神器&lt;/strong&gt;&lt;/em&gt;，说外国某论坛关于此耳机盖了很多层楼。&lt;code&gt;AKG420&lt;/code&gt; 名声更大，知乎初烧推荐里几乎都有这款。巧了，宿舍串门的时候正好看到同学在用，试了下，佩戴舒适，低音有氛围，颜值低调却在线，很喜欢，现在想来还是想拥有一部。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://4fexvw.dm.files.1drv.com/y4mLa19I26G29GMz6xYVSKU70grkdx10MkEQ2e2Rx-pWxUJeMH1nVxg87hSv6FEOXzSCh8C_UG8SblqW1w3J5VR1msmWwiXo1e8W2WwCtUu5iXKSp8SDIvvCrOJDraKo342Xgj57fQgRlLzvAAXOcHiZ5ZcZnahjLKBQspfNqWzuvVLiXhphQ6k-65MvZA1GaWGdP50NIzmFZLdEw8mwVqMxA?width=660&amp;height=422&amp;cropmode=none&#34; width=&#34;660&#34; height=&#34;422&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://4fexvw.dm.files.1drv.com/y4mLa19I26G29GMz6xYVSKU70grkdx10MkEQ2e2Rx-pWxUJeMH1nVxg87hSv6FEOXzSCh8C_UG8SblqW1w3J5VR1msmWwiXo1e8W2WwCtUu5iXKSp8SDIvvCrOJDraKo342Xgj57fQgRlLzvAAXOcHiZ5ZcZnahjLKBQspfNqWzuvVLiXhphQ6k-65MvZA1GaWGdP50NIzmFZLdEw8mwVqMxA?width=660&amp;height=422&amp;cropmode=none&#34; width=&#34;660&#34; height=&#34;422&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;可能是得不到的永远在骚动，我最终选择了 &lt;code&gt;HA-S500&lt;/code&gt; 。怀着无比激动的心情收到后，很爱惜，很享受，什么高音低音的也瞬间都感觉有了，经常晚上关灯听很久。现在想来，脑放的成分居多，此耳机声音同价位一般，唯一可以吹的是它的质量，拿到手里感觉就是特别结实，一度让我对日本制造印象特别好。现在为止已经换了两个耳套，它仍然硬硬的，躺着抽屉里，等我偶然间想起。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://4vexvw.dm.files.1drv.com/y4mlVGdYB2Pl1VROA8AYOcm043MZ7V3fGDmJpFF989ZhyXyAT-AR7smIHDulwJaN9OHeRe3Xa7LFYxYyKOqkuxqgmdadoRlyNiGKwZhtXZikFgbXjuVibAdFcr__rGJhbwH__sw1HLkJ_qxrMXOCYwrVIkysNYoTAlnrFRSpXv03PQzBjC3Obh9BA8PWT_4dT2gM1B5F9FTZhScWJclKK-4dQ?width=719&amp;height=1500&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://4vexvw.dm.files.1drv.com/y4mlVGdYB2Pl1VROA8AYOcm043MZ7V3fGDmJpFF989ZhyXyAT-AR7smIHDulwJaN9OHeRe3Xa7LFYxYyKOqkuxqgmdadoRlyNiGKwZhtXZikFgbXjuVibAdFcr__rGJhbwH__sw1HLkJ_qxrMXOCYwrVIkysNYoTAlnrFRSpXv03PQzBjC3Obh9BA8PWT_4dT2gM1B5F9FTZhScWJclKK-4dQ?width=719&amp;height=1500&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;后来又买了 &lt;code&gt;潜99&lt;/code&gt; 和 爱华 &lt;code&gt;AIWA HP-M38&lt;/code&gt;，&lt;code&gt;潜99&lt;/code&gt; 入耳式的没啥印象，&lt;code&gt;HP-M38&lt;/code&gt; 还有些印象，因为很轻，佩戴很舒服，而 &lt;code&gt;HA-S500&lt;/code&gt; 特别夹耳。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://2lexvw.dm.files.1drv.com/y4mcGknTQ8z-xUK9_S96Ts1lpErHF3krrlcLu6a5sC5JZnFOTejX0p7HvcCd6TnDmrcDZ94NmLpwB-xJsHD_NuPujWTI1WpFEeEvtlT6B1_8PVFhakkqlzE1qO0MV1-QiEo8X1N7n9JroMzEJV_SmFzCX3UMnmLa_2JkAxkYSui0uUp_Wi7BxZeLhU1navnGOmA_Vlujr3BumpH6S3xosxNyg?width=660&amp;height=490&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://2lexvw.dm.files.1drv.com/y4mcGknTQ8z-xUK9_S96Ts1lpErHF3krrlcLu6a5sC5JZnFOTejX0p7HvcCd6TnDmrcDZ94NmLpwB-xJsHD_NuPujWTI1WpFEeEvtlT6B1_8PVFhakkqlzE1qO0MV1-QiEo8X1N7n9JroMzEJV_SmFzCX3UMnmLa_2JkAxkYSui0uUp_Wi7BxZeLhU1navnGOmA_Vlujr3BumpH6S3xosxNyg?width=660&amp;height=490&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;h1 id=&#34;再烧&#34;&gt;再烧&lt;/h1&gt;
 &lt;p&gt;又不知何事引起，想再烧下耳机，也了解到好耳机真的需要上放，而上放对于我这种简约派来说想想都麻烦，需要把歌曲导进导出的，没法直接用手机听。所以我下了个决定，只直推试听，不行就不再烧。
 有了工资后，定位当然也高了，盖得排行里，锁定了接近三千价位的歌德 &lt;code&gt;SR325e&lt;/code&gt;。但三千毕竟不少，淘宝上找到个商家可以试听，每天 50，遂下单。等待期间看到了魅族 HiFi 解码耳放这么个小玩意，说能使手机推力变大，也下单了。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://5lexvw.dm.files.1drv.com/y4m0rNlBvR8r7bVyzEn3ho03Nn67wkCGEzbALRyiMuljHlBpzqjiWDPBbhA5nAZjcO7LawvaqEcxGCXCX02hUfywr-IIBKEbgjYp3Pi8IN3ciIcrrDR4zXeUZNmj0t7NFmSWwgiOqgdlPFlda7pdZFKICC8o3kW7UN58jDC5JAtUjAz09M7Y0tYqBb1tDRxx-YlnxObRtIeNxxALqk-fBWRew?width=1024&amp;height=1024&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://5lexvw.dm.files.1drv.com/y4m0rNlBvR8r7bVyzEn3ho03Nn67wkCGEzbALRyiMuljHlBpzqjiWDPBbhA5nAZjcO7LawvaqEcxGCXCX02hUfywr-IIBKEbgjYp3Pi8IN3ciIcrrDR4zXeUZNmj0t7NFmSWwgiOqgdlPFlda7pdZFKICC8o3kW7UN58jDC5JAtUjAz09M7Y0tYqBb1tDRxx-YlnxObRtIeNxxALqk-fBWRew?width=1024&amp;height=1024&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;拿到后，没感觉多少惊喜，有效果，但不值得花三千，算了，退单，再也不烧。&lt;/p&gt;
 &lt;p&gt;可心里总是还有欲望，别人怎么能听得这么爽，我是木耳吗，难道真得上放才行?&lt;/p&gt;
 &lt;p&gt;退单后，依旧在论坛贴吧瞎逛，忽然发现了个新词 &lt;code&gt;USB独占&lt;/code&gt;。大概意思是：&lt;/p&gt;
@@ -195,7 +350,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;这个理论又勾起了我的欲望。但是 &lt;code&gt;SR325e&lt;/code&gt; 已经被退了，想来好久都没买耳机了，再买一个耳机用吧，等着 &lt;code&gt;HA-S500&lt;/code&gt; 用坏怕是不可能了。&lt;/p&gt;
 &lt;p&gt;逛了一番后，买了 &lt;code&gt;HIFIMAN SUNDARA&lt;/code&gt;。我靠，真的是独占的原因！！！&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://21exvw.dm.files.1drv.com/y4ml8A0L8Daikc_GPGZI0mNmQNPVcPKQ9TYfqKIr4ncoqYgApSZ8h3moU2siNU3BpVIr_mWB7WeX8i8Azr0--p7ncpECxGv9_0RW5Y4IMjBsyBmn9FJ9nI-IlGNzOCeHmGp-DcI8DgUeWPYjhOJpeSJPCaPZbAqQ6NEb9T1vWuMwmuYTtKMsWu4g0mIdOCGXU2GsFumh_Y7LUi-aP62tp14bA?width=800&amp;height=800&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://21exvw.dm.files.1drv.com/y4ml8A0L8Daikc_GPGZI0mNmQNPVcPKQ9TYfqKIr4ncoqYgApSZ8h3moU2siNU3BpVIr_mWB7WeX8i8Azr0--p7ncpECxGv9_0RW5Y4IMjBsyBmn9FJ9nI-IlGNzOCeHmGp-DcI8DgUeWPYjhOJpeSJPCaPZbAqQ6NEb9T1vWuMwmuYTtKMsWu4g0mIdOCGXU2GsFumh_Y7LUi-aP62tp14bA?width=800&amp;height=800&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;欲望被彻底勾起，先是觉得 &lt;code&gt;SUNDARA&lt;/code&gt; 低频差点劲，二手了 &lt;code&gt;DT990&lt;/code&gt; 和 &lt;code&gt;DT1350&lt;/code&gt;，&lt;code&gt;DT1350&lt;/code&gt; 山洞音没感觉，&lt;code&gt;DT990&lt;/code&gt; 解析好，人声远，低频足，但齿音更重。不行，还是不够完美。接着逛，reddit 上 &lt;code&gt;HD58X&lt;/code&gt; 呼声很高，国内竟然没有专卖店，学了下海淘，竟然比想象中简单的多。一个月后才拿到手，没有期待的好，但也有所提升。&lt;/p&gt;
 &lt;p&gt;闲鱼这玩意不能逛，尤其是耳机这种不嫌多的产品，这不一开始的 &lt;code&gt;SR325e&lt;/code&gt; 降到了 900！这还不抢！卖家也热情，实话实说，头梁处断了（后面淘宝 50 块换了个新的），也想退烧了，所以卖的低点，又说 &lt;code&gt;SR325e&lt;/code&gt; 不上放没法听。&lt;/p&gt;
 &lt;p&gt;一句话，又海淘了个 &lt;code&gt;Atom 耳放&lt;/code&gt;。&lt;/p&gt;
@@ -213,16 +368,16 @@
 &lt;p&gt;HIFIMAN 家的东西真是跳水王，但在国外却深受欢迎，reddit 上经常有它的身影，获奖也很多。佩戴舒适，颜值喜欢，初听感受声场大，但低音欠缺些，总感觉没推好，果然上放后好很多。可能这也是跳水的原因，上放才能出好声，它却打着直推的标签。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;Beyerdynamic DT990&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;初听惊艳，声场大，人声远，解析好，但人声太刺了，听了会就受不了。上放后好多了，但还是有点刺，听说猛煲有改善。还有一点挺好，不夹眼镜。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://51exvw.dm.files.1drv.com/y4mUgrQykrAA1UBC4MmMmtZRxoghduuvsu4iWpSwLETHaoyWLeX4V20s3DKGJTHRTdsB0rZa3FZl5mulAAkooAo2VLzg9Bk0_q2zZLv8CetI79fOS20w6a6ZX2dReBpuS25I-pvLxKM01chitf1Ebwnmb1nP9YUtcWWkVkKek05lDj_EeUXvCr6pLZwuALG0RMf1wpWtAnaRfIKD30_eCwoZw?width=1024&amp;height=822&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://51exvw.dm.files.1drv.com/y4mUgrQykrAA1UBC4MmMmtZRxoghduuvsu4iWpSwLETHaoyWLeX4V20s3DKGJTHRTdsB0rZa3FZl5mulAAkooAo2VLzg9Bk0_q2zZLv8CetI79fOS20w6a6ZX2dReBpuS25I-pvLxKM01chitf1Ebwnmb1nP9YUtcWWkVkKek05lDj_EeUXvCr6pLZwuALG0RMf1wpWtAnaRfIKD30_eCwoZw?width=1024&amp;height=822&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;Beyerdynamic DT1350&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;山洞音，官方价 1700，闲鱼 700 入的，再卖 200&amp;hellip;&amp;hellip;MD 不卖了。隔音好，易推，佩戴舒适，没必要贱卖。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://2lfgpq.dm.files.1drv.com/y4mLgpSJA1t_w0PnMI-Y7fJHhwklQq2z820cBkyouHfOKnaWBY4x6o8biHg8Jl4b2ZQp1CyjF2YFqCol-U4Y4s9Auhm2KXbU_NYOhNpHOMS1LePMYbz9fyjqAX-8nU-hWXrdP6GjWlXm-SBEj7C-EG3psqs1Wkq7jSNEVJ3i4X4Bft8_wPvDnOvrjiFqwrUwMhhxiua8GPCPkYxeTNtaEjqrg?width=1565&amp;height=1715&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://2lfgpq.dm.files.1drv.com/y4mLgpSJA1t_w0PnMI-Y7fJHhwklQq2z820cBkyouHfOKnaWBY4x6o8biHg8Jl4b2ZQp1CyjF2YFqCol-U4Y4s9Auhm2KXbU_NYOhNpHOMS1LePMYbz9fyjqAX-8nU-hWXrdP6GjWlXm-SBEj7C-EG3psqs1Wkq7jSNEVJ3i4X4Bft8_wPvDnOvrjiFqwrUwMhhxiua8GPCPkYxeTNtaEjqrg?width=1565&amp;height=1715&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;MASSDROP X SENNHEISER HD58X&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;MASSDROP X SENNHEISER HD 58X JUBILEE 联名款。Youtube 上有个 UP 主评测说就是 &lt;code&gt;HD660S&lt;/code&gt; 加了层纸，而 &lt;code&gt;HD660S&lt;/code&gt; 是三千价位的，它一千价位，可以说性价比极高了。入手后，却没什么惊喜，可能我的耳放推力不足。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://21fgpq.dm.files.1drv.com/y4mZZwmP3xkGzDJ9tW3wAYueBrg2WhQz01dwVQWtg3oyy8Uh7VY1IkSzzTDW3FrqTHDVyzzS7HjzTnwVyEJO5R0gOysOj-eEDUTJlKssrrcODkmflN9Uj4MuOCr0dRhpdQ7abh15M5upFilY9K3teCGtvNINPUg3FrahT5Vxz_GlStpFD9wixZLt07uAoFjOHg_zzUntjgKuWK4I_3R3OZrwg?width=1024&amp;height=683&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://21fgpq.dm.files.1drv.com/y4mZZwmP3xkGzDJ9tW3wAYueBrg2WhQz01dwVQWtg3oyy8Uh7VY1IkSzzTDW3FrqTHDVyzzS7HjzTnwVyEJO5R0gOysOj-eEDUTJlKssrrcODkmflN9Uj4MuOCr0dRhpdQ7abh15M5upFilY9K3teCGtvNINPUg3FrahT5Vxz_GlStpFD9wixZLt07uAoFjOHg_zzUntjgKuWK4I_3R3OZrwg?width=1024&amp;height=683&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;Grado SR225e&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;卖家说人声好，初听时起鸡皮疙瘩了。女声渲染的是不错，但我觉得一般，可能我不好这口吧。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&#34;https://3vfgpq.dm.files.1drv.com/y4mCG8O2KWURj3Bjjvk_0KHySiuuOourBM1FO0kMWbTDgEiDOCHDdVheQ5PxQuC_TXj7pAlC7vHMPYMvTzW3olzQKZ31wGp0qX1KGNVCzuRjrra2O4xn6zSx_GMyisU0GOAKOlu6SoZ7g1hOQFaPG9BOT1q0Hu9GjStTjXXsOoTIPYn3sIuDFBocD1vvuAWOCMmYYgbrpSLO3oCbUGLZBXxIg?width=638&amp;height=660&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://3vfgpq.dm.files.1drv.com/y4mCG8O2KWURj3Bjjvk_0KHySiuuOourBM1FO0kMWbTDgEiDOCHDdVheQ5PxQuC_TXj7pAlC7vHMPYMvTzW3olzQKZ31wGp0qX1KGNVCzuRjrra2O4xn6zSx_GMyisU0GOAKOlu6SoZ7g1hOQFaPG9BOT1q0Hu9GjStTjXXsOoTIPYn3sIuDFBocD1vvuAWOCMmYYgbrpSLO3oCbUGLZBXxIg?width=638&amp;height=660&amp;cropmode=none&#34; height=&#34;400&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;Grado SR325e&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;最钟意的一款，声音热情洋溢，摇滚的那股劲，就它声出的好听，其它的都稍微欠缺些。直推好，上放更好。&lt;/p&gt;
 &lt;h1 id=&#34;最终搭配&#34;&gt;最终搭配&lt;/h1&gt;
@@ -241,7 +396,7 @@
 &lt;p&gt;考虑到二者的价格，可以算是性价比搅乱市场的产品，建议根据实际情况，酌情购买。&lt;/p&gt;
 &lt;p&gt;魅族今年先后发布的HiFi解码耳放、HiFi解码耳放Pro告诉我们，再没落的手机厂的供应链控制，研发实力，品控质检水平，也不是小众的HiFi厂家可以望其项背的。”&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;center&gt;&lt;img src=&#34;https://5lfgpq.dm.files.1drv.com/y4mcJn1MvzY4BfOXq405V6xEbMKqezwek-MAxODlkhaUDtg8Madvff1UgV4yYOmxMZo3APDKF7AmvDr2eLKXD1KAKmS_Z3UOVWtXPcxJACDZMM3auYU96ONgNa1oWGe10uWlBYYdHwNvT58M11ecbnoL6g5gW8AH4bN5Kg9ShOhntjBXKzHV0AEZCQdSKxSmvn2HBJwXqPFHABLDH6fJjbRiQ?width=2814&amp;height=1357&amp;cropmode=none&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://5lfgpq.dm.files.1drv.com/y4mcJn1MvzY4BfOXq405V6xEbMKqezwek-MAxODlkhaUDtg8Madvff1UgV4yYOmxMZo3APDKF7AmvDr2eLKXD1KAKmS_Z3UOVWtXPcxJACDZMM3auYU96ONgNa1oWGe10uWlBYYdHwNvT58M11ecbnoL6g5gW8AH4bN5Kg9ShOhntjBXKzHV0AEZCQdSKxSmvn2HBJwXqPFHABLDH6fJjbRiQ?width=2814&amp;height=1357&amp;cropmode=none&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;h1 id=&#34;软件&#34;&gt;软件&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;无损歌曲&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;QQ 音乐和网易云音乐上下载的无损歌曲都进行了加密，第三方无法播放。好在不难，Github 上可以搜到大神写的转换工具。&lt;/p&gt;
@@ -249,6 +404,13 @@
 &lt;p&gt;强迫症的可通过此软件修改歌曲元数据，添加封面，更改专辑名啥的。&lt;a href=&#34;https://www.mp3tag.de/index.html&#34;&gt;官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;footbar&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;flac 格式个人觉得最好，cue 有时候识别不了，wav 又没法写入标签。通过 footbar 都可以转成 flac 格式。&lt;a href=&#34;https://www.foobar2000.org/&#34;&gt;官网&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;后续2020-08-06&#34;&gt;后续（2020-08-06）&lt;/h1&gt;
+&lt;p&gt;没到一个月就打脸了，入了拓品家的 &lt;code&gt;Topping E30&lt;/code&gt;&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rt3upw.dm.files.1drv.com/y4muGjkUE_nl0MlUXnEF7iEVdmzQ2tz3G6HNjqD_XuuvC9CawUWjn2KqiLXRz-VNKl7RLjUspiBoq1Jf9AKlaSvC41aQ6Pnducf6nXORsr3c-iU97kcQslJ-qjGviYQjAExNgg60WRKc-gUuuWeGMuqiesZvLg0O-bZeSwN7JfgzRuHm87rKML2GbEiu1oTZ297wLiv-BCXv458aNij5TqeWw?width=1024&amp;height=770&amp;cropmode=none&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;起初以为那种台机必须把歌曲先导入进去才能听，觉得很麻烦。后来了解到可以用手机或者电脑作为输入源的。还有我自己没有外出听歌的习惯，算了，抱着砖听就抱着砖听吧。&lt;/p&gt;
+&lt;p&gt;把魅族线换成 E30 后惊喜了一晚上，听感又上升了两个台阶，有些歌曲听到了之前没注意的细节，至此，我觉得应该发挥了我这款歌德耳机所有的潜力了。&lt;/p&gt;
+&lt;p&gt;后续再烧的动力，想到两个方面，一是手机连着解码器的线挺碍事的，边听边玩手机时拖着线不太方便，接口处还容易松动，后续想要尝试下蓝牙解码器。二是现在这套装备我觉得能推得动大部分耳机了，想要尝试下难推的耳机，之前一直以易推作为选耳机的标准的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最后想说的是，还挺烧钱的，克制点，老弟！&lt;/strong&gt;&lt;/p&gt;
 - https://helloqb.xyz/post/2020/0713_headphone/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
@@ -473,26 +635,26 @@
 &lt;/ul&gt;
 &lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
 &lt;p&gt;如下表格，想要知道左边哪些是已婚人士。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://21fnqa.dm.files.1drv.com/y4mxHOexyJpSInaOXFQ-H74qmhCXFiBSSZhKeDcOsl9Az95dc0BGgwvQaDCMNjqzbUMZNhwYclDPKYUtaKfBbRjomBuDLL1zQNtY1WchbEey-5TQVzERl9HPTXPUBDSx6yYgnUdqV7Z2JlL-wNTMX7o_lBmzW23zVifaXUS6S0RSsYDMhfmzOZ3eJOGLyXn7DX4M02UvjS1dV-xeHpDuYlUxg?width=612&amp;height=291&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://21fnqa.dm.files.1drv.com/y4mxHOexyJpSInaOXFQ-H74qmhCXFiBSSZhKeDcOsl9Az95dc0BGgwvQaDCMNjqzbUMZNhwYclDPKYUtaKfBbRjomBuDLL1zQNtY1WchbEey-5TQVzERl9HPTXPUBDSx6yYgnUdqV7Z2JlL-wNTMX7o_lBmzW23zVifaXUS6S0RSsYDMhfmzOZ3eJOGLyXn7DX4M02UvjS1dV-xeHpDuYlUxg?width=612&amp;height=291&amp;cropmode=none&#34; /&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;1. 输入 VLOOKUP&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;在上表 2B 单元格内输入 &lt;code&gt;=VLOOKUP(&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;2. 选择查找值&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;括号后第一个参数选中 2A，然后输入英文逗号。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://3ffnqa.dm.files.1drv.com/y4mNWqmpXbuJknhmxYTy_6wlJyY9U13gY1WfQ0K7IUBk67ok4Y9U9lKKXGLMeJsNtuZfrxlBkXgcixQA4uDIZ28cO5WvIg1ao_nZ9XlsLEoZH52wsl0AcvPrzWWx_STSMIB4aRTUSI7SZdBOz-HLVjecHAMkgpyhnvt4jTL8RqianLgZXNdsu8uDIgja_E4m6P2lwZtMzS_6S9AQFG6I6QqAg?width=612&amp;height=297&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3ffnqa.dm.files.1drv.com/y4mNWqmpXbuJknhmxYTy_6wlJyY9U13gY1WfQ0K7IUBk67ok4Y9U9lKKXGLMeJsNtuZfrxlBkXgcixQA4uDIZ28cO5WvIg1ao_nZ9XlsLEoZH52wsl0AcvPrzWWx_STSMIB4aRTUSI7SZdBOz-HLVjecHAMkgpyhnvt4jTL8RqianLgZXNdsu8uDIgja_E4m6P2lwZtMzS_6S9AQFG6I6QqAg?width=612&amp;height=297&amp;cropmode=none&#34; /&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;3. 选择查找区域&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;括号后第二个参数选中 F:G 列，然后输入英文逗号。&lt;/p&gt;
 &lt;p&gt;如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。&lt;/p&gt;
 &lt;p&gt;全选时注意首行会不会影响结果。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://3vfnqa.dm.files.1drv.com/y4m4xJvHy47-M1nmcu3d0c8PIOeuhzo-PFvKCjN9rcvxHRMMdJVLFb49TWk6aaDd2w23xWBBop85GmvfLRFs0HdWn8mnTTI8TGect2__N1zLMF2uTGQcCWSkVGNX9aYngUMK2tyRiY2DC7Quh9NYHzwk_4cT8L_VVNo-MpGJJFW13UvEUSpHzfaFZwFYmPjnIACoTBC1BDAAc8cfjr3vfOGRg?width=611&amp;height=302&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3vfnqa.dm.files.1drv.com/y4m4xJvHy47-M1nmcu3d0c8PIOeuhzo-PFvKCjN9rcvxHRMMdJVLFb49TWk6aaDd2w23xWBBop85GmvfLRFs0HdWn8mnTTI8TGect2__N1zLMF2uTGQcCWSkVGNX9aYngUMK2tyRiY2DC7Quh9NYHzwk_4cT8L_VVNo-MpGJJFW13UvEUSpHzfaFZwFYmPjnIACoTBC1BDAAc8cfjr3vfOGRg?width=611&amp;height=302&amp;cropmode=none&#34; /&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;4. 其他参数&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。&lt;/p&gt;
 &lt;p&gt;最后整个公式为 &lt;code&gt;=VLOOKUP(A2,F:G,1,FALSE)&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;5. 复制公式&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;此时只是第一个单元格的结果，采用下拉拖动方式或者复制粘贴方式将公式复制到列中其他的单元格中。这两种方式粘贴的公式都会行自动变化。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://5lfnqa.dm.files.1drv.com/y4mmnfyHw_FLNQj4R4aZvCCz1zo5gm_tUTISAXTtyrtCBOn6BB-OsJ_N7XDgvtn_E92SQUNP5p6mHfOrOQ48qJQZl5f1-nw63LF78eq2oXFfF-2QHXfXEosGmFmYqwQt7OuJqYrI4vWXacKAFwG9sep5O2D1uerTu8ztzsAKl6POmj94eap3T2BDN5wpF91CC02TKjwwqcwoc-nRUz7dpP0VQ?width=617&amp;height=303&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://5lfnqa.dm.files.1drv.com/y4mmnfyHw_FLNQj4R4aZvCCz1zo5gm_tUTISAXTtyrtCBOn6BB-OsJ_N7XDgvtn_E92SQUNP5p6mHfOrOQ48qJQZl5f1-nw63LF78eq2oXFfF-2QHXfXEosGmFmYqwQt7OuJqYrI4vWXacKAFwG9sep5O2D1uerTu8ztzsAKl6POmj94eap3T2BDN5wpF91CC02TKjwwqcwoc-nRUz7dpP0VQ?width=617&amp;height=303&amp;cropmode=none&#34; /&gt;&lt;p&gt;
 &lt;p&gt;&lt;strong&gt;6. 获取其他单元格&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;第二列数据改下第三个参数为 2 就行了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://51fnqa.dm.files.1drv.com/y4m5hJfOGKRBm0nH7DWHQ0k_OJdmD7urFWDHjBE_eGtteA258Il5XP8L6MObW1uiYnQ1sDBDg6emSnoEapzZJqUmewielL1VawozZqR0G301koXwa0ayLyF6EoOczHQ6MhePa8l8Pv4wjggDm_siB9Z2vB4B99-Wev7R-Z07tec4pDokMVm_aP3fp0uOIFTkNl088UcDi1DAwcdOmbB-Vnosg?width=617&amp;height=301&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://51fnqa.dm.files.1drv.com/y4m5hJfOGKRBm0nH7DWHQ0k_OJdmD7urFWDHjBE_eGtteA258Il5XP8L6MObW1uiYnQ1sDBDg6emSnoEapzZJqUmewielL1VawozZqR0G301koXwa0ayLyF6EoOczHQ6MhePa8l8Pv4wjggDm_siB9Z2vB4B99-Wev7R-Z07tec4pDokMVm_aP3fp0uOIFTkNl088UcDi1DAwcdOmbB-Vnosg?width=617&amp;height=301&amp;cropmode=none&#34; /&gt;&lt;p&gt;
 - https://helloqb.xyz/post/2020/0604_vlookup/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
@@ -707,207 +869,6 @@ end 2020-06-02T16:09:15.468
 &lt;/tbody&gt;
 &lt;/table&gt;
 - https://helloqb.xyz/post/2020/0602_cron/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>RabbitMQ 实现跨语言通信</title>
-        <link>https://helloqb.xyz/post/2020/0515_rabbitmq/</link>
-        <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0515_rabbitmq/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0515_rabbitmq/ -&lt;h1 id=&#34;需求场景&#34;&gt;需求场景&lt;/h1&gt;
-&lt;p&gt;做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。&lt;/p&gt;
-&lt;p&gt;其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。&lt;/p&gt;
-&lt;h1 id=&#34;三种方式的实现&#34;&gt;三种方式的实现&lt;/h1&gt;
-&lt;h2 id=&#34;1-直接调用&#34;&gt;1. 直接调用&lt;/h2&gt;
-&lt;p&gt;有 &lt;code&gt;ProcessBuilder&lt;/code&gt; 和 &lt;code&gt;Runtime.exec()&lt;/code&gt; 两种方法，用法差不多，都可以传一个字符串数组。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; command &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; String&lt;span style=&#34;color:#666&#34;&gt;[]{&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;};&lt;/span&gt;
-proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; Runtime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getRuntime&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;exec&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 执行py文件
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;ProcessBuilder&lt;/code&gt; 可以是列表，官方推荐 &lt;code&gt;ProcessBuilder&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; command &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ArrayList&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-ProcessBuilder pb &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ProcessBuilder&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Process&lt;/code&gt; 提供 &lt;code&gt;InputStream&lt;/code&gt; 和 &lt;code&gt;ErrorStream&lt;/code&gt; 接收返回结果；为方便起见，可以将错误流重定向到输入流。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;redirectErrorStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//错误流重定向
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;BufferedReader in &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getInputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()));&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;若需要立即获取其返回结果，需要用 &lt;code&gt;waitFor()&lt;/code&gt; 方法。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;code &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;waitFor&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。&lt;/li&gt;
-&lt;li&gt;作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。&lt;/li&gt;
-&lt;li&gt;返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。&lt;/li&gt;
-&lt;li&gt;目前只尝试了 Java 调用 Python，反过来感觉很难。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;完整代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Test&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;java2pythonTest&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-  &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; code &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-  Process proc&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Runtime.getRuntime()
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//			String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;};
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//      proc = Runtime.getRuntime().exec(command);// 执行py文件
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
-    List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; command &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ArrayList&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-    command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    ProcessBuilder pb &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ProcessBuilder&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;redirectErrorStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//错误流重定向
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//用输入输出流来截取结果
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    BufferedReader in &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getInputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;gbk&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
-    String line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; in&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-      System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;gt; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; line&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    in&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    code &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;waitFor&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;gt; wait for code: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; code&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-  &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;IOException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-    e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-  &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-    e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-  &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-通过-api-通信&#34;&gt;2. 通过 API 通信&lt;/h2&gt;
-&lt;p&gt;两端都启动为一个 Web 项目，Java 端可以采用 &lt;code&gt;Spring Boot&lt;/code&gt; 框架，Python 端用 &lt;code&gt;Flask&lt;/code&gt; 框架。然后通过 &lt;code&gt;Spring Cloud&lt;/code&gt; 来连接。&lt;/p&gt;
-&lt;p&gt;由于 &lt;code&gt;Spring Cloud&lt;/code&gt; 非本人搭建，就不讲了。当然，你也没必要非要使用。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;两端通信频繁的情况下，相对于第一种方案更好些&lt;/li&gt;
-&lt;li&gt;开发有点烦，尤其是数据传输，如果用 &lt;code&gt;Spring Cloud&lt;/code&gt; 会好些&lt;/li&gt;
-&lt;li&gt;不适用于等待的情况，如 Python 端计算量大，没法立刻给出结果。Api 嘛，时间长肯定不太好&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;3-rabbitmq-消息队列&#34;&gt;3. RabbitMQ 消息队列&lt;/h2&gt;
-&lt;p&gt;因为实际公司开发中，Python 端计算量很大，需要等待很久，所以方法二也不太适用，后面有同事提出用消息队列的方式，可以不必等待，正好满足我的情况。&lt;/p&gt;
-&lt;p&gt;RabbitMQ 不仅要有接收端、发送端，还需要安装管理器。&lt;/p&gt;
-&lt;h3 id=&#34;管理系统&#34;&gt;管理系统&lt;/h3&gt;
-&lt;p&gt;管理系统各平台都有，也有 docker 镜像。具体不赘述，看官网就行了。&lt;/p&gt;
-&lt;p&gt;安装后会有 Web 端图形界面，使用很方便，不需要命令行就可以完成。&lt;/p&gt;
-&lt;p&gt;大概介绍下用到的一些概念，后续深入的话再补充。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Virtual Hosts&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;相当于 Mysql 的库，相互独立，exchange、queue、message 不能互通。需要账户管理员权限。Web 端操作如下。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://4fhota.dm.files.1drv.com/y4m8ssy6_IOEEMM-61Xim9dXVPqGXAFr3Z_RoNVyZLoNzHN9PQhwzZj8-3AcYN8cRrF4T5aTQ7oFlKNyeNwyoG0jAxkWBbszJdGw2HGVFlxkvVyiPM8fazvGt7I6X4QM0JpdCQj9q4U2Vd057K-Lr79wHjloJGyOEVpf3fgbgfClyrMb3Is40we--Ynuirt4zKuWXPW0tDyQJSZNrnu2uTVcg?width=1901&amp;height=583&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Queue&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;队列，基本通信模块，相当于一个消息缓冲区，消息进到队列里，再被发送出去。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://4vhota.dm.files.1drv.com/y4mHDkl9htpAR-UW-uVpdqrn3kaunkMdLUY9A6WiphfaJH3abuSMwSV1Io_w2BOpUcVNnn1HW1qQfNqilH5e9w4kLZHf-Alq4RrEtLkS1PaTHgJwwuZSqdWdgYODKNeNDunP2GRtRuoO16LLg3DklXZeePT-xvjIGB1OqR01Zj0tqrRnf_0bjAZ_T_0OsYPFfui4in6-_nrw-X8zNKw88oHAw?width=1898&amp;height=716&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Exchange&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;生产者发送消息时由 Exchange 来决定要给哪个 Queue。具体有 Direct、Fanout、Topic、Headers 四种类型，我用默认的一对一也就没有仔细了解。&lt;/p&gt;
-&lt;h3 id=&#34;java-端实现&#34;&gt;Java 端实现&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;配置&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我采用 &lt;code&gt;Spring Boot&lt;/code&gt; 框架，自带 &lt;code&gt;Spring AMQP&lt;/code&gt; 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;rabbitmq&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;192.168.0.102&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;port&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;5672&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;username&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;password&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;virtual-host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;发送消息&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;AmqpTemplate 类用于发送消息，我写了个定时 3 秒发送时间：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;TestScheduled&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//rabbitMQ Queue
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; String PYTHON2JAVA &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python2java&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; String JAVA2PYTHON &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;java2python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; AmqpTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-        String now &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-        String content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;java2python and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; now&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-        System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;content&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convertAndSend&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JAVA2PYTHON&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; content&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果没有客户端接收的话，会一直在队列中，Web 页面下可以看到：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://2lhota.dm.files.1drv.com/y4mJzu23NfL92LZyK4mv2xfcPaF1I41GtqfFnGK9bHFXt7oiYN3IdXhY2PtTqBZ4OwZH7eJECqQrB5BgiQONGxYGUGfgDl4Zuax9aLTfAfK8gE0jbDihMJRGmkarzl5Fubt-Uw9sEPqfrTzblJ3uYm8z8u_Ety07JT6qrwERGA858juJE8A5gqq75UPXL-JNIeNDfq5SK-DzQEz8xJMV21Fuw?width=1873&amp;height=805&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;接收消息&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;接收消息也非常简单，只需要添加 &lt;code&gt;@RabbitListener&lt;/code&gt; 注解即可。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;queues &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; PYTHON2JAVA&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;listen&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;String message&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;python-端实现&#34;&gt;Python 端实现&lt;/h3&gt;
-&lt;p&gt;Python 端需要安装第三方库 &lt;code&gt;pika&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;建立连接&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;get_connect&lt;/span&gt;():
-    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    连接
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return: 
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    config_pika_username &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;admin&amp;#34;&lt;/span&gt;
-    cofig_pika_password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;admin&amp;#34;&lt;/span&gt;
-    config_pika_host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;192.168.0.102&amp;#34;&lt;/span&gt;
-    config_pika_port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;5672&lt;/span&gt;
-    config_pika_virtual_host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
-    cred &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pika&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;PlainCredentials(config_pika_username, cofig_pika_password)
-    connection &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pika&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;BlockingConnection(
-        pika&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;ConnectionParameters(
-            host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;config_pika_host,
-            port&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;config_pika_port,
-            virtual_host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;config_pika_virtual_host,
-            credentials&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;cred,
-            heartbeat&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;
-        ))
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; connection
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;定义回调函数&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;callback&lt;/span&gt;(ch, method, properties, body):
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(body)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;等待接收&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;运行此方法，等待接收。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;build&lt;/span&gt;():
-    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    start_consuming
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return: 
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    channel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_connect()&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;channel()
-    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;queue_declare(queue&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;java2python&amp;#39;&lt;/span&gt;, durable&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;True)
-    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;basic_consume(queue&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;java2python&amp;#39;&lt;/span&gt;,
-                          auto_ack&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;True,
-                          on_message_callback&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;callback)
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39; consumer_start&amp;#39;&lt;/span&gt;)
-    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;start_consuming()
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-    build()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;发送消息&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;producer&lt;/span&gt;():
-    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&amp;#39;
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    生产者
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param rabbit_body: 发送内容
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 创建通道&lt;/span&gt;
-    connection &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_connect()
-    channel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; connection&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;channel()
-    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;queue_declare(queue&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;python2java&amp;#39;&lt;/span&gt;, durable&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;True)
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 发送内容&lt;/span&gt;
-    message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python2java and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;str&lt;/span&gt;(datetime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;now())
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(message)
-    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;basic_publish(exchange&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, routing_key&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;python2java&amp;#39;&lt;/span&gt;, body&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;message)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;非长连接方式，效率相对接口方式更高。&lt;/li&gt;
-&lt;li&gt;如果项目所用框架如 &lt;code&gt;Spring Boot&lt;/code&gt; 已经集成的话，开发会很方便。&lt;/li&gt;
-&lt;li&gt;有担心长时间没有消息队列会断开连接的情况，也有遇到，但好像都已解决。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
-&lt;p&gt;只是简单介绍用到的类和方法，流于表面，后续如果频繁使用的话，需要深入了解。&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0515_rabbitmq/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

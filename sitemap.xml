@@ -4,7 +4,47 @@
   
   <url>
     <loc>https://helloqb.xyz/categories/</loc>
-    <lastmod>2020-07-28T00:00:00+00:00</lastmod>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/post/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/tags/pyautogui/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/categories/python/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/tags/selenium/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/categories/spider/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/tags/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/post/2020/0805_selenium/</loc>
+    <lastmod>2020-08-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -13,27 +53,7 @@
   </url>
   
   <url>
-    <loc>https://helloqb.xyz/post/</loc>
-    <lastmod>2020-07-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/categories/python/</loc>
-    <lastmod>2020-07-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://helloqb.xyz/tags/rabbitmq/</loc>
-    <lastmod>2020-07-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/tags/</loc>
-    <lastmod>2020-07-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/</loc>
     <lastmod>2020-07-28T00:00:00+00:00</lastmod>
   </url>
   
