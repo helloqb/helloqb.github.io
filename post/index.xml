@@ -7,10 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 21 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>YAML 配置与调用</title>
+      <link>https://helloqb.xyz/post/2020/0907_yaml/</link>
+      <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0907_yaml/</guid>
+      <description>调用 Value 注解调用 例如，YAML 文件中有个自定义配置。
+myconfig:model-server-url:127.0.0.1使用 @Value 注解调用。
+import org.springframework.beans.factory.annotation.Value; @Value(&amp;#34;${myconfig.model-server-url}&amp;#34;) private String modelServerUrl; 变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。
+ConfigurationProperties 注解调用 当参数较多时，可以使用 @ConfigurationProperties 将其绑定到一个类中。例如
+myconfig:model-server-url:127.0.0.1servers:- www.abc.test.com- www.xyz.test.com配置类代码如下：
+import org.springframework.boot.context.properties.ConfigurationProperties; import org.springframework.boot.context.properties.EnableConfigurationProperties; import org.springframework.context.annotation.Configuration; /** * yaml config * */ @Configuration @EnableConfigurationProperties @ConfigurationProperties(prefix = &amp;#34;myconfig&amp;#34;) public class YAMLConfig { private String modelServerUrl; private List&amp;lt;String&amp;gt; servers = new ArrayList&amp;lt;&amp;gt;(); // standard getters and setters } 其中 @Configuration 和 @EnableConfigurationProperties 可以用 @Component 代替，前面那种注解更精确些。
+YAML 文件中参数匹配很宽松，下划线 _ 和 - 和驼峰都能够匹配到，官方建议使用 -。</description>
+    </item>
     
     <item>
       <title>MapStruct 实现 Java Bean 映射</title>
@@ -27,7 +42,7 @@ import org.mapstruct.Mapper; import org.mapstruct.Mapping; @Mapper public interf
     </item>
     
     <item>
-      <title>模拟浏览器另存为下载图片</title>
+      <title>Selenium 模拟浏览器另存为</title>
       <link>https://helloqb.xyz/post/2020/0805_selenium/</link>
       <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
       
@@ -122,8 +137,7 @@ Java 端也采用此方法。
       <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
-      <description>VLOOKUP 可以实现类似数据库的 LEFT JOIN 操作。
-官方文档 VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：
+      <description>官方文档 VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：
   要查找的值，也被称为查阅值。
   查阅值所在的区域。 请记住，查阅值应该始终位于所在区域的第一列，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。
   区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。
@@ -138,7 +152,10 @@ Java 端也采用此方法。
 如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。
 全选时注意首行会不会影响结果。
 4. 其他参数
-第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。</description>
+第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。
+最后整个公式为 =VLOOKUP(A2,F:G,1,FALSE)。
+5. 复制公式
+此时只是第一个单元格的结果，采用下拉拖动方式或者复制粘贴方式将公式复制到列中其他的单元格中。这两种方式粘贴的公式都会行自动变化。</description>
     </item>
     
     <item>

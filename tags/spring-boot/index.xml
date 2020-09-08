@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spring Boot on 哲学家</title>
+    <link>https://helloqb.xyz/tags/spring-boot/</link>
+    <description>Recent content in Spring Boot on 哲学家</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
+    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://helloqb.xyz/tags/spring-boot/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>YAML 配置与调用</title>
+      <link>https://helloqb.xyz/post/2020/0907_yaml/</link>
+      <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0907_yaml/</guid>
+      <description>调用 Value 注解调用 例如，YAML 文件中有个自定义配置。
+myconfig:model-server-url:127.0.0.1使用 @Value 注解调用。
+import org.springframework.beans.factory.annotation.Value; @Value(&amp;#34;${myconfig.model-server-url}&amp;#34;) private String modelServerUrl; 变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。
+ConfigurationProperties 注解调用 当参数较多时，可以使用 @ConfigurationProperties 将其绑定到一个类中。例如
+myconfig:model-server-url:127.0.0.1servers:- www.abc.test.com- www.xyz.test.com配置类代码如下：
+import org.springframework.boot.context.properties.ConfigurationProperties; import org.springframework.boot.context.properties.EnableConfigurationProperties; import org.springframework.context.annotation.Configuration; /** * yaml config * */ @Configuration @EnableConfigurationProperties @ConfigurationProperties(prefix = &amp;#34;myconfig&amp;#34;) public class YAMLConfig { private String modelServerUrl; private List&amp;lt;String&amp;gt; servers = new ArrayList&amp;lt;&amp;gt;(); // standard getters and setters } 其中 @Configuration 和 @EnableConfigurationProperties 可以用 @Component 代替，前面那种注解更精确些。
+YAML 文件中参数匹配很宽松，下划线 _ 和 - 和驼峰都能够匹配到，官方建议使用 -。</description>
+    </item>
+    
+  </channel>
+</rss>

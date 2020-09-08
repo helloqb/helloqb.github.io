@@ -6,9 +6,118 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 21 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>YAML 配置与调用</title>
+        <link>https://helloqb.xyz/post/2020/0907_yaml/</link>
+        <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0907_yaml/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0907_yaml/ -&lt;h1 id=&#34;调用&#34;&gt;调用&lt;/h1&gt;
+&lt;h2 id=&#34;value-注解调用&#34;&gt;Value 注解调用&lt;/h2&gt;
+&lt;p&gt;例如，YAML 文件中有个自定义配置。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用 &lt;code&gt;@Value&lt;/code&gt; 注解调用。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Value&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@Value&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;${myconfig.model-server-url}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String modelServerUrl&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。&lt;/p&gt;
+&lt;h2 id=&#34;configurationproperties-注解调用&#34;&gt;ConfigurationProperties 注解调用&lt;/h2&gt;
+&lt;p&gt;当参数较多时，可以使用 &lt;code&gt;@ConfigurationProperties&lt;/code&gt; 将其绑定到一个类中。例如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;servers&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; 
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- www.abc.test.com&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- www.xyz.test.com&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;配置类代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.context.properties.ConfigurationProperties&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.context.properties.EnableConfigurationProperties&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; * yaml config
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@Configuration&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@EnableConfigurationProperties&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@ConfigurationProperties&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;prefix &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;myconfig&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;YAMLConfig&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String modelServerUrl&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; servers &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ArrayList&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// standard getters and setters
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;@Configuration&lt;/code&gt; 和 &lt;code&gt;@EnableConfigurationProperties&lt;/code&gt; 可以用 &lt;code&gt;@Component&lt;/code&gt; 代替，前面那种注解更精确些。&lt;/p&gt;
+&lt;p&gt;YAML 文件中参数匹配很宽松，下划线 &lt;code&gt;_&lt;/code&gt; 和 &lt;code&gt;-&lt;/code&gt; 和驼峰都能够匹配到，官方建议使用 &lt;code&gt;-&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;调用时直接通过 &lt;code&gt;@Autowired&lt;/code&gt; 注入即可，例如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; YAMLConfig yamlConfig&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@ResponseBody&lt;/span&gt;
+String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;hello and url: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; yamlConfig&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getModelServerUrl&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34; and servers: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; yamlConfig&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getServers&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;多环境使用&#34;&gt;多环境使用&lt;/h1&gt;
+&lt;p&gt;通常线上环境和测试环境的配置会有不同，有时候搞混的话，部署到线上才发觉，这时又得重新打包了。若是配置写在 YAML 文件中，可以使用命令行参数进行配置更改。&lt;/p&gt;
+&lt;h2 id=&#34;命令行直接配置&#34;&gt;命令行直接配置&lt;/h2&gt;
+&lt;p&gt;如上述例中参数想要替换成 127.0.0.2，启动命令如下；&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;java -jar demo.jar --myconfig.model-server-url&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;127.0.0.2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到有很多地方可以配置，那么这些肯定会有个优先级，这种命令行的形式应该是最高的，目前没有深入了解。&lt;/p&gt;
+&lt;h2 id=&#34;单文件多配置&#34;&gt;单文件多配置&lt;/h2&gt;
+&lt;p&gt;上述命令行直接配置的方式肯定不适用于参数多的情况，这时就需要用到了 &lt;code&gt;profile&lt;/code&gt; 参数，例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;active&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;prod&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.2&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;prod&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里 &lt;code&gt;---&lt;/code&gt; 表示新文档的开始，所以其实是三个环境写到一起。一开始的默认配置是选择 test，如果想要换成 prod，则启动命令更改如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;java -jar demo.jar --spring.profiles.active&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;prod
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;多文件多配置&#34;&gt;多文件多配置&lt;/h2&gt;
+&lt;p&gt;当配置越来越多时，还是分开不同文件更好些，Spring Boot 秉承着 &lt;strong&gt;约定优于配置&lt;/strong&gt; 的理念，如果按照其规范来，会相当便利。&lt;/p&gt;
+&lt;p&gt;如上述例子可以分为文件 &lt;code&gt;application.yml&lt;/code&gt;、文件 &lt;code&gt;application-test.yml&lt;/code&gt; 和文件 &lt;code&gt;application-prod.yml&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;application.yml&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;active&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;application-test.yml&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;application-prod.yml&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.2&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;prod&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;尾巴&#34;&gt;尾巴&lt;/h1&gt;
+&lt;p&gt;个人觉得 YAML 配置不同环境挺适合的，如果是静态常量，感觉还是静态类写死更方便些。&lt;/p&gt;
+&lt;p&gt;参考：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.baeldung.com/spring-yaml&#34;&gt;Spring YAML Configuration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.hangge.com/blog/cache/detail_2459.html&#34;&gt;SpringBoot - 配置文件application.yml使用详解&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2020/0907_yaml/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -106,7 +215,7 @@ DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/spa
     
     
         <item>
-        <title>模拟浏览器另存为下载图片</title>
+        <title>Selenium 模拟浏览器另存为</title>
         <link>https://helloqb.xyz/post/2020/0805_selenium/</link>
         <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
         
@@ -714,8 +823,7 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
         <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0604_vlookup/ -&lt;p&gt;VLOOKUP 可以实现类似数据库的 &lt;code&gt;LEFT JOIN&lt;/code&gt; 操作。&lt;/p&gt;
-&lt;h1 id=&#34;官方文档&#34;&gt;官方文档&lt;/h1&gt;
+        <description>哲学家 https://helloqb.xyz/post/2020/0604_vlookup/ -&lt;h1 id=&#34;官方文档&#34;&gt;官方文档&lt;/h1&gt;
 &lt;p&gt;VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -793,55 +901,6 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
 &lt;p&gt;数据（菜单栏） -&amp;gt; 分类汇总 -&amp;gt; 全部删除。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://21gyyw.dm.files.1drv.com/y4munMdjMvbfIdvLd7d35jz9kCrHmlhQtr3nUkUM6rjiSIbxzP8vn8Hn2ZL-Nxfz9HAvno1zWdG50vFVEMzZuEfvpOM0d0x72_DH7t-wnmGeGJRgTI-pT0tn7ll3olFqYWoA0pUCC_8DZjDC__A5gcEq3MiK4FkbTYswFrSe3JuREKe35ty_mJO2sSTSwpq0B9Nuv7gsYpheOZcVlsRHE2vFg?width=289&amp;height=240&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 - https://helloqb.xyz/post/2020/0604_merge/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>四宫格办公壁纸制作</title>
-        <link>https://helloqb.xyz/post/2020/0603_ps/</link>
-        <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0603_ps/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0603_ps/ -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
-&lt;p&gt;以 Windows 自带纯色壁纸为基础，效果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://31fnqa.dm.files.1drv.com/y4mPFyoM3lP_9rd-Vg1cstN75iwI2bXFcYyD5EMT5aYeMND199Uhbo3TvKSX3El_yT2DiiMLWbIDIJE5dg-IwNhjllVzxi97yPpFr7Zx9P_lczOSDYxdcnQ77ncpsezH6ITvxZtrdWUaYA7nyfZz2kr9dExDSJEmVKtPtg0TZdkmBCfHZzlHd4aPegP-keRBvZM6Tls9In5rRGjGrhjDGxzBA?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;h1 id=&#34;流程&#34;&gt;流程&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;1. 用 Photoshop 打开壁纸&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;个人喜欢纯色壁纸，Windows10 上可通过背景设置为纯色壁纸后截屏得到。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://21hota.dm.files.1drv.com/y4mPZtvaCaLpHRBmtv3Dp5g0aNBFwpE3svq99M08Fa71_52A_4Kj2p3EpbDuzidrBnEsCOPUPXczsofo3HBsbmkv-ErqUB99uuM2HugEpfxNiaGTgiZG_FP5Maja1ass_fzQraojiYrduDrx7RaXv3eieRoVRlrKCTkDdX2IFipPEeexA4NdZbbqzVxoJw237bpqfqgmqHIUT3tOT2s1vqFvQ?width=1920&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2. 新建图层并填充为白色&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;操作： 图层（菜单栏）-&amp;gt; 新建 -&amp;gt; 图层 -&amp;gt; 编辑（菜单栏）-&amp;gt; 填充 -&amp;gt; 背景色&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://3fhota.dm.files.1drv.com/y4meK5ev_0gzQVGaO-s8pRyhSqRaLkuHZegnssv6K68sWs1r1lZ_wW9OXu7xO9zSaHe-kTG-mvcHMn8bGYOP28ZlOfEKCBFALcgP_50f0n5y-DQLuTTG6-I_zDvqnBWD_jCOVYTjZcseoEtpq-HIMxw0G4AloLnhk9dMe6LJ4JkOhPqm2dTV5lffC-NQ-H4WJ55fpEJWAZw2AiIsThnRoPfIQ?width=1914&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;3. 缩小一半长宽比&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;操作：编辑（菜单栏）-&amp;gt; 自由变换 -&amp;gt; W:49% H:49%&lt;/p&gt;
-&lt;p&gt;49% 也就是留了 2% 的缝隙，可根据自己喜好修改。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://3vhota.dm.files.1drv.com/y4mdd-w-RhQf8xV47ASDL01uDZ7wgQD_232jOUsAEyOxD1LIMeFo-0x-2ZGjS2ifpZKdVe7R3DNNe9TZxysD47udWnW-sqdrx4sC03UHddtx39yTOmG5rGm7NTg5UpaQ4ADzbkYMADlDHj0Z2btDus7ULMk2zn4vuvZxzNpRwJxwjO_1PrFduCGrslPWa09qrOghIIUDhb4Ik4OlhqHpkWY4A?width=1920&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;4. 切割图层&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;以变换后的图层作为选区，分别左上、左下、右上、右下复制图层。&lt;/p&gt;
-&lt;p&gt;操作：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;对齐：选中两个图层，点击菜单栏图层里的对齐，左对齐，然后再顶部对齐；&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://4ffnqa.dm.files.1drv.com/y4mlbXCFCPRabp5uAMcIbDFM4Refu91x1X6PhlMS_xW7rT8VLgZPdVJr2446AKpxC1IyOyBy3xKYj3Y0lYdcpzTo-n5gpy2Gnvq1VfYlosOWJSI3U9HKM_lq9c6eDxeS9P4gAY_2Tew34suApC9UJCrDMa3PFjkcDA4eMLP2DCSzItZQid_LlBR8AOe0RQGLfMM_5KqEcsxA_OvccOWFTxe2Q?width=1920&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;载入选区：按住 &lt;code&gt;Ctrl&lt;/code&gt;，并点击白色图层的缩略图；&lt;/li&gt;
-&lt;li&gt;复制图层：点击背景图层，点击 &lt;code&gt;Ctrl + J&lt;/code&gt;，将所选区域复制到新图层中；&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://4vfnqa.dm.files.1drv.com/y4mebgrRn4sXRat0i8ikv7xk8sTkINQmXcAHgYoPs5COlZfnMgtXebQYDCzdZlju-C7fJNKpEw4MkViU46Tjr7W8A6hbJSWkiUVPDw-uWD17hOw0S8GTG5FnaUn21S9WlJ0cY9WhFMtyU9PFv6Lb_nA8jJbTwguMpjEKzHRqeoblBr-iUyq9_uyZeGTKToSvL96H9kF-sX2gIZuptCC2oqECg?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;同样方式左下、右上、右下生成另外三个图层；&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://5lhota.dm.files.1drv.com/y4mSmzC0rmXrJCRQGZKM7DCF7vmmcw9iVQnjYp-d82IPsChzBX-aWqOW4DbUt2EHjROM6x9p4fsOo2lGs1FNX5-bMxGn6q2muR5C8kr1O7xoAg1pTni4YGDYjQkinxFT2nLoTRaxlXn90wEq9V9Dqf4AyXlim0zkKXqLkKoYjZCLtVGkIxTPTFgw-ZCTJgVJAuy0hr7rt7oULJkVzLNsR8ELw?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;5. 增加图层样式&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;操作：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;双击图层打开图层样式，选择投影，距离和大小设置为 20 像素；&lt;/li&gt;
-&lt;li&gt;右键图层拷贝图层样式，然后复制到另外三个图层中；&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;大功告成，当然可根据自己喜好选择样式，添加相关文字等。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://51hota.dm.files.1drv.com/y4m5etRuVzlJgeR9p7lFrGdFuTvyPjAyaJvx50_mmJhYBXwq6qD87LfDvLnAY24Lb7eUvhqv9E0EVuJL1PZxIgqlsHiPjOUt7oQfmzs3Dwwzxe7pzgL1YhIFCs1eQmwLkgPVwkwwNSNUuCOJx55bLCpVADcF0xryHRgVQYTucl8vFB5tt6-W2g-Pk1xKz9BcFmWSuRE__6WUuSxKbAVGVZVXQ?width=1919&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0603_ps/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
