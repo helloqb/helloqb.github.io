@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>YAML 配置与调用</title>
+<title>Fastjson 使用</title>
 
 
 
@@ -10,7 +10,7 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="一个项目通常会有多个环境，YAML 文件可以更好的管理，甚至可以在无需重新打包的情况下更改环境。">
+<meta name="description" content="字符串和 JSON 对象和 JAVA 对象之间如何互转。">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
@@ -185,8 +185,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e8%b0%83%e7%94%a8" onclick="onNavClick(`#调用-nav`)" id="调用-nav">
-									调用
+								<a href="#jsonobject-%e4%ba%92%e8%bd%ac" onclick="onNavClick(`#jsonobject-互转-nav`)" id="jsonobject-互转-nav">
+									JSONObject 互转
 								</a>
 							</li>
 						
@@ -207,8 +207,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#value-%e6%b3%a8%e8%a7%a3%e8%b0%83%e7%94%a8" onclick="onNavClick(`#value-注解调用-nav`)" id="value-注解调用-nav">
-									Value 注解调用
+								<a href="#string-to-jsonobject" onclick="onNavClick(`#string-to-jsonobject-nav`)" id="string-to-jsonobject-nav">
+									String to JSONObject
 								</a>
 							</li>
 						
@@ -225,8 +225,80 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#configurationproperties-%e6%b3%a8%e8%a7%a3%e8%b0%83%e7%94%a8" onclick="onNavClick(`#configurationproperties-注解调用-nav`)" id="configurationproperties-注解调用-nav">
-									ConfigurationProperties 注解调用
+								<a href="#jsonobject-to-string" onclick="onNavClick(`#jsonobject-to-string-nav`)" id="jsonobject-to-string-nav">
+									JSONObject to String
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#string-to-javabean" onclick="onNavClick(`#string-to-javabean-nav`)" id="string-to-javabean-nav">
+									String to JavaBean
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#javabean-to-string" onclick="onNavClick(`#javabean-to-string-nav`)" id="javabean-to-string-nav">
+									JavaBean to String
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#jsonobject-to-javabean" onclick="onNavClick(`#jsonobject-to-javabean-nav`)" id="jsonobject-to-javabean-nav">
+									JSONObject to JavaBean
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#javabean-to-jsonobject" onclick="onNavClick(`#javabean-to-jsonobject-nav`)" id="javabean-to-jsonobject-nav">
+									JavaBean to JSONObject
 								</a>
 							</li>
 						
@@ -247,8 +319,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%a4%9a%e7%8e%af%e5%a2%83%e4%bd%bf%e7%94%a8" onclick="onNavClick(`#多环境使用-nav`)" id="多环境使用-nav">
-									多环境使用
+								<a href="#jsonarray-%e4%ba%92%e8%bd%ac" onclick="onNavClick(`#jsonarray-互转-nav`)" id="jsonarray-互转-nav">
+									JSONArray 互转
 								</a>
 							</li>
 						
@@ -269,8 +341,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e7%9b%b4%e6%8e%a5%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#命令行直接配置-nav`)" id="命令行直接配置-nav">
-									命令行直接配置
+								<a href="#string-to-jsonarray" onclick="onNavClick(`#string-to-jsonarray-nav`)" id="string-to-jsonarray-nav">
+									String to JSONArray
 								</a>
 							</li>
 						
@@ -287,8 +359,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%8d%95%e6%96%87%e4%bb%b6%e5%a4%9a%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#单文件多配置-nav`)" id="单文件多配置-nav">
-									单文件多配置
+								<a href="#jsonarray-to-string" onclick="onNavClick(`#jsonarray-to-string-nav`)" id="jsonarray-to-string-nav">
+									JSONArray to String
 								</a>
 							</li>
 						
@@ -305,8 +377,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%a4%9a%e6%96%87%e4%bb%b6%e5%a4%9a%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#多文件多配置-nav`)" id="多文件多配置-nav">
-									多文件多配置
+								<a href="#string-to-javalist" onclick="onNavClick(`#string-to-javalist-nav`)" id="string-to-javalist-nav">
+									String to JavaList
 								</a>
 							</li>
 						
@@ -320,15 +392,47 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 						
-							
-								</ul>
-							
+						
+						
+							<li>
+								<a href="#javalist-to-string" onclick="onNavClick(`#javalist-to-string-nav`)" id="javalist-to-string-nav">
+									JavaList to String
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
 						
 						
 						
 							<li>
-								<a href="#%e5%b0%be%e5%b7%b4" onclick="onNavClick(`#尾巴-nav`)" id="尾巴-nav">
-									尾巴
+								<a href="#jsonarray-to-javalist" onclick="onNavClick(`#jsonarray-to-javalist-nav`)" id="jsonarray-to-javalist-nav">
+									JSONArray to JavaList
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#javalist-to-jsonarray" onclick="onNavClick(`#javalist-to-jsonarray-nav`)" id="javalist-to-jsonarray-nav">
+									JavaList to JSONArray
 								</a>
 							</li>
 						
@@ -431,8 +535,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e8%b0%83%e7%94%a8" onclick="onNavClick(`#调用-nav`)" id="调用-nav">
-									调用
+								<a href="#jsonobject-%e4%ba%92%e8%bd%ac" onclick="onNavClick(`#jsonobject-互转-nav`)" id="jsonobject-互转-nav">
+									JSONObject 互转
 								</a>
 							</li>
 						
@@ -453,8 +557,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#value-%e6%b3%a8%e8%a7%a3%e8%b0%83%e7%94%a8" onclick="onNavClick(`#value-注解调用-nav`)" id="value-注解调用-nav">
-									Value 注解调用
+								<a href="#string-to-jsonobject" onclick="onNavClick(`#string-to-jsonobject-nav`)" id="string-to-jsonobject-nav">
+									String to JSONObject
 								</a>
 							</li>
 						
@@ -471,8 +575,80 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#configurationproperties-%e6%b3%a8%e8%a7%a3%e8%b0%83%e7%94%a8" onclick="onNavClick(`#configurationproperties-注解调用-nav`)" id="configurationproperties-注解调用-nav">
-									ConfigurationProperties 注解调用
+								<a href="#jsonobject-to-string" onclick="onNavClick(`#jsonobject-to-string-nav`)" id="jsonobject-to-string-nav">
+									JSONObject to String
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#string-to-javabean" onclick="onNavClick(`#string-to-javabean-nav`)" id="string-to-javabean-nav">
+									String to JavaBean
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#javabean-to-string" onclick="onNavClick(`#javabean-to-string-nav`)" id="javabean-to-string-nav">
+									JavaBean to String
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#jsonobject-to-javabean" onclick="onNavClick(`#jsonobject-to-javabean-nav`)" id="jsonobject-to-javabean-nav">
+									JSONObject to JavaBean
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#javabean-to-jsonobject" onclick="onNavClick(`#javabean-to-jsonobject-nav`)" id="javabean-to-jsonobject-nav">
+									JavaBean to JSONObject
 								</a>
 							</li>
 						
@@ -493,8 +669,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%a4%9a%e7%8e%af%e5%a2%83%e4%bd%bf%e7%94%a8" onclick="onNavClick(`#多环境使用-nav`)" id="多环境使用-nav">
-									多环境使用
+								<a href="#jsonarray-%e4%ba%92%e8%bd%ac" onclick="onNavClick(`#jsonarray-互转-nav`)" id="jsonarray-互转-nav">
+									JSONArray 互转
 								</a>
 							</li>
 						
@@ -515,8 +691,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e7%9b%b4%e6%8e%a5%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#命令行直接配置-nav`)" id="命令行直接配置-nav">
-									命令行直接配置
+								<a href="#string-to-jsonarray" onclick="onNavClick(`#string-to-jsonarray-nav`)" id="string-to-jsonarray-nav">
+									String to JSONArray
 								</a>
 							</li>
 						
@@ -533,8 +709,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%8d%95%e6%96%87%e4%bb%b6%e5%a4%9a%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#单文件多配置-nav`)" id="单文件多配置-nav">
-									单文件多配置
+								<a href="#jsonarray-to-string" onclick="onNavClick(`#jsonarray-to-string-nav`)" id="jsonarray-to-string-nav">
+									JSONArray to String
 								</a>
 							</li>
 						
@@ -551,8 +727,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#%e5%a4%9a%e6%96%87%e4%bb%b6%e5%a4%9a%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#多文件多配置-nav`)" id="多文件多配置-nav">
-									多文件多配置
+								<a href="#string-to-javalist" onclick="onNavClick(`#string-to-javalist-nav`)" id="string-to-javalist-nav">
+									String to JavaList
 								</a>
 							</li>
 						
@@ -566,15 +742,47 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 						
-							
-								</ul>
-							
+						
+						
+							<li>
+								<a href="#javalist-to-string" onclick="onNavClick(`#javalist-to-string-nav`)" id="javalist-to-string-nav">
+									JavaList to String
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
 						
 						
 						
 							<li>
-								<a href="#%e5%b0%be%e5%b7%b4" onclick="onNavClick(`#尾巴-nav`)" id="尾巴-nav">
-									尾巴
+								<a href="#jsonarray-to-javalist" onclick="onNavClick(`#jsonarray-to-javalist-nav`)" id="jsonarray-to-javalist-nav">
+									JSONArray to JavaList
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#javalist-to-jsonarray" onclick="onNavClick(`#javalist-to-jsonarray-nav`)" id="javalist-to-jsonarray-nav">
+									JavaList to JSONArray
 								</a>
 							</li>
 						
@@ -638,16 +846,16 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
             >
                 <div class="post-title">
-                    YAML 配置与调用
+                    Fastjson 使用
                     
                     <div class="post-subtitle">
-                        一个项目通常会有多个环境，YAML 文件可以更好的管理，甚至可以在无需重新打包的情况下更改环境。
+                        字符串和 JSON 对象和 JAVA 对象之间如何互转。
                     </div>
                     
                     <div class="post-meta">
                         
                         <time itemprop="datePublished">
-                            2020-09-07 00:00
+                            2020-10-28 00:00
                         </time>
                         
 
@@ -660,7 +868,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                         
                             <i class="material-icons" style="">label</i>
                             
-                                <a href="/tags/spring-boot">Spring Boot</a>
+                                <a href="/tags/json">JSON</a>
                                 &nbsp;
                             
                         
@@ -673,108 +881,46 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="调用">调用</h1>
-<h2 id="value-注解调用">Value 注解调用</h2>
-<p>例如，YAML 文件中有个自定义配置。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.1</span><span style="color:#bbb">
-</span></code></pre></div><p>使用 <code>@Value</code> 注解调用。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.beans.factory.annotation.Value</span><span style="color:#666">;</span>
-
-<span style="color:#a2f">@Value</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;${myconfig.model-server-url}&#34;</span><span style="color:#666">)</span>
-<span style="color:#008000;font-weight:bold">private</span> String modelServerUrl<span style="color:#666">;</span>
-</code></pre></div><p>变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。</p>
-<h2 id="configurationproperties-注解调用">ConfigurationProperties 注解调用</h2>
-<p>当参数较多时，可以使用 <code>@ConfigurationProperties</code> 将其绑定到一个类中。例如</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.1</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">servers</span>:<span style="color:#bbb"> 
-</span><span style="color:#bbb">    </span>- www.abc.test.com<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- www.xyz.test.com<span style="color:#bbb">
-</span></code></pre></div><p>配置类代码如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
-<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.boot.context.properties.ConfigurationProperties</span><span style="color:#666">;</span>
-<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.boot.context.properties.EnableConfigurationProperties</span><span style="color:#666">;</span>
-<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.context.annotation.Configuration</span><span style="color:#666">;</span>
-
-<span style="color:#408080;font-style:italic">/**
-</span><span style="color:#408080;font-style:italic"> * yaml config
-</span><span style="color:#408080;font-style:italic"> *
-</span><span style="color:#408080;font-style:italic"> */</span>
-<span style="color:#a2f">@Configuration</span>
-<span style="color:#a2f">@EnableConfigurationProperties</span>
-<span style="color:#a2f">@ConfigurationProperties</span><span style="color:#666">(</span>prefix <span style="color:#666">=</span> <span style="color:#ba2121">&#34;myconfig&#34;</span><span style="color:#666">)</span>
-<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">YAMLConfig</span> <span style="color:#666">{</span>
-
-    <span style="color:#008000;font-weight:bold">private</span> String modelServerUrl<span style="color:#666">;</span>
-    <span style="color:#008000;font-weight:bold">private</span> List<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> servers <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ArrayList<span style="color:#666">&lt;&gt;();</span>
-
-    <span style="color:#408080;font-style:italic">// standard getters and setters
-</span><span style="color:#408080;font-style:italic"></span><span style="color:#666">}</span>
-</code></pre></div><p>其中 <code>@Configuration</code> 和 <code>@EnableConfigurationProperties</code> 可以用 <code>@Component</code> 代替，前面那种注解更精确些。</p>
-<p>YAML 文件中参数匹配很宽松，下划线 <code>_</code> 和 <code>-</code> 和驼峰都能够匹配到，官方建议使用 <code>-</code>。</p>
-<p>调用时直接通过 <code>@Autowired</code> 注入即可，例如</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Autowired</span>
-<span style="color:#008000;font-weight:bold">private</span> YAMLConfig yamlConfig<span style="color:#666">;</span>
-
-<span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/hello&#34;</span><span style="color:#666">)</span>
-<span style="color:#a2f">@ResponseBody</span>
-String <span style="color:#00f">hello</span><span style="color:#666">(){</span>
-    <span style="color:#008000;font-weight:bold">return</span> <span style="color:#ba2121">&#34;hello and url: &#34;</span> <span style="color:#666">+</span> yamlConfig<span style="color:#666">.</span><span style="color:#7d9029">getModelServerUrl</span><span style="color:#666">()</span> <span style="color:#666">+</span> <span style="color:#ba2121">&#34; and servers: &#34;</span> <span style="color:#666">+</span> yamlConfig<span style="color:#666">.</span><span style="color:#7d9029">getServers</span><span style="color:#666">();</span>
-<span style="color:#666">}</span>
-</code></pre></div><h1 id="多环境使用">多环境使用</h1>
-<p>通常线上环境和测试环境的配置会有不同，有时候搞混的话，部署到线上才发觉，这时又得重新打包了。若是配置写在 YAML 文件中，可以使用命令行参数进行配置更改。</p>
-<h2 id="命令行直接配置">命令行直接配置</h2>
-<p>如上述例中参数想要替换成 127.0.0.2，启动命令如下；</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">java -jar demo.jar --myconfig.model-server-url<span style="color:#666">=</span>127.0.0.2
-</code></pre></div><p>可以看到有很多地方可以配置，那么这些肯定会有个优先级，这种命令行的形式应该是最高的，目前没有深入了解。</p>
-<h2 id="单文件多配置">单文件多配置</h2>
-<p>上述命令行直接配置的方式肯定不适用于参数多的情况，这时就需要用到了 <code>profile</code> 参数，例如：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">profiles</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">active</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
-</span><span style="color:#bbb"></span>---<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">profiles</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.1</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">server-name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span>---<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">profiles</span>:<span style="color:#bbb"> </span>prod<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.2</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">server-name</span>:<span style="color:#bbb"> </span>prod<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span></code></pre></div><p>这里 <code>---</code> 表示新文档的开始，所以其实是三个环境写到一起。一开始的默认配置是选择 test，如果想要换成 prod，则启动命令更改如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">java -jar demo.jar --spring.profiles.active<span style="color:#666">=</span>prod
-</code></pre></div><h2 id="多文件多配置">多文件多配置</h2>
-<p>当配置越来越多时，还是分开不同文件更好些，Spring Boot 秉承着 <strong>约定优于配置</strong> 的理念，如果按照其规范来，会相当便利。</p>
-<p>如上述例子可以分为文件 <code>application.yml</code>、文件 <code>application-test.yml</code> 和文件 <code>application-prod.yml</code>。</p>
-<p><strong>application.yml</strong>：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">profiles</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">active</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
-</span></code></pre></div><p><strong>application-test.yml</strong>：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.1</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">server-name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
-</span></code></pre></div><p><strong>application-prod.yml</strong>：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.2</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">server-name</span>:<span style="color:#bbb"> </span>prod<span style="color:#bbb">
-</span></code></pre></div><h1 id="尾巴">尾巴</h1>
-<p>个人觉得 YAML 配置不同环境挺适合的，如果是静态常量，感觉还是静态类写死更方便些。</p>
-<p>参考：</p>
-<ul>
-<li><a href="https://www.baeldung.com/spring-yaml">Spring YAML Configuration</a></li>
-<li><a href="https://www.hangge.com/blog/cache/detail_2459.html">SpringBoot - 配置文件application.yml使用详解</a></li>
-</ul>
-
+                    <h1 id="jsonobject-互转">JSONObject 互转</h1>
+<p><center><img src="https://dsm01pap001files.storage.live.com/y4mdBx8XpmSPr91JS2LVgwIIFuBU5Cd5o8n_GT_dDs2Sim12WVx34JixADFfQbrikACIfDV1iAjTOlsTGamSvM80ztlp0f59TMtE-pQOKQP5SyfueVHVEqEEO8Z9bv3AnUUjYzS2jRfu6iu-qczIu1keRGv4om0zPKnTwl4SA7L3ZBpxBHyJlPZpbHMFNZBCwPV?width=1236&height=854&cropmode=none" height="500" /></center><p>
+<h2 id="string-to-jsonobject">String to JSONObject</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">JSONObject j <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">parseObject</span><span style="color:#666">(</span>str<span style="color:#666">);</span>
+</code></pre></div><h2 id="jsonobject-to-string">JSONObject to String</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> j<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">();</span>
+</code></pre></div><p>转成字符串时默认会将 <code>null</code> 值去掉，若想要保留，需要添加 <code>SerializerFeature.WriteMapNullValue</code> 参数。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> j<span style="color:#666">.</span><span style="color:#7d9029">toString</span><span style="color:#666">(</span>SerializerFeature<span style="color:#666">.</span><span style="color:#7d9029">WriteMapNullValue</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="string-to-javabean">String to JavaBean</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">T t <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">parseObject</span><span style="color:#666">(</span>str<span style="color:#666">,</span> T<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="javabean-to-string">JavaBean to String</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>t<span style="color:#666">);</span>
+</code></pre></div><p>同样，若想要保留 <code>null</code> 值，需要添加 <code>SerializerFeature.WriteMapNullValue</code> 参数。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>t<span style="color:#666">,</span> erializerFeature<span style="color:#666">.</span><span style="color:#7d9029">WriteMapNullValue</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="jsonobject-to-javabean">JSONObject to JavaBean</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">T t <span style="color:#666">=</span> j<span style="color:#666">.</span><span style="color:#7d9029">toJavaObject</span><span style="color:#666">(</span>T<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="javabean-to-jsonobject">JavaBean to JSONObject</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">JSONObject j <span style="color:#666">=</span> <span style="color:#666">(</span>JSONObject<span style="color:#666">)</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSON</span><span style="color:#666">(</span>t<span style="color:#666">);</span>
+</code></pre></div><h1 id="jsonarray-互转">JSONArray 互转</h1>
+<p><center><img src="https://dsm01pap001files.storage.live.com/y4m9fI67f8yfjAvDW7NNRqIlV399ZX24B4awFth3u6qKYnsQ9Pl2QIfO0uNstmitpiQ48-Q3AA0nTLVTqR4H1qc5gUSKOjaR1ILkFhIQJJ3iBBAponsaSMulh3qZakNejdmEBzfa5PvpG-GpXBgt5r3oCGDRwbhoCVqqg9NQtEksZGiUlPHlrgDC5oP_9M-XVtK?width=1196&height=847&cropmode=none" height="500" /></center><p>
+<h2 id="string-to-jsonarray">String to JSONArray</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">JSONArray j <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">parseArray</span><span style="color:#666">(</span>str<span style="color:#666">);</span>
+</code></pre></div><h2 id="jsonarray-to-string">JSONArray to String</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> j<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">();</span>
+</code></pre></div><p>同样，若想要保留 <code>null</code> 值，需要添加 <code>SerializerFeature.WriteMapNullValue</code> 参数。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> j<span style="color:#666">.</span><span style="color:#7d9029">toString</span><span style="color:#666">(</span>SerializerFeature<span style="color:#666">.</span><span style="color:#7d9029">WriteMapNullValue</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="string-to-javalist">String to JavaList</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">List<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> list <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">parseArray</span><span style="color:#666">(</span>str<span style="color:#666">,</span> T<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="javalist-to-string">JavaList to String</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>list<span style="color:#666">);</span>
+</code></pre></div><p>同样，若想要保留 <code>null</code> 值，需要添加 <code>SerializerFeature.WriteMapNullValue</code> 参数。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#666">=</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>list<span style="color:#666">,</span> erializerFeature<span style="color:#666">.</span><span style="color:#7d9029">WriteMapNullValue</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="jsonarray-to-javalist">JSONArray to JavaList</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">List<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> list <span style="color:#666">=</span> j<span style="color:#666">.</span><span style="color:#7d9029">toJavaList</span><span style="color:#666">(</span>T<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+</code></pre></div><h2 id="javalist-to-jsonarray">JavaList to JSONArray</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">JSONArray j <span style="color:#666">=</span> <span style="color:#666">(</span>JSONArray<span style="color:#666">)</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSON</span><span style="color:#666">(</span>list<span style="color:#666">);</span>
+</code></pre></div>
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">Last modified on 2020-09-07</p>
+		    <p style="color:#777;">Last modified on 2020-10-28</p>
                     
                 </div>
             </div>
@@ -783,14 +929,14 @@ String <span style="color:#00f">hello</span><span style="color:#666">(){</span>
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://helloqb.xyz/post/2020/1028_fastjson/">
-			Next<br>Fastjson 使用
+                <a class="newer-posts">
+			Next<br>No newer posts.
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://helloqb.xyz/post/2020/0821_mapstruct/">
-			Previous<br>MapStruct 实现 Java Bean 映射
+                <a class="older-posts" href="https://helloqb.xyz/post/2020/0907_yaml/">
+			Previous<br>YAML 配置与调用
                 </a>
                 
             </nav>

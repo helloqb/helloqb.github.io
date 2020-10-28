@@ -6,9 +6,48 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>EXCEL 技巧之 - 相同单元格合并</title>
+        <link>https://helloqb.xyz/post/2020/0604_merge/</link>
+        <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0604_merge/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0604_merge/ -&lt;h1 id=&#34;需求&#34;&gt;需求&lt;/h1&gt;
+&lt;p&gt;需求其实很简单，就是合并单元格，行数少的情况下一个一个点就行了，但是行数多的情况下就麻烦了，秉承着重复性工作一定能被计算机代替的想法，翻阅很久找到了方法，在此分享。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://31gyyw.dm.files.1drv.com/y4miPbLToyX_QudE2Tuhmf-khEmDqEgh9fO4pFq0SYcisR1bTjfqH2aCXLjOFDh-HL1TmNx2iNtba7qxK0yPJJJlK-KTQXTu9gdsI7hWYyDTIbKiiG6yKNge3h3DeJ-Iv9uhRPIJBC4KuEOCYUsq_KugpmcsbB36lc5TWJCluEdkX9QNSsSzcqJMrsYzP3etq3SxIOtrSmUsKYb16JKfo8EHQ?width=418&amp;height=251&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;1. 数据（菜单栏） -&amp;gt; 分类汇总&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;分类字段：需要合并的列，本例中为身份；&lt;/li&gt;
+&lt;li&gt;汇总方式：无关，默认即可；&lt;/li&gt;
+&lt;li&gt;选定汇总项：同分类字段；&lt;/li&gt;
+&lt;li&gt;替换当前分类汇总：无关，默认即可；&lt;/li&gt;
+&lt;li&gt;每组数据分页：不选；&lt;/li&gt;
+&lt;li&gt;汇总结果显示在数据下方：选中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://4fgyyw.dm.files.1drv.com/y4mdpA_mKe7ja74RTuqL3uh6TVetdvqyrTMtmia7YX4_6nUZPEvw_OgFgcWhFuEVsruWR0_56NWOATP2D7Ypv_lWI82CKo-FzQYNn167XegYxcwzls21vwln0Vzea-OPHYCEmLZK9II7Zlzw1SlXn4cMZO_BQ6sVTZk3TIN6Sh1rFirSuM-FrBgIc0YTQtB9X8vcgP-F5z1FzLuqLw88McQNA?width=433&amp;height=312&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 汇总列合并空值单元格&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对生成的汇总列进行空值定位，并合并空值单元格。操作如下：&lt;/p&gt;
+&lt;p&gt;汇总列第一行填 1 -&amp;gt; 选中汇总列 -&amp;gt; 开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：空值 -&amp;gt; 合并后居中&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://4vgyyw.dm.files.1drv.com/y4mz2_puQ_ai1GR6rARu-HVgdPFj_4ceRrcYzlFjRhqwCEfPeEAEwCa3hs1eeEUbZdYurpF9uHtVgb3I8J48mL0DKeJXLfdk52LyTYC2HZSmDBjPJ4uapvMYEjQTTJKWoa3pXCAp5JLm2EB-j1wbf-8m0xJBQcqw2ovTefKKMGsOvmYw_PfMiAQbS7T_qXDbfYM0CDZraANizNt4e3ML7Gl_A?width=407&amp;height=310&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 间隔一行（非必须）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果想要每一类间隔一行的话，使用操作 2 的步骤定位合并列（定位条件：数值）然后插入工作表行就行了。&lt;/p&gt;
+&lt;p&gt;提一下这个是觉得定位这个功能很强大的样子，类似于编辑器中的多光标选择。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 格式刷合并列&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将汇总列格式刷到合并列。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://2lgyyw.dm.files.1drv.com/y4mGGjq5crcBI8VL6sKd_ziCMDNdO2PE40DtdIu7xmTb3N6oILfZPXOgy5Hyjlnw_ZIQUZYbBiIUzTQuDCpmO7yokxxpO_XN7E64ci08ry0w_zN4VRAXJ1RRub8YXV1xpng9rc9237_sIpkQ7S30n64ZT7NgvtmciVXMDjZHwKGMi8OLoyw7IwDDftrMHxDCoa8_fZauumwWM2KQ5mn3oQsfg?width=400&amp;height=297&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 删除分类汇总&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;数据（菜单栏） -&amp;gt; 分类汇总 -&amp;gt; 全部删除。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://21gyyw.dm.files.1drv.com/y4munMdjMvbfIdvLd7d35jz9kCrHmlhQtr3nUkUM6rjiSIbxzP8vn8Hn2ZL-Nxfz9HAvno1zWdG50vFVEMzZuEfvpOM0d0x72_DH7t-wnmGeGJRgTI-pT0tn7ll3olFqYWoA0pUCC_8DZjDC__A5gcEq3MiK4FkbTYswFrSe3JuREKe35ty_mJO2sSTSwpq0B9Nuv7gsYpheOZcVlsRHE2vFg?width=289&amp;height=240&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0604_merge/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
