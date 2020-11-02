@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://helloqb.xyz/tags/spring-boot/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/spring-boot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>YAML 配置与调用</title>
       <link>https://helloqb.xyz/post/2020/0907_yaml/</link>

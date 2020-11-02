@@ -6,9 +6,126 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 28 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>frp 实现无公网 IP 使用 Windows 远程桌面</title>
+        <link>https://helloqb.xyz/post/2020/1102_frp/</link>
+        <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/1102_frp/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/1102_frp/ -&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;远程控制软件有用过 &lt;code&gt;TeamViewer&lt;/code&gt;、&lt;code&gt;向日葵&lt;/code&gt;、&lt;code&gt;Chrome Remote Desktop&lt;/code&gt; 等，&lt;code&gt;TeamViewer&lt;/code&gt; 的稳定性流畅性最好，但是后台挂久了，会被检测商业用途，需要付费，那价格实在没法交个朋友。&lt;code&gt;向日葵&lt;/code&gt; 挺好的，但是对国产软件向来有些警惕，不敢给予太高的权限。&lt;code&gt;Chrome Remote Desktop&lt;/code&gt; 国内没法使用无人值守访问。Windows 自带的远程桌面不能连接非局域网内的用户，公网 IP 对于租客来说也没法弄，后来了解了内网穿透技术，正好解决了问题。&lt;/p&gt;
+&lt;h1 id=&#34;简单使用&#34;&gt;简单使用&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;frp 实现需要具有公网 IP 节点的中转站，我用的是谷歌云，公司也用了内网穿透技术，用的是腾讯云，比较后发现公司速度更快。&lt;/p&gt;
+&lt;h2 id=&#34;server-端安装&#34;&gt;Server 端安装&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/fatedier/frp/releases&#34;&gt;官网&lt;/a&gt; 下载对应系统的版本，我的 VPS 是 linux x64，所以选用的是版本是 &lt;code&gt;frp_0.34.1_linux_amd64.tar.gz&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;下载后解压文件夹，将 &lt;code&gt;frps.ini&lt;/code&gt; 和 &lt;code&gt;frps&lt;/code&gt; 文件拷贝到服务器上，运行即可。示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 后台运行，输出默认重定向到当前目录下 nohup.out 文件&lt;/span&gt;
+nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp;
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 后台运行，不记录输出信息 &lt;/span&gt;
+nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp;&amp;gt; /dev/null &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;frps.ini&lt;/code&gt; 文件中 &lt;code&gt;bind_port = 7000&lt;/code&gt; 表示默认监听端口为 7000，需要安全组策略允许入站和出站。&lt;/p&gt;
+&lt;h2 id=&#34;client-端安装&#34;&gt;Client 端安装&lt;/h2&gt;
+&lt;p&gt;下载 Windows 端的版本 &lt;code&gt;frp_0.34.1_windows_amd64.zip&lt;/code&gt;，也只需要两个文件 &lt;code&gt;frpc.ini&lt;/code&gt; 和 &lt;code&gt;frpc.exe&lt;/code&gt;。运行示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 文件所在目录下&lt;/span&gt;
+frpc.exe -c frpc.ini
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;frps.ini&lt;/code&gt; 文件的示例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;common&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#19177c&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 35.***.**.216
+&lt;span style=&#34;color:#19177c&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7000&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;RDP1&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#008000&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; tcp
+&lt;span style=&#34;color:#19177c&#34;&gt;local_ip&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 127.0.0.1
+&lt;span style=&#34;color:#19177c&#34;&gt;local_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;3389&lt;/span&gt;
+&lt;span style=&#34;color:#19177c&#34;&gt;remote_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7002&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;server_addr&lt;/code&gt;：server 端公网 IP&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;server_port&lt;/code&gt;：server 端监听端口，同 &lt;code&gt;bind_port&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type&lt;/code&gt;：tcp，默认模式，不够安全&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;local_ip&lt;/code&gt;：本机使用，填 &lt;code&gt;127.0.0.1&lt;/code&gt; 即可&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;local_port&lt;/code&gt;：windows 远程桌面默认端口为 3389，可以在设置中看到&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;remote_port&lt;/code&gt;：远程用来映射的端口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;此时若两端日志都显示 &lt;code&gt;start proxy success&lt;/code&gt; 说明连接成功。远程桌面连接时计算机名称输入 &lt;code&gt;[server_port]:[remote_port]&lt;/code&gt; 即可实现远程控制。&lt;/p&gt;
+&lt;h1 id=&#34;windows-开机无窗口启动&#34;&gt;Windows 开机无窗口启动&lt;/h1&gt;
+&lt;p&gt;由于客户端要运行命令行，Windows 需要每次打开 shell 客户端，这里分享两个小技巧实现开机无窗口启动命令。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;脚本无窗口运行&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;新建 &lt;code&gt;.vbs&lt;/code&gt; 运行文件，输入以下命令，&lt;code&gt;CreateObject(&amp;quot;WScript.Shell&amp;quot;).Run &amp;quot;***&amp;quot;,0&lt;/code&gt; 将 &lt;code&gt;***&lt;/code&gt; 替换成需要的命令。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;应用开机启动&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;创建该文件的快捷方式到 &lt;code&gt;用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup&lt;/code&gt; 目录下，即可实现开机自动运行。&lt;/p&gt;
+&lt;p&gt;后台启动后，想要查看进程的话，&lt;code&gt;Windows PowerShell&lt;/code&gt; 查看进程和删除进程的命令如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;Get-Process -name frp*
+Stop-Process -name frpc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;frp-进阶&#34;&gt;frp 进阶&lt;/h1&gt;
+&lt;h2 id=&#34;stcp-模式安全&#34;&gt;stcp 模式（安全）&lt;/h2&gt;
+&lt;p&gt;tcp 暴露的端口，任何设备都可以访问，有较大的安全隐患。为此 frp 提供了 stcp 模式。&lt;/p&gt;
+&lt;p&gt;被访问端配置示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;common&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#19177c&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 35.***.**.216
+&lt;span style=&#34;color:#19177c&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7000&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;RDP2&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#008000&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; stcp
+&lt;span style=&#34;color:#19177c&#34;&gt;sk&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; abcdefg
+&lt;span style=&#34;color:#19177c&#34;&gt;local_ip&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 127.0.0.1
+&lt;span style=&#34;color:#19177c&#34;&gt;local_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;3389&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;访问端配置示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;common&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#19177c&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 35.***.**.216
+&lt;span style=&#34;color:#19177c&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7000&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;RDP2_visitor&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#008000&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; stcp
+&lt;span style=&#34;color:#19177c&#34;&gt;role&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; visitor
+&lt;span style=&#34;color:#19177c&#34;&gt;server_name&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; RDP2
+&lt;span style=&#34;color:#19177c&#34;&gt;sk&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; abcdefg
+&lt;span style=&#34;color:#19177c&#34;&gt;bind_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 127.0.0.1
+&lt;span style=&#34;color:#19177c&#34;&gt;bind_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;6000&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时访问端使用 &lt;code&gt;127.0.0.1:6000&lt;/code&gt; 即可远程连接。&lt;/p&gt;
+&lt;p&gt;此方式两边客户端都要配置，不如 tcp 方便些。&lt;/p&gt;
+&lt;h2 id=&#34;xtcp-模式高效&#34;&gt;xtcp 模式（高效）&lt;/h2&gt;
+&lt;p&gt;xtcp 模式是点对点模式，实现不通过服务器中转流量的方式来访问内网服务。使用方式同 stcp 类似，需要在两边都部署上 frpc 用于建立直接的连接。&lt;/p&gt;
+&lt;p&gt;服务端需要额外配置监听一个 UDP 端口。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[common]
+bind_port = 7000
+bind_udp_port = 7001
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;被访问端配置示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;common&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#19177c&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 35.***.**.216
+&lt;span style=&#34;color:#19177c&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7000&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;RDP2&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#008000&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; xtcp
+&lt;span style=&#34;color:#19177c&#34;&gt;sk&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; abcdefg
+&lt;span style=&#34;color:#19177c&#34;&gt;local_ip&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 127.0.0.1
+&lt;span style=&#34;color:#19177c&#34;&gt;local_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;3389&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;访问端配置示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;common&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#19177c&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 35.***.**.216
+&lt;span style=&#34;color:#19177c&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7000&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;RDP2_visitor&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#008000&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; xtcp
+&lt;span style=&#34;color:#19177c&#34;&gt;role&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; visitor
+&lt;span style=&#34;color:#19177c&#34;&gt;server_name&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; RDP2
+&lt;span style=&#34;color:#19177c&#34;&gt;sk&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; abcdefg
+&lt;span style=&#34;color:#19177c&#34;&gt;bind_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 127.0.0.1
+&lt;span style=&#34;color:#19177c&#34;&gt;bind_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;6000&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此方式穿透成功率较低，我测试了下，竟然可用，速度明显快很多，所以我最终采用的是此方法。&lt;/p&gt;
+&lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
+&lt;p&gt;上文提到公司也使用了内网穿透技术，采用 &lt;code&gt;frp + openVPN&lt;/code&gt; 的方法，给每个人分配了一个密钥，员工打开 openVPN，加载密钥，就可以实现在家访问公司内部搭建的网站，当然远程控制也可以。感觉比直连的方式稳定些，后续可以研究下。&lt;/p&gt;
+- https://helloqb.xyz/post/2020/1102_frp/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -125,14 +242,14 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;active&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;prod&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
@@ -860,55 +977,6 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
 &lt;h1 id=&#34;推荐&#34;&gt;推荐&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://regexper.com/&#34;&gt;regexper&lt;/a&gt; 这个网站可以帮助你更直观的展示正则表达式的逻辑。&lt;/p&gt;
 - https://helloqb.xyz/post/2020/0605_regex/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>EXCEL 技巧之 - VLOOKUP 函数</title>
-        <link>https://helloqb.xyz/post/2020/0604_vlookup/</link>
-        <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0604_vlookup/ -&lt;h1 id=&#34;官方文档&#34;&gt;官方文档&lt;/h1&gt;
-&lt;p&gt;VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;要查找的值，也被称为查阅值。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;查阅值所在的区域。 请记住，查阅值应该始终&lt;em&gt;&lt;strong&gt;位于所在区域的第一列&lt;/strong&gt;&lt;/em&gt;，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;（可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
-&lt;p&gt;如下表格，想要知道左边哪些是已婚人士。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://21fnqa.dm.files.1drv.com/y4mxHOexyJpSInaOXFQ-H74qmhCXFiBSSZhKeDcOsl9Az95dc0BGgwvQaDCMNjqzbUMZNhwYclDPKYUtaKfBbRjomBuDLL1zQNtY1WchbEey-5TQVzERl9HPTXPUBDSx6yYgnUdqV7Z2JlL-wNTMX7o_lBmzW23zVifaXUS6S0RSsYDMhfmzOZ3eJOGLyXn7DX4M02UvjS1dV-xeHpDuYlUxg?width=612&amp;height=291&amp;cropmode=none&#34; /&gt;&lt;p&gt;
-&lt;p&gt;&lt;strong&gt;1. 输入 VLOOKUP&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;在上表 2B 单元格内输入 &lt;code&gt;=VLOOKUP(&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2. 选择查找值&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;括号后第一个参数选中 2A，然后输入英文逗号。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://3ffnqa.dm.files.1drv.com/y4mNWqmpXbuJknhmxYTy_6wlJyY9U13gY1WfQ0K7IUBk67ok4Y9U9lKKXGLMeJsNtuZfrxlBkXgcixQA4uDIZ28cO5WvIg1ao_nZ9XlsLEoZH52wsl0AcvPrzWWx_STSMIB4aRTUSI7SZdBOz-HLVjecHAMkgpyhnvt4jTL8RqianLgZXNdsu8uDIgja_E4m6P2lwZtMzS_6S9AQFG6I6QqAg?width=612&amp;height=297&amp;cropmode=none&#34; /&gt;&lt;p&gt;
-&lt;p&gt;&lt;strong&gt;3. 选择查找区域&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;括号后第二个参数选中 F:G 列，然后输入英文逗号。&lt;/p&gt;
-&lt;p&gt;如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。&lt;/p&gt;
-&lt;p&gt;全选时注意首行会不会影响结果。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://3vfnqa.dm.files.1drv.com/y4m4xJvHy47-M1nmcu3d0c8PIOeuhzo-PFvKCjN9rcvxHRMMdJVLFb49TWk6aaDd2w23xWBBop85GmvfLRFs0HdWn8mnTTI8TGect2__N1zLMF2uTGQcCWSkVGNX9aYngUMK2tyRiY2DC7Quh9NYHzwk_4cT8L_VVNo-MpGJJFW13UvEUSpHzfaFZwFYmPjnIACoTBC1BDAAc8cfjr3vfOGRg?width=611&amp;height=302&amp;cropmode=none&#34; /&gt;&lt;p&gt;
-&lt;p&gt;&lt;strong&gt;4. 其他参数&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。&lt;/p&gt;
-&lt;p&gt;最后整个公式为 &lt;code&gt;=VLOOKUP(A2,F:G,1,FALSE)&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;5. 复制公式&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;此时只是第一个单元格的结果，采用下拉拖动方式或者复制粘贴方式将公式复制到列中其他的单元格中。这两种方式粘贴的公式都会行自动变化。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://5lfnqa.dm.files.1drv.com/y4mmnfyHw_FLNQj4R4aZvCCz1zo5gm_tUTISAXTtyrtCBOn6BB-OsJ_N7XDgvtn_E92SQUNP5p6mHfOrOQ48qJQZl5f1-nw63LF78eq2oXFfF-2QHXfXEosGmFmYqwQt7OuJqYrI4vWXacKAFwG9sep5O2D1uerTu8ztzsAKl6POmj94eap3T2BDN5wpF91CC02TKjwwqcwoc-nRUz7dpP0VQ?width=617&amp;height=303&amp;cropmode=none&#34; /&gt;&lt;p&gt;
-&lt;p&gt;&lt;strong&gt;6. 获取其他单元格&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;第二列数据改下第三个参数为 2 就行了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://51fnqa.dm.files.1drv.com/y4m5hJfOGKRBm0nH7DWHQ0k_OJdmD7urFWDHjBE_eGtteA258Il5XP8L6MObW1uiYnQ1sDBDg6emSnoEapzZJqUmewielL1VawozZqR0G301koXwa0ayLyF6EoOczHQ6MhePa8l8Pv4wjggDm_siB9Z2vB4B99-Wev7R-Z07tec4pDokMVm_aP3fp0uOIFTkNl088UcDi1DAwcdOmbB-Vnosg?width=617&amp;height=301&amp;cropmode=none&#34; /&gt;&lt;p&gt;
-- https://helloqb.xyz/post/2020/0604_vlookup/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

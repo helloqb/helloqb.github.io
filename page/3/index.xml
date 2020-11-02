@@ -1,0 +1,36 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>哲学家</title>
+    <link>https://helloqb.xyz/</link>
+    <description>Recent content on 哲学家</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
+    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>自我介绍</title>
+        <link>https://helloqb.xyz/about/</link>
+        <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/about/</guid>
+        <description>哲学家 https://helloqb.xyz/about/ -&lt;h1 id=&#34;个人&#34;&gt;个人&lt;/h1&gt;
+&lt;p&gt;自我定位中。。。&lt;/p&gt;
+&lt;h1 id=&#34;喜好&#34;&gt;喜好&lt;/h1&gt;
+&lt;h2 id=&#34;影视&#34;&gt;影视&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;导演&lt;/strong&gt;：&lt;a href=&#34;https://movie.douban.com/celebrity/1000304/&#34;&gt;马丁·麦克唐纳&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;美剧&lt;/strong&gt;：&lt;a href=&#34;https://www.imdb.com/title/tt1586680/?ref_=fn_al_tt_1&#34;&gt;无耻之徒&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;妹子&#34;&gt;妹子&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;新垣结衣&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;其他标签&#34;&gt;其他标签&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;锤友（渐渐脱粉中）&lt;/strong&gt;&lt;/p&gt;
+- https://helloqb.xyz/about/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+  </channel>
+</rss> 

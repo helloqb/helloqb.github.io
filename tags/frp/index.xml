@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>frp on 哲学家</title>
+    <link>https://helloqb.xyz/tags/frp/</link>
+    <description>Recent content in frp on 哲学家</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
+    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/frp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>frp 实现无公网 IP 使用 Windows 远程桌面</title>
+      <link>https://helloqb.xyz/post/2020/1102_frp/</link>
+      <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/1102_frp/</guid>
+      <description>前言 远程控制软件有用过 TeamViewer、向日葵、Chrome Remote Desktop 等，TeamViewer 的稳定性流畅性最好，但是后台挂久了，会被检测商业用途，需要付费，那价格实在没法交个朋友。向日葵 挺好的，但是对国产软件向来有些警惕，不敢给予太高的权限。Chrome Remote Desktop 国内没法使用无人值守访问。Windows 自带的远程桌面不能连接非局域网内的用户，公网 IP 对于租客来说也没法弄，后来了解了内网穿透技术，正好解决了问题。
+简单使用  frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。
+ frp 实现需要具有公网 IP 节点的中转站，我用的是谷歌云，公司也用了内网穿透技术，用的是腾讯云，比较后发现公司速度更快。
+Server 端安装 官网 下载对应系统的版本，我的 VPS 是 linux x64，所以选用的是版本是 frp_0.34.1_linux_amd64.tar.gz。
+下载后解压文件夹，将 frps.ini 和 frps 文件拷贝到服务器上，运行即可。示例如下：
+# 后台运行，输出默认重定向到当前目录下 nohup.out 文件 nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp; # 后台运行，不记录输出信息  nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp;&amp;gt; /dev/null &amp;amp; 其中 frps.ini 文件中 bind_port = 7000 表示默认监听端口为 7000，需要安全组策略允许入站和出站。
+Client 端安装 下载 Windows 端的版本 frp_0.</description>
+    </item>
+    
+  </channel>
+</rss>

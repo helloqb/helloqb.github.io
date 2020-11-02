@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 28 Oct 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://helloqb.xyz/tags/json/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 28 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/json/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Fastjson 使用</title>
       <link>https://helloqb.xyz/post/2020/1028_fastjson/</link>

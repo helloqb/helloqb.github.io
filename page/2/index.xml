@@ -6,9 +6,58 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 28 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>EXCEL 技巧之 - VLOOKUP 函数</title>
+        <link>https://helloqb.xyz/post/2020/0604_vlookup/</link>
+        <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0604_vlookup/ -&lt;h1 id=&#34;官方文档&#34;&gt;官方文档&lt;/h1&gt;
+&lt;p&gt;VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;要查找的值，也被称为查阅值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查阅值所在的区域。 请记住，查阅值应该始终&lt;em&gt;&lt;strong&gt;位于所在区域的第一列&lt;/strong&gt;&lt;/em&gt;，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;（可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
+&lt;p&gt;如下表格，想要知道左边哪些是已婚人士。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://21fnqa.dm.files.1drv.com/y4mxHOexyJpSInaOXFQ-H74qmhCXFiBSSZhKeDcOsl9Az95dc0BGgwvQaDCMNjqzbUMZNhwYclDPKYUtaKfBbRjomBuDLL1zQNtY1WchbEey-5TQVzERl9HPTXPUBDSx6yYgnUdqV7Z2JlL-wNTMX7o_lBmzW23zVifaXUS6S0RSsYDMhfmzOZ3eJOGLyXn7DX4M02UvjS1dV-xeHpDuYlUxg?width=612&amp;height=291&amp;cropmode=none&#34; /&gt;&lt;p&gt;
+&lt;p&gt;&lt;strong&gt;1. 输入 VLOOKUP&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在上表 2B 单元格内输入 &lt;code&gt;=VLOOKUP(&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 选择查找值&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;括号后第一个参数选中 2A，然后输入英文逗号。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3ffnqa.dm.files.1drv.com/y4mNWqmpXbuJknhmxYTy_6wlJyY9U13gY1WfQ0K7IUBk67ok4Y9U9lKKXGLMeJsNtuZfrxlBkXgcixQA4uDIZ28cO5WvIg1ao_nZ9XlsLEoZH52wsl0AcvPrzWWx_STSMIB4aRTUSI7SZdBOz-HLVjecHAMkgpyhnvt4jTL8RqianLgZXNdsu8uDIgja_E4m6P2lwZtMzS_6S9AQFG6I6QqAg?width=612&amp;height=297&amp;cropmode=none&#34; /&gt;&lt;p&gt;
+&lt;p&gt;&lt;strong&gt;3. 选择查找区域&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;括号后第二个参数选中 F:G 列，然后输入英文逗号。&lt;/p&gt;
+&lt;p&gt;如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。&lt;/p&gt;
+&lt;p&gt;全选时注意首行会不会影响结果。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3vfnqa.dm.files.1drv.com/y4m4xJvHy47-M1nmcu3d0c8PIOeuhzo-PFvKCjN9rcvxHRMMdJVLFb49TWk6aaDd2w23xWBBop85GmvfLRFs0HdWn8mnTTI8TGect2__N1zLMF2uTGQcCWSkVGNX9aYngUMK2tyRiY2DC7Quh9NYHzwk_4cT8L_VVNo-MpGJJFW13UvEUSpHzfaFZwFYmPjnIACoTBC1BDAAc8cfjr3vfOGRg?width=611&amp;height=302&amp;cropmode=none&#34; /&gt;&lt;p&gt;
+&lt;p&gt;&lt;strong&gt;4. 其他参数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。&lt;/p&gt;
+&lt;p&gt;最后整个公式为 &lt;code&gt;=VLOOKUP(A2,F:G,1,FALSE)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. 复制公式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;此时只是第一个单元格的结果，采用下拉拖动方式或者复制粘贴方式将公式复制到列中其他的单元格中。这两种方式粘贴的公式都会行自动变化。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://5lfnqa.dm.files.1drv.com/y4mmnfyHw_FLNQj4R4aZvCCz1zo5gm_tUTISAXTtyrtCBOn6BB-OsJ_N7XDgvtn_E92SQUNP5p6mHfOrOQ48qJQZl5f1-nw63LF78eq2oXFfF-2QHXfXEosGmFmYqwQt7OuJqYrI4vWXacKAFwG9sep5O2D1uerTu8ztzsAKl6POmj94eap3T2BDN5wpF91CC02TKjwwqcwoc-nRUz7dpP0VQ?width=617&amp;height=303&amp;cropmode=none&#34; /&gt;&lt;p&gt;
+&lt;p&gt;&lt;strong&gt;6. 获取其他单元格&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;第二列数据改下第三个参数为 2 就行了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://51fnqa.dm.files.1drv.com/y4m5hJfOGKRBm0nH7DWHQ0k_OJdmD7urFWDHjBE_eGtteA258Il5XP8L6MObW1uiYnQ1sDBDg6emSnoEapzZJqUmewielL1VawozZqR0G301koXwa0ayLyF6EoOczHQ6MhePa8l8Pv4wjggDm_siB9Z2vB4B99-Wev7R-Z07tec4pDokMVm_aP3fp0uOIFTkNl088UcDi1DAwcdOmbB-Vnosg?width=617&amp;height=301&amp;cropmode=none&#34; /&gt;&lt;p&gt;
+- https://helloqb.xyz/post/2020/0604_vlookup/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -1009,7 +1058,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;元数据&#34;&gt;元数据&lt;/h1&gt;
 &lt;p&gt;通常元数据包括如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;title&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人笔记 - Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;description&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;date&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2020-03-01&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
@@ -1018,34 +1067,13 @@ unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/spa
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;tags&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Sourcetree&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Note&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;---&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其他的有：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;draft: true&lt;/code&gt; 视为草稿&lt;/li&gt;
 &lt;li&gt;有的主题文章列表会展示文章的开头，有标签会很乱，用 &lt;code&gt;&amp;lt; !--more--&amp;gt;&lt;/code&gt; 会强制展示此节点之前的内容&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0101_hugo/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>自我介绍</title>
-        <link>https://helloqb.xyz/about/</link>
-        <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/about/</guid>
-        <description>哲学家 https://helloqb.xyz/about/ -&lt;h1 id=&#34;个人&#34;&gt;个人&lt;/h1&gt;
-&lt;p&gt;自我定位中。。。&lt;/p&gt;
-&lt;h1 id=&#34;喜好&#34;&gt;喜好&lt;/h1&gt;
-&lt;h2 id=&#34;影视&#34;&gt;影视&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;导演&lt;/strong&gt;：&lt;a href=&#34;https://movie.douban.com/celebrity/1000304/&#34;&gt;马丁·麦克唐纳&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;美剧&lt;/strong&gt;：&lt;a href=&#34;https://www.imdb.com/title/tt1586680/?ref_=fn_al_tt_1&#34;&gt;无耻之徒&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;妹子&#34;&gt;妹子&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;新垣结衣&lt;/strong&gt;&lt;/p&gt;
-&lt;h1 id=&#34;其他标签&#34;&gt;其他标签&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;锤友（渐渐脱粉中）&lt;/strong&gt;&lt;/p&gt;
-- https://helloqb.xyz/about/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
