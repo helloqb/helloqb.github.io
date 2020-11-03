@@ -725,18 +725,18 @@ nohup /root/frp/frps -c /root/frp/frps.ini &amp;&gt; /dev/null &amp;
 </code></pre></div><p>其中 <code>frps.ini</code> 文件中 <code>bind_port = 7000</code> 表示默认监听端口为 7000，需要安全组策略允许入站和出站。</p>
 <h2 id="client-端安装">Client 端安装</h2>
 <p>下载 Windows 端的版本 <code>frp_0.34.1_windows_amd64.zip</code>，也只需要两个文件 <code>frpc.ini</code> 和 <code>frpc.exe</code>。运行示例如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#408080;font-style:italic"># 文件所在目录下</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ps1" data-lang="ps1"><span style="color:#408080;font-style:italic"># 文件所在目录下</span>
 frpc.exe -c frpc.ini
 </code></pre></div><p><code>frps.ini</code> 文件的示例：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#666">[</span>common<span style="color:#666">]</span>
-<span style="color:#19177c">server_addr</span> <span style="color:#666">=</span> 35.***.**.216
-<span style="color:#19177c">server_port</span> <span style="color:#666">=</span> <span style="color:#666">7000</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#008000;font-weight:bold">[common]</span>
+<span style="color:#7d9029">server_addr</span> <span style="color:#666">=</span> <span style="color:#ba2121">35.***.**.216</span>
+<span style="color:#7d9029">server_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7000</span>
 
-<span style="color:#666">[</span>RDP1<span style="color:#666">]</span>
-<span style="color:#008000">type</span> <span style="color:#666">=</span> tcp
-<span style="color:#19177c">local_ip</span> <span style="color:#666">=</span> 127.0.0.1
-<span style="color:#19177c">local_port</span> <span style="color:#666">=</span> <span style="color:#666">3389</span>
-<span style="color:#19177c">remote_port</span> <span style="color:#666">=</span> <span style="color:#666">7002</span>
+<span style="color:#008000;font-weight:bold">[RDP1]</span>
+<span style="color:#7d9029">type</span> <span style="color:#666">=</span> <span style="color:#ba2121">tcp</span>
+<span style="color:#7d9029">local_ip</span> <span style="color:#666">=</span> <span style="color:#ba2121">127.0.0.1</span>
+<span style="color:#7d9029">local_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">3389</span>
+<span style="color:#7d9029">remote_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7002</span>
 </code></pre></div><p>其中：</p>
 <ul>
 <li><code>server_addr</code>：server 端公网 IP</li>
@@ -754,63 +754,63 @@ frpc.exe -c frpc.ini
 <p><strong>应用开机启动</strong></p>
 <p>创建该文件的快捷方式到 <code>用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code> 目录下，即可实现开机自动运行。</p>
 <p>后台启动后，想要查看进程的话，<code>Windows PowerShell</code> 查看进程和删除进程的命令如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">Get-Process -name frp*
-Stop-Process -name frpc
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ps1" data-lang="ps1"><span style="color:#008000">Get-Process</span> -name frp*
+<span style="color:#008000">Stop-Process</span> -name frpc
 </code></pre></div><h1 id="frp-进阶">frp 进阶</h1>
 <h2 id="stcp-模式安全">stcp 模式（安全）</h2>
 <p>tcp 暴露的端口，任何设备都可以访问，有较大的安全隐患。为此 frp 提供了 stcp 模式。</p>
 <p>被访问端配置示例如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#666">[</span>common<span style="color:#666">]</span>
-<span style="color:#19177c">server_addr</span> <span style="color:#666">=</span> 35.***.**.216
-<span style="color:#19177c">server_port</span> <span style="color:#666">=</span> <span style="color:#666">7000</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#008000;font-weight:bold">[common]</span>
+<span style="color:#7d9029">server_addr</span> <span style="color:#666">=</span> <span style="color:#ba2121">35.***.**.216</span>
+<span style="color:#7d9029">server_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7000</span>
 
-<span style="color:#666">[</span>RDP2<span style="color:#666">]</span>
-<span style="color:#008000">type</span> <span style="color:#666">=</span> stcp
-<span style="color:#19177c">sk</span> <span style="color:#666">=</span> abcdefg
-<span style="color:#19177c">local_ip</span> <span style="color:#666">=</span> 127.0.0.1
-<span style="color:#19177c">local_port</span> <span style="color:#666">=</span> <span style="color:#666">3389</span>
+<span style="color:#008000;font-weight:bold">[RDP2]</span>
+<span style="color:#7d9029">type</span> <span style="color:#666">=</span> <span style="color:#ba2121">stcp</span>
+<span style="color:#7d9029">sk</span> <span style="color:#666">=</span> <span style="color:#ba2121">abcdefg</span>
+<span style="color:#7d9029">local_ip</span> <span style="color:#666">=</span> <span style="color:#ba2121">127.0.0.1</span>
+<span style="color:#7d9029">local_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">3389</span>
 </code></pre></div><p>访问端配置示例如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#666">[</span>common<span style="color:#666">]</span>
-<span style="color:#19177c">server_addr</span> <span style="color:#666">=</span> 35.***.**.216
-<span style="color:#19177c">server_port</span> <span style="color:#666">=</span> <span style="color:#666">7000</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#008000;font-weight:bold">[common]</span>
+<span style="color:#7d9029">server_addr</span> <span style="color:#666">=</span> <span style="color:#ba2121">35.***.**.216</span>
+<span style="color:#7d9029">server_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7000</span>
 
-<span style="color:#666">[</span>RDP2_visitor<span style="color:#666">]</span>
-<span style="color:#008000">type</span> <span style="color:#666">=</span> stcp
-<span style="color:#19177c">role</span> <span style="color:#666">=</span> visitor
-<span style="color:#19177c">server_name</span> <span style="color:#666">=</span> RDP2
-<span style="color:#19177c">sk</span> <span style="color:#666">=</span> abcdefg
-<span style="color:#19177c">bind_addr</span> <span style="color:#666">=</span> 127.0.0.1
-<span style="color:#19177c">bind_port</span> <span style="color:#666">=</span> <span style="color:#666">6000</span>
+<span style="color:#008000;font-weight:bold">[RDP2_visitor]</span>
+<span style="color:#7d9029">type</span> <span style="color:#666">=</span> <span style="color:#ba2121">stcp</span>
+<span style="color:#7d9029">role</span> <span style="color:#666">=</span> <span style="color:#ba2121">visitor</span>
+<span style="color:#7d9029">server_name</span> <span style="color:#666">=</span> <span style="color:#ba2121">RDP2</span>
+<span style="color:#7d9029">sk</span> <span style="color:#666">=</span> <span style="color:#ba2121">abcdefg</span>
+<span style="color:#7d9029">bind_addr</span> <span style="color:#666">=</span> <span style="color:#ba2121">127.0.0.1</span>
+<span style="color:#7d9029">bind_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">6000</span>
 </code></pre></div><p>此时访问端使用 <code>127.0.0.1:6000</code> 即可远程连接。</p>
 <p>此方式两边客户端都要配置，不如 tcp 方便些。</p>
 <h2 id="xtcp-模式高效">xtcp 模式（高效）</h2>
 <p>xtcp 模式是点对点模式，实现不通过服务器中转流量的方式来访问内网服务。使用方式同 stcp 类似，需要在两边都部署上 frpc 用于建立直接的连接。</p>
 <p>服务端需要额外配置监听一个 UDP 端口。</p>
-<pre><code>[common]
-bind_port = 7000
-bind_udp_port = 7001
-</code></pre><p>被访问端配置示例如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#666">[</span>common<span style="color:#666">]</span>
-<span style="color:#19177c">server_addr</span> <span style="color:#666">=</span> 35.***.**.216
-<span style="color:#19177c">server_port</span> <span style="color:#666">=</span> <span style="color:#666">7000</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#008000;font-weight:bold">[common]</span>
+<span style="color:#7d9029">bind_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7000</span>
+<span style="color:#7d9029">bind_udp_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7001</span>
+</code></pre></div><p>被访问端配置示例如下：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#008000;font-weight:bold">[common]</span>
+<span style="color:#7d9029">server_addr</span> <span style="color:#666">=</span> <span style="color:#ba2121">35.***.**.216</span>
+<span style="color:#7d9029">server_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7000</span>
 
-<span style="color:#666">[</span>RDP2<span style="color:#666">]</span>
-<span style="color:#008000">type</span> <span style="color:#666">=</span> xtcp
-<span style="color:#19177c">sk</span> <span style="color:#666">=</span> abcdefg
-<span style="color:#19177c">local_ip</span> <span style="color:#666">=</span> 127.0.0.1
-<span style="color:#19177c">local_port</span> <span style="color:#666">=</span> <span style="color:#666">3389</span>
+<span style="color:#008000;font-weight:bold">[RDP2]</span>
+<span style="color:#7d9029">type</span> <span style="color:#666">=</span> <span style="color:#ba2121">xtcp</span>
+<span style="color:#7d9029">sk</span> <span style="color:#666">=</span> <span style="color:#ba2121">abcdefg</span>
+<span style="color:#7d9029">local_ip</span> <span style="color:#666">=</span> <span style="color:#ba2121">127.0.0.1</span>
+<span style="color:#7d9029">local_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">3389</span>
 </code></pre></div><p>访问端配置示例如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#666">[</span>common<span style="color:#666">]</span>
-<span style="color:#19177c">server_addr</span> <span style="color:#666">=</span> 35.***.**.216
-<span style="color:#19177c">server_port</span> <span style="color:#666">=</span> <span style="color:#666">7000</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#008000;font-weight:bold">[common]</span>
+<span style="color:#7d9029">server_addr</span> <span style="color:#666">=</span> <span style="color:#ba2121">35.***.**.216</span>
+<span style="color:#7d9029">server_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">7000</span>
 
-<span style="color:#666">[</span>RDP2_visitor<span style="color:#666">]</span>
-<span style="color:#008000">type</span> <span style="color:#666">=</span> xtcp
-<span style="color:#19177c">role</span> <span style="color:#666">=</span> visitor
-<span style="color:#19177c">server_name</span> <span style="color:#666">=</span> RDP2
-<span style="color:#19177c">sk</span> <span style="color:#666">=</span> abcdefg
-<span style="color:#19177c">bind_addr</span> <span style="color:#666">=</span> 127.0.0.1
-<span style="color:#19177c">bind_port</span> <span style="color:#666">=</span> <span style="color:#666">6000</span>
+<span style="color:#008000;font-weight:bold">[RDP2_visitor]</span>
+<span style="color:#7d9029">type</span> <span style="color:#666">=</span> <span style="color:#ba2121">xtcp</span>
+<span style="color:#7d9029">role</span> <span style="color:#666">=</span> <span style="color:#ba2121">visitor</span>
+<span style="color:#7d9029">server_name</span> <span style="color:#666">=</span> <span style="color:#ba2121">RDP2</span>
+<span style="color:#7d9029">sk</span> <span style="color:#666">=</span> <span style="color:#ba2121">abcdefg</span>
+<span style="color:#7d9029">bind_addr</span> <span style="color:#666">=</span> <span style="color:#ba2121">127.0.0.1</span>
+<span style="color:#7d9029">bind_port</span> <span style="color:#666">=</span> <span style="color:#ba2121">6000</span>
 </code></pre></div><p>此方式穿透成功率较低，我测试了下，竟然可用，速度明显快很多，所以我最终采用的是此方法。</p>
 <h1 id="后续">后续</h1>
 <p>上文提到公司也使用了内网穿透技术，采用 <code>frp + openVPN</code> 的方法，给每个人分配了一个密钥，员工打开 openVPN，加载密钥，就可以实现在家访问公司内部搭建的网站，当然远程控制也可以。感觉比直连的方式稳定些，后续可以研究下。</p>
