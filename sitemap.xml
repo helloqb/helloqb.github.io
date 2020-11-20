@@ -4,7 +4,27 @@
   
   <url>
     <loc>https://helloqb.xyz/categories/</loc>
-    <lastmod>2020-11-02T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/categories/excel/</loc>
+    <lastmod>2020-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/post/2020/1120_excel/</loc>
+    <lastmod>2020-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/post/</loc>
+    <lastmod>2020-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://helloqb.xyz/</loc>
+    <lastmod>2020-11-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -18,22 +38,12 @@
   </url>
   
   <url>
-    <loc>https://helloqb.xyz/post/</loc>
-    <lastmod>2020-11-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://helloqb.xyz/tags/</loc>
     <lastmod>2020-11-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://helloqb.xyz/categories/windows/</loc>
-    <lastmod>2020-11-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/</loc>
     <lastmod>2020-11-02T00:00:00+00:00</lastmod>
   </url>
   
@@ -160,11 +170,6 @@
   <url>
     <loc>https://helloqb.xyz/post/2020/0605_regex/</loc>
     <lastmod>2020-06-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://helloqb.xyz/categories/excel/</loc>
-    <lastmod>2020-06-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>

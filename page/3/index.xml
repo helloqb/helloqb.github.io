@@ -6,9 +6,64 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Hugo 上手</title>
+        <link>https://helloqb.xyz/post/2020/0101_hugo/</link>
+        <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0101_hugo/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0101_hugo/ -&lt;h1 id=&#34;下载运行&#34;&gt;下载运行&lt;/h1&gt;
+&lt;p&gt;主要操作：文件下载解压，添加环境变量即可。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;文档链接&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/gohugoio/hugo/releases&#34;&gt;下载&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/getting-started/installing&#34;&gt;安装&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/&#34;&gt;Github 自动托管&lt;/a&gt;：先删除public文件再运行脚本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;测试成功：&lt;code&gt;hugo version&lt;/code&gt;, &lt;code&gt;hugo help&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其他操作有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;hugo server&lt;/code&gt; 本地调试&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hugo server -D&lt;/code&gt; 本地调试（显示隐藏文件）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hugo server -t theme&lt;/code&gt; 指定主题调试&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hugo&lt;/code&gt; 生成静态文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;主题下载&#34;&gt;主题下载&lt;/h1&gt;
+&lt;p&gt;喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;git submodule 方式下载主题&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;拉取主题 &lt;code&gt;git submodule add url themes/diary&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;更新主题：进入子模块 &lt;code&gt;git pull&lt;/code&gt; 或者 &lt;code&gt;git submodule update --remote --merge&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;支持 html 标签&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[markup.goldmark.renderer]
+unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;元数据&#34;&gt;元数据&lt;/h1&gt;
+&lt;p&gt;通常元数据包括如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;title&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人笔记 - Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;description&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;date&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2020-03-01&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;categories&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;tags&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Sourcetree&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Note&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其他的有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;draft: true&lt;/code&gt; 视为草稿&lt;/li&gt;
+&lt;li&gt;有的主题文章列表会展示文章的开头，有标签会很乱，用 &lt;code&gt;&amp;lt; !--more--&amp;gt;&lt;/code&gt; 会强制展示此节点之前的内容&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2020/0101_hugo/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     

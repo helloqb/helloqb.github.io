@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EXCEL 技巧之 - 小技巧</title>
+      <link>https://helloqb.xyz/post/2020/1120_excel/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/1120_excel/</guid>
+      <description>单元格间隔一行  编写左图，选中，往下拖动形成右图。  
+开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量  
+开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行  
+得到最终结果，如下。  
+待 </description>
+    </item>
+    
     <item>
       <title>frp 实现无公网 IP 使用 Windows 远程桌面</title>
       <link>https://helloqb.xyz/post/2020/1102_frp/</link>
