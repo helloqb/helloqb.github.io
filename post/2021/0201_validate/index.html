@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html><head>
+<title>后端接口校验参数异常统一处理</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="Web Api 开发不可避免的会遇到参数校验，如何统一处理是需要解决的问题。">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/journal.min.c116bc90d171283f099f173854157ec8f183f9073b93443b2c8ad82899ee9025.css" integrity="sha256-wRa8kNFxKD8Jnxc4VBV&#43;yPGD&#43;Qc7k0Q7LIrYKJnukCU=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/dark-mode.min.552aae4638a84aa57cf0b195750a49ea9131d3bb621d1ed3ebc9b14b18166536.css" integrity="sha256-VSquRjioSqV88LGVdQpJ6pEx07tiHR7T68mxSxgWZTY=" media="screen">
+
+
+<script src="https://helloqb.xyz//js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="https://helloqb.xyz//js/toc-collapse.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '64eac7e04ef1c9c58977',
+  clientSecret: '230d5636dc1e4810ca4e7af9090a20ab1c5a1e74',
+  repo: 'helloqb.github.io',
+  owner: 'helloqb',
+  admin: ['helloqb'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://helloqb.xyz/">
+    
+        <div class="nav-title">
+            哲学家
+        </div>
+        
+        <div class="nav-subtitle">
+            怕什么真理无穷，进一寸有进一寸的欢喜
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/post">
+                归档
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%a8%e5%b1%80%e5%a4%84%e7%90%86" onclick="onNavClick(`#全局处理-nav`)" id="全局处理-nav">
+									全局处理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#1-%e5%a4%84%e7%90%86-requestparam-%e5%92%8c-pathvariable-%e6%96%b9%e5%bc%8f" onclick="onNavClick(`#1-处理-requestparam-和-pathvariable-方式-nav`)" id="1-处理-requestparam-和-pathvariable-方式-nav">
+									1. 处理 RequestParam 和 PathVariable 方式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#2-%e5%a4%84%e7%90%86%e5%ae%9e%e4%bd%93%e7%b1%bb%e6%8e%a5%e6%94%b6" onclick="onNavClick(`#2-处理实体类接收-nav`)" id="2-处理实体类接收-nav">
+									2. 处理实体类接收
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#3-%e5%a4%84%e7%90%86-requestbody-%e6%83%85%e5%86%b5" onclick="onNavClick(`#3-处理-requestbody-情况-nav`)" id="3-处理-requestbody-情况-nav">
+									3. 处理 RequestBody 情况
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%a0%a1%e9%aa%8c%e5%a4%b1%e8%b4%a5%e7%ab%8b%e5%8d%b3%e8%bf%94%e5%9b%9e" onclick="onNavClick(`#校验失败立即返回-nav`)" id="校验失败立即返回-nav">
+									校验失败立即返回
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#validated-%e9%aa%8c%e8%af%81%e7%bb%84" onclick="onNavClick(`#validated-验证组-nav`)" id="validated-验证组-nav">
+									Validated 验证组
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b3%a8%e8%a7%a3%e7%94%a8%e6%b3%95" onclick="onNavClick(`#注解用法-nav`)" id="注解用法-nav">
+									注解用法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%8e%e7%bb%ad" onclick="onNavClick(`#后续-nav`)" id="后续-nav">
+									后续
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
+									参考
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/post">
+                    归档
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%a8%e5%b1%80%e5%a4%84%e7%90%86" onclick="onNavClick(`#全局处理-nav`)" id="全局处理-nav">
+									全局处理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#1-%e5%a4%84%e7%90%86-requestparam-%e5%92%8c-pathvariable-%e6%96%b9%e5%bc%8f" onclick="onNavClick(`#1-处理-requestparam-和-pathvariable-方式-nav`)" id="1-处理-requestparam-和-pathvariable-方式-nav">
+									1. 处理 RequestParam 和 PathVariable 方式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#2-%e5%a4%84%e7%90%86%e5%ae%9e%e4%bd%93%e7%b1%bb%e6%8e%a5%e6%94%b6" onclick="onNavClick(`#2-处理实体类接收-nav`)" id="2-处理实体类接收-nav">
+									2. 处理实体类接收
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#3-%e5%a4%84%e7%90%86-requestbody-%e6%83%85%e5%86%b5" onclick="onNavClick(`#3-处理-requestbody-情况-nav`)" id="3-处理-requestbody-情况-nav">
+									3. 处理 RequestBody 情况
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%a0%a1%e9%aa%8c%e5%a4%b1%e8%b4%a5%e7%ab%8b%e5%8d%b3%e8%bf%94%e5%9b%9e" onclick="onNavClick(`#校验失败立即返回-nav`)" id="校验失败立即返回-nav">
+									校验失败立即返回
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#validated-%e9%aa%8c%e8%af%81%e7%bb%84" onclick="onNavClick(`#validated-验证组-nav`)" id="validated-验证组-nav">
+									Validated 验证组
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b3%a8%e8%a7%a3%e7%94%a8%e6%b3%95" onclick="onNavClick(`#注解用法-nav`)" id="注解用法-nav">
+									注解用法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%8e%e7%bb%ad" onclick="onNavClick(`#后续-nav`)" id="后续-nav">
+									后续
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
+									参考
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://helloqb.xyz/">
+            哲学家
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://helloqb.xyz/">
+        <div class="single-column-header-title">哲学家</div>
+        
+        <div class="single-column-header-subtitle">怕什么真理无穷，进一寸有进一寸的欢喜</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    后端接口校验参数异常统一处理
+                    
+                    <div class="post-subtitle">
+                        Web Api 开发不可避免的会遇到参数校验，如何统一处理是需要解决的问题。
+                    </div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-02-02 00:00
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/">[Java]</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/spring-web">Spring Web</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="前言">前言</h1>
+<p>工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">//全局异常处理类
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#a2f">@RestControllerAdvice</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">GlobalExceptionHandler</span> <span style="color:#008000;font-weight:bold">extends</span> ResponseEntityExceptionHandler <span style="color:#666">{</span>
+
+    <span style="color:#a2f">@ExceptionHandler</span><span style="color:#666">(</span>value <span style="color:#666">=</span> BaseException<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
+    <span style="color:#008000;font-weight:bold">public</span> S2VJSONResult <span style="color:#00f">baseHandler</span><span style="color:#666">(</span>BaseException e<span style="color:#666">)</span> <span style="color:#666">{</span>
+        <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> e<span style="color:#666">.</span><span style="color:#7d9029">getMessage</span><span style="color:#666">());</span>
+    <span style="color:#666">}</span>
+</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">//接口
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#a2f">@PostMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/transfer/company&#34;</span><span style="color:#666">)</span>
+S2VJSONResult <span style="color:#00f">transferCompany</span><span style="color:#666">(</span><span style="color:#a2f">@Validated</span> <span style="color:#a2f">@RequestBody</span> AdminTransferCompanyVO vo<span style="color:#666">,</span>
+                              BindingResult bindingResult<span style="color:#666">)</span> <span style="color:#666">{</span>
+
+    <span style="color:#008000;font-weight:bold">if</span> <span style="color:#666">(</span>bindingResult<span style="color:#666">.</span><span style="color:#7d9029">hasErrors</span><span style="color:#666">())</span> <span style="color:#666">{</span>
+        <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> bindingResult<span style="color:#666">.</span><span style="color:#7d9029">getFieldError</span><span style="color:#666">().</span><span style="color:#7d9029">getDefaultMessage</span><span style="color:#666">());</span>
+    <span style="color:#666">}</span>
+</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">//参数实体类
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">AdminTransferCompanyVO</span> <span style="color:#666">{</span>
+
+    <span style="color:#a2f">@NotNull</span><span style="color:#666">(</span>message <span style="color:#666">=</span> <span style="color:#ba2121">&#34;客户 ID 不能为空&#34;</span><span style="color:#666">)</span>
+    <span style="color:#008000;font-weight:bold">private</span> List<span style="color:#666">&lt;</span>Integer<span style="color:#666">&gt;</span> companyIds<span style="color:#666">;</span>
+    <span style="color:#a2f">@NotNull</span><span style="color:#666">(</span>message <span style="color:#666">=</span> <span style="color:#ba2121">&#34;目标客户经理 ID 不能为空&#34;</span><span style="color:#666">)</span>
+    <span style="color:#008000;font-weight:bold">private</span> Integer targetCustomerId<span style="color:#666">;</span>
+    <span style="color:#a2f">@NotNull</span><span style="color:#666">(</span>message <span style="color:#666">=</span> <span style="color:#ba2121">&#34;管理员 ID 不能为空&#34;</span><span style="color:#666">)</span>
+    <span style="color:#008000;font-weight:bold">private</span> Integer operationCustomerId<span style="color:#666">;</span>
+</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">//统一返回响应
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">S2VJSONResult</span><span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#666">{</span>
+
+    <span style="color:#008000;font-weight:bold">private</span> Integer code<span style="color:#666">;</span><span style="color:#408080;font-style:italic">//状态码
+</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#008000;font-weight:bold">private</span> Boolean isSuccess<span style="color:#666">;</span><span style="color:#408080;font-style:italic">//状态
+</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#008000;font-weight:bold">private</span> String message<span style="color:#666">;</span><span style="color:#408080;font-style:italic">//消息
+</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#008000;font-weight:bold">private</span> T data<span style="color:#666">;</span><span style="color:#408080;font-style:italic">//数据对象
+</span><span style="color:#408080;font-style:italic"></span>
+    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> S2VJSONResult<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#00f">all</span><span style="color:#666">(</span>Boolean success<span style="color:#666">,</span> Integer code<span style="color:#666">,</span>String message<span style="color:#666">,</span>T data<span style="color:#666">)</span> <span style="color:#666">{</span>
+        <span style="color:#008000;font-weight:bold">return</span> <span style="color:#008000;font-weight:bold">new</span> S2VJSONResult<span style="color:#666">&lt;&gt;(</span>success<span style="color:#666">,</span> code<span style="color:#666">,</span> message<span style="color:#666">,</span>  data<span style="color:#666">);</span>
+    <span style="color:#666">}</span>
+
+    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> S2VJSONResult<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#00f">msg</span><span style="color:#666">(</span>Boolean success<span style="color:#666">,</span> Integer code<span style="color:#666">,</span>String message<span style="color:#666">)</span> <span style="color:#666">{</span>
+        <span style="color:#008000;font-weight:bold">return</span> <span style="color:#008000;font-weight:bold">new</span> S2VJSONResult<span style="color:#666">&lt;&gt;(</span>success<span style="color:#666">,</span> code<span style="color:#666">,</span> message<span style="color:#666">);</span>
+    <span style="color:#666">}</span>
+
+</code></pre></div><p>整理了一下其思路，大概如下：</p>
+<ol>
+<li>利用 <code>@RestControllerAdvice</code> 全局处理异常</li>
+<li>Spring MVC 会将验证结果放入 <code>BindResult</code> 中</li>
+<li>封装报错信息返回统一错误响应</li>
+</ol>
+<p>我个人很懒，感觉有些地方还是重复代码了，不够优雅，比如 <code>BindingResult</code> 每个接口都要加，既然是异常应该就能够捕捉到，为什么不全局处理？验证的 <code>message</code> 每个字段都要写，可否在不写的情况下，返回特定模板的报错信息？</p>
+<h1 id="全局处理">全局处理</h1>
+<p>要解决我的问题，思路也很清晰，只要知道校验失败具体抛出的是什么异常，获取异常中有用的的报错信息，然后利用 <code>@RestControllerAdvice</code> 全局处理一下就好了。</p>
+<p>这里遇到个坑，同事写的全局处理类继承了 <code>ResponseEntityExceptionHandler</code>，而我要特定捕捉的异常都在这里面，所以我一开始的时候，老是报重复处理异常的错误。。。</p>
+<h2 id="1-处理-requestparam-和-pathvariable-方式">1. 处理 RequestParam 和 PathVariable 方式</h2>
+<p>Controller 层代码示例如下，将需要的约束添加到 <code>@RequestParam</code> 注解的前面，此时需要在类上添加注解 <code>@Validated</code> 才能实现验证。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Controller</span>
+<span style="color:#a2f">@RequestMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/report1&#34;</span><span style="color:#666">)</span>
+<span style="color:#a2f">@ResponseBody</span>
+<span style="color:#a2f">@Validated</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">TestController</span> <span style="color:#666">{</span>
+
+    <span style="color:#a2f">@PostMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/test1&#34;</span><span style="color:#666">)</span>
+    S2VJSONResult<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> <span style="color:#00f">test1</span><span style="color:#666">(</span><span style="color:#a2f">@Max</span><span style="color:#666">(</span>3<span style="color:#666">)</span> <span style="color:#a2f">@RequestParam</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;id&#34;</span><span style="color:#666">)</span> Integer id<span style="color:#666">){</span>
+        <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">all</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">,</span> 200<span style="color:#666">,</span> <span style="color:#ba2121">&#34;success&#34;</span><span style="color:#666">,</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>id<span style="color:#666">));</span>
+    <span style="color:#666">}</span>
+
+    <span style="color:#a2f">@PostMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/test2/{id}&#34;</span><span style="color:#666">)</span>
+    S2VJSONResult<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> <span style="color:#00f">test2</span><span style="color:#666">(</span><span style="color:#a2f">@Max</span><span style="color:#666">(</span>value <span style="color:#666">=</span> 3<span style="color:#666">,</span> message <span style="color:#666">=</span> <span style="color:#ba2121">&#34;别瞎填！&#34;</span><span style="color:#666">)</span> <span style="color:#a2f">@PathVariable</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;id&#34;</span><span style="color:#666">)</span> Integer id<span style="color:#666">){</span>
+        <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">all</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">,</span> 200<span style="color:#666">,</span> <span style="color:#ba2121">&#34;success&#34;</span><span style="color:#666">,</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>id<span style="color:#666">));</span>
+    <span style="color:#666">}</span>
+</code></pre></div><p>这种情况会抛出 <code>ConstraintViolationException</code> 异常。Spring 会处理这种异常并抛出报错信息，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#008000;font-weight:bold">&#34;timestamp&#34;</span>: <span style="color:#ba2121">&#34;2021-02-02 11:34:45&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;status&#34;</span>: <span style="color:#666">500</span>,
+    <span style="color:#008000;font-weight:bold">&#34;error&#34;</span>: <span style="color:#ba2121">&#34;Internal Server Error&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;message&#34;</span>: <span style="color:#ba2121">&#34;test1.id: 最大不能超过3&#34;</span>,
+    <span style="">//</span> <span style="color:#008000;font-weight:bold">&#34;message&#34;</span>: <span style="color:#ba2121">&#34;test2.id: 别瞎填！&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;path&#34;</span>: <span style="color:#ba2121">&#34;/pcg/report1/test1&#34;</span>
+}
+</code></pre></div><p>可以看到<code>message</code> 字段中有较为完整的报错信息，可以直接拿来用。统一异常处理代码如下，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic">  * 处理 @RequestParam @PathVariable 参数验证失败
+</span><span style="color:#408080;font-style:italic">  *
+</span><span style="color:#408080;font-style:italic">  * @param e
+</span><span style="color:#408080;font-style:italic">  * @return S2VJSONResult&lt;T&gt;
+</span><span style="color:#408080;font-style:italic">  * @Author zrr
+</span><span style="color:#408080;font-style:italic">  * @Date 2021/2/2 10:48
+</span><span style="color:#408080;font-style:italic">  * @throws
+</span><span style="color:#408080;font-style:italic">  */</span>
+<span style="color:#a2f">@ExceptionHandler</span><span style="color:#666">(</span>value <span style="color:#666">=</span> ConstraintViolationException<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> S2VJSONResult<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#00f">handlerConstraintViolationException</span><span style="color:#666">(</span>ConstraintViolationException e<span style="color:#666">)</span> <span style="color:#666">{</span>
+    <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> <span style="color:#ba2121">&#34;参数验证未通过（&#34;</span> <span style="color:#666">+</span> e<span style="color:#666">.</span><span style="color:#7d9029">getMessage</span><span style="color:#666">()</span> <span style="color:#666">+</span> <span style="color:#ba2121">&#34;）&#34;</span><span style="color:#666">);</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>封装报错信息，统一返回响应的结果如下，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#008000;font-weight:bold">&#34;code&#34;</span>: <span style="color:#666">400</span>,
+    <span style="color:#008000;font-weight:bold">&#34;isSuccess&#34;</span>: <span style="color:#008000;font-weight:bold">false</span>,
+    <span style="">//</span> <span style="color:#008000;font-weight:bold">&#34;message&#34;</span>: <span style="color:#ba2121">&#34;参数验证未通过（test1.id: 最大不能超过3）&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;message&#34;</span>: <span style="color:#ba2121">&#34;参数验证未通过（test2.id: 别瞎填！）&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;data&#34;</span>: <span style="color:#008000;font-weight:bold">null</span>
+}
+</code></pre></div><p>基本实现了我想要的结果，不需要通过 <code>BindingResult</code>，只需要添加注解就可以校验参数，并且不写 <code>message</code> 也可以返回较为清楚的报错信息。</p>
+<p>但是这只是传参的一种情况，其他的情况抛出的异常还不一样，需要再次处理。</p>
+<h2 id="2-处理实体类接收">2. 处理实体类接收</h2>
+<p>接口传入很多参数的时候，通常代码会用实体类接收。Controller 层代码示例如下，这种情况无需在类上添加注解 <code>@Validated</code>。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a2f">@PostMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/test3&#34;</span><span style="color:#666">)</span>
+    S2VJSONResult<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> <span style="color:#00f">test3</span><span style="color:#666">(</span><span style="color:#a2f">@Validated</span> ReportVO vo<span style="color:#666">){</span>
+        <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">all</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">,</span> 200<span style="color:#666">,</span> <span style="color:#ba2121">&#34;success&#34;</span><span style="color:#666">,</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>vo<span style="color:#666">));</span>
+    <span style="color:#666">}</span>
+</code></pre></div><p>实体类添加相应的约束，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.validation.constraints.NotEmpty</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.validation.constraints.NotNull</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">java.io.Serializable</span><span style="color:#666">;</span>
+
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">ReportVO</span> <span style="color:#008000;font-weight:bold">implements</span> Serializable <span style="color:#666">{</span>
+
+    <span style="color:#a2f">@NotNull</span>
+    <span style="color:#008000;font-weight:bold">private</span> Integer cgeId<span style="color:#666">;</span>
+
+    <span style="color:#a2f">@NotEmpty</span><span style="color:#666">(</span>message <span style="color:#666">=</span> <span style="color:#ba2121">&#34;baseinfoSqrxm 不能为空&#34;</span><span style="color:#666">)</span>
+    <span style="color:#008000;font-weight:bold">private</span> String baseinfoSqrxm<span style="color:#666">;</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>这种情况会抛出 <code>BindException</code> 异常。Spring 仍然会处理这种异常并抛出报错信息，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#008000;font-weight:bold">&#34;timestamp&#34;</span>: <span style="color:#ba2121">&#34;2021-02-02 13:58:18&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;status&#34;</span>: <span style="color:#666">400</span>,
+    <span style="color:#008000;font-weight:bold">&#34;error&#34;</span>: <span style="color:#ba2121">&#34;Bad Request&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;errors&#34;</span>: [
+        {
+            <span style="color:#008000;font-weight:bold">&#34;codes&#34;</span>: [
+                <span style="color:#ba2121">&#34;NotNull.reportVO.cgeId&#34;</span>,
+                <span style="color:#ba2121">&#34;NotNull.cgeId&#34;</span>,
+                <span style="color:#ba2121">&#34;NotNull.java.lang.Integer&#34;</span>,
+                <span style="color:#ba2121">&#34;NotNull&#34;</span>
+            ],
+            <span style="color:#008000;font-weight:bold">&#34;arguments&#34;</span>: [
+                {
+                    <span style="color:#008000;font-weight:bold">&#34;codes&#34;</span>: [
+                        <span style="color:#ba2121">&#34;reportVO.cgeId&#34;</span>,
+                        <span style="color:#ba2121">&#34;cgeId&#34;</span>
+                    ],
+                    <span style="color:#008000;font-weight:bold">&#34;arguments&#34;</span>: <span style="color:#008000;font-weight:bold">null</span>,
+                    <span style="color:#008000;font-weight:bold">&#34;defaultMessage&#34;</span>: <span style="color:#ba2121">&#34;cgeId&#34;</span>,
+                    <span style="color:#008000;font-weight:bold">&#34;code&#34;</span>: <span style="color:#ba2121">&#34;cgeId&#34;</span>
+                }
+            ],
+            <span style="color:#008000;font-weight:bold">&#34;defaultMessage&#34;</span>: <span style="color:#ba2121">&#34;不能为null&#34;</span>,
+            <span style="color:#008000;font-weight:bold">&#34;objectName&#34;</span>: <span style="color:#ba2121">&#34;reportVO&#34;</span>,
+            <span style="color:#008000;font-weight:bold">&#34;field&#34;</span>: <span style="color:#ba2121">&#34;cgeId&#34;</span>,
+            <span style="color:#008000;font-weight:bold">&#34;rejectedValue&#34;</span>: <span style="color:#008000;font-weight:bold">null</span>,
+            <span style="color:#008000;font-weight:bold">&#34;bindingFailure&#34;</span>: <span style="color:#008000;font-weight:bold">false</span>,
+            <span style="color:#008000;font-weight:bold">&#34;code&#34;</span>: <span style="color:#ba2121">&#34;NotNull&#34;</span>
+        }
+    ],
+    <span style="color:#008000;font-weight:bold">&#34;message&#34;</span>: <span style="color:#ba2121">&#34;Validation failed for object=&#39;reportVO&#39;. Error count: 1&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;path&#34;</span>: <span style="color:#ba2121">&#34;/pcg/report1/test3&#34;</span>
+}
+</code></pre></div><p>可以看到 <code>defaultMessage</code> 中有相应的报错信息，但是不够完整，可以将字段名 <code>field</code> 一起拼接后作为报错信息，统一异常处理代码如下，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic">  * 处理实体校验失败（multipart/form-data、x-www-form-urlencoded）
+</span><span style="color:#408080;font-style:italic">  *
+</span><span style="color:#408080;font-style:italic">  * @param e
+</span><span style="color:#408080;font-style:italic">  * @return S2VJSONResult&lt;T&gt;
+</span><span style="color:#408080;font-style:italic">  * @Author zrr
+</span><span style="color:#408080;font-style:italic">  * @Date 2021/2/2 10:50
+</span><span style="color:#408080;font-style:italic">  * @throws
+</span><span style="color:#408080;font-style:italic">  */</span>
+<span style="color:#a2f">@ExceptionHandler</span><span style="color:#666">(</span>value <span style="color:#666">=</span> BindException<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> S2VJSONResult<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#00f">handlerBindException</span><span style="color:#666">(</span>BindException e<span style="color:#666">)</span> <span style="color:#666">{</span>
+    FieldError fieldError <span style="color:#666">=</span> e<span style="color:#666">.</span><span style="color:#7d9029">getBindingResult</span><span style="color:#666">().</span><span style="color:#7d9029">getFieldError</span><span style="color:#666">();</span>
+    <span style="color:#008000;font-weight:bold">assert</span> fieldError <span style="color:#666">!=</span> <span style="color:#008000;font-weight:bold">null</span><span style="color:#666">;</span>
+    String message <span style="color:#666">=</span> MessageFormat<span style="color:#666">.</span><span style="color:#7d9029">format</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;参数 {0} 有误，{1}&#34;</span><span style="color:#666">,</span> fieldError<span style="color:#666">.</span><span style="color:#7d9029">getField</span><span style="color:#666">(),</span> fieldError<span style="color:#666">.</span><span style="color:#7d9029">getDefaultMessage</span><span style="color:#666">());</span>
+    <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> message<span style="color:#666">);</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>其中，<code>e.getBindingResult()</code> 中会有所有的参数报错信息，对我来说感觉一个就够了，所以我只取了一个，统一错误响应后的结果为，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#008000;font-weight:bold">&#34;code&#34;</span>: <span style="color:#666">400</span>,
+    <span style="color:#008000;font-weight:bold">&#34;isSuccess&#34;</span>: <span style="color:#008000;font-weight:bold">false</span>,
+    <span style="color:#008000;font-weight:bold">&#34;message&#34;</span>: <span style="color:#ba2121">&#34;参数 baseinfoSqrxm 有误，baseinfoSqrxm 不能为空&#34;</span>,
+    <span style="">//</span> <span style="color:#008000;font-weight:bold">&#34;message&#34;</span>: <span style="color:#ba2121">&#34;参数 cgeId 有误，不能为null&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;data&#34;</span>: <span style="color:#008000;font-weight:bold">null</span>
+}
+</code></pre></div><h2 id="3-处理-requestbody-情况">3. 处理 RequestBody 情况</h2>
+<p>RequestBody 情况和上面很类似，但抛出的异常不一样，仍然需要单独处理。Controller 层代码示例如下，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@PostMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/test4&#34;</span><span style="color:#666">)</span>
+S2VJSONResult<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> <span style="color:#00f">test4</span><span style="color:#666">(</span><span style="color:#a2f">@Validated</span> <span style="color:#a2f">@RequestBody</span> ReportVO vo<span style="color:#666">){</span>
+    <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">ok</span><span style="color:#666">(</span>JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>vo<span style="color:#666">));</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>这种情况会抛出 <code>MethodArgumentNotValidException</code> 异常。默认报错消息同 <code>BindException</code>，处理方式基本一致。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic">  * 处理 @RequestBody 参数验证失败（application/json）
+</span><span style="color:#408080;font-style:italic">  *
+</span><span style="color:#408080;font-style:italic">  * @param e
+</span><span style="color:#408080;font-style:italic">  * @return S2VJSONResult&lt;T&gt;
+</span><span style="color:#408080;font-style:italic">  * @Author zrr
+</span><span style="color:#408080;font-style:italic">  * @Date 2021/2/2 10:49
+</span><span style="color:#408080;font-style:italic">  * @throws
+</span><span style="color:#408080;font-style:italic">  */</span>
+<span style="color:#a2f">@ExceptionHandler</span><span style="color:#666">(</span>value <span style="color:#666">=</span> MethodArgumentNotValidException<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> S2VJSONResult<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#00f">handlerMethodArgumentNotValidException</span><span style="color:#666">(</span>MethodArgumentNotValidException e<span style="color:#666">)</span> <span style="color:#666">{</span>
+    FieldError fieldError <span style="color:#666">=</span> e<span style="color:#666">.</span><span style="color:#7d9029">getBindingResult</span><span style="color:#666">().</span><span style="color:#7d9029">getFieldError</span><span style="color:#666">();</span>
+    <span style="color:#008000;font-weight:bold">assert</span> fieldError <span style="color:#666">!=</span> <span style="color:#008000;font-weight:bold">null</span><span style="color:#666">;</span>
+    String message <span style="color:#666">=</span> MessageFormat<span style="color:#666">.</span><span style="color:#7d9029">format</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;参数 {0} 有误，{1}&#34;</span><span style="color:#666">,</span> fieldError<span style="color:#666">.</span><span style="color:#7d9029">getField</span><span style="color:#666">(),</span> fieldError<span style="color:#666">.</span><span style="color:#7d9029">getDefaultMessage</span><span style="color:#666">());</span>
+    <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> message<span style="color:#666">);</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>这三种情况基本涵盖了传参的所有方式，后面若是有遗漏的情况，也是同样的原理，再加上就好了。</p>
+<h2 id="校验失败立即返回">校验失败立即返回</h2>
+<p>上述三种默认情况都是校验全部字段后再返回报错信息，可以通过配置实现当一个参数校验有误时立即返回，提高效率。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.hibernate.validator.HibernateValidator</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.context.annotation.Bean</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.context.annotation.Configuration</span><span style="color:#666">;</span>
+
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.validation.Validation</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.validation.Validator</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.validation.ValidatorFactory</span><span style="color:#666">;</span>
+
+<span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic"> * valid
+</span><span style="color:#408080;font-style:italic"> *
+</span><span style="color:#408080;font-style:italic"> * @author: zrr
+</span><span style="color:#408080;font-style:italic"> * @date: 2021/2/1 16:30
+</span><span style="color:#408080;font-style:italic"> */</span>
+<span style="color:#a2f">@Configuration</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">ValidConfig</span> <span style="color:#666">{</span>
+    <span style="color:#a2f">@Bean</span>
+    <span style="color:#008000;font-weight:bold">public</span> Validator <span style="color:#00f">validator</span><span style="color:#666">()</span> <span style="color:#666">{</span>
+        ValidatorFactory validatorFactory <span style="color:#666">=</span> Validation<span style="color:#666">.</span><span style="color:#7d9029">byProvider</span><span style="color:#666">(</span> HibernateValidator<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
+                <span style="color:#666">.</span><span style="color:#7d9029">configure</span><span style="color:#666">()</span>
+                <span style="color:#666">.</span><span style="color:#7d9029">failFast</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">)</span>  <span style="color:#408080;font-style:italic">//立即返回
+</span><span style="color:#408080;font-style:italic"></span>                <span style="color:#666">.</span><span style="color:#7d9029">buildValidatorFactory</span><span style="color:#666">();</span>
+        <span style="color:#008000;font-weight:bold">return</span> validatorFactory<span style="color:#666">.</span><span style="color:#7d9029">getValidator</span><span style="color:#666">();</span>
+    <span style="color:#666">}</span>
+<span style="color:#666">}</span>
+
+</code></pre></div><h1 id="validated-验证组">Validated 验证组</h1>
+<p>接口通常有新增和更新，它们字段一致但是约束可能不同，若想要利用同一个实体类，可以通过组的方式实现共用。注意 <code>@Valid</code> 不支持组只有 <code>@Validated</code> 可以。</p>
+<p>首先新增两个接口组，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.validation.groups.Default</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">interface</span> <span style="color:#00f;font-weight:bold">ValidGroupCreate</span> <span style="color:#008000;font-weight:bold">extends</span> Default <span style="color:#666">{</span>
+<span style="color:#666">}</span>
+</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.validation.groups.Default</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">interface</span> <span style="color:#00f;font-weight:bold">ValidGroupUpdate</span> <span style="color:#008000;font-weight:bold">extends</span> Default <span style="color:#666">{</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>这里我继承了 <code>Default.class</code> 默认分组，可以实现参数没有标明组的情况时，也可以使用组。可以减少一些代码量。</p>
+<p>实体类添加约束如下：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">ReportVO</span> <span style="color:#008000;font-weight:bold">implements</span> Serializable <span style="color:#666">{</span>
+
+    <span style="color:#a2f">@NotNull</span>
+    <span style="color:#008000;font-weight:bold">private</span> Integer cgeId<span style="color:#666">;</span>
+
+    <span style="color:#a2f">@NotEmpty</span><span style="color:#666">(</span>groups <span style="color:#666">=</span> ValidGroupCreate<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
+    <span style="color:#008000;font-weight:bold">private</span> String baseinfoSqrxm<span style="color:#666">;</span>
+
+    <span style="color:#a2f">@NotEmpty</span><span style="color:#666">(</span>groups <span style="color:#666">=</span> ValidGroupUpdate<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
+    <span style="color:#008000;font-weight:bold">private</span> String baseinfoSfzhm<span style="color:#666">;</span>
+
+    <span style="color:#a2f">@NotEmpty</span><span style="color:#666">(</span>groups <span style="color:#666">=</span> <span style="color:#666">{</span>ValidGroupCreate<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">,</span> ValidGroupUpdate<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">})</span>
+    <span style="color:#008000;font-weight:bold">private</span> String baseinfoHyzk<span style="color:#666">;</span>
+</code></pre></div><p>再然后 Controller 层指定组即可，不填的话则是默认分组，</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@PostMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/test3&#34;</span><span style="color:#666">)</span>
+S2VJSONResult<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> <span style="color:#00f">test3</span><span style="color:#666">(</span><span style="color:#a2f">@Validated</span><span style="color:#666">(</span>ValidGroupUpdate<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span> ReportVO vo<span style="color:#666">){</span>
+    <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">all</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">,</span> 200<span style="color:#666">,</span> <span style="color:#ba2121">&#34;success&#34;</span><span style="color:#666">,</span> JSON<span style="color:#666">.</span><span style="color:#7d9029">toJSONString</span><span style="color:#666">(</span>vo<span style="color:#666">));</span>
+<span style="color:#666">}</span>
+</code></pre></div><h1 id="注解用法">注解用法</h1>
+<p>在此列举一些常用的校验注解，方便查看。</p>
+<ul>
+<li><code>@NotNull</code> 验证带注释的属性值不为 null。</li>
+<li><code>@AssertTrue</code> 验证带注释的属性值为 true。</li>
+<li><code>@Size</code> 验证带注释的属性值的大小在属性 min 和 max 之间；可以应用于 String， Collection， Map和数组属性。</li>
+<li><code>@Min</code> 验证带注释的属性的值不小于 value 属性。</li>
+<li><code>@Max</code> 验证带注释的属性的值不大于 value 属性。</li>
+<li><code>@Email</code> 验证带注释的属性是有效的电子邮件地址。</li>
+<li><code>@NotEmpty</code> 验证该属性不为 null 或为空；可以应用于 String， Collection， Map或Array值。</li>
+<li><code>@NotBlank</code> 只能应用于文本值，并验证该属性不是null还是空白。</li>
+<li><code>@Positive</code> 和 <code>@PositiveOrZero</code> 适用于数值，并验证它们严格为正，或包括 0 在内为正。</li>
+<li><code>@Negative</code> 和 <code>@NegativeOrZero</code> 适用于数值，并验证它们严格为负数，或为负数（包括0）。</li>
+<li><code>@Past</code> 和 <code>@PastOrPresent</code> 验证日期值是过去还是现在（包括现在）；可以应用于日期类型，包括 Java 8中添加的日期类型。</li>
+<li><code>@Future</code> 和 <code>@FutureOrPresent</code> 验证日期值是将来的日期还是将来的日期（包括现在）。</li>
+<li><code>@Pattern</code> 字段或属性的值必须与 regexp 元素中定义的正则表达式匹配。</li>
+</ul>
+<h1 id="后续">后续</h1>
+<p>可以创建自定义约束，目前项目大多用到就是非空判断，暂时先不弄</p>
+<h1 id="参考">参考</h1>
+<ul>
+<li><a href="https://mossgreen.github.io/Validations-in-Spring/">Validations in Spring</a></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2021-02-02</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://helloqb.xyz/post/2020/1120_excel/">
+			Previous<br>EXCEL 技巧之 - 小技巧
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            }
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+</script>
+
+<script src="https://helloqb.xyz//js/journal.js"></script>
+    </body>
+</html>

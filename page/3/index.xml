@@ -6,9 +6,58 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>个人笔记 - Git</title>
+        <link>https://helloqb.xyz/post/2020/0301_git/</link>
+        <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0301_git/ -&lt;h1 id=&#34;ssh-客户端-putty-和-openssh-的互相转换&#34;&gt;SSH 客户端 Putty 和 OpenSSH 的互相转换&lt;/h1&gt;
+&lt;p&gt;原本只需要用 &lt;code&gt;ssh-keygen&lt;/code&gt; 生成密钥到 &lt;code&gt;.ssh&lt;/code&gt; 目录，然后打开 &lt;code&gt;id_rsa.pub&lt;/code&gt; 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://2mo7ng.dm.files.1drv.com/y4m2zS4N31r_4feXiRfpaAjXBceJRLLXJrr5i_-HDrOUPwc74UiW4eRtEIfezlfU9EfoYRV9vZcmvhyJ13FJpaLrgZcmLjoOqpQO29QKMmd4NcpkrrpObc5DV06idlGQyroNuVgdAWYiE8Jrl5_PAcfnQ4_iiLtD6MisopG1FixVe8RMmSfCDdIK_SjXh3YJLIjlkrZMBOevRV2MIFRgsThCQ?width=660&amp;height=628&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
+**1. 使用 puTTY 生成 Key**
+1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；
+2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；
+3. 同时将生成器页面上的 Key 复制到云服务器上即可。
+&lt;p&gt;&lt;strong&gt;2. 使用已有的 id_rsa 导入到 puTTY&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打开生成器，点击状态栏 &lt;code&gt;Conversions&lt;/code&gt; 中 &lt;code&gt;Import Key&lt;/code&gt; 导入私钥 &lt;code&gt;.id_rsa&lt;/code&gt; 文件；&lt;/li&gt;
+&lt;li&gt;同上 &lt;code&gt;Save private key&lt;/code&gt; 然后导入。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;参考：
+&lt;a href=&#34;https://blog.csdn.net/caoshiying/article/details/80131761&#34;&gt;https://blog.csdn.net/caoshiying/article/details/80131761&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;查看单个文件提交历史&#34;&gt;查看单个文件提交历史&lt;/h1&gt;
+&lt;p&gt;两种情况：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选定项目的变更历史，即 &lt;code&gt;git log &amp;lt;path&amp;gt;&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;按行审阅选定项目，即 &lt;code&gt;git blame &amp;lt;path&amp;gt;&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。&lt;/p&gt;
+&lt;p&gt;之前想要查看某个文件还要去提交记录里翻，有时要翻很久，后来想到个方法，先改下这个文件，它就会出现在暂存区里，右击即可。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://0cmgkg.dm.files.1drv.com/y4mHSMt5I6XZ8e_ZT_HyQnzo5wiFZ3GX57b3tTE_57jNKhJpBFHE2awJC87ANX1Mx26r4uqChbeGsB7lpqsYiwTpz-XaBH8mGZ1fsgUPPMVbKOHcfbu9pKTS_or-Ng1hOcwvtQaDM0hbnR0H-RtFsblP4y5XtInnmv0s-7Y5r731-B8F49y16OSCnb75CWW4P52fZzYQjI1XL6CxMm77pQiCg?width=860&amp;height=419&amp;cropmode=none&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;变更历史：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://0smgkg.dm.files.1drv.com/y4msY4FENDEH4BxVtKldHkQNpjc1Dpp4Ai-qa9xC0bitKHKfBY1vuzAdh8HHg22qWmUjXNdZuaiQj_saDD14P7jQ6o4iFelQBMY_v70ZPzfhUn_HBdSkUdoz8JPW2AgvykmKS13g-m4vvkIEX3_oRNesn4pcbuZglbZj9_9MVHGoBBu9HGnPYkvfk7KrKFtBOomxRc-5Yrr_Afb8tRpct_ZBQ?width=1004&amp;height=553&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;按行审阅：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://08mgkg.dm.files.1drv.com/y4m04sDXLzN1qQf133--6BcjbXj-NmtB1ruTRgUqZbo59qKNjxV4-GeeKy7JQutIviGYFLqmJnPcMU6y__T_ixTffBdE-dv615O5g0ERTt8PyuUjNyWytWe_BQW93YCx1mALOefbr-xT46jg_HsAnoRMTCLdPPgrhJjPvN7RodxUhMwz59euow2Etdc2wDGTwSudI0yspcZVk0C0DODjlHyjQ?width=915&amp;height=484&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;本地项目到远程仓库&#34;&gt;本地项目到远程仓库&lt;/h1&gt;
+&lt;p&gt;步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;git init&lt;/code&gt;  命令将项目变成仓库&lt;/li&gt;
+&lt;li&gt;远程创建空的仓库&lt;/li&gt;
+&lt;li&gt;将本地连接到远程
+&lt;code&gt;git remote add origin url&lt;/code&gt;
+&lt;code&gt;git push -u origin master&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注：
+远程创建的为非空仓库（会有README.txt）则需要 &lt;code&gt;git pull --rebase origin master&lt;/code&gt;，之后再 push。&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0301_git/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     

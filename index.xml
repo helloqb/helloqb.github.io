@@ -6,9 +6,307 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>后端接口校验参数异常统一处理</title>
+        <link>https://helloqb.xyz/post/2021/0201_validate/</link>
+        <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2021/0201_validate/</guid>
+        <description>哲学家 https://helloqb.xyz/post/2021/0201_validate/ -&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//全局异常处理类
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@RestControllerAdvice&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;GlobalExceptionHandler&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;extends&lt;/span&gt; ResponseEntityExceptionHandler &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@ExceptionHandler&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;value &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; BaseException&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;baseHandler&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;BaseException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//接口
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/transfer/company&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;@RequestBody&lt;/span&gt; AdminTransferCompanyVO vo&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt;
+                              BindingResult bindingResult&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;bindingResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;hasErrors&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; bindingResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getFieldError&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getDefaultMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//参数实体类
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;AdminTransferCompanyVO&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;客户 ID 不能为空&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;Integer&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; companyIds&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;目标客户经理 ID 不能为空&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer targetCustomerId&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;管理员 ID 不能为空&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer operationCustomerId&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//统一返回响应
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;S2VJSONResult&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer code&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//状态码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Boolean isSuccess&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//状态
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String message&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//消息
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; T data&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//数据对象
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Boolean success&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; Integer code&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt;String message&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt;T data&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;success&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; code&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; message&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt;  data&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Boolean success&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; Integer code&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt;String message&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;success&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; code&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; message&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;整理了一下其思路，大概如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;利用 &lt;code&gt;@RestControllerAdvice&lt;/code&gt; 全局处理异常&lt;/li&gt;
+&lt;li&gt;Spring MVC 会将验证结果放入 &lt;code&gt;BindResult&lt;/code&gt; 中&lt;/li&gt;
+&lt;li&gt;封装报错信息返回统一错误响应&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我个人很懒，感觉有些地方还是重复代码了，不够优雅，比如 &lt;code&gt;BindingResult&lt;/code&gt; 每个接口都要加，既然是异常应该就能够捕捉到，为什么不全局处理？验证的 &lt;code&gt;message&lt;/code&gt; 每个字段都要写，可否在不写的情况下，返回特定模板的报错信息？&lt;/p&gt;
+&lt;h1 id=&#34;全局处理&#34;&gt;全局处理&lt;/h1&gt;
+&lt;p&gt;要解决我的问题，思路也很清晰，只要知道校验失败具体抛出的是什么异常，获取异常中有用的的报错信息，然后利用 &lt;code&gt;@RestControllerAdvice&lt;/code&gt; 全局处理一下就好了。&lt;/p&gt;
+&lt;p&gt;这里遇到个坑，同事写的全局处理类继承了 &lt;code&gt;ResponseEntityExceptionHandler&lt;/code&gt;，而我要特定捕捉的异常都在这里面，所以我一开始的时候，老是报重复处理异常的错误。。。&lt;/p&gt;
+&lt;h2 id=&#34;1-处理-requestparam-和-pathvariable-方式&#34;&gt;1. 处理 RequestParam 和 PathVariable 方式&lt;/h2&gt;
+&lt;p&gt;Controller 层代码示例如下，将需要的约束添加到 &lt;code&gt;@RequestParam&lt;/code&gt; 注解的前面，此时需要在类上添加注解 &lt;code&gt;@Validated&lt;/code&gt; 才能实现验证。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Controller&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@RequestMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/report1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@ResponseBody&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;TestController&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test1&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Max&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;3&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;@RequestParam&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; Integer id&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 200&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test2/{id}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test2&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Max&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;value &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;别瞎填！&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;@PathVariable&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; Integer id&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 200&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种情况会抛出 &lt;code&gt;ConstraintViolationException&lt;/code&gt; 异常。Spring 会处理这种异常并抛出报错信息，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2021-02-02 11:34:45&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;500&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;error&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Internal Server Error&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test1.id: 最大不能超过3&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test2.id: 别瞎填！&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;path&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/pcg/report1/test1&amp;#34;&lt;/span&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到&lt;code&gt;message&lt;/code&gt; 字段中有较为完整的报错信息，可以直接拿来用。统一异常处理代码如下，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * 处理 @RequestParam @PathVariable 参数验证失败
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  *
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @param e
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @return S2VJSONResult&amp;lt;T&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @Author zrr
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @Date 2021/2/2 10:48
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @throws
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  */&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@ExceptionHandler&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;value &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; ConstraintViolationException&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;handlerConstraintViolationException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;ConstraintViolationException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;）&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;封装报错信息，统一返回响应的结果如下，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;400&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;isSuccess&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;,
+    &lt;span style=&#34;&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（test1.id: 最大不能超过3）&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（test2.id: 别瞎填！）&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;基本实现了我想要的结果，不需要通过 &lt;code&gt;BindingResult&lt;/code&gt;，只需要添加注解就可以校验参数，并且不写 &lt;code&gt;message&lt;/code&gt; 也可以返回较为清楚的报错信息。&lt;/p&gt;
+&lt;p&gt;但是这只是传参的一种情况，其他的情况抛出的异常还不一样，需要再次处理。&lt;/p&gt;
+&lt;h2 id=&#34;2-处理实体类接收&#34;&gt;2. 处理实体类接收&lt;/h2&gt;
+&lt;p&gt;接口传入很多参数的时候，通常代码会用实体类接收。Controller 层代码示例如下，这种情况无需在类上添加注解 &lt;code&gt;@Validated&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt; ReportVO vo&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 200&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;vo&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;实体类添加相应的约束，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.constraints.NotEmpty&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.constraints.NotNull&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.io.Serializable&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ReportVO&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Serializable &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer cgeId&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotEmpty&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;baseinfoSqrxm 不能为空&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String baseinfoSqrxm&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种情况会抛出 &lt;code&gt;BindException&lt;/code&gt; 异常。Spring 仍然会处理这种异常并抛出报错信息，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2021-02-02 13:58:18&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;400&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;error&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Bad Request&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;errors&amp;#34;&lt;/span&gt;: [
+        {
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;codes&amp;#34;&lt;/span&gt;: [
+                &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;NotNull.reportVO.cgeId&amp;#34;&lt;/span&gt;,
+                &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;NotNull.cgeId&amp;#34;&lt;/span&gt;,
+                &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;NotNull.java.lang.Integer&amp;#34;&lt;/span&gt;,
+                &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;NotNull&amp;#34;&lt;/span&gt;
+            ],
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;arguments&amp;#34;&lt;/span&gt;: [
+                {
+                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;codes&amp;#34;&lt;/span&gt;: [
+                        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;reportVO.cgeId&amp;#34;&lt;/span&gt;,
+                        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;cgeId&amp;#34;&lt;/span&gt;
+                    ],
+                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;arguments&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;,
+                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;defaultMessage&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;cgeId&amp;#34;&lt;/span&gt;,
+                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;cgeId&amp;#34;&lt;/span&gt;
+                }
+            ],
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;defaultMessage&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;不能为null&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;objectName&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;reportVO&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;field&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;cgeId&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;rejectedValue&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;,
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;bindingFailure&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;,
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;NotNull&amp;#34;&lt;/span&gt;
+        }
+    ],
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Validation failed for object=&amp;#39;reportVO&amp;#39;. Error count: 1&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;path&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/pcg/report1/test3&amp;#34;&lt;/span&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到 &lt;code&gt;defaultMessage&lt;/code&gt; 中有相应的报错信息，但是不够完整，可以将字段名 &lt;code&gt;field&lt;/code&gt; 一起拼接后作为报错信息，统一异常处理代码如下，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * 处理实体校验失败（multipart/form-data、x-www-form-urlencoded）
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  *
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @param e
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @return S2VJSONResult&amp;lt;T&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @Author zrr
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @Date 2021/2/2 10:50
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @throws
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  */&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@ExceptionHandler&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;value &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; BindException&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;handlerBindException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;BindException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    FieldError fieldError &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBindingResult&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getFieldError&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;assert&lt;/span&gt; fieldError &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    String message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; MessageFormat&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数 {0} 有误，{1}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; fieldError&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getField&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt; fieldError&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getDefaultMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; message&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中，&lt;code&gt;e.getBindingResult()&lt;/code&gt; 中会有所有的参数报错信息，对我来说感觉一个就够了，所以我只取了一个，统一错误响应后的结果为，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;400&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;isSuccess&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数 baseinfoSqrxm 有误，baseinfoSqrxm 不能为空&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数 cgeId 有误，不能为null&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;3-处理-requestbody-情况&#34;&gt;3. 处理 RequestBody 情况&lt;/h2&gt;
+&lt;p&gt;RequestBody 情况和上面很类似，但抛出的异常不一样，仍然需要单独处理。Controller 层代码示例如下，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test4&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;@RequestBody&lt;/span&gt; ReportVO vo&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ok&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;vo&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种情况会抛出 &lt;code&gt;MethodArgumentNotValidException&lt;/code&gt; 异常。默认报错消息同 &lt;code&gt;BindException&lt;/code&gt;，处理方式基本一致。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * 处理 @RequestBody 参数验证失败（application/json）
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  *
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @param e
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @return S2VJSONResult&amp;lt;T&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @Author zrr
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @Date 2021/2/2 10:49
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * @throws
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  */&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@ExceptionHandler&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;value &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; MethodArgumentNotValidException&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;handlerMethodArgumentNotValidException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;MethodArgumentNotValidException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    FieldError fieldError &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBindingResult&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getFieldError&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;assert&lt;/span&gt; fieldError &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    String message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; MessageFormat&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数 {0} 有误，{1}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; fieldError&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getField&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt; fieldError&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getDefaultMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; message&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这三种情况基本涵盖了传参的所有方式，后面若是有遗漏的情况，也是同样的原理，再加上就好了。&lt;/p&gt;
+&lt;h2 id=&#34;校验失败立即返回&#34;&gt;校验失败立即返回&lt;/h2&gt;
+&lt;p&gt;上述三种默认情况都是校验全部字段后再返回报错信息，可以通过配置实现当一个参数校验有误时立即返回，提高效率。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.hibernate.validator.HibernateValidator&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Bean&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.Validation&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.Validator&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.ValidatorFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; * valid
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; * @author: zrr
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; * @date: 2021/2/1 16:30
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@Configuration&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ValidConfig&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; Validator &lt;span style=&#34;color:#00f&#34;&gt;validator&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        ValidatorFactory validatorFactory &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; Validation&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;byProvider&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt; HibernateValidator&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+                &lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt;
+                &lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;failFast&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//立即返回
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                &lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;buildValidatorFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; validatorFactory&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getValidator&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;validated-验证组&#34;&gt;Validated 验证组&lt;/h1&gt;
+&lt;p&gt;接口通常有新增和更新，它们字段一致但是约束可能不同，若想要利用同一个实体类，可以通过组的方式实现共用。注意 &lt;code&gt;@Valid&lt;/code&gt; 不支持组只有 &lt;code&gt;@Validated&lt;/code&gt; 可以。&lt;/p&gt;
+&lt;p&gt;首先新增两个接口组，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.groups.Default&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ValidGroupCreate&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Default &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.groups.Default&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ValidGroupUpdate&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Default &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我继承了 &lt;code&gt;Default.class&lt;/code&gt; 默认分组，可以实现参数没有标明组的情况时，也可以使用组。可以减少一些代码量。&lt;/p&gt;
+&lt;p&gt;实体类添加约束如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ReportVO&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Serializable &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer cgeId&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotEmpty&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;groups &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; ValidGroupCreate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String baseinfoSqrxm&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotEmpty&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;groups &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; ValidGroupUpdate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String baseinfoSfzhm&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@NotEmpty&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;groups &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;ValidGroupCreate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; ValidGroupUpdate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;})&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String baseinfoHyzk&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;再然后 Controller 层指定组即可，不填的话则是默认分组，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;ValidGroupUpdate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; ReportVO vo&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 200&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;vo&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;注解用法&#34;&gt;注解用法&lt;/h1&gt;
+&lt;p&gt;在此列举一些常用的校验注解，方便查看。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@NotNull&lt;/code&gt; 验证带注释的属性值不为 null。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@AssertTrue&lt;/code&gt; 验证带注释的属性值为 true。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Size&lt;/code&gt; 验证带注释的属性值的大小在属性 min 和 max 之间；可以应用于 String， Collection， Map和数组属性。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Min&lt;/code&gt; 验证带注释的属性的值不小于 value 属性。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Max&lt;/code&gt; 验证带注释的属性的值不大于 value 属性。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Email&lt;/code&gt; 验证带注释的属性是有效的电子邮件地址。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@NotEmpty&lt;/code&gt; 验证该属性不为 null 或为空；可以应用于 String， Collection， Map或Array值。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@NotBlank&lt;/code&gt; 只能应用于文本值，并验证该属性不是null还是空白。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Positive&lt;/code&gt; 和 &lt;code&gt;@PositiveOrZero&lt;/code&gt; 适用于数值，并验证它们严格为正，或包括 0 在内为正。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Negative&lt;/code&gt; 和 &lt;code&gt;@NegativeOrZero&lt;/code&gt; 适用于数值，并验证它们严格为负数，或为负数（包括0）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Past&lt;/code&gt; 和 &lt;code&gt;@PastOrPresent&lt;/code&gt; 验证日期值是过去还是现在（包括现在）；可以应用于日期类型，包括 Java 8中添加的日期类型。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Future&lt;/code&gt; 和 &lt;code&gt;@FutureOrPresent&lt;/code&gt; 验证日期值是将来的日期还是将来的日期（包括现在）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Pattern&lt;/code&gt; 字段或属性的值必须与 regexp 元素中定义的正则表达式匹配。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
+&lt;p&gt;可以创建自定义约束，目前项目大多用到就是非空判断，暂时先不弄&lt;/p&gt;
+&lt;h1 id=&#34;参考&#34;&gt;参考&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://mossgreen.github.io/Validations-in-Spring/&#34;&gt;Validations in Spring&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2021/0201_validate/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -907,29 +1205,6 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//23%
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.0000%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//23.0000%
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://helloqb.xyz/post/2020/0707_decimal/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>个人笔记 - Jupyter 笔记汇总</title>
-        <link>https://helloqb.xyz/post/2020/0615_jupyter/</link>
-        <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0615_jupyter/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0615_jupyter/ -&lt;p&gt;Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。其中 &lt;code&gt;html 版本&lt;/code&gt; 用于在线浏览，&lt;code&gt;ipynb 版本&lt;/code&gt; 用于导出到 Jupyter 中运行。&lt;/p&gt;
-&lt;h1 id=&#34;函数&#34;&gt;函数&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;加载 sklearn 公共数据集&lt;/li&gt;
-&lt;li&gt;返回 df2 按照 df1 的 id 排序&lt;/li&gt;
-&lt;li&gt;数据通用预处理&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://helloqb.xyz/post/ipynb/0617_func.html&#34;&gt;&amp;lt;html 版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0617_func.ipynb&#34;&gt;&amp;lt;ipynb 版本&amp;gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;其他&#34;&gt;其他&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Difference between map, applymap and apply methods in Pandas.&lt;/strong&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.html&#34;&gt;&amp;lt;html 版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.ipynb&#34;&gt;&amp;lt;ipynb 版本&amp;gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0615_jupyter/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
