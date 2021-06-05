@@ -6,19 +6,114 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 May 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     
     
         <item>
+        <title>使用 BigDecimal 和 DecimalFormat 计算</title>
+        <link>https://helloqb.xyz/post/2020/0707_decimal.html</link>
+        <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0707_decimal.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0707_decimal.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+&lt;p&gt;本文主要记录下 &lt;code&gt;BigDecimal&lt;/code&gt; 和 &lt;code&gt;DecimalFormat&lt;/code&gt; 类的用法，方便下次使用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;BigDecimal&lt;/code&gt; 可以更精确的进行小数点运算。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DecimalFormat&lt;/code&gt; 可以更好的进行与科学计算法之间的换算和保留有效数字。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;bigdecimal&#34;&gt;BigDecimal&lt;/h1&gt;
+&lt;h2 id=&#34;加减乘除等&#34;&gt;加减乘除等&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.math.BigDecimal&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;3.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//加
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;3.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;subtract&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//减
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;3.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;multiply&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//乘
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;3.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;divide&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; 2&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//除
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;3.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;max&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//最大值
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;3.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;compareTo&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//比较
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;四舍五入&#34;&gt;四舍五入&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;BigDecimal.ROUND_UP&lt;/code&gt;：不降低计算值的大小(和正负无关)&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//不降低计算值的大小（不考虑负号）
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.35
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;BigDecimal.ROUND_DOWN&lt;/code&gt;：不增加计算值的大小(和正负无关)&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//不增加计算值的大小（不考虑负号）
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.34
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;BigDecimal.ROUND_CEILING&lt;/code&gt;：不降低值的大小&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//不降低值的大小
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_CEILING&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_CEILING&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_CEILING&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_CEILING&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.34
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;BigDecimal.ROUND_FLOOR&lt;/code&gt;：不增加计算值的大小&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//不增加计算值的大小
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_FLOOR&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_FLOOR&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_FLOOR&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_FLOOR&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.35
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;BigDecimal.ROUND_HALF_UP&lt;/code&gt;：四舍五入(和正负无关)&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//四舍五入(和正负无关)
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_UP&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.35
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;BigDecimal.ROUND_HALF_DOWN&lt;/code&gt;：五舍六入(和正负无关)&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//五舍六入(和正负无关)
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_DOWN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.35
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;BigDecimal.ROUND_HALF_EVEN&lt;/code&gt;：左边奇数四舍五入，左边偶数五舍六入&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//左边奇数四舍五入，左边偶数五舍六入
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//当在一系列计算中重复应用时，该模式可将累积误差最小化
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.34
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.35
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.355&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.36
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;1.356&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.36
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.355&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.36
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;-1.356&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setScale&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; BigDecimal&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ROUND_HALF_EVEN&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//-1.36
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用 &lt;code&gt;new BigDecimal&lt;/code&gt; 的字符串构建，不要用 doubel 类型，doule 类型用 &lt;code&gt;BigDecimal.valueOf()&lt;/code&gt; 构建。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;decimalformat&#34;&gt;DecimalFormat&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;#&lt;/code&gt;：表示只要有可能就把数字拉上这个位置&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.text.DecimalFormat&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;12340&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//12340
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.23
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;2323423&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.2323
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;0&lt;/code&gt;：表示如果位数不足则以 0 补充&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.0000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;12340&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//12340.0000
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.0000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.2300
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;E&lt;/code&gt;：科学计数&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####E0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;00000234234&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//2.3423E-6
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####E0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;132459999&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//1.3246E8
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####E0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;6&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//6E0
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;%&lt;/code&gt;：百分比&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.####%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//23%
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DecimalFormat&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#.0000%&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;format&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//23.0000%
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://helloqb.xyz/post/2020/0707_decimal.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
         <title>个人笔记 - Jupyter 笔记汇总</title>
-        <link>https://helloqb.xyz/post/2020/0615_jupyter/</link>
+        <link>https://helloqb.xyz/post/2020/0615_jupyter.html</link>
         <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0615_jupyter/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0615_jupyter/ -&lt;p&gt;Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。其中 &lt;code&gt;html 版本&lt;/code&gt; 用于在线浏览，&lt;code&gt;ipynb 版本&lt;/code&gt; 用于导出到 Jupyter 中运行。&lt;/p&gt;
+        <guid>https://helloqb.xyz/post/2020/0615_jupyter.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0615_jupyter.html -&lt;p&gt;Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。其中 &lt;code&gt;html 版本&lt;/code&gt; 用于在线浏览，&lt;code&gt;ipynb 版本&lt;/code&gt; 用于导出到 Jupyter 中运行。&lt;/p&gt;
 &lt;h1 id=&#34;函数&#34;&gt;函数&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;加载 sklearn 公共数据集&lt;/li&gt;
@@ -30,18 +125,18 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Difference between map, applymap and apply methods in Pandas.&lt;/strong&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.html&#34;&gt;&amp;lt;html 版本&amp;gt;&lt;/a&gt; &lt;a href=&#34;https://helloqb.xyz/post/ipynb/0615_df_map.ipynb&#34;&gt;&amp;lt;ipynb 版本&amp;gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0615_jupyter/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0615_jupyter.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>个人笔记 - 正则表达式</title>
-        <link>https://helloqb.xyz/post/2020/0605_regex/</link>
+        <link>https://helloqb.xyz/post/2020/0605_regex.html</link>
         <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0605_regex/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0605_regex/ -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0605_regex.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0605_regex.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;正则表达式（Regex）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。 &amp;ndash; &lt;a href=&#34;https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F&#34;&gt;维基百科&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -106,18 +201,18 @@
 &lt;/table&gt;
 &lt;h1 id=&#34;推荐&#34;&gt;推荐&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://regexper.com/&#34;&gt;regexper&lt;/a&gt; 这个网站可以帮助你更直观的展示正则表达式的逻辑。&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0605_regex/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0605_regex.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>EXCEL 技巧之 - VLOOKUP 函数</title>
-        <link>https://helloqb.xyz/post/2020/0604_vlookup/</link>
+        <link>https://helloqb.xyz/post/2020/0604_vlookup.html</link>
         <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0604_vlookup/ -&lt;h1 id=&#34;官方文档&#34;&gt;官方文档&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0604_vlookup.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0604_vlookup.html -&lt;h1 id=&#34;官方文档&#34;&gt;官方文档&lt;/h1&gt;
 &lt;p&gt;VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -155,18 +250,18 @@
 &lt;p&gt;&lt;strong&gt;6. 获取其他单元格&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;第二列数据改下第三个参数为 2 就行了。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://51fnqa.dm.files.1drv.com/y4m5hJfOGKRBm0nH7DWHQ0k_OJdmD7urFWDHjBE_eGtteA258Il5XP8L6MObW1uiYnQ1sDBDg6emSnoEapzZJqUmewielL1VawozZqR0G301koXwa0ayLyF6EoOczHQ6MhePa8l8Pv4wjggDm_siB9Z2vB4B99-Wev7R-Z07tec4pDokMVm_aP3fp0uOIFTkNl088UcDi1DAwcdOmbB-Vnosg?width=617&amp;height=301&amp;cropmode=none&#34; /&gt;&lt;p&gt;
-- https://helloqb.xyz/post/2020/0604_vlookup/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0604_vlookup.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>EXCEL 技巧之 - 相同单元格合并</title>
-        <link>https://helloqb.xyz/post/2020/0604_merge/</link>
+        <link>https://helloqb.xyz/post/2020/0604_merge.html</link>
         <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0604_merge/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0604_merge/ -&lt;h1 id=&#34;需求&#34;&gt;需求&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0604_merge.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0604_merge.html -&lt;h1 id=&#34;需求&#34;&gt;需求&lt;/h1&gt;
 &lt;p&gt;需求其实很简单，就是合并单元格，行数少的情况下一个一个点就行了，但是行数多的情况下就麻烦了，秉承着重复性工作一定能被计算机代替的想法，翻阅很久找到了方法，在此分享。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://31gyyw.dm.files.1drv.com/y4miPbLToyX_QudE2Tuhmf-khEmDqEgh9fO4pFq0SYcisR1bTjfqH2aCXLjOFDh-HL1TmNx2iNtba7qxK0yPJJJlK-KTQXTu9gdsI7hWYyDTIbKiiG6yKNge3h3DeJ-Iv9uhRPIJBC4KuEOCYUsq_KugpmcsbB36lc5TWJCluEdkX9QNSsSzcqJMrsYzP3etq3SxIOtrSmUsKYb16JKfo8EHQ?width=418&amp;height=251&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 &lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
@@ -194,18 +289,18 @@
 &lt;p&gt;&lt;strong&gt;4. 删除分类汇总&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;数据（菜单栏） -&amp;gt; 分类汇总 -&amp;gt; 全部删除。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://21gyyw.dm.files.1drv.com/y4munMdjMvbfIdvLd7d35jz9kCrHmlhQtr3nUkUM6rjiSIbxzP8vn8Hn2ZL-Nxfz9HAvno1zWdG50vFVEMzZuEfvpOM0d0x72_DH7t-wnmGeGJRgTI-pT0tn7ll3olFqYWoA0pUCC_8DZjDC__A5gcEq3MiK4FkbTYswFrSe3JuREKe35ty_mJO2sSTSwpq0B9Nuv7gsYpheOZcVlsRHE2vFg?width=289&amp;height=240&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0604_merge/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0604_merge.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>四宫格办公壁纸制作</title>
-        <link>https://helloqb.xyz/post/2020/0603_ps/</link>
+        <link>https://helloqb.xyz/post/2020/0603_ps.html</link>
         <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0603_ps/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0603_ps/ -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0603_ps.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0603_ps.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
 &lt;p&gt;以 Windows 自带纯色壁纸为基础，效果如下：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://31fnqa.dm.files.1drv.com/y4mPFyoM3lP_9rd-Vg1cstN75iwI2bXFcYyD5EMT5aYeMND199Uhbo3TvKSX3El_yT2DiiMLWbIDIJE5dg-IwNhjllVzxi97yPpFr7Zx9P_lczOSDYxdcnQ77ncpsezH6ITvxZtrdWUaYA7nyfZz2kr9dExDSJEmVKtPtg0TZdkmBCfHZzlHd4aPegP-keRBvZM6Tls9In5rRGjGrhjDGxzBA?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 &lt;h1 id=&#34;流程&#34;&gt;流程&lt;/h1&gt;
@@ -243,18 +338,18 @@
 &lt;/ol&gt;
 &lt;p&gt;大功告成，当然可根据自己喜好选择样式，添加相关文字等。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://51hota.dm.files.1drv.com/y4m5etRuVzlJgeR9p7lFrGdFuTvyPjAyaJvx50_mmJhYBXwq6qD87LfDvLnAY24Lb7eUvhqv9E0EVuJL1PZxIgqlsHiPjOUt7oQfmzs3Dwwzxe7pzgL1YhIFCs1eQmwLkgPVwkwwNSNUuCOJx55bLCpVADcF0xryHRgVQYTucl8vFB5tt6-W2g-Pk1xKz9BcFmWSuRE__6WUuSxKbAVGVZVXQ?width=1919&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0603_ps/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0603_ps.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>Spring 定时任务</title>
-        <link>https://helloqb.xyz/post/2020/0602_cron/</link>
+        <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
         <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0602_cron/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0602_cron/ -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0602_cron.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
 &lt;p&gt;本文主要记录下 cron 表达式的用法，方便下次使用。&lt;/p&gt;
 &lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
 &lt;p&gt;程序主入口添加 &lt;code&gt;@SpringBootApplication&lt;/code&gt; 和 &lt;code&gt;@EnableScheduling&lt;/code&gt; 注解以启动定时任务。&lt;/p&gt;
@@ -368,18 +463,18 @@ end 2020-06-02T16:09:15.468
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-- https://helloqb.xyz/post/2020/0602_cron/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0602_cron.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>RabbitMQ 实现跨语言通信</title>
-        <link>https://helloqb.xyz/post/2020/0515_rabbitmq/</link>
+        <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
         <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0515_rabbitmq/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0515_rabbitmq/ -&lt;h1 id=&#34;需求场景&#34;&gt;需求场景&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0515_rabbitmq.html -&lt;h1 id=&#34;需求场景&#34;&gt;需求场景&lt;/h1&gt;
 &lt;p&gt;做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。&lt;/p&gt;
 &lt;p&gt;其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。&lt;/p&gt;
 &lt;h1 id=&#34;三种方式的实现&#34;&gt;三种方式的实现&lt;/h1&gt;
@@ -569,18 +664,18 @@ proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34
 &lt;/ul&gt;
 &lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
 &lt;p&gt;只是简单介绍用到的类和方法，流于表面，后续如果频繁使用的话，需要深入了解。&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0515_rabbitmq/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0515_rabbitmq.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>油猴脚本初探</title>
-        <link>https://helloqb.xyz/post/2020/0507_monkey/</link>
+        <link>https://helloqb.xyz/post/2020/0507_monkey.html</link>
         <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0507_monkey/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0507_monkey/ -&lt;h1 id=&#34;认识&#34;&gt;认识&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0507_monkey.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0507_monkey.html -&lt;h1 id=&#34;认识&#34;&gt;认识&lt;/h1&gt;
 &lt;p&gt;常言道，不装扩展的浏览器只能发挥它 40% 的能力。而扩展中不得不提的神器就是 &lt;strong&gt;油猴脚本&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;相对扩展来说，它更轻量，只作用于指定网站，占用内存少。所以在脚本和扩展实现相同功能的情况下，我都是优先选用脚本。&lt;/p&gt;
 &lt;p&gt;个人认为油猴脚本就是一串 Javascript 代码，因而前端工程师很容易上手。作为后端工程师的我。。。应该也比较容易上手吧。开干！&lt;/p&gt;
@@ -714,18 +809,18 @@ $(&lt;span style=&#34;color:#ba2121&#34;&gt;`
 &lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN/scripts/329484-%E8%B1%86%E7%93%A3%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD%E5%A4%A7%E5%B8%88-1%E7%A7%92%E6%90%9E%E5%AE%9A%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1-%E9%9F%B3%E4%B9%90-%E5%9B%BE%E4%B9%A6%E4%B8%8B%E8%BD%BD&#34;&gt;豆瓣资源下载大师&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN/scripts/378351-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0-csdn%E9%A1%B5%E9%9D%A2%E6%B5%AE%E7%AA%97%E5%B9%BF%E5%91%8A%E5%AE%8C%E5%85%A8%E8%BF%87%E6%BB%A4%E5%87%80%E5%8C%96-%E5%87%80%E5%8C%96%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9-%E8%87%AA%E5%8A%A8%E5%B1%95%E5%BC%80-%E8%AE%A9%E4%BD%A0%E4%B8%93%E6%B3%A8%E4%BA%8E%E6%96%87%E7%AB%A0-%E4%B8%8D%E5%BD%B1%E5%93%8D%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8&#34;&gt;CSDN页面浮窗广告完全过滤净化&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0507_monkey/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0507_monkey.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>锤子阅读文章搜索</title>
-        <link>https://helloqb.xyz/post/2020/0311_python/</link>
+        <link>https://helloqb.xyz/post/2020/0311_python.html</link>
         <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0311_python/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0311_python/ -&lt;h1 id=&#34;缘由&#34;&gt;缘由&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0311_python.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0311_python.html -&lt;h1 id=&#34;缘由&#34;&gt;缘由&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。&lt;/li&gt;
 &lt;li&gt;锤子阅读不支持文章搜索，有时候想要找个文章难。&lt;/li&gt;
@@ -939,136 +1034,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# main_by_args(&amp;#39;大象公会&amp;#39;, &amp;#39;同性恋&amp;#39;, 10, 1, 1)  # debug&lt;/span&gt;
     main()
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://helloqb.xyz/post/2020/0311_python/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>SpringMVC 下载文本实现边转码边下载</title>
-        <link>https://helloqb.xyz/post/2020/0304_java/</link>
-        <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0304_java/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0304_java/ -&lt;h1 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h1&gt;
-&lt;p&gt;SpringMVC 框架的接口中 Response 有 &lt;code&gt;ServletOutputStream&lt;/code&gt; 和 &lt;code&gt;PrintWriter&lt;/code&gt; 两种输出，还有一个 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
-&lt;p&gt;OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 无效。所以先采用 &lt;code&gt;PrintWriter&lt;/code&gt; 搭配 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile1&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setCharacterEncoding&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    BufferedWriter bufferedWriter &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedWriter&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getWriter&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
-    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;无用，没有仔细研究，应该 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 只是告诉浏览器是什么编码，没有解码功能。&lt;/p&gt;
-&lt;h1 id=&#34;方案二servletoutputstream--outputstreamwriter&#34;&gt;方案二：ServletOutputStream + OutputStreamWriter&lt;/h1&gt;
-&lt;p&gt;将 &lt;code&gt;response.getOutputStream()&lt;/code&gt; 获取到的流用 &lt;code&gt;OutputStreamWriter&lt;/code&gt; 包装。结果可行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile2&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStreamWriter writerStream &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; OutputStreamWriter&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GBK&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;方案三servletoutputstream--getbytes&#34;&gt;方案三：ServletOutputStream + getBytes&lt;/h1&gt;
-&lt;p&gt;在按行写入字符串时，使用 &lt;code&gt;getBytes&lt;/code&gt; 方法将字符串转换为想要输出的编码格式。结果可行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream outputStream &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBytes&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
-        outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;无需转码的写法&#34;&gt;无需转码的写法&lt;/h1&gt;
-&lt;p&gt;若不需要转码的话，就很简短了，用字节流就行了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile4&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    FileInputStream fis &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream os &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; buffer &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;4096&lt;span style=&#34;color:#666&#34;&gt;];&lt;/span&gt;
-    &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; b &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;b &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; fis&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;read&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#666&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    fis&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简写的话可以用第三方包。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.util.FileCopyUtils&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile5&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile5&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    InputStream inputStream&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    FileCopyUtils&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;copy&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;inputStream&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
-
-
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;补充：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。&lt;/li&gt;
-&lt;/ul&gt;- https://helloqb.xyz/post/2020/0304_java/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://helloqb.xyz/post/2020/0311_python.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

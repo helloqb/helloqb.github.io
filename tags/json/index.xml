@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>JSON on 哲学家</title>
-    <link>https://helloqb.xyz/tags/json/</link>
+    <link>https://helloqb.xyz/tags/json.html</link>
     <description>Recent content in JSON on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,13 +10,13 @@
     <lastBuildDate>Wed, 28 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/json/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Fastjson 使用</title>
-      <link>https://helloqb.xyz/post/2020/1028_fastjson/</link>
+      <link>https://helloqb.xyz/post/2020/1028_fastjson.html</link>
       <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/1028_fastjson/</guid>
-      <description>JSONObject 互转 String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
+      <guid>https://helloqb.xyz/post/2020/1028_fastjson.html</guid>
+      <description>JSONObject 互转  String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
 String str = j.toString(SerializerFeature.WriteMapNullValue); String to JavaBean T t = JSON.parseObject(str, T.class); JavaBean to String String str = JSON.toJSONString(t); 同样，若想要保留 null 值，需要添加 SerializerFeature.WriteMapNullValue 参数。
-String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转 String to JSONArray JSONArray j = JSON.</description>
+String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转  String to JSONArray JSONArray j = JSON.</description>
     </item>
     
   </channel>

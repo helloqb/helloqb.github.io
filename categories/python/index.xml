@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on 哲学家</title>
-    <link>https://helloqb.xyz/categories/python/</link>
+    <link>https://helloqb.xyz/categories/python.html</link>
     <description>Recent content in Python on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,10 +10,10 @@
     <lastBuildDate>Wed, 05 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Selenium 模拟浏览器另存为</title>
-      <link>https://helloqb.xyz/post/2020/0805_selenium/</link>
+      <link>https://helloqb.xyz/post/2020/0805_selenium.html</link>
       <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0805_selenium/</guid>
+      <guid>https://helloqb.xyz/post/2020/0805_selenium.html</guid>
       <description>缘由 开发一个下载图片的爬虫，原网站时不时变动，导致爬虫经常会挂掉，尤其在最终下载图片的环节。想着模拟浏览器另存为的方式可能会更健壮些，不那么容易挂。另外也一直想学习下 Selenium。
 Selenium 1. 驱动和环境 使用的是 Python 环境，Selenium 的安装直接 pip install selenium 即可。
 浏览器使用的是 Firefox，驱动是 geckdriver。将下载后的文件放入到 Firefox 安装目录下，如 C:\Program Files\Mozilla Firefox。
@@ -27,10 +27,10 @@ SCROLL_PAUSE_TIME = 0.</description>
     
     <item>
       <title>进一步了解 RabbitMQ 跨语言通讯</title>
-      <link>https://helloqb.xyz/post/2020/0728_rabbitmq/</link>
+      <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
       <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq/</guid>
+      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
       <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
 配置 pom.xml 文件中添加依赖。
 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
@@ -40,10 +40,10 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframew
     
     <item>
       <title>RabbitMQ 实现跨语言通信</title>
-      <link>https://helloqb.xyz/post/2020/0515_rabbitmq/</link>
+      <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq/</guid>
+      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
       <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
 其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
 三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
@@ -56,10 +56,10 @@ pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new Buffer
     
     <item>
       <title>锤子阅读文章搜索</title>
-      <link>https://helloqb.xyz/post/2020/0311_python/</link>
+      <link>https://helloqb.xyz/post/2020/0311_python.html</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0311_python/</guid>
+      <guid>https://helloqb.xyz/post/2020/0311_python.html</guid>
       <description>缘由  之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。 锤子阅读不支持文章搜索，有时候想要找个文章难。 划水好无聊。  脚本调用 使用 Python3 编写，单个文件，无第三方库。结果有命令行和文本两种输出方式，具体参数如下：
  -h 帮助文档 -s 订阅号名称 -k 搜索关键词，不填返回最新的文章 -n 返回文章数，默认10 -m 搜索匹配等级，默认1匹配标题 2匹配标题和摘要 -o 输出方式， 默认1命令行输出 2写入本地文件到当前目录  代码 就 200 行代码，直接贴出来了，不放到 Github 上了。
 附锤子阅读APP下载 链接

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Spring Boot on 哲学家</title>
-    <link>https://helloqb.xyz/tags/spring-boot/</link>
+    <link>https://helloqb.xyz/tags/spring-boot.html</link>
     <description>Recent content in Spring Boot on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,10 +10,10 @@
     <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/spring-boot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>YAML 配置与调用</title>
-      <link>https://helloqb.xyz/post/2020/0907_yaml/</link>
+      <link>https://helloqb.xyz/post/2020/0907_yaml.html</link>
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0907_yaml/</guid>
+      <guid>https://helloqb.xyz/post/2020/0907_yaml.html</guid>
       <description>调用 Value 注解调用 例如，YAML 文件中有个自定义配置。
 myconfig:model-server-url:127.0.0.1使用 @Value 注解调用。
 import org.springframework.beans.factory.annotation.Value; @Value(&amp;#34;${myconfig.model-server-url}&amp;#34;) private String modelServerUrl; 变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。

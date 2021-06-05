@@ -2,28 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 哲学家</title>
-    <link>https://helloqb.xyz/post/</link>
+    <link>https://helloqb.xyz/post.html</link>
     <description>Recent content in Posts on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 31 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TCPDUMP 抓包和 Wireshark 分析</title>
+      <link>https://helloqb.xyz/post/2021/0531_tcpdump.html</link>
+      <pubDate>Mon, 31 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2021/0531_tcpdump.html</guid>
+      <description>tcpdump 抓包并保存到文件中 常见命令：
+ -i eth0：指明 eth0 网卡 host hostname：截获指定 hostname 发出和接收的所有数据 src：截获发出的所有数据 dst：截获接收的所有数据 -w：保存为文件  由于工作中既需要将 tcpdump 的结果打印，又需要将结果保存供 Wireshark 分析，搜索许久后终于实现了。
+tcpdump -s 0 -U -w - | tee target.$(date +%Y-%m-%d-%H-%M-%S).pcap | tcpdump -r - 
+其中：
+ -w：告诉 tcpdump 将二进制数据写入 stdout -s 0：抓取完整的数据包 tee：将该二进制数据写入文件并写入其自己的 stdout -r：告诉第二个 tcpdump 从它的数据中获取它的数据 stdin -U：使数据包在收到后立即写入  docker 容器内抓包 项目采用 docker 部署的时候，若不指明网卡则可能得不到想要的结果，有三种方法：
+ 直接进入容器 找到容器对应的虚拟网卡，参数 -i 指明网卡 nsenter 命令在宿主机上进入容器的网络空间  第 2 种 方法参考底部链接，我个人更喜欢第 3 种方法，详细命令如下：</description>
+    </item>
+    
     <item>
       <title>后端接口校验参数异常统一处理</title>
-      <link>https://helloqb.xyz/post/2021/0201_validate/</link>
+      <link>https://helloqb.xyz/post/2021/0201_validate.html</link>
       <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0201_validate/</guid>
-      <description>前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
+      <guid>https://helloqb.xyz/post/2021/0201_validate.html</guid>
+      <description>2021-06-01 补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
+ 前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
 //全局异常处理类 @RestControllerAdvice public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { @ExceptionHandler(value = BaseException.class) public S2VJSONResult baseHandler(BaseException e) { return S2VJSONResult.msg(false, 400, e.getMessage()); } //接口 @PostMapping(&amp;#34;/transfer/company&amp;#34;) S2VJSONResult transferCompany(@Validated @RequestBody AdminTransferCompanyVO vo, BindingResult bindingResult) { if (bindingResult.hasErrors()) { return S2VJSONResult.msg(false, 400, bindingResult.getFieldError().getDefaultMessage()); } //参数实体类 public class AdminTransferCompanyVO { @NotNull(message = &amp;#34;客户 ID 不能为空&amp;#34;) private List&amp;lt;Integer&amp;gt; companyIds; @NotNull(message = &amp;#34;目标客户经理 ID 不能为空&amp;#34;) private Integer targetCustomerId; @NotNull(message = &amp;#34;管理员 ID 不能为空&amp;#34;) private Integer operationCustomerId; //统一返回响应 public class S2VJSONResult&amp;lt;T&amp;gt; { private Integer code;//状态码  private Boolean isSuccess;//状态  private String message;//消息  private T data;//数据对象  public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; all(Boolean success, Integer code,String message,T data) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message, data); } public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; msg(Boolean success, Integer code,String message) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message); } 整理了一下其思路，大概如下：</description>
     </item>
     
     <item>
       <title>EXCEL 技巧之 - 小技巧</title>
-      <link>https://helloqb.xyz/post/2020/1120_excel/</link>
+      <link>https://helloqb.xyz/post/2020/1120_excel.html</link>
       <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/1120_excel/</guid>
+      <guid>https://helloqb.xyz/post/2020/1120_excel.html</guid>
       <description>单元格间隔一行  编写左图，选中，往下拖动形成右图。  
 开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量  
 开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行  
@@ -33,10 +48,10 @@
     
     <item>
       <title>frp 实现无公网 IP 使用 Windows 远程桌面</title>
-      <link>https://helloqb.xyz/post/2020/1102_frp/</link>
+      <link>https://helloqb.xyz/post/2020/1102_frp.html</link>
       <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/1102_frp/</guid>
+      <guid>https://helloqb.xyz/post/2020/1102_frp.html</guid>
       <description>前言 远程控制软件有用过 TeamViewer、向日葵、Chrome Remote Desktop 等，TeamViewer 的稳定性流畅性最好，但是后台挂久了，会被检测商业用途，需要付费，那价格实在没法交个朋友。向日葵 挺好的，但是对国产软件向来有些警惕，不敢给予太高的权限。Chrome Remote Desktop 国内没法使用无人值守访问。Windows 自带的远程桌面不能连接非局域网内的用户，公网 IP 对于租客来说也没法弄，后来了解了内网穿透技术，正好解决了问题。
 简单使用  frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。
  frp 实现需要具有公网 IP 节点的中转站，我用的是谷歌云，公司也用了内网穿透技术，用的是腾讯云，比较后发现公司速度更快。
@@ -48,21 +63,21 @@ Client 端安装 下载 Windows 端的版本 frp_0.</description>
     
     <item>
       <title>Fastjson 使用</title>
-      <link>https://helloqb.xyz/post/2020/1028_fastjson/</link>
+      <link>https://helloqb.xyz/post/2020/1028_fastjson.html</link>
       <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/1028_fastjson/</guid>
-      <description>JSONObject 互转 String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
+      <guid>https://helloqb.xyz/post/2020/1028_fastjson.html</guid>
+      <description>JSONObject 互转  String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
 String str = j.toString(SerializerFeature.WriteMapNullValue); String to JavaBean T t = JSON.parseObject(str, T.class); JavaBean to String String str = JSON.toJSONString(t); 同样，若想要保留 null 值，需要添加 SerializerFeature.WriteMapNullValue 参数。
-String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转 String to JSONArray JSONArray j = JSON.</description>
+String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转  String to JSONArray JSONArray j = JSON.</description>
     </item>
     
     <item>
       <title>YAML 配置与调用</title>
-      <link>https://helloqb.xyz/post/2020/0907_yaml/</link>
+      <link>https://helloqb.xyz/post/2020/0907_yaml.html</link>
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0907_yaml/</guid>
+      <guid>https://helloqb.xyz/post/2020/0907_yaml.html</guid>
       <description>调用 Value 注解调用 例如，YAML 文件中有个自定义配置。
 myconfig:model-server-url:127.0.0.1使用 @Value 注解调用。
 import org.springframework.beans.factory.annotation.Value; @Value(&amp;#34;${myconfig.model-server-url}&amp;#34;) private String modelServerUrl; 变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。
@@ -74,10 +89,10 @@ YAML 文件中参数匹配很宽松，下划线 _ 和 - 和驼峰都能够匹配
     
     <item>
       <title>MapStruct 实现 Java Bean 映射</title>
-      <link>https://helloqb.xyz/post/2020/0821_mapstruct/</link>
+      <link>https://helloqb.xyz/post/2020/0821_mapstruct.html</link>
       <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0821_mapstruct/</guid>
+      <guid>https://helloqb.xyz/post/2020/0821_mapstruct.html</guid>
       <description>介绍 项目中遇到数据库返回的字段不想全部返回给前端，一个一个 setter 挺麻烦，不够优雅。市面上有挺多映射框架如 Dozer，Orika，MapStruct，ModelMapper，JMapper 等，其中 MapStruct 只是代码生成器，使用纯 Java 的方法调用源对象和目标对象之间进行映射，并非 Java 反射机制，所以其性能最好。
 实现 Maven 依赖
 ... &amp;lt;properties&amp;gt; &amp;lt;org.mapstruct.version&amp;gt;1.3.1.Final&amp;lt;/org.mapstruct.version&amp;gt; &amp;lt;/properties&amp;gt; ... &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mapstruct&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mapstruct&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${org.mapstruct.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; ... &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-compiler-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.8.1&amp;lt;/version&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;source&amp;gt;1.8&amp;lt;/source&amp;gt; &amp;lt;target&amp;gt;1.8&amp;lt;/target&amp;gt; &amp;lt;annotationProcessorPaths&amp;gt; &amp;lt;path&amp;gt; &amp;lt;groupId&amp;gt;org.mapstruct&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mapstruct-processor&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${org.mapstruct.version}&amp;lt;/version&amp;gt; &amp;lt;/path&amp;gt; &amp;lt;/annotationProcessorPaths&amp;gt; &amp;lt;/configuration&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; ... 如果项目中有用到 lombok 的话，MapStruct 也支持，添加如下即可。
@@ -88,10 +103,10 @@ import org.mapstruct.Mapper; import org.mapstruct.Mapping; @Mapper public interf
     
     <item>
       <title>Selenium 模拟浏览器另存为</title>
-      <link>https://helloqb.xyz/post/2020/0805_selenium/</link>
+      <link>https://helloqb.xyz/post/2020/0805_selenium.html</link>
       <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0805_selenium/</guid>
+      <guid>https://helloqb.xyz/post/2020/0805_selenium.html</guid>
       <description>缘由 开发一个下载图片的爬虫，原网站时不时变动，导致爬虫经常会挂掉，尤其在最终下载图片的环节。想着模拟浏览器另存为的方式可能会更健壮些，不那么容易挂。另外也一直想学习下 Selenium。
 Selenium 1. 驱动和环境 使用的是 Python 环境，Selenium 的安装直接 pip install selenium 即可。
 浏览器使用的是 Firefox，驱动是 geckdriver。将下载后的文件放入到 Firefox 安装目录下，如 C:\Program Files\Mozilla Firefox。
@@ -105,10 +120,10 @@ SCROLL_PAUSE_TIME = 0.</description>
     
     <item>
       <title>进一步了解 RabbitMQ 跨语言通讯</title>
-      <link>https://helloqb.xyz/post/2020/0728_rabbitmq/</link>
+      <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
       <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq/</guid>
+      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
       <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
 配置 pom.xml 文件中添加依赖。
 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
@@ -118,30 +133,30 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframew
     
     <item>
       <title>耳机初烧之旅</title>
-      <link>https://helloqb.xyz/post/2020/0713_headphone/</link>
+      <link>https://helloqb.xyz/post/2020/0713_headphone.html</link>
       <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0713_headphone/</guid>
+      <guid>https://helloqb.xyz/post/2020/0713_headphone.html</guid>
       <description>入门穷烧 大三，不知何事引起，对耳机产生兴趣，可能是看到论坛们一堆 高音甜，中音准，低音沉 的分析，感觉他们从里面获得了很大的满足，所以也想尝试一下。
 鉴于一直以来耳机不都是十块钱的印象，只能将价位定位在了一两百。瞄准两款 AKG420 和 JVC HA-S500。HA-S500 在网上的形容词是 白菜神器，说外国某论坛关于此耳机盖了很多层楼。AKG420 名声更大，知乎初烧推荐里几乎都有这款。巧了，宿舍串门的时候正好看到同学在用，试了下，佩戴舒适，低音有氛围，颜值低调却在线，很喜欢，现在想来还是想拥有一部。
-可能是得不到的永远在骚动，我最终选择了 HA-S500 。怀着无比激动的心情收到后，很爱惜，很享受，什么高音低音的也瞬间都感觉有了，经常晚上关灯听很久。现在想来，脑放的成分居多，此耳机声音同价位一般，唯一可以吹的是它的质量，拿到手里感觉就是特别结实，一度让我对日本制造印象特别好。现在为止已经换了两个耳套，它仍然硬硬的，躺着抽屉里，等我偶然间想起。
-后来又买了 潜99 和 爱华 AIWA HP-M38，潜99 入耳式的没啥印象，HP-M38 还有些印象，因为很轻，佩戴很舒服，而 HA-S500 特别夹耳。
-再烧 又不知何事引起，想再烧下耳机，也了解到好耳机真的需要上放，而上放对于我这种简约派来说想想都麻烦，需要把歌曲导进导出的，没法直接用手机听。所以我下了个决定，只直推试听，不行就不再烧。 有了工资后，定位当然也高了，盖得排行里，锁定了接近三千价位的歌德 SR325e。但三千毕竟不少，淘宝上找到个商家可以试听，每天 50，遂下单。等待期间看到了魅族 HiFi 解码耳放这么个小玩意，说能使手机推力变大，也下单了。
-拿到后，没感觉多少惊喜，有效果，但不值得花三千，算了，退单，再也不烧。
+ 可能是得不到的永远在骚动，我最终选择了 HA-S500 。怀着无比激动的心情收到后，很爱惜，很享受，什么高音低音的也瞬间都感觉有了，经常晚上关灯听很久。现在想来，脑放的成分居多，此耳机声音同价位一般，唯一可以吹的是它的质量，拿到手里感觉就是特别结实，一度让我对日本制造印象特别好。现在为止已经换了两个耳套，它仍然硬硬的，躺着抽屉里，等我偶然间想起。
+ 后来又买了 潜99 和 爱华 AIWA HP-M38，潜99 入耳式的没啥印象，HP-M38 还有些印象，因为很轻，佩戴很舒服，而 HA-S500 特别夹耳。
+ 再烧 又不知何事引起，想再烧下耳机，也了解到好耳机真的需要上放，而上放对于我这种简约派来说想想都麻烦，需要把歌曲导进导出的，没法直接用手机听。所以我下了个决定，只直推试听，不行就不再烧。 有了工资后，定位当然也高了，盖得排行里，锁定了接近三千价位的歌德 SR325e。但三千毕竟不少，淘宝上找到个商家可以试听，每天 50，遂下单。等待期间看到了魅族 HiFi 解码耳放这么个小玩意，说能使手机推力变大，也下单了。
+ 拿到后，没感觉多少惊喜，有效果，但不值得花三千，算了，退单，再也不烧。
 可心里总是还有欲望，别人怎么能听得这么爽，我是木耳吗，难道真得上放才行?
 退单后，依旧在论坛贴吧瞎逛，忽然发现了个新词 USB独占。大概意思是：
  “Android 系统为了兼容不同 APP 音频同时输出，需要使用 Mixer(混音模块)将这些声音混在一起后输出，Android 混音输出的采样率固定为 48k，如果某个 APP 输出的声音格式和混音输出结果不一样，就需要 SRC（采样率转换），这对音质是一个大大的损伤。而在独占模式下，APP 会把数字信号直接送给 USB 系统，通过 USB 接口送给数字耳机。”
  这个理论又勾起了我的欲望。但是 SR325e 已经被退了，想来好久都没买耳机了，再买一个耳机用吧，等着 HA-S500 用坏怕是不可能了。
 逛了一番后，买了 HIFIMAN SUNDARA。我靠，真的是独占的原因！！！
-欲望被彻底勾起，先是觉得 SUNDARA 低频差点劲，二手了 DT990 和 DT1350，DT1350 山洞音没感觉，DT990 解析好，人声远，低频足，但齿音更重。不行，还是不够完美。接着逛，reddit 上 HD58X 呼声很高，国内竟然没有专卖店，学了下海淘，竟然比想象中简单的多。一个月后才拿到手，没有期待的好，但也有所提升。</description>
+ 欲望被彻底勾起，先是觉得 SUNDARA 低频差点劲，二手了 DT990 和 DT1350，DT1350 山洞音没感觉，DT990 解析好，人声远，低频足，但齿音更重。不行，还是不够完美。接着逛，reddit 上 HD58X 呼声很高，国内竟然没有专卖店，学了下海淘，竟然比想象中简单的多。一个月后才拿到手，没有期待的好，但也有所提升。</description>
     </item>
     
     <item>
       <title>使用 BigDecimal 和 DecimalFormat 计算</title>
-      <link>https://helloqb.xyz/post/2020/0707_decimal/</link>
+      <link>https://helloqb.xyz/post/2020/0707_decimal.html</link>
       <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0707_decimal/</guid>
+      <guid>https://helloqb.xyz/post/2020/0707_decimal.html</guid>
       <description>介绍 本文主要记录下 BigDecimal 和 DecimalFormat 类的用法，方便下次使用。
  BigDecimal 可以更精确的进行小数点运算。 DecimalFormat 可以更好的进行与科学计算法之间的换算和保留有效数字。  BigDecimal 加减乘除等 import java.math.BigDecimal; new BigDecimal(&amp;#34;3.1&amp;#34;).add(new BigDecimal(&amp;#34;1.2&amp;#34;));//加 new BigDecimal(&amp;#34;3.1&amp;#34;).subtract(new BigDecimal(&amp;#34;1.2&amp;#34;));//减 new BigDecimal(&amp;#34;3.1&amp;#34;).multiply(new BigDecimal(&amp;#34;1.2&amp;#34;));//乘 new BigDecimal(&amp;#34;3.1&amp;#34;).divide(new BigDecimal(&amp;#34;1.2&amp;#34;), 2);//除 new BigDecimal(&amp;#34;3.1&amp;#34;).max(new BigDecimal(&amp;#34;1.2&amp;#34;));//最大值 new BigDecimal(&amp;#34;3.1&amp;#34;).compareTo(new BigDecimal(&amp;#34;1.2&amp;#34;));//比较 四舍五入 BigDecimal.ROUND_UP：不降低计算值的大小(和正负无关)
 //不降低计算值的大小（不考虑负号） new BigDecimal(&amp;#34;1.345&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //1.35 new BigDecimal(&amp;#34;1.346&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //1.35 new BigDecimal(&amp;#34;-1.345&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //-1.35 new BigDecimal(&amp;#34;-1.346&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //-1.35 BigDecimal.ROUND_DOWN：不增加计算值的大小(和正负无关)
@@ -150,10 +165,10 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframew
     
     <item>
       <title>个人笔记 - Jupyter 笔记汇总</title>
-      <link>https://helloqb.xyz/post/2020/0615_jupyter/</link>
+      <link>https://helloqb.xyz/post/2020/0615_jupyter.html</link>
       <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0615_jupyter/</guid>
+      <guid>https://helloqb.xyz/post/2020/0615_jupyter.html</guid>
       <description>Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。其中 html 版本 用于在线浏览，ipynb 版本 用于导出到 Jupyter 中运行。
 函数  加载 sklearn 公共数据集 返回 df2 按照 df1 的 id 排序 数据通用预处理  &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt;
 其他  Difference between map, applymap and apply methods in Pandas. &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt;  </description>
@@ -161,13 +176,13 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframew
     
     <item>
       <title>个人笔记 - 正则表达式</title>
-      <link>https://helloqb.xyz/post/2020/0605_regex/</link>
+      <link>https://helloqb.xyz/post/2020/0605_regex.html</link>
       <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0605_regex/</guid>
+      <guid>https://helloqb.xyz/post/2020/0605_regex.html</guid>
       <description>介绍  正则表达式（Regex）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。 &amp;ndash; 维基百科
  Jupyter 版 例子在 Jupyter Notebook 中展示更清晰些，所以就直接上传了 Jupyter 版本的。&amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;
-这是A用法 文本编辑器替换 使用 $1 代替某一组。
+这是A 用法 文本编辑器替换 使用 $1 代替某一组。
 如替换隐藏手机号中间四位，查找正则为 (\d{3})(\d*)(\d{4})，替换为 $1****$3。
 Java 端也采用此方法。
 // 手机号隐藏中间4位： public static String hidePhone(String phone){ return phone.replaceAll(&amp;#34;(\\d{3})(\\d*)(\\d{4})&amp;#34;, &amp;#34;$1****$3&amp;#34;); } 常用正则表达式 中文：[\u4e00-\u9fa5]
@@ -178,25 +193,25 @@ Java 端也采用此方法。
     
     <item>
       <title>EXCEL 技巧之 - VLOOKUP 函数</title>
-      <link>https://helloqb.xyz/post/2020/0604_vlookup/</link>
+      <link>https://helloqb.xyz/post/2020/0604_vlookup.html</link>
       <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0604_vlookup/</guid>
+      <guid>https://helloqb.xyz/post/2020/0604_vlookup.html</guid>
       <description>官方文档 VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：
   要查找的值，也被称为查阅值。
   查阅值所在的区域。 请记住，查阅值应该始终位于所在区域的第一列，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。
   区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。
   （可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。
   实现 如下表格，想要知道左边哪些是已婚人士。
-1. 输入 VLOOKUP
+ 1. 输入 VLOOKUP
 在上表 2B 单元格内输入 =VLOOKUP(。
 2. 选择查找值
 括号后第一个参数选中 2A，然后输入英文逗号。
-3. 选择查找区域
+ 3. 选择查找区域
 括号后第二个参数选中 F:G 列，然后输入英文逗号。
 如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。
 全选时注意首行会不会影响结果。
-4. 其他参数
+ 4. 其他参数
 第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。
 最后整个公式为 =VLOOKUP(A2,F:G,1,FALSE)。
 5. 复制公式
@@ -205,10 +220,10 @@ Java 端也采用此方法。
     
     <item>
       <title>EXCEL 技巧之 - 相同单元格合并</title>
-      <link>https://helloqb.xyz/post/2020/0604_merge/</link>
+      <link>https://helloqb.xyz/post/2020/0604_merge.html</link>
       <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0604_merge/</guid>
+      <guid>https://helloqb.xyz/post/2020/0604_merge.html</guid>
       <description>需求 需求其实很简单，就是合并单元格，行数少的情况下一个一个点就行了，但是行数多的情况下就麻烦了，秉承着重复性工作一定能被计算机代替的想法，翻阅很久找到了方法，在此分享。
 实现 1. 数据（菜单栏） -&amp;gt; 分类汇总
 其中：
@@ -226,10 +241,10 @@ Java 端也采用此方法。
     
     <item>
       <title>四宫格办公壁纸制作</title>
-      <link>https://helloqb.xyz/post/2020/0603_ps/</link>
+      <link>https://helloqb.xyz/post/2020/0603_ps.html</link>
       <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0603_ps/</guid>
+      <guid>https://helloqb.xyz/post/2020/0603_ps.html</guid>
       <description>介绍 以 Windows 自带纯色壁纸为基础，效果如下：
 流程 1. 用 Photoshop 打开壁纸
 个人喜欢纯色壁纸，Windows10 上可通过背景设置为纯色壁纸后截屏得到。
@@ -248,10 +263,10 @@ Java 端也采用此方法。
     
     <item>
       <title>Spring 定时任务</title>
-      <link>https://helloqb.xyz/post/2020/0602_cron/</link>
+      <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0602_cron/</guid>
+      <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
       <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
 配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
 import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。
@@ -262,10 +277,10 @@ import org.springframework.boot.SpringApplication; import org.springframework.bo
     
     <item>
       <title>RabbitMQ 实现跨语言通信</title>
-      <link>https://helloqb.xyz/post/2020/0515_rabbitmq/</link>
+      <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq/</guid>
+      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
       <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
 其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
 三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
@@ -278,26 +293,26 @@ pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new Buffer
     
     <item>
       <title>油猴脚本初探</title>
-      <link>https://helloqb.xyz/post/2020/0507_monkey/</link>
+      <link>https://helloqb.xyz/post/2020/0507_monkey.html</link>
       <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0507_monkey/</guid>
+      <guid>https://helloqb.xyz/post/2020/0507_monkey.html</guid>
       <description>认识 常言道，不装扩展的浏览器只能发挥它 40% 的能力。而扩展中不得不提的神器就是 油猴脚本。
 相对扩展来说，它更轻量，只作用于指定网站，占用内存少。所以在脚本和扩展实现相同功能的情况下，我都是优先选用脚本。
 个人认为油猴脚本就是一串 Javascript 代码，因而前端工程师很容易上手。作为后端工程师的我。。。应该也比较容易上手吧。开干！
 脚本编写 开发环境  Chrome：可以更方便的定位 DOM。 暴力猴：有个为此站点查找脚本的功能，很方便。  需求 如果你像我一样，只是想在某个页面添加一个按钮，实现快速跳转的功能。而自己又非前端，后面的内容应该会帮到你。示例 js 很简单，前端大神的话直接无视看下元数据块的内容就行了。
 以 torrentz2 网站为例，该网站磁力链接无法跳转，现在实现点击某一按钮后跳转到谷歌或者弹出磁力链接。
 元数据块（Metadata Block） 用暴力猴新建脚本时，会默认创建基础的元数据块。
-// ==UserScript==// @name New script - torrentz2.eu// @namespace Violentmonkey Scripts// @match *://torrentz2.eu/*// @grant none// @version 1.0// @author -// @description 2020/5/9 下午4:13:37// ==/UserScript==其中：
+// ==UserScript== // @name New script - torrentz2.eu // @namespace Violentmonkey Scripts // @match *://torrentz2.eu/* // @grant none // @version 1.0 // @author - // @description 2020/5/9 下午4:13:37 // ==/UserScript== 其中：
  name：名称 namespace：命名空间，正式发布时需要 match：脚本适用网站，另外有个 include 用法差不多，官网说这个匹配规则更安全些 grant：控制特定 api 的使用，不常用，none 即可 version：版本 author：作者 description：描述  其余我用到的有：</description>
     </item>
     
     <item>
       <title>锤子阅读文章搜索</title>
-      <link>https://helloqb.xyz/post/2020/0311_python/</link>
+      <link>https://helloqb.xyz/post/2020/0311_python.html</link>
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0311_python/</guid>
+      <guid>https://helloqb.xyz/post/2020/0311_python.html</guid>
       <description>缘由  之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。 锤子阅读不支持文章搜索，有时候想要找个文章难。 划水好无聊。  脚本调用 使用 Python3 编写，单个文件，无第三方库。结果有命令行和文本两种输出方式，具体参数如下：
  -h 帮助文档 -s 订阅号名称 -k 搜索关键词，不填返回最新的文章 -n 返回文章数，默认10 -m 搜索匹配等级，默认1匹配标题 2匹配标题和摘要 -o 输出方式， 默认1命令行输出 2写入本地文件到当前目录  代码 就 200 行代码，直接贴出来了，不放到 Github 上了。
 附锤子阅读APP下载 链接
@@ -306,22 +321,22 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
     
     <item>
       <title>SpringMVC 下载文本实现边转码边下载</title>
-      <link>https://helloqb.xyz/post/2020/0304_java/</link>
+      <link>https://helloqb.xyz/post/2020/0304_java.html</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0304_java/</guid>
+      <guid>https://helloqb.xyz/post/2020/0304_java.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>个人笔记 - Git</title>
-      <link>https://helloqb.xyz/post/2020/0301_git/</link>
+      <link>https://helloqb.xyz/post/2020/0301_git.html</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
+      <guid>https://helloqb.xyz/post/2020/0301_git.html</guid>
       <description>SSH 客户端 Putty 和 OpenSSH 的互相转换 原本只需要用 ssh-keygen 生成密钥到 .ssh 目录，然后打开 id_rsa.pub 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。
 
-**1. 使用 puTTY 生成 Key**1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件；2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件；3. 同时将生成器页面上的 Key 复制到云服务器上即可。2. 使用已有的 id_rsa 导入到 puTTY
+**1. 使用 puTTY 生成 Key** 1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件； 2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件； 3. 同时将生成器页面上的 Key 复制到云服务器上即可。 2. 使用已有的 id_rsa 导入到 puTTY
  打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。  参考： https://blog.csdn.net/caoshiying/article/details/80131761
 查看单个文件提交历史 两种情况：
  选定项目的变更历史，即 git log &amp;lt;path&amp;gt;。 按行审阅选定项目，即 git blame &amp;lt;path&amp;gt;。  在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</description>
@@ -329,10 +344,10 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
     
     <item>
       <title>Hugo 上手</title>
-      <link>https://helloqb.xyz/post/2020/0101_hugo/</link>
+      <link>https://helloqb.xyz/post/2020/0101_hugo.html</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0101_hugo/</guid>
+      <guid>https://helloqb.xyz/post/2020/0101_hugo.html</guid>
       <description>下载运行 主要操作：文件下载解压，添加环境变量即可。
 文档链接
  下载 安装 Github 自动托管：先删除public文件再运行脚本  测试成功：hugo version, hugo help
@@ -340,8 +355,8 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
  hugo server 本地调试 hugo server -D 本地调试（显示隐藏文件） hugo server -t theme 指定主题调试 hugo 生成静态文件  主题下载 喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor
 git submodule 方式下载主题
  拉取主题 git submodule add url themes/diary 更新主题：进入子模块 git pull 或者 git submodule update --remote --merge  配置 支持 html 标签
-[markup.goldmark.renderer] unsafe = true # enable raw HTML in Markdown 元数据 通常元数据包括如下：
----title:&amp;#34;个人笔记 - Git&amp;#34;description:&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;date:&amp;#34;2020-03-01&amp;#34;categories:- &amp;#34;Git&amp;#34;tags:- &amp;#34;Sourcetree&amp;#34;- &amp;#34;Note&amp;#34;---其他的有：</description>
+[markup.goldmark.renderer] unsafe = true # enable raw HTML in Markdown 图片居中
+&amp;lt;p&amp;gt;&amp;lt;center&amp;gt;&amp;lt;img src=&amp;#34;https://dsm01pap001.com&amp;#34; height=&amp;#34;300&amp;#34; /&amp;gt;&amp;lt;/center&amp;gt;&amp;lt;/p&amp;gt; 元数据 通常元数据包括如下：</description>
     </item>
     
   </channel>

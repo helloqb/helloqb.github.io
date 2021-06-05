@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Java on 哲学家</title>
-    <link>https://helloqb.xyz/categories/java/</link>
+    <link>https://helloqb.xyz/categories/java.html</link>
     <description>Recent content in Java on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,31 +10,32 @@
     <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>后端接口校验参数异常统一处理</title>
-      <link>https://helloqb.xyz/post/2021/0201_validate/</link>
+      <link>https://helloqb.xyz/post/2021/0201_validate.html</link>
       <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0201_validate/</guid>
-      <description>前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
+      <guid>https://helloqb.xyz/post/2021/0201_validate.html</guid>
+      <description>2021-06-01 补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
+ 前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
 //全局异常处理类 @RestControllerAdvice public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { @ExceptionHandler(value = BaseException.class) public S2VJSONResult baseHandler(BaseException e) { return S2VJSONResult.msg(false, 400, e.getMessage()); } //接口 @PostMapping(&amp;#34;/transfer/company&amp;#34;) S2VJSONResult transferCompany(@Validated @RequestBody AdminTransferCompanyVO vo, BindingResult bindingResult) { if (bindingResult.hasErrors()) { return S2VJSONResult.msg(false, 400, bindingResult.getFieldError().getDefaultMessage()); } //参数实体类 public class AdminTransferCompanyVO { @NotNull(message = &amp;#34;客户 ID 不能为空&amp;#34;) private List&amp;lt;Integer&amp;gt; companyIds; @NotNull(message = &amp;#34;目标客户经理 ID 不能为空&amp;#34;) private Integer targetCustomerId; @NotNull(message = &amp;#34;管理员 ID 不能为空&amp;#34;) private Integer operationCustomerId; //统一返回响应 public class S2VJSONResult&amp;lt;T&amp;gt; { private Integer code;//状态码  private Boolean isSuccess;//状态  private String message;//消息  private T data;//数据对象  public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; all(Boolean success, Integer code,String message,T data) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message, data); } public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; msg(Boolean success, Integer code,String message) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message); } 整理了一下其思路，大概如下：</description>
     </item>
     
     <item>
       <title>Fastjson 使用</title>
-      <link>https://helloqb.xyz/post/2020/1028_fastjson/</link>
+      <link>https://helloqb.xyz/post/2020/1028_fastjson.html</link>
       <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/1028_fastjson/</guid>
-      <description>JSONObject 互转 String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
+      <guid>https://helloqb.xyz/post/2020/1028_fastjson.html</guid>
+      <description>JSONObject 互转  String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
 String str = j.toString(SerializerFeature.WriteMapNullValue); String to JavaBean T t = JSON.parseObject(str, T.class); JavaBean to String String str = JSON.toJSONString(t); 同样，若想要保留 null 值，需要添加 SerializerFeature.WriteMapNullValue 参数。
-String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转 String to JSONArray JSONArray j = JSON.</description>
+String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转  String to JSONArray JSONArray j = JSON.</description>
     </item>
     
     <item>
       <title>YAML 配置与调用</title>
-      <link>https://helloqb.xyz/post/2020/0907_yaml/</link>
+      <link>https://helloqb.xyz/post/2020/0907_yaml.html</link>
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0907_yaml/</guid>
+      <guid>https://helloqb.xyz/post/2020/0907_yaml.html</guid>
       <description>调用 Value 注解调用 例如，YAML 文件中有个自定义配置。
 myconfig:model-server-url:127.0.0.1使用 @Value 注解调用。
 import org.springframework.beans.factory.annotation.Value; @Value(&amp;#34;${myconfig.model-server-url}&amp;#34;) private String modelServerUrl; 变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。
@@ -46,10 +47,10 @@ YAML 文件中参数匹配很宽松，下划线 _ 和 - 和驼峰都能够匹配
     
     <item>
       <title>MapStruct 实现 Java Bean 映射</title>
-      <link>https://helloqb.xyz/post/2020/0821_mapstruct/</link>
+      <link>https://helloqb.xyz/post/2020/0821_mapstruct.html</link>
       <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0821_mapstruct/</guid>
+      <guid>https://helloqb.xyz/post/2020/0821_mapstruct.html</guid>
       <description>介绍 项目中遇到数据库返回的字段不想全部返回给前端，一个一个 setter 挺麻烦，不够优雅。市面上有挺多映射框架如 Dozer，Orika，MapStruct，ModelMapper，JMapper 等，其中 MapStruct 只是代码生成器，使用纯 Java 的方法调用源对象和目标对象之间进行映射，并非 Java 反射机制，所以其性能最好。
 实现 Maven 依赖
 ... &amp;lt;properties&amp;gt; &amp;lt;org.mapstruct.version&amp;gt;1.3.1.Final&amp;lt;/org.mapstruct.version&amp;gt; &amp;lt;/properties&amp;gt; ... &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mapstruct&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mapstruct&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${org.mapstruct.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; ... &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-compiler-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.8.1&amp;lt;/version&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;source&amp;gt;1.8&amp;lt;/source&amp;gt; &amp;lt;target&amp;gt;1.8&amp;lt;/target&amp;gt; &amp;lt;annotationProcessorPaths&amp;gt; &amp;lt;path&amp;gt; &amp;lt;groupId&amp;gt;org.mapstruct&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mapstruct-processor&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${org.mapstruct.version}&amp;lt;/version&amp;gt; &amp;lt;/path&amp;gt; &amp;lt;/annotationProcessorPaths&amp;gt; &amp;lt;/configuration&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; ... 如果项目中有用到 lombok 的话，MapStruct 也支持，添加如下即可。
@@ -60,10 +61,10 @@ import org.mapstruct.Mapper; import org.mapstruct.Mapping; @Mapper public interf
     
     <item>
       <title>进一步了解 RabbitMQ 跨语言通讯</title>
-      <link>https://helloqb.xyz/post/2020/0728_rabbitmq/</link>
+      <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
       <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq/</guid>
+      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
       <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
 配置 pom.xml 文件中添加依赖。
 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
@@ -73,10 +74,10 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframew
     
     <item>
       <title>使用 BigDecimal 和 DecimalFormat 计算</title>
-      <link>https://helloqb.xyz/post/2020/0707_decimal/</link>
+      <link>https://helloqb.xyz/post/2020/0707_decimal.html</link>
       <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0707_decimal/</guid>
+      <guid>https://helloqb.xyz/post/2020/0707_decimal.html</guid>
       <description>介绍 本文主要记录下 BigDecimal 和 DecimalFormat 类的用法，方便下次使用。
  BigDecimal 可以更精确的进行小数点运算。 DecimalFormat 可以更好的进行与科学计算法之间的换算和保留有效数字。  BigDecimal 加减乘除等 import java.math.BigDecimal; new BigDecimal(&amp;#34;3.1&amp;#34;).add(new BigDecimal(&amp;#34;1.2&amp;#34;));//加 new BigDecimal(&amp;#34;3.1&amp;#34;).subtract(new BigDecimal(&amp;#34;1.2&amp;#34;));//减 new BigDecimal(&amp;#34;3.1&amp;#34;).multiply(new BigDecimal(&amp;#34;1.2&amp;#34;));//乘 new BigDecimal(&amp;#34;3.1&amp;#34;).divide(new BigDecimal(&amp;#34;1.2&amp;#34;), 2);//除 new BigDecimal(&amp;#34;3.1&amp;#34;).max(new BigDecimal(&amp;#34;1.2&amp;#34;));//最大值 new BigDecimal(&amp;#34;3.1&amp;#34;).compareTo(new BigDecimal(&amp;#34;1.2&amp;#34;));//比较 四舍五入 BigDecimal.ROUND_UP：不降低计算值的大小(和正负无关)
 //不降低计算值的大小（不考虑负号） new BigDecimal(&amp;#34;1.345&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //1.35 new BigDecimal(&amp;#34;1.346&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //1.35 new BigDecimal(&amp;#34;-1.345&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //-1.35 new BigDecimal(&amp;#34;-1.346&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //-1.35 BigDecimal.ROUND_DOWN：不增加计算值的大小(和正负无关)
@@ -85,10 +86,10 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframew
     
     <item>
       <title>Spring 定时任务</title>
-      <link>https://helloqb.xyz/post/2020/0602_cron/</link>
+      <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0602_cron/</guid>
+      <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
       <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
 配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
 import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。
@@ -99,10 +100,10 @@ import org.springframework.boot.SpringApplication; import org.springframework.bo
     
     <item>
       <title>RabbitMQ 实现跨语言通信</title>
-      <link>https://helloqb.xyz/post/2020/0515_rabbitmq/</link>
+      <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq/</guid>
+      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
       <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
 其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
 三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
@@ -115,10 +116,10 @@ pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new Buffer
     
     <item>
       <title>SpringMVC 下载文本实现边转码边下载</title>
-      <link>https://helloqb.xyz/post/2020/0304_java/</link>
+      <link>https://helloqb.xyz/post/2020/0304_java.html</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0304_java/</guid>
+      <guid>https://helloqb.xyz/post/2020/0304_java.html</guid>
       <description></description>
     </item>
     

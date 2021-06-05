@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Photoshop on 哲学家</title>
-    <link>https://helloqb.xyz/categories/photoshop/</link>
+    <link>https://helloqb.xyz/categories/photoshop.html</link>
     <description>Recent content in Photoshop on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,10 +10,10 @@
     <lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/photoshop/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>四宫格办公壁纸制作</title>
-      <link>https://helloqb.xyz/post/2020/0603_ps/</link>
+      <link>https://helloqb.xyz/post/2020/0603_ps.html</link>
       <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0603_ps/</guid>
+      <guid>https://helloqb.xyz/post/2020/0603_ps.html</guid>
       <description>介绍 以 Windows 自带纯色壁纸为基础，效果如下：
 流程 1. 用 Photoshop 打开壁纸
 个人喜欢纯色壁纸，Windows10 上可通过背景设置为纯色壁纸后截屏得到。

@@ -6,19 +6,148 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 May 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     
     
         <item>
+        <title>SpringMVC 下载文本实现边转码边下载</title>
+        <link>https://helloqb.xyz/post/2020/0304_java.html</link>
+        <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0304_java.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0304_java.html -&lt;h1 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h1&gt;
+&lt;p&gt;SpringMVC 框架的接口中 Response 有 &lt;code&gt;ServletOutputStream&lt;/code&gt; 和 &lt;code&gt;PrintWriter&lt;/code&gt; 两种输出，还有一个 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
+&lt;p&gt;OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 无效。所以先采用 &lt;code&gt;PrintWriter&lt;/code&gt; 搭配 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile1&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setCharacterEncoding&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    BufferedWriter bufferedWriter &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedWriter&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getWriter&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    bufferedWriter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;无用，没有仔细研究，应该 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 只是告诉浏览器是什么编码，没有解码功能。&lt;/p&gt;
+&lt;h1 id=&#34;方案二servletoutputstream--outputstreamwriter&#34;&gt;方案二：ServletOutputStream + OutputStreamWriter&lt;/h1&gt;
+&lt;p&gt;将 &lt;code&gt;response.getOutputStream()&lt;/code&gt; 获取到的流用 &lt;code&gt;OutputStreamWriter&lt;/code&gt; 包装。结果可行。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile2&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStreamWriter writerStream &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; OutputStreamWriter&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GBK&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;方案三servletoutputstream--getbytes&#34;&gt;方案三：ServletOutputStream + getBytes&lt;/h1&gt;
+&lt;p&gt;在按行写入字符串时，使用 &lt;code&gt;getBytes&lt;/code&gt; 方法将字符串转换为想要输出的编码格式。结果可行。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    BufferedReader bufferedReader &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream outputStream &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    String line&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;\r\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBytes&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GB2312&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+        outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;无需转码的写法&#34;&gt;无需转码的写法&lt;/h1&gt;
+&lt;p&gt;若不需要转码的话，就很简短了，用字节流就行了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile4&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    FileInputStream fis &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    OutputStream os &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; buffer &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;4096&lt;span style=&#34;color:#666&#34;&gt;];&lt;/span&gt;
+    &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; b &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;b &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; fis&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;read&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#666&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;buffer&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    fis&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简写的话可以用第三方包。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.util.FileCopyUtils&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile5&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile5&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    File file &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;LOCAL_FILE_PATH&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    InputStream inputStream&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//设置下载
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Content-Disposition&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;attachment;filename=file.csv&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setContentType&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//传输
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    FileCopyUtils&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;copy&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;inputStream&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;补充：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。&lt;/li&gt;
+&lt;/ul&gt;- https://helloqb.xyz/post/2020/0304_java.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
         <title>个人笔记 - Git</title>
-        <link>https://helloqb.xyz/post/2020/0301_git/</link>
+        <link>https://helloqb.xyz/post/2020/0301_git.html</link>
         <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0301_git/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0301_git/ -&lt;h1 id=&#34;ssh-客户端-putty-和-openssh-的互相转换&#34;&gt;SSH 客户端 Putty 和 OpenSSH 的互相转换&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0301_git.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0301_git.html -&lt;h1 id=&#34;ssh-客户端-putty-和-openssh-的互相转换&#34;&gt;SSH 客户端 Putty 和 OpenSSH 的互相转换&lt;/h1&gt;
 &lt;p&gt;原本只需要用 &lt;code&gt;ssh-keygen&lt;/code&gt; 生成密钥到 &lt;code&gt;.ssh&lt;/code&gt; 目录，然后打开 &lt;code&gt;id_rsa.pub&lt;/code&gt; 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。&lt;/p&gt;
 &lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://2mo7ng.dm.files.1drv.com/y4m2zS4N31r_4feXiRfpaAjXBceJRLLXJrr5i_-HDrOUPwc74UiW4eRtEIfezlfU9EfoYRV9vZcmvhyJ13FJpaLrgZcmLjoOqpQO29QKMmd4NcpkrrpObc5DV06idlGQyroNuVgdAWYiE8Jrl5_PAcfnQ4_iiLtD6MisopG1FixVe8RMmSfCDdIK_SjXh3YJLIjlkrZMBOevRV2MIFRgsThCQ?width=660&amp;height=628&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
 **1. 使用 puTTY 生成 Key**
@@ -56,18 +185,18 @@
 &lt;/ol&gt;
 &lt;p&gt;注：
 远程创建的为非空仓库（会有README.txt）则需要 &lt;code&gt;git pull --rebase origin master&lt;/code&gt;，之后再 push。&lt;/p&gt;
-- https://helloqb.xyz/post/2020/0301_git/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0301_git.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>Hugo 上手</title>
-        <link>https://helloqb.xyz/post/2020/0101_hugo/</link>
+        <link>https://helloqb.xyz/post/2020/0101_hugo.html</link>
         <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/post/2020/0101_hugo/</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0101_hugo/ -&lt;h1 id=&#34;下载运行&#34;&gt;下载运行&lt;/h1&gt;
+        <guid>https://helloqb.xyz/post/2020/0101_hugo.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0101_hugo.html -&lt;h1 id=&#34;下载运行&#34;&gt;下载运行&lt;/h1&gt;
 &lt;p&gt;主要操作：文件下载解压，添加环境变量即可。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;文档链接&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -94,6 +223,8 @@
 &lt;p&gt;&lt;strong&gt;支持 html 标签&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[markup.goldmark.renderer]
 unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;图片居中&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;center&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://dsm01pap001.com&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;height&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;300&amp;#34;&lt;/span&gt; /&amp;gt;&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;center&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;p&lt;/span&gt;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;元数据&#34;&gt;元数据&lt;/h1&gt;
 &lt;p&gt;通常元数据包括如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
@@ -111,18 +242,18 @@ unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/spa
 &lt;li&gt;&lt;code&gt;draft: true&lt;/code&gt; 视为草稿&lt;/li&gt;
 &lt;li&gt;有的主题文章列表会展示文章的开头，有标签会很乱，用 &lt;code&gt;&amp;lt; !--more--&amp;gt;&lt;/code&gt; 会强制展示此节点之前的内容&lt;/li&gt;
 &lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0101_hugo/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/post/2020/0101_hugo.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
     
         <item>
         <title>自我介绍</title>
-        <link>https://helloqb.xyz/about/</link>
+        <link>https://helloqb.xyz/about.html</link>
         <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
         
-        <guid>https://helloqb.xyz/about/</guid>
-        <description>哲学家 https://helloqb.xyz/about/ -&lt;h1 id=&#34;个人&#34;&gt;个人&lt;/h1&gt;
+        <guid>https://helloqb.xyz/about.html</guid>
+        <description>哲学家 https://helloqb.xyz/about.html -&lt;h1 id=&#34;个人&#34;&gt;个人&lt;/h1&gt;
 &lt;p&gt;自我定位中。。。&lt;/p&gt;
 &lt;h1 id=&#34;喜好&#34;&gt;喜好&lt;/h1&gt;
 &lt;h2 id=&#34;影视&#34;&gt;影视&lt;/h2&gt;
@@ -132,7 +263,7 @@ unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/spa
 &lt;p&gt;&lt;strong&gt;新垣结衣&lt;/strong&gt;&lt;/p&gt;
 &lt;h1 id=&#34;其他标签&#34;&gt;其他标签&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;锤友（渐渐脱粉中）&lt;/strong&gt;&lt;/p&gt;
-- https://helloqb.xyz/about/ - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+- https://helloqb.xyz/about.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

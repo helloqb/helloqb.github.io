@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Spider on 哲学家</title>
-    <link>https://helloqb.xyz/categories/spider/</link>
+    <link>https://helloqb.xyz/categories/spider.html</link>
     <description>Recent content in Spider on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,10 +10,10 @@
     <lastBuildDate>Wed, 05 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/spider/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Selenium 模拟浏览器另存为</title>
-      <link>https://helloqb.xyz/post/2020/0805_selenium/</link>
+      <link>https://helloqb.xyz/post/2020/0805_selenium.html</link>
       <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0805_selenium/</guid>
+      <guid>https://helloqb.xyz/post/2020/0805_selenium.html</guid>
       <description>缘由 开发一个下载图片的爬虫，原网站时不时变动，导致爬虫经常会挂掉，尤其在最终下载图片的环节。想着模拟浏览器另存为的方式可能会更健壮些，不那么容易挂。另外也一直想学习下 Selenium。
 Selenium 1. 驱动和环境 使用的是 Python 环境，Selenium 的安装直接 pip install selenium 即可。
 浏览器使用的是 Firefox，驱动是 geckdriver。将下载后的文件放入到 Firefox 安装目录下，如 C:\Program Files\Mozilla Firefox。

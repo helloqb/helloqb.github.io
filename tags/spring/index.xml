@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Spring on 哲学家</title>
-    <link>https://helloqb.xyz/tags/spring/</link>
+    <link>https://helloqb.xyz/tags/spring.html</link>
     <description>Recent content in Spring on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,10 +10,10 @@
     <lastBuildDate>Fri, 21 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MapStruct 实现 Java Bean 映射</title>
-      <link>https://helloqb.xyz/post/2020/0821_mapstruct/</link>
+      <link>https://helloqb.xyz/post/2020/0821_mapstruct.html</link>
       <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0821_mapstruct/</guid>
+      <guid>https://helloqb.xyz/post/2020/0821_mapstruct.html</guid>
       <description>介绍 项目中遇到数据库返回的字段不想全部返回给前端，一个一个 setter 挺麻烦，不够优雅。市面上有挺多映射框架如 Dozer，Orika，MapStruct，ModelMapper，JMapper 等，其中 MapStruct 只是代码生成器，使用纯 Java 的方法调用源对象和目标对象之间进行映射，并非 Java 反射机制，所以其性能最好。
 实现 Maven 依赖
 ... &amp;lt;properties&amp;gt; &amp;lt;org.mapstruct.version&amp;gt;1.3.1.Final&amp;lt;/org.mapstruct.version&amp;gt; &amp;lt;/properties&amp;gt; ... &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mapstruct&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mapstruct&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${org.mapstruct.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; ... &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-compiler-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.8.1&amp;lt;/version&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;source&amp;gt;1.8&amp;lt;/source&amp;gt; &amp;lt;target&amp;gt;1.8&amp;lt;/target&amp;gt; &amp;lt;annotationProcessorPaths&amp;gt; &amp;lt;path&amp;gt; &amp;lt;groupId&amp;gt;org.mapstruct&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mapstruct-processor&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${org.mapstruct.version}&amp;lt;/version&amp;gt; &amp;lt;/path&amp;gt; &amp;lt;/annotationProcessorPaths&amp;gt; &amp;lt;/configuration&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; ... 如果项目中有用到 lombok 的话，MapStruct 也支持，添加如下即可。
@@ -24,10 +24,10 @@ import org.mapstruct.Mapper; import org.mapstruct.Mapping; @Mapper public interf
     
     <item>
       <title>Spring 定时任务</title>
-      <link>https://helloqb.xyz/post/2020/0602_cron/</link>
+      <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0602_cron/</guid>
+      <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
       <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
 配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
 import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。

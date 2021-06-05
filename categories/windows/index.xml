@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Windows on 哲学家</title>
-    <link>https://helloqb.xyz/categories/windows/</link>
+    <link>https://helloqb.xyz/categories/windows.html</link>
     <description>Recent content in Windows on 哲学家</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
@@ -10,10 +10,10 @@
     <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/windows/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>frp 实现无公网 IP 使用 Windows 远程桌面</title>
-      <link>https://helloqb.xyz/post/2020/1102_frp/</link>
+      <link>https://helloqb.xyz/post/2020/1102_frp.html</link>
       <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/1102_frp/</guid>
+      <guid>https://helloqb.xyz/post/2020/1102_frp.html</guid>
       <description>前言 远程控制软件有用过 TeamViewer、向日葵、Chrome Remote Desktop 等，TeamViewer 的稳定性流畅性最好，但是后台挂久了，会被检测商业用途，需要付费，那价格实在没法交个朋友。向日葵 挺好的，但是对国产软件向来有些警惕，不敢给予太高的权限。Chrome Remote Desktop 国内没法使用无人值守访问。Windows 自带的远程桌面不能连接非局域网内的用户，公网 IP 对于租客来说也没法弄，后来了解了内网穿透技术，正好解决了问题。
 简单使用  frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。
  frp 实现需要具有公网 IP 节点的中转站，我用的是谷歌云，公司也用了内网穿透技术，用的是腾讯云，比较后发现公司速度更快。

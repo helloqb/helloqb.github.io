@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html><head>
+<title>耳机初烧之旅</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/journal.min.5e8f3f653e9f6ce67bf72ff8ee6fee69decf7b5639a3ae7f8344750ad4e065b1.css" integrity="sha256-Xo8/ZT6fbOZ79y/47m/uad7Pe1Y5o65/g0R1CtTgZbE=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/dark-mode.min.bdfa63b2e89903517dcbb1032b537d54cff3f425c19d008a78dfe49e6cd07ced.css" integrity="sha256-vfpjsuiZA1F9y7EDK1N9VM/z9CXBnQCKeN/knmzQfO0=" media="screen">
+
+
+<script src="https://helloqb.xyz//js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="https://helloqb.xyz//js/toc-collapse.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '64eac7e04ef1c9c58977',
+  clientSecret: '230d5636dc1e4810ca4e7af9090a20ab1c5a1e74',
+  repo: 'helloqb.github.io',
+  owner: 'helloqb',
+  admin: ['helloqb'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://helloqb.xyz/">
+    
+        <div class="nav-title">
+            哲学家
+        </div>
+        
+        <div class="nav-subtitle">
+            怕什么真理无穷，进一寸有进一寸的欢喜
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/post">
+                归档
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%a5%e9%97%a8%e7%a9%b7%e7%83%a7" onclick="onNavClick(`#入门穷烧-nav`)" id="入门穷烧-nav">
+									入门穷烧
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%86%8d%e7%83%a7" onclick="onNavClick(`#再烧-nav`)" id="再烧-nav">
+									再烧
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%81%8a%e8%81%8a%e5%90%ac%e6%84%9f" onclick="onNavClick(`#聊聊听感-nav`)" id="聊聊听感-nav">
+									聊聊听感
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%9c%80%e7%bb%88%e6%90%ad%e9%85%8d" onclick="onNavClick(`#最终搭配-nav`)" id="最终搭配-nav">
+									最终搭配
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6" onclick="onNavClick(`#软件-nav`)" id="软件-nav">
+									软件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%8e%e7%bb%ad2020-08-06" onclick="onNavClick(`#后续2020-08-06-nav`)" id="后续2020-08-06-nav">
+									后续（2020-08-06）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%8e%e7%bb%ad2020-08-17" onclick="onNavClick(`#后续2020-08-17-nav`)" id="后续2020-08-17-nav">
+									后续（2020-08-17）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/post">
+                    归档
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%a5%e9%97%a8%e7%a9%b7%e7%83%a7" onclick="onNavClick(`#入门穷烧-nav`)" id="入门穷烧-nav">
+									入门穷烧
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%86%8d%e7%83%a7" onclick="onNavClick(`#再烧-nav`)" id="再烧-nav">
+									再烧
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%81%8a%e8%81%8a%e5%90%ac%e6%84%9f" onclick="onNavClick(`#聊聊听感-nav`)" id="聊聊听感-nav">
+									聊聊听感
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%9c%80%e7%bb%88%e6%90%ad%e9%85%8d" onclick="onNavClick(`#最终搭配-nav`)" id="最终搭配-nav">
+									最终搭配
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6" onclick="onNavClick(`#软件-nav`)" id="软件-nav">
+									软件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%8e%e7%bb%ad2020-08-06" onclick="onNavClick(`#后续2020-08-06-nav`)" id="后续2020-08-06-nav">
+									后续（2020-08-06）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%8e%e7%bb%ad2020-08-17" onclick="onNavClick(`#后续2020-08-17-nav`)" id="后续2020-08-17-nav">
+									后续（2020-08-17）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://helloqb.xyz/">
+            哲学家
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://helloqb.xyz/">
+        <div class="single-column-header-title">哲学家</div>
+        
+        <div class="single-column-header-subtitle">怕什么真理无穷，进一寸有进一寸的欢喜</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://4vfgpq.dm.files.1drv.com/y4m0RLPNTEJIBgk5urTY-7EfUgKWXEZPrhsp-wKXPexXSwr71_nA6AGCsHUtLkcGaNm_wKnpTXFnf2LDDHiS8nPF8H6POyJvLd04b47XTVNItEUklGPcF9aS30215ec62cuy6Gm8O5AhhHB7Y12-tiIf4NIxb7CIf1-9zrck7k_fGigTVbuaJEE0YFOGX3Smc3ZIkJkp7U0M7nafokTIufjAg?width=1024&amp;height=512&amp;cropmode=none')"
+                    
+                
+            >
+                <div class="post-title">
+                    耳机初烧之旅
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2020-07-13 00:00
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/">[杂谈]</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/%E8%80%B3%E6%9C%BA">耳机</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="入门穷烧">入门穷烧</h1>
+<p>大三，不知何事引起，对耳机产生兴趣，可能是看到论坛们一堆 <em><strong>高音甜，中音准，低音沉</strong></em> 的分析，感觉他们从里面获得了很大的满足，所以也想尝试一下。</p>
+<p>鉴于一直以来耳机不都是十块钱的印象，只能将价位定位在了一两百。瞄准两款 <code>AKG420</code> 和 <code>JVC HA-S500</code>。<code>HA-S500</code> 在网上的形容词是 <em><strong>白菜神器</strong></em>，说外国某论坛关于此耳机盖了很多层楼。<code>AKG420</code> 名声更大，知乎初烧推荐里几乎都有这款。巧了，宿舍串门的时候正好看到同学在用，试了下，佩戴舒适，低音有氛围，颜值低调却在线，很喜欢，现在想来还是想拥有一部。</p>
+<p><center><img src="https://4fexvw.dm.files.1drv.com/y4mLa19I26G29GMz6xYVSKU70grkdx10MkEQ2e2Rx-pWxUJeMH1nVxg87hSv6FEOXzSCh8C_UG8SblqW1w3J5VR1msmWwiXo1e8W2WwCtUu5iXKSp8SDIvvCrOJDraKo342Xgj57fQgRlLzvAAXOcHiZ5ZcZnahjLKBQspfNqWzuvVLiXhphQ6k-65MvZA1GaWGdP50NIzmFZLdEw8mwVqMxA?width=660&height=422&cropmode=none" width="660" height="422" /></center><p>
+<p>可能是得不到的永远在骚动，我最终选择了 <code>HA-S500</code> 。怀着无比激动的心情收到后，很爱惜，很享受，什么高音低音的也瞬间都感觉有了，经常晚上关灯听很久。现在想来，脑放的成分居多，此耳机声音同价位一般，唯一可以吹的是它的质量，拿到手里感觉就是特别结实，一度让我对日本制造印象特别好。现在为止已经换了两个耳套，它仍然硬硬的，躺着抽屉里，等我偶然间想起。</p>
+<p><center><img src="https://4vexvw.dm.files.1drv.com/y4mlVGdYB2Pl1VROA8AYOcm043MZ7V3fGDmJpFF989ZhyXyAT-AR7smIHDulwJaN9OHeRe3Xa7LFYxYyKOqkuxqgmdadoRlyNiGKwZhtXZikFgbXjuVibAdFcr__rGJhbwH__sw1HLkJ_qxrMXOCYwrVIkysNYoTAlnrFRSpXv03PQzBjC3Obh9BA8PWT_4dT2gM1B5F9FTZhScWJclKK-4dQ?width=719&height=1500&cropmode=none" height="500" /></center><p>
+<p>后来又买了 <code>潜99</code> 和 爱华 <code>AIWA HP-M38</code>，<code>潜99</code> 入耳式的没啥印象，<code>HP-M38</code> 还有些印象，因为很轻，佩戴很舒服，而 <code>HA-S500</code> 特别夹耳。</p>
+<p><center><img src="https://2lexvw.dm.files.1drv.com/y4mcGknTQ8z-xUK9_S96Ts1lpErHF3krrlcLu6a5sC5JZnFOTejX0p7HvcCd6TnDmrcDZ94NmLpwB-xJsHD_NuPujWTI1WpFEeEvtlT6B1_8PVFhakkqlzE1qO0MV1-QiEo8X1N7n9JroMzEJV_SmFzCX3UMnmLa_2JkAxkYSui0uUp_Wi7BxZeLhU1navnGOmA_Vlujr3BumpH6S3xosxNyg?width=660&height=490&cropmode=none" height="400" /></center><p>
+<h1 id="再烧">再烧</h1>
+<p>又不知何事引起，想再烧下耳机，也了解到好耳机真的需要上放，而上放对于我这种简约派来说想想都麻烦，需要把歌曲导进导出的，没法直接用手机听。所以我下了个决定，只直推试听，不行就不再烧。
+有了工资后，定位当然也高了，盖得排行里，锁定了接近三千价位的歌德 <code>SR325e</code>。但三千毕竟不少，淘宝上找到个商家可以试听，每天 50，遂下单。等待期间看到了魅族 HiFi 解码耳放这么个小玩意，说能使手机推力变大，也下单了。</p>
+<p><center><img src="https://5lexvw.dm.files.1drv.com/y4m0rNlBvR8r7bVyzEn3ho03Nn67wkCGEzbALRyiMuljHlBpzqjiWDPBbhA5nAZjcO7LawvaqEcxGCXCX02hUfywr-IIBKEbgjYp3Pi8IN3ciIcrrDR4zXeUZNmj0t7NFmSWwgiOqgdlPFlda7pdZFKICC8o3kW7UN58jDC5JAtUjAz09M7Y0tYqBb1tDRxx-YlnxObRtIeNxxALqk-fBWRew?width=1024&height=1024&cropmode=none" height="500" /></center><p>
+<p>拿到后，没感觉多少惊喜，有效果，但不值得花三千，算了，退单，再也不烧。</p>
+<p>可心里总是还有欲望，别人怎么能听得这么爽，我是木耳吗，难道真得上放才行?</p>
+<p>退单后，依旧在论坛贴吧瞎逛，忽然发现了个新词 <code>USB独占</code>。大概意思是：</p>
+<blockquote>
+<p>“Android 系统为了兼容不同 APP 音频同时输出，需要使用 Mixer(混音模块)将这些声音混在一起后输出，Android 混音输出的采样率固定为 48k，如果某个 APP 输出的声音格式和混音输出结果不一样，就需要 SRC（采样率转换），这对音质是一个大大的损伤。而在独占模式下，APP 会把数字信号直接送给 USB 系统，通过 USB 接口送给数字耳机。”</p>
+</blockquote>
+<p>这个理论又勾起了我的欲望。但是 <code>SR325e</code> 已经被退了，想来好久都没买耳机了，再买一个耳机用吧，等着 <code>HA-S500</code> 用坏怕是不可能了。</p>
+<p>逛了一番后，买了 <code>HIFIMAN SUNDARA</code>。我靠，真的是独占的原因！！！</p>
+<p><center><img src="https://21exvw.dm.files.1drv.com/y4ml8A0L8Daikc_GPGZI0mNmQNPVcPKQ9TYfqKIr4ncoqYgApSZ8h3moU2siNU3BpVIr_mWB7WeX8i8Azr0--p7ncpECxGv9_0RW5Y4IMjBsyBmn9FJ9nI-IlGNzOCeHmGp-DcI8DgUeWPYjhOJpeSJPCaPZbAqQ6NEb9T1vWuMwmuYTtKMsWu4g0mIdOCGXU2GsFumh_Y7LUi-aP62tp14bA?width=800&height=800&cropmode=none" height="500" /></center><p>
+<p>欲望被彻底勾起，先是觉得 <code>SUNDARA</code> 低频差点劲，二手了 <code>DT990</code> 和 <code>DT1350</code>，<code>DT1350</code> 山洞音没感觉，<code>DT990</code> 解析好，人声远，低频足，但齿音更重。不行，还是不够完美。接着逛，reddit 上 <code>HD58X</code> 呼声很高，国内竟然没有专卖店，学了下海淘，竟然比想象中简单的多。一个月后才拿到手，没有期待的好，但也有所提升。</p>
+<p>闲鱼这玩意不能逛，尤其是耳机这种不嫌多的产品，这不一开始的 <code>SR325e</code> 降到了 900！这还不抢！卖家也热情，实话实说，头梁处断了（后面淘宝 50 块换了个新的），也想退烧了，所以卖的低点，又说 <code>SR325e</code> 不上放没法听。</p>
+<p>一句话，又海淘了个 <code>Atom 耳放</code>。</p>
+<p><img src="https://3fexvw.dm.files.1drv.com/y4mdas9dW8lyZsA8KwnovQagDWvGofsnJXT1QAamKg5euKFeyMBLaCXqJ9SnnWJ6GY2V83vaDwkVlaoFXfS16nFZFXTKAl9pVQPCibS9O6XeF-Z5p1RxbbF89Ro289Xvc_5YJO12aF8QVmFCIY9DLx-hhXOSBbkhirLLxH_u0WiJ50w31AtpHz3bRlDKnRmKeKZWT6BTCx13SFPOeGbp1q7cg?width=2124&height=1131&cropmode=none" /></p>
+<p>耳放确实得要有。<code>SUNDARA</code> 在 reddit 论坛里很火的，但我初听时除了声场大些其他没啥感觉，低音不够，接上耳放后低音瞬间好多了。<code>SR325e</code> 接上后解析也更好，声音更凝聚。但还是一直的问题，没期待的那么惊喜，没论坛里烧友那么有感触&hellip;&hellip;</p>
+<p>忽然想到了一直不坏的 <code>HA-S500</code>，拿起来听了下，我靠！也太难听了吧，声音像糊了层纸一样。顿悟：</p>
+<blockquote>
+<p>每一次的耳机的提升，亦或是器材的变化虽让音质提升微小，但最后汇集起来，确实是一种让人回不去的听觉享受。</p>
+</blockquote>
+<p>最后的最后，我还是退烧了，耳机带来的提升远远不如歌曲本身，何况我也不是很喜欢听歌（这也是我一直想打自己的原因，MD 不听歌你烧个毛啊）&hellip;&hellip;当然了，由奢入俭难，想要回到几十块是不可能了，后面可能哪个耳机火了，闲鱼会试听玩玩。</p>
+<h1 id="聊聊听感">聊聊听感</h1>
+<p><strong><code>AKG420</code> &amp; <code>JVC HA-S500</code></strong></p>
+<p>再选一次的话，我会选择 <code>AKG420</code>，它佩戴更舒服些，颜值也比 <code>HA-S500</code> 高，<code>HA-S500</code> 摸着结实，耐操。</p>
+<p><strong><code>HIFIMAN SUNDARA</code></strong></p>
+<p>HIFIMAN 家的东西真是跳水王，但在国外却深受欢迎，reddit 上经常有它的身影，获奖也很多。佩戴舒适，颜值喜欢，初听感受声场大，但低音欠缺些，总感觉没推好，果然上放后好很多。可能这也是跳水的原因，上放才能出好声，它却打着直推的标签。</p>
+<p><strong><code>Beyerdynamic DT990</code></strong></p>
+<p>初听惊艳，声场大，人声远，解析好，但人声太刺了，听了会就受不了。上放后好多了，但还是有点刺，听说猛煲有改善。还有一点挺好，不夹眼镜。</p>
+<p><center><img src="https://51exvw.dm.files.1drv.com/y4mUgrQykrAA1UBC4MmMmtZRxoghduuvsu4iWpSwLETHaoyWLeX4V20s3DKGJTHRTdsB0rZa3FZl5mulAAkooAo2VLzg9Bk0_q2zZLv8CetI79fOS20w6a6ZX2dReBpuS25I-pvLxKM01chitf1Ebwnmb1nP9YUtcWWkVkKek05lDj_EeUXvCr6pLZwuALG0RMf1wpWtAnaRfIKD30_eCwoZw?width=1024&height=822&cropmode=none" height="400" /></center><p>
+<p><strong><code>Beyerdynamic DT1350</code></strong></p>
+<p>山洞音，官方价 1700，闲鱼 700 入的，再卖 200&hellip;&hellip;MD 不卖了。隔音好，易推，佩戴舒适，没必要贱卖。</p>
+<p><center><img src="https://2lfgpq.dm.files.1drv.com/y4mLgpSJA1t_w0PnMI-Y7fJHhwklQq2z820cBkyouHfOKnaWBY4x6o8biHg8Jl4b2ZQp1CyjF2YFqCol-U4Y4s9Auhm2KXbU_NYOhNpHOMS1LePMYbz9fyjqAX-8nU-hWXrdP6GjWlXm-SBEj7C-EG3psqs1Wkq7jSNEVJ3i4X4Bft8_wPvDnOvrjiFqwrUwMhhxiua8GPCPkYxeTNtaEjqrg?width=1565&height=1715&cropmode=none" height="400" /></center><p>
+<p><strong><code>MASSDROP X SENNHEISER HD58X</code></strong></p>
+<p>MASSDROP X SENNHEISER HD 58X JUBILEE 联名款。Youtube 上有个 UP 主评测说就是 <code>HD660S</code> 加了层纸，而 <code>HD660S</code> 是三千价位的，它一千价位，可以说性价比极高了。入手后，却没什么惊喜，可能我的耳放推力不足。</p>
+<p><center><img src="https://21fgpq.dm.files.1drv.com/y4mZZwmP3xkGzDJ9tW3wAYueBrg2WhQz01dwVQWtg3oyy8Uh7VY1IkSzzTDW3FrqTHDVyzzS7HjzTnwVyEJO5R0gOysOj-eEDUTJlKssrrcODkmflN9Uj4MuOCr0dRhpdQ7abh15M5upFilY9K3teCGtvNINPUg3FrahT5Vxz_GlStpFD9wixZLt07uAoFjOHg_zzUntjgKuWK4I_3R3OZrwg?width=1024&height=683&cropmode=none" height="400" /></center><p>
+<p><strong><code>Grado SR225e</code></strong></p>
+<p>卖家说人声好，初听时起鸡皮疙瘩了。女声渲染的是不错，但我觉得一般，可能我不好这口吧。</p>
+<p><center><img src="https://3vfgpq.dm.files.1drv.com/y4mCG8O2KWURj3Bjjvk_0KHySiuuOourBM1FO0kMWbTDgEiDOCHDdVheQ5PxQuC_TXj7pAlC7vHMPYMvTzW3olzQKZ31wGp0qX1KGNVCzuRjrra2O4xn6zSx_GMyisU0GOAKOlu6SoZ7g1hOQFaPG9BOT1q0Hu9GjStTjXXsOoTIPYn3sIuDFBocD1vvuAWOCMmYYgbrpSLO3oCbUGLZBXxIg?width=638&height=660&cropmode=none" height="400" /></center><p>
+<p><strong><code>Grado SR325e</code></strong></p>
+<p>最钟意的一款，声音热情洋溢，摇滚的那股劲，就它声出的好听，其它的都稍微欠缺些。直推好，上放更好。</p>
+<h1 id="最终搭配">最终搭配</h1>
+<p>最终搭配：APP（USB Audio Player PRO）+ 解码（MEIZU HIFI DAC PRO）+ 耳放（JDS LABS ATOM AMP）</p>
+<p><strong><code>USB Audio Player PRO</code></strong></p>
+<p>用于实现 USB 独占，谷歌商店 9 美元，小贵，可用海贝音乐代替。</p>
+<p><strong><code>MEIZU HIFI DAC PRO</code></strong></p>
+<p>很强大！它让手机也能玩得转 HiFi，配合 Atom 耳放可以将性能发挥到极致。我是看了削腚恶的文章 <a href="https://zhuanlan.zhihu.com/p/94991395">魅族HiFi解码耳放与魅族HiFi解码耳放Pro评测</a> 种草的。</p>
+<blockquote>
+<p>“魅族线与魅族线Pro都是音频性能非常优异的解码耳放转接线；</p>
+<p>魅族厂商完全没有虚标参数；
+魅族线的实际推力为80mW@32Ω，13mW@300Ω；
+魅族线Pro的实际推力为100mW@32Ω，13mW@300Ω；
+魅族线与魅族线Pro的实际失真都&lt;0.0002% (1kHz，300Ω负载)
+魅族线与魅族线Pro的实际信噪比和动态范围都&gt;123dBA (300Ω负载)</p>
+<p>考虑到二者的价格，可以算是性价比搅乱市场的产品，建议根据实际情况，酌情购买。</p>
+<p>魅族今年先后发布的HiFi解码耳放、HiFi解码耳放Pro告诉我们，再没落的手机厂的供应链控制，研发实力，品控质检水平，也不是小众的HiFi厂家可以望其项背的。”</p>
+</blockquote>
+<p><center><img src="https://5lfgpq.dm.files.1drv.com/y4mcJn1MvzY4BfOXq405V6xEbMKqezwek-MAxODlkhaUDtg8Madvff1UgV4yYOmxMZo3APDKF7AmvDr2eLKXD1KAKmS_Z3UOVWtXPcxJACDZMM3auYU96ONgNa1oWGe10uWlBYYdHwNvT58M11ecbnoL6g5gW8AH4bN5Kg9ShOhntjBXKzHV0AEZCQdSKxSmvn2HBJwXqPFHABLDH6fJjbRiQ?width=2814&height=1357&cropmode=none" /></center><p>
+<h1 id="软件">软件</h1>
+<p><strong><code>无损歌曲</code></strong></p>
+<p>QQ 音乐和网易云音乐上下载的无损歌曲都进行了加密，第三方无法播放。好在不难，Github 上可以搜到大神写的转换工具。</p>
+<p><strong><code>mp3tag</code></strong></p>
+<p>强迫症的可通过此软件修改歌曲元数据，添加封面，更改专辑名啥的。<a href="https://www.mp3tag.de/index.html">官网</a></p>
+<p><strong><code>footbar</code></strong></p>
+<p>flac 格式个人觉得最好，cue 有时候识别不了，wav 又没法写入标签。通过 footbar 都可以转成 flac 格式。<a href="https://www.foobar2000.org/">官网</a></p>
+<h1 id="后续2020-08-06">后续（2020-08-06）</h1>
+<p>没到一个月就打脸了，入了拓品家的 <code>Topping E30</code>&hellip;&hellip;</p>
+<p><img src="https://rt3upw.dm.files.1drv.com/y4muGjkUE_nl0MlUXnEF7iEVdmzQ2tz3G6HNjqD_XuuvC9CawUWjn2KqiLXRz-VNKl7RLjUspiBoq1Jf9AKlaSvC41aQ6Pnducf6nXORsr3c-iU97kcQslJ-qjGviYQjAExNgg60WRKc-gUuuWeGMuqiesZvLg0O-bZeSwN7JfgzRuHm87rKML2GbEiu1oTZ297wLiv-BCXv458aNij5TqeWw?width=1024&height=770&cropmode=none"/></p>
+<p>起初以为那种台机必须把歌曲先导入进去才能听，觉得很麻烦。后来了解到可以用手机或者电脑作为输入源的。还有我自己没有外出听歌的习惯，算了，抱着砖听就抱着砖听吧。</p>
+<p>把魅族线换成 E30 后惊喜了一晚上，听感又上升了两个台阶，有些歌曲听到了之前没注意的细节，至此，我觉得应该发挥了我这款歌德耳机所有的潜力了。</p>
+<p>后续再烧的动力，想到两个方面，一是手机连着解码器的线挺碍事的，边听边玩手机时拖着线不太方便，接口处还容易松动，后续想要尝试下蓝牙解码器。二是现在这套装备我觉得能推得动大部分耳机了，想要尝试下难推的耳机，之前一直以易推作为选耳机的标准的。</p>
+<p><strong>最后想说的是，还挺烧钱的，克制点，老弟！</strong></p>
+<h1 id="后续2020-08-17">后续（2020-08-17）</h1>
+<p>没到半个月又打脸了，入了拓品家的 <code>BC3</code>&hellip;&hellip;</p>
+<p><center><img src="https://p93upw.dm.files.1drv.com/y4mD4m01PCQrODGUigK2FGjEaN_u5aau9jCvHzqECHLfphSS_VFlACqjzTih2OvP0ZwXuCz2P2EeCQswGxZYNNRx7PAvwcOQiAW2fp8ShxNQkqTD5lwHJC2RgJENsEuZYkmngcopxOXVA5B5d2p0c2V21zWPuuXBbiNUyhNx6O4pt9wv3MvYhpUl0QtcJ1Gxw0P45lGgU8SCiA93iTCE_GKxA?width=753&height=1024&cropmode=none" height="600" /></center></p>
+<p>因为手机连接 DAC 时得拖着挺长的一根线不够方便，想尝试下蓝牙，经了解，LDAC 传输虽然是有损传输，但是已经够了。连接后，无奈发现，虽然我的手机支持外接 DAC 自动切换采样率，但是 LDAC 模式下却 SRC 了。</p>
+<p>SRC 其实对音质的损耗很大，之前没在意，现在听来确实有挺大差距。网上搜了下，索尼的 <code>Music Center</code> 可以解决 SRC 问题，但是我的手机只成功过两次，经常是切换了采样率，但是播放却变得异常缓慢，暂先搁置吧，等着 APP 兼容或者手机兼容。</p>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2020-07-13</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="https://helloqb.xyz/post/2020/0728_rabbitmq.html">
+			Next<br>进一步了解 RabbitMQ 跨语言通讯
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://helloqb.xyz/post/2020/0707_decimal.html">
+			Previous<br>使用 BigDecimal 和 DecimalFormat 计算
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            }
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+</script>
+
+<script src="https://helloqb.xyz//js/journal.js"></script>
+    </body>
+</html>
