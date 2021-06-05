@@ -219,6 +219,13 @@
 &lt;li&gt;拉取主题 &lt;code&gt;git submodule add url themes/diary&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;更新主题：进入子模块 &lt;code&gt;git pull&lt;/code&gt; 或者 &lt;code&gt;git submodule update --remote --merge&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h1 id=&#34;新项目准备工作&#34;&gt;新项目准备工作&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;git rm &amp;ndash;cached public -f&lt;/li&gt;
+&lt;li&gt;git submodule add &lt;a href=&#34;mailto:git@github.com&#34;&gt;git@github.com&lt;/a&gt;:helloqb/helloqb.github.io.git public&lt;/li&gt;
+&lt;li&gt;chmod 777 deploy.sh&lt;/li&gt;
+&lt;li&gt;./deploy.sh&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;支持 html 标签&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[markup.goldmark.renderer]

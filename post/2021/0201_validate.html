@@ -313,6 +313,10 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 						
+							
+								</ul>
+							
+						
 						
 						
 							<li>
@@ -330,10 +334,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 					
 						
 						
-						
-							
-								</ul>
-							
 						
 						
 						
@@ -358,24 +358,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 							<li>
 								<a href="#%e6%b3%a8%e8%a7%a3%e7%94%a8%e6%b3%95" onclick="onNavClick(`#注解用法-nav`)" id="注解用法-nav">
 									注解用法
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#2021-06-01-%e8%a1%a5%e5%85%85" onclick="onNavClick(`#2021-06-01-补充-nav`)" id="2021-06-01-补充-nav">
-									2021-06-01 补充
 								</a>
 							</li>
 						
@@ -642,6 +624,10 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 						
+							
+								</ul>
+							
+						
 						
 						
 							<li>
@@ -659,10 +645,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 					
 						
 						
-						
-							
-								</ul>
-							
 						
 						
 						
@@ -687,24 +669,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 							<li>
 								<a href="#%e6%b3%a8%e8%a7%a3%e7%94%a8%e6%b3%95" onclick="onNavClick(`#注解用法-nav`)" id="注解用法-nav">
 									注解用法
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#2021-06-01-%e8%a1%a5%e5%85%85" onclick="onNavClick(`#2021-06-01-补充-nav`)" id="2021-06-01-补充-nav">
-									2021-06-01 补充
 								</a>
 							</li>
 						
@@ -1100,7 +1064,7 @@ S2VJSONResult<span style="color:#666">&lt;</span>String<span style="color:#666">
     logger<span style="color:#666">.</span><span style="color:#7d9029">error</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;catch MaxUploadSizeExceededException {}&#34;</span><span style="color:#666">,</span> e<span style="color:#666">.</span><span style="color:#7d9029">getMessage</span><span style="color:#666">());</span>
     <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> <span style="color:#ba2121">&#34;文件大小超出限制（&#34;</span> <span style="color:#666">+</span> maxFileSize <span style="color:#666">+</span> <span style="color:#ba2121">&#34;）&#34;</span><span style="color:#666">);</span>
 <span style="color:#666">}</span>
-</code></pre></div><h2 id="校验失败立即返回">校验失败立即返回</h2>
+</code></pre></div><h1 id="校验失败立即返回">校验失败立即返回</h1>
 <p>上述三种默认情况都是校验全部字段后再返回报错信息，可以通过配置实现当一个参数校验有误时立即返回，提高效率。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.hibernate.validator.HibernateValidator</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.context.annotation.Bean</span><span style="color:#666">;</span>
@@ -1174,48 +1138,7 @@ S2VJSONResult<span style="color:#666">&lt;</span>String<span style="color:#666">
 <li><code>@Future</code> 和 <code>@FutureOrPresent</code> 验证日期值是将来的日期还是将来的日期（包括现在）。</li>
 <li><code>@Pattern</code> 字段或属性的值必须与 regexp 元素中定义的正则表达式匹配。</li>
 </ul>
-<h1 id="2021-06-01-补充">2021-06-01 补充</h1>
-<p>没有继承 extends ResponseEntityExceptionHandler 导致的一些问题；</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">profiles</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#408080;font-style:italic"># TODO:</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#408080;font-style:italic">#    active: jztx   # jzt</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">active</span>:<span style="color:#bbb"> </span>ykmysql <span style="color:#bbb"> </span><span style="color:#408080;font-style:italic"># yk</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">servlet</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">multipart</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">max-file-size</span>:<span style="color:#bbb"> </span>10MB<span style="color:#bbb">
-</span></code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.web.multipart.MaxUploadSizeExceededException</span><span style="color:#666">;</span>
-<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.beans.factory.annotation.Value</span><span style="color:#666">;</span>
-
-<span style="color:#a2f">@Value</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;${spring.servlet.multipart.max-file-size}&#34;</span><span style="color:#666">)</span>
-<span style="color:#008000;font-weight:bold">private</span> String maxFileSize<span style="color:#666">;</span>
-
-<span style="color:#408080;font-style:italic">/**
-</span><span style="color:#408080;font-style:italic">    * 处理文件上传大小限制
-</span><span style="color:#408080;font-style:italic">    *
-</span><span style="color:#408080;font-style:italic">    * @param e
-</span><span style="color:#408080;font-style:italic">    * @return com.jztdata.pre_credit_granting.entity.S2VJSONResult&lt;T&gt;
-</span><span style="color:#408080;font-style:italic">    * @Author zrr
-</span><span style="color:#408080;font-style:italic">    * @Date 2021/5/6 11:48
-</span><span style="color:#408080;font-style:italic">    * @throws
-</span><span style="color:#408080;font-style:italic">    */</span>
-<span style="color:#a2f">@ExceptionHandler</span><span style="color:#666">(</span>value <span style="color:#666">=</span> MaxUploadSizeExceededException<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
-<span style="color:#008000;font-weight:bold">public</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> S2VJSONResult<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#00f">handlerMaxUploadSizeExceededException</span><span style="color:#666">(</span>MaxUploadSizeExceededException e<span style="color:#666">)</span> <span style="color:#666">{</span>
-    logger<span style="color:#666">.</span><span style="color:#7d9029">error</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;catch MaxUploadSizeExceededException {}&#34;</span><span style="color:#666">,</span> e<span style="color:#666">.</span><span style="color:#7d9029">getMessage</span><span style="color:#666">());</span>
-    <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> <span style="color:#ba2121">&#34;文件大小超出限制（&#34;</span> <span style="color:#666">+</span> maxFileSize <span style="color:#666">+</span> <span style="color:#ba2121">&#34;）&#34;</span><span style="color:#666">);</span>
-<span style="color:#666">}</span>
-</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.web.bind.MissingServletRequestParameterException</span><span style="color:#666">;</span>
-    <span style="color:#408080;font-style:italic">/**
-</span><span style="color:#408080;font-style:italic">     * 处理 @RequestParam 参数验证失败（整个不传）
-</span><span style="color:#408080;font-style:italic">     * @param e
-</span><span style="color:#408080;font-style:italic">     * @param &lt;T&gt;
-</span><span style="color:#408080;font-style:italic">     * @return
-</span><span style="color:#408080;font-style:italic">     */</span>
-    <span style="color:#a2f">@ExceptionHandler</span><span style="color:#666">(</span>value <span style="color:#666">=</span> MissingServletRequestParameterException<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">)</span>
-    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> S2VJSONResult<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> <span style="color:#00f">handlerMissingServletRequestParameterException</span><span style="color:#666">(</span>MissingServletRequestParameterException e<span style="color:#666">)</span> <span style="color:#666">{</span>
-        <span style="color:#008000;font-weight:bold">return</span> S2VJSONResult<span style="color:#666">.</span><span style="color:#7d9029">msg</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">false</span><span style="color:#666">,</span> 400<span style="color:#666">,</span> <span style="color:#ba2121">&#34;参数验证未通过（&#34;</span> <span style="color:#666">+</span> e<span style="color:#666">.</span><span style="color:#7d9029">getMessage</span><span style="color:#666">()</span> <span style="color:#666">+</span> <span style="color:#ba2121">&#34;）&#34;</span><span style="color:#666">);</span>
-    <span style="color:#666">}</span>
-</code></pre></div><h1 id="后续">后续</h1>
+<h1 id="后续">后续</h1>
 <p>可以创建自定义约束，目前项目大多用到就是非空判断，暂时先不弄</p>
 <h1 id="参考">参考</h1>
 <ul>
