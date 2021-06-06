@@ -186,6 +186,28 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
+								<a href="#%e8%be%b9%e8%bd%ac%e7%a0%81%e8%be%b9%e4%b8%8b%e8%bd%bd" onclick="onNavClick(`#边转码边下载-nav`)" id="边转码边下载-nav">
+									边转码边下载
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
 								<a href="#%e6%96%b9%e6%a1%88%e4%b8%80-printwriter--characterencoding" onclick="onNavClick(`#方案一-printwriter--characterencoding-nav`)" id="方案一-printwriter--characterencoding-nav">
 									方案一： PrintWriter &#43; CharacterEncoding
 								</a>
@@ -237,11 +259,33 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 						
+							
+								</ul>
+							
+						
 						
 						
 							<li>
-								<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e7%a0%81%e7%9a%84%e5%86%99%e6%b3%95" onclick="onNavClick(`#无需转码的写法-nav`)" id="无需转码的写法-nav">
-									无需转码的写法
+								<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e6%8d%a2%e7%9a%84%e5%86%99%e6%b3%95" onclick="onNavClick(`#无需转换的写法-nav`)" id="无需转换的写法-nav">
+									无需转换的写法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%9a%e6%96%87%e4%bb%b6%e6%89%93%e5%8c%85%e4%b8%8b%e8%bd%bd" onclick="onNavClick(`#多文件打包下载-nav`)" id="多文件打包下载-nav">
+									多文件打包下载
 								</a>
 							</li>
 						
@@ -345,6 +389,28 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
+								<a href="#%e8%be%b9%e8%bd%ac%e7%a0%81%e8%be%b9%e4%b8%8b%e8%bd%bd" onclick="onNavClick(`#边转码边下载-nav`)" id="边转码边下载-nav">
+									边转码边下载
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
 								<a href="#%e6%96%b9%e6%a1%88%e4%b8%80-printwriter--characterencoding" onclick="onNavClick(`#方案一-printwriter--characterencoding-nav`)" id="方案一-printwriter--characterencoding-nav">
 									方案一： PrintWriter &#43; CharacterEncoding
 								</a>
@@ -396,11 +462,33 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 						
+							
+								</ul>
+							
+						
 						
 						
 							<li>
-								<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e7%a0%81%e7%9a%84%e5%86%99%e6%b3%95" onclick="onNavClick(`#无需转码的写法-nav`)" id="无需转码的写法-nav">
-									无需转码的写法
+								<a href="#%e6%97%a0%e9%9c%80%e8%bd%ac%e6%8d%a2%e7%9a%84%e5%86%99%e6%b3%95" onclick="onNavClick(`#无需转换的写法-nav`)" id="无需转换的写法-nav">
+									无需转换的写法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%9a%e6%96%87%e4%bb%b6%e6%89%93%e5%8c%85%e4%b8%8b%e8%bd%bd" onclick="onNavClick(`#多文件打包下载-nav`)" id="多文件打包下载-nav">
+									多文件打包下载
 								</a>
 							</li>
 						
@@ -499,7 +587,9 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="方案一-printwriter--characterencoding">方案一： PrintWriter + CharacterEncoding</h1>
+                    <h1 id="边转码边下载">边转码边下载</h1>
+<p>下载通常都会遇到这种情况，代码里通常保存为 utf-8 格式，但是用户想要 gbk 格式，实现思路如下：</p>
+<h2 id="方案一-printwriter--characterencoding">方案一： PrintWriter + CharacterEncoding</h2>
 <p>SpringMVC 框架的接口中 Response 有 <code>ServletOutputStream</code> 和 <code>PrintWriter</code> 两种输出，还有一个 <code>setCharacterEncoding</code> 方法。</p>
 <p>OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 <code>setCharacterEncoding</code> 无效。所以先采用 <code>PrintWriter</code> 搭配 <code>setCharacterEncoding</code> 方法。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile1&#34;</span><span style="color:#666">)</span>
@@ -526,7 +616,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
 <span style="color:#666">}</span>
 </code></pre></div><p>无用，没有仔细研究，应该 <code>setCharacterEncoding</code> 只是告诉浏览器是什么编码，没有解码功能。</p>
-<h1 id="方案二servletoutputstream--outputstreamwriter">方案二：ServletOutputStream + OutputStreamWriter</h1>
+<h2 id="方案二servletoutputstream--outputstreamwriter">方案二：ServletOutputStream + OutputStreamWriter</h2>
 <p>将 <code>response.getOutputStream()</code> 获取到的流用 <code>OutputStreamWriter</code> 包装。结果可行。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile2&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile2</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
@@ -550,7 +640,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
     writerStream<span style="color:#666">.</span><span style="color:#7d9029">close</span><span style="color:#666">();</span>
 
 <span style="color:#666">}</span>
-</code></pre></div><h1 id="方案三servletoutputstream--getbytes">方案三：ServletOutputStream + getBytes</h1>
+</code></pre></div><h2 id="方案三servletoutputstream--getbytes">方案三：ServletOutputStream + getBytes</h2>
 <p>在按行写入字符串时，使用 <code>getBytes</code> 方法将字符串转换为想要输出的编码格式。结果可行。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile3&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile3</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
@@ -573,7 +663,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
     bufferedReader<span style="color:#666">.</span><span style="color:#7d9029">close</span><span style="color:#666">();</span>
     outputStream<span style="color:#666">.</span><span style="color:#7d9029">close</span><span style="color:#666">();</span>
 <span style="color:#666">}</span>
-</code></pre></div><h1 id="无需转码的写法">无需转码的写法</h1>
+</code></pre></div><h1 id="无需转换的写法">无需转换的写法</h1>
 <p>若不需要转码的话，就很简短了，用字节流就行了。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile4&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile4</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
@@ -614,6 +704,47 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
 
 <span style="color:#666">}</span>
+</code></pre></div><h1 id="多文件打包下载">多文件打包下载</h1>
+<p>当需要下载多个文件时，可以将其打包成一个文件，然后下载。Java 自带的 <code>ZipOutputStream</code> 可以实现。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">java.util.zip.ZipEntry</span><span style="color:#666">;</span>
+<span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">java.util.zip.ZipOutputStream</span><span style="color:#666">;</span>
+
+<span style="color:#a2f">@Override</span>
+<span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">download</span><span style="color:#666">(</span>OutputStream outputStream<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException <span style="color:#666">{</span>
+
+    <span style="color:#408080;font-style:italic">// Create the ZIP file
+</span><span style="color:#408080;font-style:italic"></span>    ZipOutputStream zipOut <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ZipOutputStream<span style="color:#666">(</span>outputStream<span style="color:#666">);</span>
+
+    <span style="color:#408080;font-style:italic">// image demo
+</span><span style="color:#408080;font-style:italic"></span>    Map<span style="color:#666">&lt;</span>String<span style="color:#666">,</span> String<span style="color:#666">&gt;</span> imageMap <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> HashMap<span style="color:#666">&lt;&gt;;</span>
+
+    <span style="color:#408080;font-style:italic">//add file to zip
+</span><span style="color:#408080;font-style:italic"></span>    ZipEntry zipEntry<span style="color:#666">;</span>
+    <span style="color:#008000;font-weight:bold">for</span> <span style="color:#666">(</span>String imageName <span style="color:#666">:</span> imageMap<span style="color:#666">.</span><span style="color:#7d9029">keySet</span><span style="color:#666">())</span> <span style="color:#666">{</span>
+        <span style="color:#408080;font-style:italic">// http://192.168.0.102:13080/pcg/files/image/64280347-afa8-4057-8941-ccbaeebf3c4b
+</span><span style="color:#408080;font-style:italic"></span>        File fileToZip <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> File<span style="color:#666">(</span>StaticProperty<span style="color:#666">.</span><span style="color:#7d9029">IMAGE_PATH</span><span style="color:#666">,</span> imageMap<span style="color:#666">.</span><span style="color:#7d9029">get</span><span style="color:#666">(</span>imageName<span style="color:#666">));</span>
+
+        <span style="color:#008000;font-weight:bold">try</span> <span style="color:#666">(</span>FileInputStream fis <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> FileInputStream<span style="color:#666">(</span>fileToZip<span style="color:#666">))</span> <span style="color:#666">{</span>
+            zipEntry <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ZipEntry<span style="color:#666">(</span>imageName<span style="color:#666">);</span>
+
+            zipOut<span style="color:#666">.</span><span style="color:#7d9029">putNextEntry</span><span style="color:#666">(</span>zipEntry<span style="color:#666">);</span>
+
+            <span style="color:#b00040">byte</span><span style="color:#666">[]</span> bytes <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> <span style="color:#b00040">byte</span><span style="color:#666">[</span>1024<span style="color:#666">];</span>
+            <span style="color:#b00040">int</span> length<span style="color:#666">;</span>
+            <span style="color:#008000;font-weight:bold">while</span><span style="color:#666">((</span>length <span style="color:#666">=</span> fis<span style="color:#666">.</span><span style="color:#7d9029">read</span><span style="color:#666">(</span>bytes<span style="color:#666">))</span> <span style="color:#666">&gt;=</span> 0<span style="color:#666">)</span> <span style="color:#666">{</span>
+                zipOut<span style="color:#666">.</span><span style="color:#7d9029">write</span><span style="color:#666">(</span>bytes<span style="color:#666">,</span> 0<span style="color:#666">,</span> length<span style="color:#666">);</span>
+            <span style="color:#666">}</span>
+
+        <span style="color:#666">}</span><span style="color:#008000;font-weight:bold">catch</span> <span style="color:#666">(</span>FileNotFoundException fnfe<span style="color:#666">){</span>
+            LOG<span style="color:#666">.</span><span style="color:#7d9029">warn</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;file {} not found&#34;</span><span style="color:#666">,</span> imageMap<span style="color:#666">.</span><span style="color:#7d9029">get</span><span style="color:#666">(</span>imageName<span style="color:#666">));</span>
+        <span style="color:#666">}</span>
+
+        zipOut<span style="color:#666">.</span><span style="color:#7d9029">closeEntry</span><span style="color:#666">();</span>
+    <span style="color:#666">}</span>
+
+    zipOut<span style="color:#666">.</span><span style="color:#7d9029">flush</span><span style="color:#666">();</span>
+    zipOut<span style="color:#666">.</span><span style="color:#7d9029">close</span><span style="color:#666">();</span>
+
 </code></pre></div><p>补充：</p>
 <ul>
 <li>使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。</li>

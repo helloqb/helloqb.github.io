@@ -18,7 +18,9 @@
         <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2020/0304_java.html</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0304_java.html -&lt;h1 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h1&gt;
+        <description>哲学家 https://helloqb.xyz/post/2020/0304_java.html -&lt;h1 id=&#34;边转码边下载&#34;&gt;边转码边下载&lt;/h1&gt;
+&lt;p&gt;下载通常都会遇到这种情况，代码里通常保存为 utf-8 格式，但是用户想要 gbk 格式，实现思路如下：&lt;/p&gt;
+&lt;h2 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h2&gt;
 &lt;p&gt;SpringMVC 框架的接口中 Response 有 &lt;code&gt;ServletOutputStream&lt;/code&gt; 和 &lt;code&gt;PrintWriter&lt;/code&gt; 两种输出，还有一个 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
 &lt;p&gt;OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 无效。所以先采用 &lt;code&gt;PrintWriter&lt;/code&gt; 搭配 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
@@ -45,7 +47,7 @@
 
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;无用，没有仔细研究，应该 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 只是告诉浏览器是什么编码，没有解码功能。&lt;/p&gt;
-&lt;h1 id=&#34;方案二servletoutputstream--outputstreamwriter&#34;&gt;方案二：ServletOutputStream + OutputStreamWriter&lt;/h1&gt;
+&lt;h2 id=&#34;方案二servletoutputstream--outputstreamwriter&#34;&gt;方案二：ServletOutputStream + OutputStreamWriter&lt;/h2&gt;
 &lt;p&gt;将 &lt;code&gt;response.getOutputStream()&lt;/code&gt; 获取到的流用 &lt;code&gt;OutputStreamWriter&lt;/code&gt; 包装。结果可行。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile2&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
@@ -69,7 +71,7 @@
     writerStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
 
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;方案三servletoutputstream--getbytes&#34;&gt;方案三：ServletOutputStream + getBytes&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方案三servletoutputstream--getbytes&#34;&gt;方案三：ServletOutputStream + getBytes&lt;/h2&gt;
 &lt;p&gt;在按行写入字符串时，使用 &lt;code&gt;getBytes&lt;/code&gt; 方法将字符串转换为想要输出的编码格式。结果可行。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
@@ -92,7 +94,7 @@
     bufferedReader&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
     outputStream&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;无需转码的写法&#34;&gt;无需转码的写法&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;无需转换的写法&#34;&gt;无需转换的写法&lt;/h1&gt;
 &lt;p&gt;若不需要转码的话，就很简短了，用字节流就行了。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile4&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
@@ -133,6 +135,47 @@
 
 
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;多文件打包下载&#34;&gt;多文件打包下载&lt;/h1&gt;
+&lt;p&gt;当需要下载多个文件时，可以将其打包成一个文件，然后下载。Java 自带的 &lt;code&gt;ZipOutputStream&lt;/code&gt; 可以实现。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.util.zip.ZipEntry&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.util.zip.ZipOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;download&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;OutputStream outputStream&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Create the ZIP file
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    ZipOutputStream zipOut &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ZipOutputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;outputStream&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// image demo
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    Map&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; imageMap &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; HashMap&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//add file to zip
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    ZipEntry zipEntry&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;String imageName &lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; imageMap&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;keySet&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// http://192.168.0.102:13080/pcg/files/image/64280347-afa8-4057-8941-ccbaeebf3c4b
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;        File fileToZip &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; File&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;StaticProperty&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;IMAGE_PATH&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; imageMap&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;imageName&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;FileInputStream fis &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; FileInputStream&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fileToZip&lt;span style=&#34;color:#666&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+            zipEntry &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ZipEntry&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;imageName&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+            zipOut&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;putNextEntry&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;zipEntry&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+            &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; bytes &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;1024&lt;span style=&#34;color:#666&#34;&gt;];&lt;/span&gt;
+            &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; length&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;length &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; fis&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;read&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;bytes&lt;span style=&#34;color:#666&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+                zipOut&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;write&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;bytes&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; length&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;FileNotFoundException fnfe&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
+            LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;warn&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;file {} not found&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; imageMap&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;imageName&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+        zipOut&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;closeEntry&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+    zipOut&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    zipOut&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;补充：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 Nginx 可以不通过接口前端直接下载，后续可以尝试采用此方法。&lt;/li&gt;
