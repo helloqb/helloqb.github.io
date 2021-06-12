@@ -7,22 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 31 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java</title>
+      <link>https://helloqb.xyz/categories/java.html</link>
+      <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/categories/java.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Testing</title>
       <link>https://helloqb.xyz/categories/testing.html</link>
       <pubDate>Mon, 31 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/categories/testing.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Java</title>
-      <link>https://helloqb.xyz/categories/java.html</link>
-      <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/categories/java.html</guid>
       <description></description>
     </item>
     

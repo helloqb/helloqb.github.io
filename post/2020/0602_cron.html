@@ -699,7 +699,7 @@ start 2020-06-02T16:03:05.728
 <p>默认项目启动立即执行定时任务，若想要延迟，使用 <code>initialDelay</code> 参数。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Scheduled</span><span style="color:#666">(</span>initialDelay <span style="color:#666">=</span> 10000<span style="color:#666">,</span> fixedRate <span style="color:#666">=</span> 3000<span style="color:#666">)</span>
 </code></pre></div><p>结果如下：</p>
-<pre><code>2020-06-02 16:09:00.487 [main] INFO  com.jztdata.label.LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
+<pre><code>2020-06-02 16:09:00.487 [main] INFO  LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
 start 2020-06-02T16:09:10.467
 end 2020-06-02T16:09:15.468
 </code></pre><h2 id="cron-表达式">cron 表达式</h2>

@@ -6,9 +6,234 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 31 May 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>锤子阅读文章搜索</title>
+        <link>https://helloqb.xyz/post/2020/0311_python.html</link>
+        <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0311_python.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0311_python.html -&lt;h1 id=&#34;缘由&#34;&gt;缘由&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。&lt;/li&gt;
+&lt;li&gt;锤子阅读不支持文章搜索，有时候想要找个文章难。&lt;/li&gt;
+&lt;li&gt;划水好无聊。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;脚本调用&#34;&gt;脚本调用&lt;/h1&gt;
+&lt;p&gt;使用 Python3 编写，单个文件，无第三方库。结果有命令行和文本两种输出方式，具体参数如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-h 帮助文档&lt;/li&gt;
+&lt;li&gt;-s 订阅号名称&lt;/li&gt;
+&lt;li&gt;-k 搜索关键词，不填返回最新的文章&lt;/li&gt;
+&lt;li&gt;-n 返回文章数，默认10&lt;/li&gt;
+&lt;li&gt;-m 搜索匹配等级，默认1匹配标题 2匹配标题和摘要&lt;/li&gt;
+&lt;li&gt;-o 输出方式， 默认1命令行输出 2写入本地文件到当前目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
+&lt;p&gt;就 200 行代码，直接贴出来了，不放到 Github 上了。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;附锤子阅读APP下载 &lt;a href=&#34;https://www.smartisan.com/apps/#/reader&#34;&gt;链接&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;sys&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;getopt&lt;/span&gt;
+
+PAGE_SIZE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;
+TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;result.md&amp;#39;&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;api_site_articles&lt;/span&gt;(site_id, offset, page_size):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;订阅号文章列表的接口json返回结果
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param site_id:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param offset:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param page_size:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    params &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;site_id&amp;#39;&lt;/span&gt;: site_id,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;offset&amp;#39;&lt;/span&gt;: offset,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;page_size&amp;#39;&lt;/span&gt;: page_size
+    }
+    url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;http://reader.smartisan.com/index.php?r=article/getList&amp;#39;&lt;/span&gt;
+    response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(url, params)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;json()
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;api_search_site&lt;/span&gt;(name, offset, page_size):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;搜索订阅号的接口json返回结果
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param name:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param offset:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param page_size:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    params &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;: name,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;offset&amp;#39;&lt;/span&gt;: offset,
+        &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;page_size&amp;#39;&lt;/span&gt;: page_size
+    }
+    url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;http://reader.smartisan.com/index.php?r=site/search&amp;#39;&lt;/span&gt;
+    response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(url, params)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;json()
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;search_site&lt;/span&gt;(name):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;订阅号搜索
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    有结果返回第一个，无结果返回空
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param name:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    result &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_search_site(name, &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#666&#34;&gt;20&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;]:
+        site_json &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;]
+        site_id &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; site_json[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;]
+        site_name &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; site_json[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;]
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; site_id, site_name
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; None, None
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;search_titles&lt;/span&gt;(site_id, offset, page_size, search_name, match_level):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;根据搜索关键词返回文章
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param site_id:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param offset:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param page_size:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param search_name:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param match_level:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    title_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+    result &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_site_articles(site_id, offset, page_size)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;]:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; search_name:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find(search_name) &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:
+                title_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i)
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; match_level &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;:
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;brief&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find(search_name) &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:
+                    title_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+            title_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i)
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; title_list
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;get_article_count&lt;/span&gt;(site_id):
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;返回当前订阅号的文章总数
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param site_id:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return:
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    result &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_site_articles(site_id, &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+    count &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; result[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;count&amp;#39;&lt;/span&gt;]
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(count)
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;get_args&lt;/span&gt;():
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    编写此脚本的理由：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        1. 锤子阅读不支持文章搜索功能
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        2. 锤子阅读的文章是经过转码的, 可能会在自己服务器上保留，可用于被封文章查询
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    参数定义：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -h    帮助文档
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -s    订阅号名称
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -k    搜索关键词，不填返回最新的文章
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -n    返回文章数，默认10 
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -m    搜索匹配等级，默认1匹配标题 2匹配标题和摘要
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        -o    输出方式， 默认1命令行输出 2写入本地文件到当前目录
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    返回：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        文章标题和文章链接
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    附：
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        锤子阅读官网：https://www.smartisan.com/apps/#/reader
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+
+    site &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+    keyword &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+    num &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;10&lt;/span&gt;
+    match_level &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;
+    output &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt;:
+        opts, args &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; getopt&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;getopt(sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;argv[&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:], &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;hs:k:n:m:o:&amp;#39;&lt;/span&gt;, [&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;help=&amp;#39;&lt;/span&gt;])
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;except&lt;/span&gt; getopt&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;GetoptError:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;Error ! Use -h or --help to show this help message&amp;#39;&lt;/span&gt;)
+        sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; opt, arg &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; opts:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; opt &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; (&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;--help&amp;#39;&lt;/span&gt;):
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(get_args&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;__doc__)
+            sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-s&amp;#39;&lt;/span&gt;:
+            site &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; arg
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-k&amp;#39;&lt;/span&gt;:
+            keyword &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; arg
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-n&amp;#39;&lt;/span&gt;:
+            num &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(arg)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-m&amp;#39;&lt;/span&gt;:
+            match_level &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(arg)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-o&amp;#39;&lt;/span&gt;:
+            output &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(arg)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; site, keyword, num, match_level, output
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main_by_args&lt;/span&gt;(site, keyword, num, match_level, output):
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 查找订阅号site_id&lt;/span&gt;
+    site_id, site_name &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_site(site)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;not&lt;/span&gt; site_id:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;订阅号不存在&amp;#34;&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;正在搜索 {} 的文章&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(site_name))
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取当前订阅号文章总数，计算遍历最高次数&lt;/span&gt;
+    count &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_article_count(site_id)
+    range_count &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(count &lt;span style=&#34;color:#666&#34;&gt;/&lt;/span&gt; PAGE_SIZE) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 遍历查找&lt;/span&gt;
+    search_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;range&lt;/span&gt;(range_count):
+        titles &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_titles(site_id, i, PAGE_SIZE, keyword, match_level)
+        search_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;extend(titles)
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;len&lt;/span&gt;(search_list) &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; num:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;break&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 输出&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;not&lt;/span&gt; search_list:
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;无搜索结果&amp;#34;&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+        search_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_list[:num]
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; output &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;{0} {1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; output &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;:
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;open&lt;/span&gt;(TEMP_FILE, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;w&amp;#39;&lt;/span&gt;, encoding&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;as&lt;/span&gt; f:
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
+                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;[{}]({})&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
+                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b62;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;)
+                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b62;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;)
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;结果已成功写入 {} 中&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(TEMP_FILE))
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main&lt;/span&gt;():
+    site, keyword, num, match_level, output &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_args()
+    main_by_args(site, keyword, num, match_level, output)
+
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# main_by_args(&amp;#39;大象公会&amp;#39;, &amp;#39;同性恋&amp;#39;, 10, 1, 1)  # debug&lt;/span&gt;
+    main()
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://helloqb.xyz/post/2020/0311_python.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
