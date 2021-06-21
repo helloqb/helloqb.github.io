@@ -6,9 +6,166 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>进一步了解 RabbitMQ 跨语言通讯</title>
+        <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
+        <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0728_rabbitmq.html -&lt;h1 id=&#34;进一步了解&#34;&gt;进一步了解&lt;/h1&gt;
+&lt;p&gt;开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。&lt;/p&gt;
+&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;pom.xml&lt;/code&gt; 文件中添加依赖。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-amqp&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;application.yml&lt;/code&gt; 文件中添加配置开启确认。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;rabbitmq&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;192.168.0.102&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;port&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;5672&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;username&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;password&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;virtual-host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;sl&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;publisher-confirm-type&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;correlated&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;publisher-returns&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;template&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;mandatory&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;重写方法&#34;&gt;重写方法&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;RabbitTemplate.ConfirmCallback&lt;/code&gt; 确认消息是否到达交换机， &lt;code&gt;RabbitTemplate.ReturnCallback&lt;/code&gt; 确认消息是否到达队列中。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Message&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.connection.CorrelationData&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.core.RabbitTemplate&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.stereotype.Component&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.annotation.PostConstruct&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;CustomRabbitSend&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;implements&lt;/span&gt; RabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ConfirmCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; RabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ReturnCallback&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; Logger LOG &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LoggerFactory&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getLogger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CustomRabbitSend&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; RabbitTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@PostConstruct&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;init&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
+        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setConfirmCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setReturnCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;confirm&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CorrelationData correlationData&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;boolean&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//到达Exchange交换机，会调用此方法
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(!&lt;/span&gt;b&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+            LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;error&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;消息发送异常!&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+            LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;发送者收到确认，correlationData={} ,ack={}, cause={}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; correlationData&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getId&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;returnedMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Message message&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s1&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s2&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//没有到达Queue队列中，会调用此方法
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;        LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;returnedMessage ===&amp;gt; replyCode={} ,replyText={} ,exchange={} ,routingKey={}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s1&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s2&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;交换机和队列绑定&#34;&gt;交换机和队列绑定&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Exchange&lt;/code&gt; 交换机需要通过 &lt;code&gt;routingKey&lt;/code&gt; 才能将消息传递到 &lt;code&gt;Queue&lt;/code&gt; 队列中（本文只用到 &lt;code&gt;direct&lt;/code&gt; 类型，其实无需绑定，&lt;code&gt;fanout&lt;/code&gt;、&lt;code&gt;topic&lt;/code&gt; 类型才需要）。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Binding&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.BindingBuilder&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.DirectExchange&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Queue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Bean&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@Configuration&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;DirectRabbitConfig&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//队列
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; Queue &lt;span style=&#34;color:#00f&#34;&gt;customDirectQueue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; Queue&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testQueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//Direct交换机
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; DirectExchange &lt;span style=&#34;color:#00f&#34;&gt;customDirectExchange&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DirectExchange&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testDirectExchange&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//将队列和交换机绑定
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; Binding &lt;span style=&#34;color:#00f&#34;&gt;bindingDirect&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; BindingBuilder&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;bind&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;customDirectQueue&lt;span style=&#34;color:#666&#34;&gt;()).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;to&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;customDirectExchange&lt;span style=&#34;color:#666&#34;&gt;()).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testRoutingKey&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;发送&#34;&gt;发送&lt;/h1&gt;
+&lt;p&gt;传递 &lt;code&gt;CorrelationData&lt;/code&gt; 类，包含消息唯一标识（&lt;code&gt;AmqpTemplate&lt;/code&gt; 类无法传递，之前一直用的这个，死活找不到方法）。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;TestScheduled&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; RabbitTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
+        String content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test rabbit and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+        CorrelationData cId &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; CorrelationData&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;unique key&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convertAndSend&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testDirectExchange&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testRoutingKey&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; content&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; cId&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;接收&#34;&gt;接收&lt;/h1&gt;
+&lt;p&gt;用 &lt;code&gt;Message&lt;/code&gt; 类接收。目前我用的是 String 传输，可以配置成 JSON 传输更好些。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSON&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSONException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSONObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Message&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.annotation.RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.stereotype.Component&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;CustomRabbitReceiver&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; Logger LOG &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LoggerFactory&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getLogger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CustomRabbitReceiver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;queues &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testQueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;listen&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Message message&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        String body &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; String&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBody&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+        LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;receiver from python:&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; body&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;谁的锅&#34;&gt;谁的锅&lt;/h1&gt;
+&lt;p&gt;加了验证后，Java 端没有丢失，另一端消息也确实拿掉了，研究可能是多线程的问题，之前用的是 &lt;code&gt;pika&lt;/code&gt;，官方说多线程不安全，后续可以改为 &lt;code&gt;rabbitpy&lt;/code&gt; 更安全。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关联阅读&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://rabbitpy.readthedocs.io/en/latest/index.html#&#34;&gt;rabbitpy documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://helloqb.xyz/post/2020/0515_rabbitmq/&#34;&gt;RabbitMQ 实现跨语言通信&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/qq_35387940/article/details/100514134&#34;&gt;Springboot 整合RabbitMq ，用心看完这一篇就够了&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.spring.io/spring-amqp/reference/html/&#34;&gt;Spring AMQP&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2020/0728_rabbitmq.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -762,151 +919,6 @@ proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34
 &lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
 &lt;p&gt;只是简单介绍用到的类和方法，流于表面，后续如果频繁使用的话，需要深入了解。&lt;/p&gt;
 - https://helloqb.xyz/post/2020/0515_rabbitmq.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>油猴脚本初探</title>
-        <link>https://helloqb.xyz/post/2020/0507_monkey.html</link>
-        <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0507_monkey.html</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0507_monkey.html -&lt;h1 id=&#34;认识&#34;&gt;认识&lt;/h1&gt;
-&lt;p&gt;常言道，不装扩展的浏览器只能发挥它 40% 的能力。而扩展中不得不提的神器就是 &lt;strong&gt;油猴脚本&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;相对扩展来说，它更轻量，只作用于指定网站，占用内存少。所以在脚本和扩展实现相同功能的情况下，我都是优先选用脚本。&lt;/p&gt;
-&lt;p&gt;个人认为油猴脚本就是一串 Javascript 代码，因而前端工程师很容易上手。作为后端工程师的我。。。应该也比较容易上手吧。开干！&lt;/p&gt;
-&lt;h1 id=&#34;脚本编写&#34;&gt;脚本编写&lt;/h1&gt;
-&lt;h2 id=&#34;开发环境&#34;&gt;开发环境&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Chrome：可以更方便的定位 DOM。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://violentmonkey.github.io/&#34;&gt;暴力猴&lt;/a&gt;：有个为此站点查找脚本的功能，很方便。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;需求&#34;&gt;需求&lt;/h2&gt;
-&lt;p&gt;如果你像我一样，只是想在某个页面添加一个按钮，实现快速跳转的功能。而自己又非前端，后面的内容应该会帮到你。示例 js 很简单，前端大神的话直接无视看下元数据块的内容就行了。&lt;/p&gt;
-&lt;p&gt;以 &lt;a href=&#34;https://torrentz2.eu/&#34;&gt;torrentz2&lt;/a&gt; 网站为例，该网站磁力链接无法跳转，现在实现点击某一按钮后跳转到谷歌或者弹出磁力链接。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://n0p2tw.dm.files.1drv.com/y4mwf-OEOC9M3hPuAM-cf25Kuwuv6zt5ylvqRo2epKZjLtA4T-g09hxwxwmkwUd8TmPDan_ZN3w5D19ZnXgCez_SHSTtCVxISYYkZxC7XOoW1XbQsOZ2j5rtJqWMehFYkvMOHNEEub1s7rISsqsfMEcLAWZyX9fufOKVcdMqfqR48NljJkC7Fm44ugpNmwi9KUFO8SJ2zIECjb-cWARSGuKOw?width=2850&amp;height=1566&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;h2 id=&#34;元数据块metadata-block&#34;&gt;元数据块（Metadata Block）&lt;/h2&gt;
-&lt;p&gt;用暴力猴新建脚本时，会默认创建基础的元数据块。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// ==UserScript==
-// @name        New script - torrentz2.eu
-// @namespace   Violentmonkey Scripts
-// @match       *://torrentz2.eu/*
-// @grant       none
-// @version     1.0
-// @author      -
-// @description 2020/5/9 下午4:13:37
-// ==/UserScript==
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;name&lt;/code&gt;：名称&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;namespace&lt;/code&gt;：命名空间，正式发布时需要&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;match&lt;/code&gt;：脚本适用网站，另外有个 &lt;code&gt;include&lt;/code&gt; 用法差不多，官网说这个匹配规则更安全些&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;grant&lt;/code&gt;：控制特定 api 的使用，不常用，none 即可&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;version&lt;/code&gt;：版本&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;author&lt;/code&gt;：作者&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;description&lt;/code&gt;：描述&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;其余我用到的有：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// ==UserScript==
-// @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
-// @run-at      document-idle
-// ==/UserScript==
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;require&lt;/code&gt;：加载第三方库，比如 jquery&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;run-at&lt;/code&gt;：控制脚本在页面哪个阶段运行，如 document-idle 为将在页面和所有资源加载之后运行&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我只是将个人用到的介绍下，详细请参考 &lt;a href=&#34;https://wiki.greasespot.net/Metadata_Block&#34;&gt;官方文档&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;方案一额外添加按钮&#34;&gt;方案一：额外添加按钮&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;简单粗暴的在页面上添加一个很丑很丑的按钮。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; input&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.createElement(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;input&amp;#34;&lt;/span&gt;);
-input.type&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;button&amp;#34;&lt;/span&gt;;
-input.value&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Custom Button&amp;#34;&lt;/span&gt;;
-input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;font-size:18px;position:absolute;top:120px;right:40px;&amp;#34;&lt;/span&gt;);
-&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.body.appendChild(input);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;然后为按钮添加点击事件。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;input.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; skipFunc;
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; skipFunc()
-{
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; info_hash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;).innerHTML
-    &lt;span style=&#34;color:#008000&#34;&gt;window&lt;/span&gt;.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://www.google.com/search?q=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; info_hash.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;))
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;本示例中，需要获取 info_hash 内容，浏览器直接右键检查复制 Selector 选择器，用 &lt;code&gt;querySelector&lt;/code&gt; 方法定位即可。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://oep2tw.dm.files.1drv.com/y4mRJBSD9WJHd0CwRrDQhVP0ONFhdkWMYBehiV7rZjyvB3-sBXzqcryi1DDfzJMd4zmUi-AJX12sT1YT6ajvxyDwKhakGcMBBiAyyYJ3h2UJcfUdvgxvzBilqja0s0IxcrGstntjatrAlFqsB0zhiKsHCTw_9iPJCSvCumwrb_9ro6M0kCZe9ZdGSf1G4-ULs3uoQFpv_34xKnwHAt7HXtDCA?width=2440&amp;height=1248&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;另外，&lt;code&gt;innerHTML&lt;/code&gt;、&lt;code&gt;window.open&lt;/code&gt; 等其他方法就不赘述了，最后展示如下图，点击会跳转至谷歌。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://mup2tw.dm.files.1drv.com/y4mQQE9aEjU3z7R2DSA2BLQ2S37BNFaxSoxNyrfBaijR1lt5xhgEQL8S_KlaGt6LrMhbMSsjomvCRyV90Kqyzq268yqaYtiBag4GA2qSquOGsT5khQ5XdPAjnN0qJG0mGI-5kqHPfYSnhsxMLMWLvPQ5yPz-y937wDMwL-i3SOuhPIoudLAOW1k5rvleQRaz0iCL58o-MVqOFgrL3QDKgVvdw?width=2506&amp;height=1260&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;丑哭了有没有。。整个用户脚本如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// ==UserScript==
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @name        New script - torrentz2.eu
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @namespace   Violentmonkey Scripts
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @match       *://torrentz2.eu/*
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @grant       none
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @run-at      document-idle
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @version     1.0
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @author      -
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @description 2020/5/9 下午4:13:37
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// ==/UserScript==
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
-
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// add button in top 
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; input&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.createElement(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;input&amp;#34;&lt;/span&gt;);
-input.type&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;button&amp;#34;&lt;/span&gt;;
-input.value&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Button&amp;#34;&lt;/span&gt;;
-input.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; showAlert;
-input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;font-size:18px;position:absolute;top:120px;right:40px;&amp;#34;&lt;/span&gt;);
-&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.body.appendChild(input); 
- 
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; showAlert()
-{
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; info_hash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;).innerHTML
-    &lt;span style=&#34;color:#008000&#34;&gt;window&lt;/span&gt;.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://www.google.com/search?q=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; info_hash.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;))
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方案二页面原有元素添加点击&#34;&gt;方案二：页面原有元素添加点击&lt;/h2&gt;
-&lt;p&gt;在 info_hash 文本上添加点击事件，点击文本会跳转至谷歌。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
-infoHash.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt;(){&lt;span style=&#34;color:#008000&#34;&gt;window&lt;/span&gt;.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://www.google.com/search?q=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; infoHash.innerHTML.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;))}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此方案完美隐藏，没有破坏原有页面。&lt;/p&gt;
-&lt;h2 id=&#34;方案三按钮嵌入至页面&#34;&gt;方案三：按钮嵌入至页面&lt;/h2&gt;
-&lt;p&gt;思路是在某一节点中，添加其子节点，以共用其子节点的样式。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;找到并复制兄弟节点的所有元素&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://mkp2tw.dm.files.1drv.com/y4mwJ-vDI3kdXN0d4tlY4NWG_7qCl1z_qNF6Dh2pwBCLqMFO11khPmuj5Td8meMFKrfhhlxbUfiE-M4o6DigxCRs04ryi2XFd97ZOUnZHUpizw5a6ual-L_aWX-l88sdjT3LxTWyljTqGr2J0crcF6V3gyJXNISzxIcF-ulrUeZIRarahXne7BG8mmpD7HH38N7wsyDCSraiiH3EzaVNVazFg?width=2694&amp;height=1120&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;找到父节点的 Selector 选择器&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://m0p2tw.dm.files.1drv.com/y4mv3MDuJh3PNL26ePCzDUQDiXFow1o2Oq4El5oqA90xemtOq30XCIp693BluvQ8xSaLrhFGiT1QknB3DIMSK9wu_CNBdTQZNJHvcsr8_Nt6dmKx4zlIk0IzlNRoehQbQxTf0pPbQFUCIdc0KqJuFS3TcF0CftGrKAnJPk11V1frDciHtUJ_Lz2z2A0JwwCag4iPLx0JbhCiwT8JlLhvkljyQ?width=2568&amp;height=1018&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;&lt;code&gt;appendTo&lt;/code&gt; 方法添加到父节点中&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHashText &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; infoHash.innerHTML.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
-$(&lt;span style=&#34;color:#ba2121&#34;&gt;`
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;lt;a href=&amp;#34;https://www.google.com/search?q=&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;${&lt;/span&gt;infoHashText&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34; target=&amp;#34;_blank&amp;#34; &amp;gt;Google&amp;lt;/a&amp;gt;
-&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;`&lt;/span&gt;).appendTo(&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#votebox &amp;gt; span.replist&amp;#34;&lt;/span&gt;));
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如下，完美嵌入。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://nep2tw.dm.files.1drv.com/y4mSwRdebaViBcA8QJYWi7p7VSERUEVDjw79nHi40kFO0UmUAULvTgAgvVhWAbrmyw0e35xIdVf6T5J9RBlwLsHXwCtRik3uZmzzOaDB3wmprrLMLZxtbAJvNeCZ9PE-bAhA7lyPe-ofR8lGoEzJGU_Qts4c7nqfATGJ_nXPlblQyAFH4selQBJzKmHRRn57PdKWFhmGT5VMB0AW2FH3Z1dkA?width=3146&amp;height=1602&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
-&lt;h1 id=&#34;推荐&#34;&gt;推荐&lt;/h1&gt;
-&lt;h2 id=&#34;网站链接&#34;&gt;网站链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://violentmonkey.github.io/&#34;&gt;暴力猴&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN&#34;&gt;Greasy Fork&lt;/a&gt;：脚本搜索&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://sleazyfork.org/zh-CN&#34;&gt;Sleazy Fork&lt;/a&gt;：大人的 Greasy Fork&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://wiki.greasespot.net/Main_Page&#34;&gt;官方教程&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;自用脚本&#34;&gt;自用脚本&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN/scripts/329484-%E8%B1%86%E7%93%A3%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD%E5%A4%A7%E5%B8%88-1%E7%A7%92%E6%90%9E%E5%AE%9A%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1-%E9%9F%B3%E4%B9%90-%E5%9B%BE%E4%B9%A6%E4%B8%8B%E8%BD%BD&#34;&gt;豆瓣资源下载大师&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://greasyfork.org/zh-CN/scripts/378351-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0-csdn%E9%A1%B5%E9%9D%A2%E6%B5%AE%E7%AA%97%E5%B9%BF%E5%91%8A%E5%AE%8C%E5%85%A8%E8%BF%87%E6%BB%A4%E5%87%80%E5%8C%96-%E5%87%80%E5%8C%96%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9-%E8%87%AA%E5%8A%A8%E5%B1%95%E5%BC%80-%E8%AE%A9%E4%BD%A0%E4%B8%93%E6%B3%A8%E4%BA%8E%E6%96%87%E7%AB%A0-%E4%B8%8D%E5%BD%B1%E5%93%8D%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8&#34;&gt;CSDN页面浮窗广告完全过滤净化&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0507_monkey.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

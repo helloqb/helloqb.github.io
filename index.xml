@@ -6,9 +6,157 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Axure 原型图局域网共享指南</title>
+        <link>https://helloqb.xyz/post/2021/0617_axshare.html</link>
+        <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2021/0617_axshare.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2021/0617_axshare.html -&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;知道 Axure 导出的原型图是静态 html 文件后，思路就清晰了，在本地搭建一个 web 服务器即可局域网之间访问。&lt;/p&gt;
+&lt;p&gt;但在正式搭建的时候，还是遇到些棘手的问题，先列举出来，读者可以提前思考下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;产品经理如何用自己的电脑（通常 Windows）将共享的文件导出到服务器上（通常 Linux 上）；&lt;/li&gt;
+&lt;li&gt;可不可以搭建一个首页，前端自动识别服务器里存在的原型项目并展示在首页；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;samba-共享文件&#34;&gt;Samba 共享文件&lt;/h1&gt;
+&lt;p&gt;在如何将 Windows 的文件导出到 Linux 上时，也纠结了几种方法，如用 svn 同步文件，或者 sftp 传输文件。但想到产品经理又不是我们这些敲代码的，对这些不熟悉。所以想要使用一种尽量没有学习成本的方法。&lt;/p&gt;
+&lt;p&gt;最后用了 Samba。Linux 上配置好后，Windows 映射成网络驱动器，然后在 Axure 分享链接时，选择本地此驱动器即可上传到服务器上。具体操作如下。&lt;/p&gt;
+&lt;h2 id=&#34;linux-安装-samba&#34;&gt;Linux 安装 Samba&lt;/h2&gt;
+&lt;p&gt;公司的 Wiki 项目已经用到了 Samba，所以没有亲自安装，直接配置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cfg&#34; data-lang=&#34;cfg&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[axure]&lt;/span&gt;
+        &lt;span style=&#34;color:#7d9029&#34;&gt;comment&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;share for axure
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        path = /root/server_axure/html
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        public = yes
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        security = user
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        map to guest = Bad User
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        guest ok = yes
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        guest account = ftp
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        browseable = yes
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        writable = yes
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        create mask = 0777
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        directory mask = 0777&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;配置文件在 &lt;code&gt;/etc/samba/smb.conf&lt;/code&gt; 中，其中 &lt;code&gt;path&lt;/code&gt; 用于存放 html 文件，即原型图上传的位置。&lt;/p&gt;
+&lt;h2 id=&#34;windows-映射网络驱动器&#34;&gt;Windows 映射网络驱动器&lt;/h2&gt;
+&lt;p&gt;Linux 配置好 Samba 后，打开 Windows 资源管理器，选择映射网络驱动器（或者添加一个网络位置），输入 samba 共享的地址，如本例中 &lt;code&gt;\\192.168.0.105\axure&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mwYmx1A06I7NY0MzOI9iGtdCgjV7dhGMnwM0KXby29-7DhMDucDKVD1Mw7CYwBTNdACd85E9vgyh6dZcc8edDmV06Lca5NQ3kIo1IMKhfI9U9HDdgYkqOrBwwsXgK8eIP-W4ZMJvo3oUW3nf46ikYXWo1RFCoKaacIXkLpX-oygcKycf0qZNfSVlYkxNPonAU?width=973&amp;height=667&amp;cropmode=none&#34; height=&#34;450&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h2 id=&#34;上传原型图到服务器&#34;&gt;上传原型图到服务器&lt;/h2&gt;
+&lt;p&gt;Axure 点击分享，选择 Publish Locally，选择映射好的网络驱动器，注意新建一个文件夹，点击发布会自动上传到服务器上。&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mWoVupHdhCuJVXR_EEN8ONtFQmEzhyCSBtI_ho5_hko-UAy8n1Yn3kMwjMY8aQCgJ87WwxYA2QHvDJWpRstGv7VfGoORuRNWvsM-bptJBvk7ApR-ZxyLpDYlB3Hy7H83hiG1zSErk1vje9O2yJX0JmZoDsVLOyG6PoQxt6X-BdqPINL8kQJddZZn80Xq-Xd4x?width=1308&amp;height=837&amp;cropmode=none&#34; height=&#34;450&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1 id=&#34;搭建-web-端&#34;&gt;搭建 Web 端&lt;/h1&gt;
+&lt;p&gt;此时，已成功将原型图 html 文件上传到服务器上，只要搭建一个 web 服务器就可以访问了。如本例中采用的是 Docker + Nginx 配置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-docker&#34; data-lang=&#34;docker&#34;&gt;version: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;3&amp;#39;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;services:&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;  web:&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;    image: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;nginx:latest&amp;#34;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;    volumes:&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;      - &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#19177c&#34;&gt;$PWD&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;/html:/usr/share/nginx/html&amp;#34;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;      - &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#19177c&#34;&gt;$PWD&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;/conf/nginx.conf:/etc/nginx/nginx.conf&amp;#34;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;    container_name: axure_web&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;    ports:&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;      - &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;12345:8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server&lt;/span&gt; {
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;8080&lt;/span&gt;;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;root&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;/usr/share/nginx/html&lt;/span&gt;;
+
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;/&lt;/span&gt; {
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;index&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;index.html&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;index.htm&lt;/span&gt;;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;本例中，将原型图 html 文件上传到了 &lt;code&gt;/project&lt;/code&gt; 文件夹下，命名为 test，则此时该原型图的访问地址为 &lt;code&gt;http://192.168.0.105/project/test/start.html&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;前端自动获取服务器目录&#34;&gt;前端自动获取服务器目录&lt;/h2&gt;
+&lt;p&gt;但是手动修改链接总归不够好，所以想看实现一个逻辑，当产品经理把原型图放入到指定文件夹中， 服务器能自动读取所添加的原型图，然后在首页展示。&lt;/p&gt;
+&lt;p&gt;这个需求我问了下前端，前端断然否决，说不可能，前端无法访问服务器的。&lt;/p&gt;
+&lt;p&gt;本来也打算写一个后台实现这个需求的，因为谷歌也没有找到结果。但是在配置 Nginx 的时候突然想到其有一个参数 &lt;code&gt;autoindex on&lt;/code&gt;，可实现目录浏览功能。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server&lt;/span&gt; {
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;/project/&lt;/span&gt; {
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;autoindex&lt;/span&gt; &lt;span style=&#34;color:#800&#34;&gt;on&lt;/span&gt;;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mnHkddENsSkpb-sdl62jyA9isp1ewGyug_O5FkzWQQp_ix-Hs9MQYxpp4BYs0Fv2d7HtRtB1iw-h5oILIaUEJSlj-nw9rgpWR7qRlsVjFflNmTmB43MAbywvwB-WvUYCNcJz9FAnAdX7xnVkD_8irfhA2da29mvG2t08IxDpczOA8U3N8ARwwpY7gaPALvAps?width=1210&amp;height=492&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;有希望！既然是个网址，前端是否可以通过 js 获取，解析网页，获取想要的目录文件呢！&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;研究良久，实现如下（本人是后端&amp;hellip;&amp;hellip;随意写的，前端大神肯定有更好的写法）：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; loadDoc() {
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; xhttp &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; XMLHttpRequest();
+    xhttp.onreadystatechange &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; () {
+      &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;.readyState &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;4&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;.status &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;200&lt;/span&gt;) {
+        myFunction(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;);
+      }
+    };
+    xhttp.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;GET&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/project/&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;);
+    xhttp.send();
+  }
+
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; myFunction(xml) {
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// console.log(xml.responseText)
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; parser &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DOMParser();
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; htmlDoc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; parser.parseFromString(xml.responseText, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;text/html&amp;#39;&lt;/span&gt;);
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; preList &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; htmlDoc.getElementsByTagName(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;pre&amp;#34;&lt;/span&gt;)[&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;].getElementsByTagName(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;a&amp;#34;&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt; preList.length; i&lt;span style=&#34;color:#666&#34;&gt;++&lt;/span&gt;) {
+      console.log(preList[i].innerHTML)
+      &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//jqueryAdd(preList[i].innerHTML.slice(0,-1))
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    }
+  }
+&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;前端小白抄袭网页&#34;&gt;前端小白抄袭网页&lt;/h2&gt;
+&lt;p&gt;实现了前端自动获取服务器指定目录后，后面的事情其实可以交给公司前端帮忙弄一下了，就是首页列表展示，没多大工作量的。&lt;/p&gt;
+&lt;p&gt;但是，折腾的我还是想要自己来弄，在此分享一下自己如何直接将别人的网页拿来用的思路。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;首先，将别人的网页右键保存下来，找到想要用的地方，比如本例中想要列表，则右键检查到列表的某个子模块，复制整个 html 实现；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;然后，编写 js 方法如下，实现添加子模块到列表模块中；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;再者，将写好的方法放入到循环中，如本例上述注释的地方；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;最后，将原先的列表下的所有子模块删除，改为调用循环方法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; jqueryAdd(name) {
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; child &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; $(&lt;span style=&#34;color:#ba2121&#34;&gt;`
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;  &amp;lt;div class=&amp;#34;el-col el-col-6&amp;#34; style=&amp;#34;padding-left: 20px; padding-right: 20px;&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;          &amp;lt;div class=&amp;#34;task-card&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;            &amp;lt;div class=&amp;#34;node-name node-name-my&amp;#34;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;${&lt;/span&gt;name&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;            &amp;lt;div class=&amp;#34;task-card-main&amp;#34; style=&amp;#34;background: url(/static/images/&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;${&lt;/span&gt;name&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;.png); background-size: cover&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;div class=&amp;#34;task-card-top&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;p class=&amp;#34;task-brief&amp;#34;&amp;gt;&amp;lt;/p&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;div class=&amp;#34;task-status&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;            &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;            &amp;lt;div class=&amp;#34;task-card-apply&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;div class=&amp;#34;apply-info&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;div class=&amp;#34;apply-btn&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;                &amp;lt;div class=&amp;#34;to-edit-task can-set&amp;#34; onclick=&amp;#34;window.open(&amp;#39;/project/&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;${&lt;/span&gt;name&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;/start.html&amp;#39;)&amp;#34; &amp;gt;&amp;lt;span&amp;gt;查看原型&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;              &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;            &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;          &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;  `&lt;/span&gt;)
+  $(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#taskListId&amp;#34;&lt;/span&gt;).append(child)
+  }
+&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最终实现结果如下：&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mLsZDxSkAvNRQR8A0RbWeOs7EYjbyraqUK5n1B81W3vvFMEudvjPpiAHE6axzE8vH-IFo-zE0TJKrDlV_kUDBDYcZqe2DlrrtdMJQnytDHvlvKIpF00WbeS0DI869q8zL7pgSqjn4d3a7zrk5dSTTGM0gO3nEk5YpD4GxC0-Ry9xcdNTo2h5vpL-uWpKOjkrM?width=2880&amp;height=1418&amp;cropmode=none&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1 id=&#34;参考&#34;&gt;参考&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/baidu_26678247/article/details/103157532&#34;&gt;Linux 局域网内共享｜SameWorld&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/10585029/parse-an-html-string-with-js#55046067&#34;&gt;Parse an HTML string with JS｜stackoverflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2021/0617_axshare.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -1102,163 +1250,6 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
 &lt;li&gt;&lt;a href=&#34;https://selenium-python-zh.readthedocs.io/en/latest/index.html#&#34;&gt;Selenium with Python中文翻译文档&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0805_selenium.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>进一步了解 RabbitMQ 跨语言通讯</title>
-        <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
-        <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0728_rabbitmq.html -&lt;h1 id=&#34;进一步了解&#34;&gt;进一步了解&lt;/h1&gt;
-&lt;p&gt;开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。&lt;/p&gt;
-&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;pom.xml&lt;/code&gt; 文件中添加依赖。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-amqp&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;application.yml&lt;/code&gt; 文件中添加配置开启确认。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;rabbitmq&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;192.168.0.102&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;port&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;5672&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;username&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;password&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;virtual-host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;sl&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;publisher-confirm-type&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;correlated&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;publisher-returns&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;template&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;mandatory&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;重写方法&#34;&gt;重写方法&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;RabbitTemplate.ConfirmCallback&lt;/code&gt; 确认消息是否到达交换机， &lt;code&gt;RabbitTemplate.ReturnCallback&lt;/code&gt; 确认消息是否到达队列中。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Message&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.connection.CorrelationData&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.core.RabbitTemplate&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.stereotype.Component&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.annotation.PostConstruct&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;CustomRabbitSend&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;implements&lt;/span&gt; RabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ConfirmCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; RabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ReturnCallback&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; Logger LOG &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LoggerFactory&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getLogger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CustomRabbitSend&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; RabbitTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@PostConstruct&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;init&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setConfirmCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setReturnCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;confirm&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CorrelationData correlationData&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;boolean&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//到达Exchange交换机，会调用此方法
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(!&lt;/span&gt;b&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-            LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;error&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;消息发送异常!&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-            LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;发送者收到确认，correlationData={} ,ack={}, cause={}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; correlationData&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getId&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;returnedMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Message message&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s1&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s2&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//没有到达Queue队列中，会调用此方法
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;        LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;returnedMessage ===&amp;gt; replyCode={} ,replyText={} ,exchange={} ,routingKey={}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s1&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s2&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;交换机和队列绑定&#34;&gt;交换机和队列绑定&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Exchange&lt;/code&gt; 交换机需要通过 &lt;code&gt;routingKey&lt;/code&gt; 才能将消息传递到 &lt;code&gt;Queue&lt;/code&gt; 队列中（本文只用到 &lt;code&gt;direct&lt;/code&gt; 类型，其实无需绑定，&lt;code&gt;fanout&lt;/code&gt;、&lt;code&gt;topic&lt;/code&gt; 类型才需要）。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Binding&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.BindingBuilder&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.DirectExchange&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Queue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Bean&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@Configuration&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;DirectRabbitConfig&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//队列
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; Queue &lt;span style=&#34;color:#00f&#34;&gt;customDirectQueue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; Queue&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testQueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//Direct交换机
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; DirectExchange &lt;span style=&#34;color:#00f&#34;&gt;customDirectExchange&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DirectExchange&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testDirectExchange&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//将队列和交换机绑定
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; Binding &lt;span style=&#34;color:#00f&#34;&gt;bindingDirect&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; BindingBuilder&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;bind&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;customDirectQueue&lt;span style=&#34;color:#666&#34;&gt;()).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;to&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;customDirectExchange&lt;span style=&#34;color:#666&#34;&gt;()).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testRoutingKey&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;发送&#34;&gt;发送&lt;/h1&gt;
-&lt;p&gt;传递 &lt;code&gt;CorrelationData&lt;/code&gt; 类，包含消息唯一标识（&lt;code&gt;AmqpTemplate&lt;/code&gt; 类无法传递，之前一直用的这个，死活找不到方法）。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
-&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;TestScheduled&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; RabbitTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-        String content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test rabbit and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-        CorrelationData cId &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; CorrelationData&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;unique key&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convertAndSend&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testDirectExchange&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testRoutingKey&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; content&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; cId&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;接收&#34;&gt;接收&lt;/h1&gt;
-&lt;p&gt;用 &lt;code&gt;Message&lt;/code&gt; 类接收。目前我用的是 String 传输，可以配置成 JSON 传输更好些。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSON&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSONException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSONObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Message&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.annotation.RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.stereotype.Component&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;CustomRabbitReceiver&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; Logger LOG &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LoggerFactory&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getLogger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CustomRabbitReceiver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;queues &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testQueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;listen&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Message message&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        String body &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; String&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBody&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
-        LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;receiver from python:&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; body&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;谁的锅&#34;&gt;谁的锅&lt;/h1&gt;
-&lt;p&gt;加了验证后，Java 端没有丢失，另一端消息也确实拿掉了，研究可能是多线程的问题，之前用的是 &lt;code&gt;pika&lt;/code&gt;，官方说多线程不安全，后续可以改为 &lt;code&gt;rabbitpy&lt;/code&gt; 更安全。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;关联阅读&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://rabbitpy.readthedocs.io/en/latest/index.html#&#34;&gt;rabbitpy documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://helloqb.xyz/post/2020/0515_rabbitmq/&#34;&gt;RabbitMQ 实现跨语言通信&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/qq_35387940/article/details/100514134&#34;&gt;Springboot 整合RabbitMq ，用心看完这一篇就够了&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.spring.io/spring-amqp/reference/html/&#34;&gt;Spring AMQP&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0728_rabbitmq.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

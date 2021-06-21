@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html><head>
+<title>Axure 原型图局域网共享指南</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="产品经理用 Axure 分享原型图时，通常是将其分享到 Axure 的官网上，但由于其服务器在外国，国内访问速度较慢。其实导出的原型图就是普通的静态 html 文件，倒不如在本地搭建一个。">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/journal.min.5e8f3f653e9f6ce67bf72ff8ee6fee69decf7b5639a3ae7f8344750ad4e065b1.css" integrity="sha256-Xo8/ZT6fbOZ79y/47m/uad7Pe1Y5o65/g0R1CtTgZbE=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/dark-mode.min.bdfa63b2e89903517dcbb1032b537d54cff3f425c19d008a78dfe49e6cd07ced.css" integrity="sha256-vfpjsuiZA1F9y7EDK1N9VM/z9CXBnQCKeN/knmzQfO0=" media="screen">
+
+
+<script src="https://helloqb.xyz//js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="https://helloqb.xyz//js/toc-collapse.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '64eac7e04ef1c9c58977',
+  clientSecret: '230d5636dc1e4810ca4e7af9090a20ab1c5a1e74',
+  repo: 'helloqb.github.io',
+  owner: 'helloqb',
+  admin: ['helloqb'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://helloqb.xyz/">
+    
+        <div class="nav-title">
+            哲学家
+        </div>
+        
+        <div class="nav-subtitle">
+            怕什么真理无穷，进一寸有进一寸的欢喜
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/post">
+                归档
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#samba-%e5%85%b1%e4%ba%ab%e6%96%87%e4%bb%b6" onclick="onNavClick(`#samba-共享文件-nav`)" id="samba-共享文件-nav">
+									Samba 共享文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#linux-%e5%ae%89%e8%a3%85-samba" onclick="onNavClick(`#linux-安装-samba-nav`)" id="linux-安装-samba-nav">
+									Linux 安装 Samba
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#windows-%e6%98%a0%e5%b0%84%e7%bd%91%e7%bb%9c%e9%a9%b1%e5%8a%a8%e5%99%a8" onclick="onNavClick(`#windows-映射网络驱动器-nav`)" id="windows-映射网络驱动器-nav">
+									Windows 映射网络驱动器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%8a%e4%bc%a0%e5%8e%9f%e5%9e%8b%e5%9b%be%e5%88%b0%e6%9c%8d%e5%8a%a1%e5%99%a8" onclick="onNavClick(`#上传原型图到服务器-nav`)" id="上传原型图到服务器-nav">
+									上传原型图到服务器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%90%ad%e5%bb%ba-web-%e7%ab%af" onclick="onNavClick(`#搭建-web-端-nav`)" id="搭建-web-端-nav">
+									搭建 Web 端
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e7%ab%af%e8%87%aa%e5%8a%a8%e8%8e%b7%e5%8f%96%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9b%ae%e5%bd%95" onclick="onNavClick(`#前端自动获取服务器目录-nav`)" id="前端自动获取服务器目录-nav">
+									前端自动获取服务器目录
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e7%ab%af%e5%b0%8f%e7%99%bd%e6%8a%84%e8%a2%ad%e7%bd%91%e9%a1%b5" onclick="onNavClick(`#前端小白抄袭网页-nav`)" id="前端小白抄袭网页-nav">
+									前端小白抄袭网页
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
+									参考
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/post">
+                    归档
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#samba-%e5%85%b1%e4%ba%ab%e6%96%87%e4%bb%b6" onclick="onNavClick(`#samba-共享文件-nav`)" id="samba-共享文件-nav">
+									Samba 共享文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#linux-%e5%ae%89%e8%a3%85-samba" onclick="onNavClick(`#linux-安装-samba-nav`)" id="linux-安装-samba-nav">
+									Linux 安装 Samba
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#windows-%e6%98%a0%e5%b0%84%e7%bd%91%e7%bb%9c%e9%a9%b1%e5%8a%a8%e5%99%a8" onclick="onNavClick(`#windows-映射网络驱动器-nav`)" id="windows-映射网络驱动器-nav">
+									Windows 映射网络驱动器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%8a%e4%bc%a0%e5%8e%9f%e5%9e%8b%e5%9b%be%e5%88%b0%e6%9c%8d%e5%8a%a1%e5%99%a8" onclick="onNavClick(`#上传原型图到服务器-nav`)" id="上传原型图到服务器-nav">
+									上传原型图到服务器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%90%ad%e5%bb%ba-web-%e7%ab%af" onclick="onNavClick(`#搭建-web-端-nav`)" id="搭建-web-端-nav">
+									搭建 Web 端
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e7%ab%af%e8%87%aa%e5%8a%a8%e8%8e%b7%e5%8f%96%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9b%ae%e5%bd%95" onclick="onNavClick(`#前端自动获取服务器目录-nav`)" id="前端自动获取服务器目录-nav">
+									前端自动获取服务器目录
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e7%ab%af%e5%b0%8f%e7%99%bd%e6%8a%84%e8%a2%ad%e7%bd%91%e9%a1%b5" onclick="onNavClick(`#前端小白抄袭网页-nav`)" id="前端小白抄袭网页-nav">
+									前端小白抄袭网页
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
+									参考
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://helloqb.xyz/">
+            哲学家
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://helloqb.xyz/">
+        <div class="single-column-header-title">哲学家</div>
+        
+        <div class="single-column-header-subtitle">怕什么真理无穷，进一寸有进一寸的欢喜</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://dsm01pap001files.storage.live.com/y4mSOHR_tfj7jBq3rT6rK2aerQpLXl4kvNO4KHPEdXySGk7LU08eqLkCMtlMQN57hCHw7AbKmqVZMJ3bFQnTw95wEPheYbfKpDAiodTWXtvxTriNZj6bpNYFdtzVYbDRViqz4daStbovkYUP2S8QE1BtPXhmsTLlBch3LceJS8JlMCTgHgLZEs3Frkh6AK_a4oz?width=1200&amp;height=630&amp;cropmode=none')"
+                    
+                
+            >
+                <div class="post-title">
+                    Axure 原型图局域网共享指南
+                    
+                    <div class="post-subtitle">
+                        产品经理用 Axure 分享原型图时，通常是将其分享到 Axure 的官网上，但由于其服务器在外国，国内访问速度较慢。其实导出的原型图就是普通的静态 html 文件，倒不如在本地搭建一个。
+                    </div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-06-17 00:00
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/">[Web]</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/axure">Axure</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="前言">前言</h1>
+<p>知道 Axure 导出的原型图是静态 html 文件后，思路就清晰了，在本地搭建一个 web 服务器即可局域网之间访问。</p>
+<p>但在正式搭建的时候，还是遇到些棘手的问题，先列举出来，读者可以提前思考下：</p>
+<ul>
+<li>产品经理如何用自己的电脑（通常 Windows）将共享的文件导出到服务器上（通常 Linux 上）；</li>
+<li>可不可以搭建一个首页，前端自动识别服务器里存在的原型项目并展示在首页；</li>
+</ul>
+<h1 id="samba-共享文件">Samba 共享文件</h1>
+<p>在如何将 Windows 的文件导出到 Linux 上时，也纠结了几种方法，如用 svn 同步文件，或者 sftp 传输文件。但想到产品经理又不是我们这些敲代码的，对这些不熟悉。所以想要使用一种尽量没有学习成本的方法。</p>
+<p>最后用了 Samba。Linux 上配置好后，Windows 映射成网络驱动器，然后在 Axure 分享链接时，选择本地此驱动器即可上传到服务器上。具体操作如下。</p>
+<h2 id="linux-安装-samba">Linux 安装 Samba</h2>
+<p>公司的 Wiki 项目已经用到了 Samba，所以没有亲自安装，直接配置：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cfg" data-lang="cfg"><span style="color:#008000;font-weight:bold">[axure]</span>
+        <span style="color:#7d9029">comment</span> <span style="color:#666">=</span> <span style="color:#ba2121">share for axure
+</span><span style="color:#ba2121">        path = /root/server_axure/html
+</span><span style="color:#ba2121">        public = yes
+</span><span style="color:#ba2121">        security = user
+</span><span style="color:#ba2121">        map to guest = Bad User
+</span><span style="color:#ba2121">        guest ok = yes
+</span><span style="color:#ba2121">        guest account = ftp
+</span><span style="color:#ba2121">        browseable = yes
+</span><span style="color:#ba2121">        writable = yes
+</span><span style="color:#ba2121">        create mask = 0777
+</span><span style="color:#ba2121">        directory mask = 0777</span>
+</code></pre></div><p>配置文件在 <code>/etc/samba/smb.conf</code> 中，其中 <code>path</code> 用于存放 html 文件，即原型图上传的位置。</p>
+<h2 id="windows-映射网络驱动器">Windows 映射网络驱动器</h2>
+<p>Linux 配置好 Samba 后，打开 Windows 资源管理器，选择映射网络驱动器（或者添加一个网络位置），输入 samba 共享的地址，如本例中 <code>\\192.168.0.105\axure</code>。</p>
+<p><center><img src="https://dsm01pap001files.storage.live.com/y4mwYmx1A06I7NY0MzOI9iGtdCgjV7dhGMnwM0KXby29-7DhMDucDKVD1Mw7CYwBTNdACd85E9vgyh6dZcc8edDmV06Lca5NQ3kIo1IMKhfI9U9HDdgYkqOrBwwsXgK8eIP-W4ZMJvo3oUW3nf46ikYXWo1RFCoKaacIXkLpX-oygcKycf0qZNfSVlYkxNPonAU?width=973&height=667&cropmode=none" height="450" /></center></p>
+<h2 id="上传原型图到服务器">上传原型图到服务器</h2>
+<p>Axure 点击分享，选择 Publish Locally，选择映射好的网络驱动器，注意新建一个文件夹，点击发布会自动上传到服务器上。</p>
+<p><center><img src="https://dsm01pap001files.storage.live.com/y4mWoVupHdhCuJVXR_EEN8ONtFQmEzhyCSBtI_ho5_hko-UAy8n1Yn3kMwjMY8aQCgJ87WwxYA2QHvDJWpRstGv7VfGoORuRNWvsM-bptJBvk7ApR-ZxyLpDYlB3Hy7H83hiG1zSErk1vje9O2yJX0JmZoDsVLOyG6PoQxt6X-BdqPINL8kQJddZZn80Xq-Xd4x?width=1308&height=837&cropmode=none" height="450" /></center></p>
+<h1 id="搭建-web-端">搭建 Web 端</h1>
+<p>此时，已成功将原型图 html 文件上传到服务器上，只要搭建一个 web 服务器就可以访问了。如本例中采用的是 Docker + Nginx 配置：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">version: <span style="color:#ba2121">&#39;3&#39;</span><span style="">
+</span><span style=""></span>services:<span style="">
+</span><span style=""></span>  web:<span style="">
+</span><span style=""></span>    image: <span style="color:#ba2121">&#34;nginx:latest&#34;</span><span style="">
+</span><span style=""></span>    volumes:<span style="">
+</span><span style=""></span>      - <span style="color:#ba2121">&#34;</span><span style="color:#19177c">$PWD</span><span style="color:#ba2121">/html:/usr/share/nginx/html&#34;</span><span style="">
+</span><span style=""></span>      - <span style="color:#ba2121">&#34;</span><span style="color:#19177c">$PWD</span><span style="color:#ba2121">/conf/nginx.conf:/etc/nginx/nginx.conf&#34;</span><span style="">
+</span><span style=""></span>    container_name: axure_web<span style="">
+</span><span style=""></span>    ports:<span style="">
+</span><span style=""></span>      - <span style="color:#ba2121">&#34;12345:8080&#34;</span><span style="">
+</span></code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#008000;font-weight:bold">server</span> {
+  <span style="color:#008000;font-weight:bold">listen</span> <span style="color:#666">8080</span>;
+  <span style="color:#008000;font-weight:bold">root</span> <span style="color:#ba2121">/usr/share/nginx/html</span>;
+
+  <span style="color:#008000;font-weight:bold">location</span> <span style="color:#ba2121">/</span> {
+    <span style="color:#008000;font-weight:bold">index</span> <span style="color:#ba2121">index.html</span> <span style="color:#ba2121">index.htm</span>;
+  }
+}
+</code></pre></div><p>本例中，将原型图 html 文件上传到了 <code>/project</code> 文件夹下，命名为 test，则此时该原型图的访问地址为 <code>http://192.168.0.105/project/test/start.html</code>。</p>
+<h2 id="前端自动获取服务器目录">前端自动获取服务器目录</h2>
+<p>但是手动修改链接总归不够好，所以想看实现一个逻辑，当产品经理把原型图放入到指定文件夹中， 服务器能自动读取所添加的原型图，然后在首页展示。</p>
+<p>这个需求我问了下前端，前端断然否决，说不可能，前端无法访问服务器的。</p>
+<p>本来也打算写一个后台实现这个需求的，因为谷歌也没有找到结果。但是在配置 Nginx 的时候突然想到其有一个参数 <code>autoindex on</code>，可实现目录浏览功能。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#008000;font-weight:bold">server</span> {
+  <span style="color:#008000;font-weight:bold">location</span> <span style="color:#ba2121">/project/</span> {
+    <span style="color:#008000;font-weight:bold">autoindex</span> <span style="color:#800">on</span>;
+  }
+}
+</code></pre></div><p><center><img src="https://dsm01pap001files.storage.live.com/y4mnHkddENsSkpb-sdl62jyA9isp1ewGyug_O5FkzWQQp_ix-Hs9MQYxpp4BYs0Fv2d7HtRtB1iw-h5oILIaUEJSlj-nw9rgpWR7qRlsVjFflNmTmB43MAbywvwB-WvUYCNcJz9FAnAdX7xnVkD_8irfhA2da29mvG2t08IxDpczOA8U3N8ARwwpY7gaPALvAps?width=1210&height=492&cropmode=none" height="300" /></center></p>
+<p><strong>有希望！既然是个网址，前端是否可以通过 js 获取，解析网页，获取想要的目录文件呢！</strong></p>
+<p>研究良久，实现如下（本人是后端&hellip;&hellip;随意写的，前端大神肯定有更好的写法）：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#008000;font-weight:bold">script</span>&gt;
+  <span style="color:#008000;font-weight:bold">function</span> loadDoc() {
+    <span style="color:#008000;font-weight:bold">var</span> xhttp <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> XMLHttpRequest();
+    xhttp.onreadystatechange <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> () {
+      <span style="color:#008000;font-weight:bold">if</span> (<span style="color:#008000;font-weight:bold">this</span>.readyState <span style="color:#666">==</span> <span style="color:#666">4</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#008000;font-weight:bold">this</span>.status <span style="color:#666">==</span> <span style="color:#666">200</span>) {
+        myFunction(<span style="color:#008000;font-weight:bold">this</span>);
+      }
+    };
+    xhttp.open(<span style="color:#ba2121">&#34;GET&#34;</span>, <span style="color:#ba2121">&#34;/project/&#34;</span>, <span style="color:#008000;font-weight:bold">true</span>);
+    xhttp.send();
+  }
+
+  <span style="color:#008000;font-weight:bold">function</span> myFunction(xml) {
+    <span style="color:#408080;font-style:italic">// console.log(xml.responseText)
+</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#008000;font-weight:bold">var</span> parser <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> DOMParser();
+    <span style="color:#008000;font-weight:bold">var</span> htmlDoc <span style="color:#666">=</span> parser.parseFromString(xml.responseText, <span style="color:#ba2121">&#39;text/html&#39;</span>);
+    <span style="color:#008000;font-weight:bold">var</span> preList <span style="color:#666">=</span> htmlDoc.getElementsByTagName(<span style="color:#ba2121">&#34;pre&#34;</span>)[<span style="color:#666">0</span>].getElementsByTagName(<span style="color:#ba2121">&#34;a&#34;</span>)
+    <span style="color:#008000;font-weight:bold">for</span> (i <span style="color:#666">=</span> <span style="color:#666">1</span>; i <span style="color:#666">&lt;</span> preList.length; i<span style="color:#666">++</span>) {
+      console.log(preList[i].innerHTML)
+      <span style="color:#408080;font-style:italic">//jqueryAdd(preList[i].innerHTML.slice(0,-1))
+</span><span style="color:#408080;font-style:italic"></span>    }
+  }
+&lt;/<span style="color:#008000;font-weight:bold">script</span>&gt;
+</code></pre></div><h2 id="前端小白抄袭网页">前端小白抄袭网页</h2>
+<p>实现了前端自动获取服务器指定目录后，后面的事情其实可以交给公司前端帮忙弄一下了，就是首页列表展示，没多大工作量的。</p>
+<p>但是，折腾的我还是想要自己来弄，在此分享一下自己如何直接将别人的网页拿来用的思路。</p>
+<ol>
+<li>
+<p>首先，将别人的网页右键保存下来，找到想要用的地方，比如本例中想要列表，则右键检查到列表的某个子模块，复制整个 html 实现；</p>
+</li>
+<li>
+<p>然后，编写 js 方法如下，实现添加子模块到列表模块中；</p>
+</li>
+<li>
+<p>再者，将写好的方法放入到循环中，如本例上述注释的地方；</p>
+</li>
+<li>
+<p>最后，将原先的列表下的所有子模块删除，改为调用循环方法。</p>
+</li>
+</ol>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#008000;font-weight:bold">script</span>&gt;
+  <span style="color:#008000;font-weight:bold">function</span> jqueryAdd(name) {
+    <span style="color:#008000;font-weight:bold">var</span> child <span style="color:#666">=</span> $(<span style="color:#ba2121">`
+</span><span style="color:#ba2121">  &lt;div class=&#34;el-col el-col-6&#34; style=&#34;padding-left: 20px; padding-right: 20px;&#34;&gt;
+</span><span style="color:#ba2121">          &lt;div class=&#34;task-card&#34;&gt;
+</span><span style="color:#ba2121">            &lt;div class=&#34;node-name node-name-my&#34;&gt;</span><span style="color:#b68;font-weight:bold">${</span>name<span style="color:#b68;font-weight:bold">}</span><span style="color:#ba2121">&lt;/div&gt;
+</span><span style="color:#ba2121">            &lt;div class=&#34;task-card-main&#34; style=&#34;background: url(/static/images/</span><span style="color:#b68;font-weight:bold">${</span>name<span style="color:#b68;font-weight:bold">}</span><span style="color:#ba2121">.png); background-size: cover&#34;&gt;
+</span><span style="color:#ba2121">              &lt;div class=&#34;task-card-top&#34;&gt;
+</span><span style="color:#ba2121">              &lt;/div&gt;
+</span><span style="color:#ba2121">              &lt;p class=&#34;task-brief&#34;&gt;&lt;/p&gt;
+</span><span style="color:#ba2121">              &lt;div class=&#34;task-status&#34;&gt;
+</span><span style="color:#ba2121">              &lt;/div&gt;
+</span><span style="color:#ba2121">            &lt;/div&gt;
+</span><span style="color:#ba2121">            &lt;div class=&#34;task-card-apply&#34;&gt;
+</span><span style="color:#ba2121">              &lt;div class=&#34;apply-info&#34;&gt;
+</span><span style="color:#ba2121">              &lt;/div&gt;
+</span><span style="color:#ba2121">              &lt;div class=&#34;apply-btn&#34;&gt;
+</span><span style="color:#ba2121">                &lt;div class=&#34;to-edit-task can-set&#34; onclick=&#34;window.open(&#39;/project/</span><span style="color:#b68;font-weight:bold">${</span>name<span style="color:#b68;font-weight:bold">}</span><span style="color:#ba2121">/start.html&#39;)&#34; &gt;&lt;span&gt;查看原型&lt;/span&gt;&lt;/div&gt;
+</span><span style="color:#ba2121">              &lt;/div&gt;
+</span><span style="color:#ba2121">            &lt;/div&gt;
+</span><span style="color:#ba2121">          &lt;/div&gt;
+</span><span style="color:#ba2121">        &lt;/div&gt;
+</span><span style="color:#ba2121">  `</span>)
+  $(<span style="color:#ba2121">&#34;#taskListId&#34;</span>).append(child)
+  }
+&lt;/<span style="color:#008000;font-weight:bold">script</span>&gt;
+</code></pre></div><p>最终实现结果如下：</p>
+<p><center><img src="https://dsm01pap001files.storage.live.com/y4mLsZDxSkAvNRQR8A0RbWeOs7EYjbyraqUK5n1B81W3vvFMEudvjPpiAHE6axzE8vH-IFo-zE0TJKrDlV_kUDBDYcZqe2DlrrtdMJQnytDHvlvKIpF00WbeS0DI869q8zL7pgSqjn4d3a7zrk5dSTTGM0gO3nEk5YpD4GxC0-Ry9xcdNTo2h5vpL-uWpKOjkrM?width=2880&height=1418&cropmode=none" /></center></p>
+<h1 id="参考">参考</h1>
+<ul>
+<li><a href="https://blog.csdn.net/baidu_26678247/article/details/103157532">Linux 局域网内共享｜SameWorld</a></li>
+<li><a href="https://stackoverflow.com/questions/10585029/parse-an-html-string-with-js#55046067">Parse an HTML string with JS｜stackoverflow</a></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2021-06-17</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://helloqb.xyz/post/2021/0609_tailer.html">
+			Previous<br>Web 实现日志文件实时监听
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            }
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+</script>
+
+<script src="https://helloqb.xyz//js/journal.js"></script>
+    </body>
+</html>
