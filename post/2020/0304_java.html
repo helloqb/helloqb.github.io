@@ -592,7 +592,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <h2 id="方案一-printwriter--characterencoding">方案一： PrintWriter + CharacterEncoding</h2>
 <p>SpringMVC 框架的接口中 Response 有 <code>ServletOutputStream</code> 和 <code>PrintWriter</code> 两种输出，还有一个 <code>setCharacterEncoding</code> 方法。</p>
 <p>OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 <code>setCharacterEncoding</code> 无效。所以先采用 <code>PrintWriter</code> 搭配 <code>setCharacterEncoding</code> 方法。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile1&#34;</span><span style="color:#666">)</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile1&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile1</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
 
     <span style="color:#408080;font-style:italic">//读取本地文件
@@ -618,7 +618,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </code></pre></div><p>无用，没有仔细研究，应该 <code>setCharacterEncoding</code> 只是告诉浏览器是什么编码，没有解码功能。</p>
 <h2 id="方案二servletoutputstream--outputstreamwriter">方案二：ServletOutputStream + OutputStreamWriter</h2>
 <p>将 <code>response.getOutputStream()</code> 获取到的流用 <code>OutputStreamWriter</code> 包装。结果可行。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile2&#34;</span><span style="color:#666">)</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile2&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile2</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
 
     <span style="color:#408080;font-style:italic">//读取本地文件
@@ -642,7 +642,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#666">}</span>
 </code></pre></div><h2 id="方案三servletoutputstream--getbytes">方案三：ServletOutputStream + getBytes</h2>
 <p>在按行写入字符串时，使用 <code>getBytes</code> 方法将字符串转换为想要输出的编码格式。结果可行。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile3&#34;</span><span style="color:#666">)</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile3&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile3</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
 
     <span style="color:#408080;font-style:italic">//读取本地文件
@@ -665,7 +665,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#666">}</span>
 </code></pre></div><h1 id="无需转换的写法">无需转换的写法</h1>
 <p>若不需要转码的话，就很简短了，用字节流就行了。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile4&#34;</span><span style="color:#666">)</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile4&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile4</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
 
     <span style="color:#408080;font-style:italic">//读取本地文件
@@ -687,7 +687,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
     os<span style="color:#666">.</span><span style="color:#7d9029">close</span><span style="color:#666">();</span>
 <span style="color:#666">}</span>
 </code></pre></div><p>简写的话可以用第三方包。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.util.FileCopyUtils</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.util.FileCopyUtils</span><span style="color:#666">;</span>
 <span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/downloadFile5&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">downloadFile5</span><span style="color:#666">(</span>HttpServletResponse response<span style="color:#666">)</span> <span style="color:#008000;font-weight:bold">throws</span> IOException<span style="color:#666">{</span>
 
@@ -706,7 +706,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#666">}</span>
 </code></pre></div><h1 id="多文件打包下载">多文件打包下载</h1>
 <p>当需要下载多个文件时，可以将其打包成一个文件，然后下载。Java 自带的 <code>ZipOutputStream</code> 可以实现。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">java.util.zip.ZipEntry</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">java.util.zip.ZipEntry</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">java.util.zip.ZipOutputStream</span><span style="color:#666">;</span>
 
 <span style="color:#a2f">@Override</span>

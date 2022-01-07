@@ -6,9 +6,210 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Jan 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>RabbitMQ 实现跨语言通信</title>
+        <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
+        <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0515_rabbitmq.html -&lt;h1 id=&#34;需求场景&#34;&gt;需求场景&lt;/h1&gt;
+&lt;p&gt;做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。&lt;/p&gt;
+&lt;p&gt;其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。&lt;/p&gt;
+&lt;h1 id=&#34;三种方式的实现&#34;&gt;三种方式的实现&lt;/h1&gt;
+&lt;h2 id=&#34;1-直接调用&#34;&gt;1. 直接调用&lt;/h2&gt;
+&lt;p&gt;有 &lt;code&gt;ProcessBuilder&lt;/code&gt; 和 &lt;code&gt;Runtime.exec()&lt;/code&gt; 两种方法，用法差不多，都可以传一个字符串数组。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; command &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; String&lt;span style=&#34;color:#666&#34;&gt;[]{&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;};&lt;/span&gt;
+proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; Runtime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getRuntime&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;exec&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 执行py文件
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;ProcessBuilder&lt;/code&gt; 可以是列表，官方推荐 &lt;code&gt;ProcessBuilder&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; command &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ArrayList&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+ProcessBuilder pb &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ProcessBuilder&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Process&lt;/code&gt; 提供 &lt;code&gt;InputStream&lt;/code&gt; 和 &lt;code&gt;ErrorStream&lt;/code&gt; 接收返回结果；为方便起见，可以将错误流重定向到输入流。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;redirectErrorStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//错误流重定向
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;BufferedReader in &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getInputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;若需要立即获取其返回结果，需要用 &lt;code&gt;waitFor()&lt;/code&gt; 方法。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;code &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;waitFor&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。&lt;/li&gt;
+&lt;li&gt;作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。&lt;/li&gt;
+&lt;li&gt;返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。&lt;/li&gt;
+&lt;li&gt;目前只尝试了 Java 调用 Python，反过来感觉很难。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;完整代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Test&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;java2pythonTest&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
+  &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; code &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+  Process proc&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Runtime.getRuntime()
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//			String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;};
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//      proc = Runtime.getRuntime().exec(command);// 执行py文件
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+    List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; command &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ArrayList&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+    command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    command&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    ProcessBuilder pb &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; ProcessBuilder&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;command&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;redirectErrorStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//错误流重定向
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    proc &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//用输入输出流来截取结果
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    BufferedReader in &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; BufferedReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; InputStreamReader&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getInputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;gbk&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
+    String line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;line &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; in&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;readLine&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+      System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;gt; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; line&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    in&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    code &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; proc&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;waitFor&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python&amp;gt; wait for code: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; code&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+
+  &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;IOException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+  &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+  &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-通过-api-通信&#34;&gt;2. 通过 API 通信&lt;/h2&gt;
+&lt;p&gt;两端都启动为一个 Web 项目，Java 端可以采用 &lt;code&gt;Spring Boot&lt;/code&gt; 框架，Python 端用 &lt;code&gt;Flask&lt;/code&gt; 框架。然后通过 &lt;code&gt;Spring Cloud&lt;/code&gt; 来连接。&lt;/p&gt;
+&lt;p&gt;由于 &lt;code&gt;Spring Cloud&lt;/code&gt; 非本人搭建，就不讲了。当然，你也没必要非要使用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;两端通信频繁的情况下，相对于第一种方案更好些&lt;/li&gt;
+&lt;li&gt;开发有点烦，尤其是数据传输，如果用 &lt;code&gt;Spring Cloud&lt;/code&gt; 会好些&lt;/li&gt;
+&lt;li&gt;不适用于等待的情况，如 Python 端计算量大，没法立刻给出结果。Api 嘛，时间长肯定不太好&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-rabbitmq-消息队列&#34;&gt;3. RabbitMQ 消息队列&lt;/h2&gt;
+&lt;p&gt;因为实际公司开发中，Python 端计算量很大，需要等待很久，所以方法二也不太适用，后面有同事提出用消息队列的方式，可以不必等待，正好满足我的情况。&lt;/p&gt;
+&lt;p&gt;RabbitMQ 不仅要有接收端、发送端，还需要安装管理器。&lt;/p&gt;
+&lt;h3 id=&#34;管理系统&#34;&gt;管理系统&lt;/h3&gt;
+&lt;p&gt;管理系统各平台都有，也有 docker 镜像。具体不赘述，看官网就行了。&lt;/p&gt;
+&lt;p&gt;安装后会有 Web 端图形界面，使用很方便，不需要命令行就可以完成。&lt;/p&gt;
+&lt;p&gt;大概介绍下用到的一些概念，后续深入的话再补充。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Virtual Hosts&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;相当于 Mysql 的库，相互独立，exchange、queue、message 不能互通。需要账户管理员权限。Web 端操作如下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://4fhota.dm.files.1drv.com/y4m8ssy6_IOEEMM-61Xim9dXVPqGXAFr3Z_RoNVyZLoNzHN9PQhwzZj8-3AcYN8cRrF4T5aTQ7oFlKNyeNwyoG0jAxkWBbszJdGw2HGVFlxkvVyiPM8fazvGt7I6X4QM0JpdCQj9q4U2Vd057K-Lr79wHjloJGyOEVpf3fgbgfClyrMb3Is40we--Ynuirt4zKuWXPW0tDyQJSZNrnu2uTVcg?width=1901&amp;height=583&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Queue&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;队列，基本通信模块，相当于一个消息缓冲区，消息进到队列里，再被发送出去。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://4vhota.dm.files.1drv.com/y4mHDkl9htpAR-UW-uVpdqrn3kaunkMdLUY9A6WiphfaJH3abuSMwSV1Io_w2BOpUcVNnn1HW1qQfNqilH5e9w4kLZHf-Alq4RrEtLkS1PaTHgJwwuZSqdWdgYODKNeNDunP2GRtRuoO16LLg3DklXZeePT-xvjIGB1OqR01Zj0tqrRnf_0bjAZ_T_0OsYPFfui4in6-_nrw-X8zNKw88oHAw?width=1898&amp;height=716&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exchange&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;生产者发送消息时由 Exchange 来决定要给哪个 Queue。具体有 Direct、Fanout、Topic、Headers 四种类型，我用默认的一对一也就没有仔细了解。&lt;/p&gt;
+&lt;h3 id=&#34;java-端实现&#34;&gt;Java 端实现&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;配置&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我采用 &lt;code&gt;Spring Boot&lt;/code&gt; 框架，自带 &lt;code&gt;Spring AMQP&lt;/code&gt; 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;rabbitmq&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;192.168.0.102&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;port&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;5672&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;username&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;password&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;virtual-host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;发送消息&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;AmqpTemplate 类用于发送消息，我写了个定时 3 秒发送时间：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;TestScheduled&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//rabbitMQ Queue
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; String PYTHON2JAVA &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python2java&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; String JAVA2PYTHON &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;java2python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; AmqpTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
+        String now &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+        String content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;java2python and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; now&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+        System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;content&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convertAndSend&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JAVA2PYTHON&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; content&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果没有客户端接收的话，会一直在队列中，Web 页面下可以看到：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://2lhota.dm.files.1drv.com/y4mJzu23NfL92LZyK4mv2xfcPaF1I41GtqfFnGK9bHFXt7oiYN3IdXhY2PtTqBZ4OwZH7eJECqQrB5BgiQONGxYGUGfgDl4Zuax9aLTfAfK8gE0jbDihMJRGmkarzl5Fubt-Uw9sEPqfrTzblJ3uYm8z8u_Ety07JT6qrwERGA858juJE8A5gqq75UPXL-JNIeNDfq5SK-DzQEz8xJMV21Fuw?width=1873&amp;height=805&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;接收消息&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;接收消息也非常简单，只需要添加 &lt;code&gt;@RabbitListener&lt;/code&gt; 注解即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;queues &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; PYTHON2JAVA&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;listen&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;String message&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;python-端实现&#34;&gt;Python 端实现&lt;/h3&gt;
+&lt;p&gt;Python 端需要安装第三方库 &lt;code&gt;pika&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;建立连接&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;get_connect&lt;/span&gt;():
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    连接
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return: 
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    config_pika_username &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;admin&amp;#34;&lt;/span&gt;
+    cofig_pika_password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;admin&amp;#34;&lt;/span&gt;
+    config_pika_host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;192.168.0.102&amp;#34;&lt;/span&gt;
+    config_pika_port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;5672&lt;/span&gt;
+    config_pika_virtual_host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
+    cred &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pika&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;PlainCredentials(config_pika_username, cofig_pika_password)
+    connection &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pika&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;BlockingConnection(
+        pika&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;ConnectionParameters(
+            host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;config_pika_host,
+            port&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;config_pika_port,
+            virtual_host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;config_pika_virtual_host,
+            credentials&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;cred,
+            heartbeat&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;
+        ))
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; connection
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;定义回调函数&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;callback&lt;/span&gt;(ch, method, properties, body):
+    &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(body)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;等待接收&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;运行此方法，等待接收。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;build&lt;/span&gt;():
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    start_consuming
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :return: 
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    channel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_connect()&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;channel()
+    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;queue_declare(queue&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;java2python&amp;#39;&lt;/span&gt;, durable&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;True&lt;/span&gt;)
+    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;basic_consume(queue&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;java2python&amp;#39;&lt;/span&gt;,
+                          auto_ack&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;True&lt;/span&gt;,
+                          on_message_callback&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;callback)
+    &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39; consumer_start&amp;#39;&lt;/span&gt;)
+    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;start_consuming()
+
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    build()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;发送消息&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;producer&lt;/span&gt;():
+    &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    生产者
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    :param rabbit_body: 发送内容
+&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 创建通道&lt;/span&gt;
+    connection &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_connect()
+    channel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; connection&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;channel()
+    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;queue_declare(queue&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;python2java&amp;#39;&lt;/span&gt;, durable&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;True&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 发送内容&lt;/span&gt;
+    message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;python2java and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;str&lt;/span&gt;(datetime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;now())
+    &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(message)
+    channel&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;basic_publish(exchange&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;, routing_key&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;python2java&amp;#39;&lt;/span&gt;, body&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;message)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;坑不坑：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;非长连接方式，效率相对接口方式更高。&lt;/li&gt;
+&lt;li&gt;如果项目所用框架如 &lt;code&gt;Spring Boot&lt;/code&gt; 已经集成的话，开发会很方便。&lt;/li&gt;
+&lt;li&gt;有担心长时间没有消息队列会断开连接的情况，也有遇到，但好像都已解决。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;后续&#34;&gt;后续&lt;/h1&gt;
+&lt;p&gt;只是简单介绍用到的类和方法，流于表面，后续如果频繁使用的话，需要深入了解。&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0515_rabbitmq.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -34,7 +235,7 @@
 &lt;p&gt;&lt;img src=&#34;https://n0p2tw.dm.files.1drv.com/y4mwf-OEOC9M3hPuAM-cf25Kuwuv6zt5ylvqRo2epKZjLtA4T-g09hxwxwmkwUd8TmPDan_ZN3w5D19ZnXgCez_SHSTtCVxISYYkZxC7XOoW1XbQsOZ2j5rtJqWMehFYkvMOHNEEub1s7rISsqsfMEcLAWZyX9fufOKVcdMqfqR48NljJkC7Fm44ugpNmwi9KUFO8SJ2zIECjb-cWARSGuKOw?width=2850&amp;height=1566&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 &lt;h2 id=&#34;元数据块metadata-block&#34;&gt;元数据块（Metadata Block）&lt;/h2&gt;
 &lt;p&gt;用暴力猴新建脚本时，会默认创建基础的元数据块。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// ==UserScript==
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;// ==UserScript==
 // @name        New script - torrentz2.eu
 // @namespace   Violentmonkey Scripts
 // @match       *://torrentz2.eu/*
@@ -54,7 +255,7 @@
 &lt;li&gt;&lt;code&gt;description&lt;/code&gt;：描述&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;其余我用到的有：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// ==UserScript==
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;// ==UserScript==
 // @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
 // @run-at      document-idle
 // ==/UserScript==
@@ -68,7 +269,7 @@
 &lt;ol&gt;
 &lt;li&gt;简单粗暴的在页面上添加一个很丑很丑的按钮。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; input&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.createElement(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;input&amp;#34;&lt;/span&gt;);
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; input&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.createElement(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;input&amp;#34;&lt;/span&gt;);
 input.type&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;button&amp;#34;&lt;/span&gt;;
 input.value&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Custom Button&amp;#34;&lt;/span&gt;;
 input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;font-size:18px;position:absolute;top:120px;right:40px;&amp;#34;&lt;/span&gt;);
@@ -76,7 +277,7 @@ input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;然后为按钮添加点击事件。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;input.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; skipFunc;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;input.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; skipFunc;
 
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; skipFunc()
 {
@@ -88,7 +289,7 @@ input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;
 &lt;p&gt;另外，&lt;code&gt;innerHTML&lt;/code&gt;、&lt;code&gt;window.open&lt;/code&gt; 等其他方法就不赘述了，最后展示如下图，点击会跳转至谷歌。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://mup2tw.dm.files.1drv.com/y4mQQE9aEjU3z7R2DSA2BLQ2S37BNFaxSoxNyrfBaijR1lt5xhgEQL8S_KlaGt6LrMhbMSsjomvCRyV90Kqyzq268yqaYtiBag4GA2qSquOGsT5khQ5XdPAjnN0qJG0mGI-5kqHPfYSnhsxMLMWLvPQ5yPz-y937wDMwL-i3SOuhPIoudLAOW1k5rvleQRaz0iCL58o-MVqOFgrL3QDKgVvdw?width=2506&amp;height=1260&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;丑哭了有没有。。整个用户脚本如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// ==UserScript==
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// ==UserScript==
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @name        New script - torrentz2.eu
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @namespace   Violentmonkey Scripts
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// @match       *://torrentz2.eu/*
@@ -116,7 +317,7 @@ input.setAttribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;style&amp;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方案二页面原有元素添加点击&#34;&gt;方案二：页面原有元素添加点击&lt;/h2&gt;
 &lt;p&gt;在 info_hash 文本上添加点击事件，点击文本会跳转至谷歌。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
 infoHash.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt;(){&lt;span style=&#34;color:#008000&#34;&gt;window&lt;/span&gt;.open(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://www.google.com/search?q=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; infoHash.innerHTML.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;))}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此方案完美隐藏，没有破坏原有页面。&lt;/p&gt;
 &lt;h2 id=&#34;方案三按钮嵌入至页面&#34;&gt;方案三：按钮嵌入至页面&lt;/h2&gt;
@@ -132,7 +333,7 @@ infoHash.onclick &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span 
 &lt;ol start=&#34;3&#34;&gt;
 &lt;li&gt;&lt;code&gt;appendTo&lt;/code&gt; 方法添加到父节点中&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHash &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;document&lt;/span&gt;.querySelector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;#wrap &amp;gt; div.trackersvotebox &amp;gt; div.trackers &amp;gt; div&amp;#34;&lt;/span&gt;)
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; infoHashText &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; infoHash.innerHTML.replace(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;info_hash: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
 $(&lt;span style=&#34;color:#ba2121&#34;&gt;`
 &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;lt;a href=&amp;#34;https://www.google.com/search?q=&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;${&lt;/span&gt;infoHashText&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34; target=&amp;#34;_blank&amp;#34; &amp;gt;Google&amp;lt;/a&amp;gt;
@@ -182,7 +383,7 @@ $(&lt;span style=&#34;color:#ba2121&#34;&gt;`
 &lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
 &lt;p&gt;就 200 行代码，直接贴出来了，不放到 Github 上了。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;附锤子阅读APP下载 &lt;a href=&#34;https://www.smartisan.com/apps/#/reader&#34;&gt;链接&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;sys&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;getopt&lt;/span&gt;
 
@@ -241,7 +442,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
         site_name &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; site_json[&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;]
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; site_id, site_name
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; None, None
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;None&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;None&lt;/span&gt;
 
 
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;search_titles&lt;/span&gt;(site_id, offset, page_size, search_name, match_level):
@@ -310,11 +511,11 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt;:
         opts, args &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; getopt&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;getopt(sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;argv[&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:], &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;hs:k:n:m:o:&amp;#39;&lt;/span&gt;, [&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;help=&amp;#39;&lt;/span&gt;])
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;except&lt;/span&gt; getopt&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;GetoptError:
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;Error ! Use -h or --help to show this help message&amp;#39;&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;Error ! Use -h or --help to show this help message&amp;#39;&lt;/span&gt;)
         sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;)
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; opt, arg &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; opts:
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; opt &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; (&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;--help&amp;#39;&lt;/span&gt;):
-            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(get_args&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;__doc__)
+            &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(get_args&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;__doc__)
             sys&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;exit(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; opt &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;-s&amp;#39;&lt;/span&gt;:
             site &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; arg
@@ -334,9 +535,9 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 查找订阅号site_id&lt;/span&gt;
     site_id, site_name &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_site(site)
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;not&lt;/span&gt; site_id:
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;订阅号不存在&amp;#34;&lt;/span&gt;)
-        &lt;span style=&#34;color:#008000&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;正在搜索 {} 的文章&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(site_name))
+        &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;订阅号不存在&amp;#34;&lt;/span&gt;)
+        exit(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+    &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;正在搜索 &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt; 的文章&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(site_name))
 
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取当前订阅号文章总数，计算遍历最高次数&lt;/span&gt;
     count &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; get_article_count(site_id)
@@ -352,20 +553,20 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 输出&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;not&lt;/span&gt; search_list:
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;无搜索结果&amp;#34;&lt;/span&gt;)
-        &lt;span style=&#34;color:#008000&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
+        &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;无搜索结果&amp;#34;&lt;/span&gt;)
+        exit(&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;)
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
         search_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_list[:num]
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; output &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;:
             &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
-                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;{0} {1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
+                &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{0}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{1}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;elif&lt;/span&gt; output &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;:
             &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;open&lt;/span&gt;(TEMP_FILE, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;w&amp;#39;&lt;/span&gt;, encoding&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;as&lt;/span&gt; f:
                 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; search_list:
-                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;[{}]({})&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
+                    f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;[&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;](&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;)&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;), i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;origin_url&amp;#39;&lt;/span&gt;)))
                     f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b62;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;)
                     f&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b62;font-weight:bold&#34;&gt;\r\n&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;&lt;/span&gt;)
-            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;结果已成功写入 {} 中&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(TEMP_FILE))
+            &lt;span style=&#34;color:#008000&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;结果已成功写入 &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt; 中&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(TEMP_FILE))
 
 
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main&lt;/span&gt;():
@@ -393,7 +594,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 &lt;h2 id=&#34;方案一-printwriter--characterencoding&#34;&gt;方案一： PrintWriter + CharacterEncoding&lt;/h2&gt;
 &lt;p&gt;SpringMVC 框架的接口中 Response 有 &lt;code&gt;ServletOutputStream&lt;/code&gt; 和 &lt;code&gt;PrintWriter&lt;/code&gt; 两种输出，还有一个 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
 &lt;p&gt;OutPutStream 视为写入二进制数据，容器不对二进制数据进行编码，即 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 无效。所以先采用 &lt;code&gt;PrintWriter&lt;/code&gt; 搭配 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 方法。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile1&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
@@ -419,7 +620,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;无用，没有仔细研究，应该 &lt;code&gt;setCharacterEncoding&lt;/code&gt; 只是告诉浏览器是什么编码，没有解码功能。&lt;/p&gt;
 &lt;h2 id=&#34;方案二servletoutputstream--outputstreamwriter&#34;&gt;方案二：ServletOutputStream + OutputStreamWriter&lt;/h2&gt;
 &lt;p&gt;将 &lt;code&gt;response.getOutputStream()&lt;/code&gt; 获取到的流用 &lt;code&gt;OutputStreamWriter&lt;/code&gt; 包装。结果可行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile2&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
@@ -443,7 +644,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方案三servletoutputstream--getbytes&#34;&gt;方案三：ServletOutputStream + getBytes&lt;/h2&gt;
 &lt;p&gt;在按行写入字符串时，使用 &lt;code&gt;getBytes&lt;/code&gt; 方法将字符串转换为想要输出的编码格式。结果可行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
@@ -466,7 +667,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;无需转换的写法&#34;&gt;无需转换的写法&lt;/h1&gt;
 &lt;p&gt;若不需要转码的话，就很简短了，用字节流就行了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile4&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//读取本地文件
@@ -488,7 +689,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
     os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简写的话可以用第三方包。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.util.FileCopyUtils&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.util.FileCopyUtils&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/downloadFile5&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;downloadFile5&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;HttpServletResponse response&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;throws&lt;/span&gt; IOException&lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
@@ -507,7 +708,7 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;多文件打包下载&#34;&gt;多文件打包下载&lt;/h1&gt;
 &lt;p&gt;当需要下载多个文件时，可以将其打包成一个文件，然后下载。Java 自带的 &lt;code&gt;ZipOutputStream&lt;/code&gt; 可以实现。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.util.zip.ZipEntry&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.util.zip.ZipEntry&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.util.zip.ZipOutputStream&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
 &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
@@ -641,13 +842,13 @@ TEMP_FILE &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&
 &lt;/ol&gt;
 &lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;支持 html 标签&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[markup.goldmark.renderer]
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;[markup.goldmark.renderer]
 unsafe = &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# enable raw HTML in Markdown&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;图片居中&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;center&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://dsm01pap001.com&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;height&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;300&amp;#34;&lt;/span&gt; /&amp;gt;&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;center&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;center&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://dsm01pap001.com&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;height&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;300&amp;#34;&lt;/span&gt; /&amp;gt;&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;center&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;p&lt;/span&gt;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;元数据&#34;&gt;元数据&lt;/h1&gt;
 &lt;p&gt;通常元数据包括如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;title&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人笔记 - Git&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;description&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;个人使用 Git 时遇到的坑和使用的技巧梳理。&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;date&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2020-03-01&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;

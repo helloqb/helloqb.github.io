@@ -468,7 +468,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p>项目中遇到数据库返回的字段不想全部返回给前端，一个一个 setter 挺麻烦，不够优雅。市面上有挺多映射框架如 <code>Dozer</code>，<code>Orika</code>，<code>MapStruct</code>，<code>ModelMapper</code>，<code>JMapper</code> 等，其中 <code>MapStruct</code> 只是代码生成器，使用纯 Java 的方法调用源对象和目标对象之间进行映射，并非 Java 反射机制，所以其性能最好。</p>
 <h1 id="实现">实现</h1>
 <p><strong>Maven 依赖</strong></p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">...
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">...
 <span style="color:#008000;font-weight:bold">&lt;properties&gt;</span>
     <span style="color:#008000;font-weight:bold">&lt;org.mapstruct.version&gt;</span>1.3.1.Final<span style="color:#008000;font-weight:bold">&lt;/org.mapstruct.version&gt;</span>
 <span style="color:#008000;font-weight:bold">&lt;/properties&gt;</span>
@@ -503,7 +503,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#008000;font-weight:bold">&lt;/build&gt;</span>
 ...
 </code></pre></div><p>如果项目中有用到 <code>lombok</code> 的话，<code>MapStruct</code> 也支持，添加如下即可。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#008000;font-weight:bold">&lt;annotationProcessorPaths&gt;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#008000;font-weight:bold">&lt;annotationProcessorPaths&gt;</span>
     <span style="color:#008000;font-weight:bold">&lt;path&gt;</span>
         <span style="color:#008000;font-weight:bold">&lt;groupId&gt;</span>org.projectlombok<span style="color:#008000;font-weight:bold">&lt;/groupId&gt;</span>
         <span style="color:#008000;font-weight:bold">&lt;artifactId&gt;</span>lombok<span style="color:#008000;font-weight:bold">&lt;/artifactId&gt;</span>
@@ -512,7 +512,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#008000;font-weight:bold">&lt;/annotationProcessorPaths&gt;</span>
 </code></pre></div><p><strong>普通调用</strong></p>
 <p><code>MapStruct</code> 定义非常简单，因为它完全基于代码生成。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.mapstruct.Mapper</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.mapstruct.Mapper</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.mapstruct.Mapping</span><span style="color:#666">;</span>
 
 <span style="color:#a2f">@Mapper</span>
@@ -527,14 +527,14 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
     DestinationCode <span style="color:#00f">convert</span><span style="color:#666">(</span>SourceCode sourceCode<span style="color:#666">);</span>
 <span style="color:#666">}</span>
 </code></pre></div><p>调用也很简单。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">DestinationCode destinationCode <span style="color:#666">=</span> MapStructConverter<span style="color:#666">.</span><span style="color:#7d9029">MAPPER</span><span style="color:#666">.</span><span style="color:#7d9029">convert</span><span style="color:#666">(</span>sourceCode<span style="color:#666">);</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">DestinationCode destinationCode <span style="color:#666">=</span> MapStructConverter<span style="color:#666">.</span><span style="color:#7d9029">MAPPER</span><span style="color:#666">.</span><span style="color:#7d9029">convert</span><span style="color:#666">(</span>sourceCode<span style="color:#666">);</span>
 </code></pre></div><p><strong>Spring 注解调用</strong></p>
 <p>Spring 项目的话可以如下参数实现依赖注入。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Mapper</span><span style="color:#666">(</span>componentModel <span style="color:#666">=</span> <span style="color:#ba2121">&#34;spring&#34;</span><span style="color:#666">)</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Mapper</span><span style="color:#666">(</span>componentModel <span style="color:#666">=</span> <span style="color:#ba2121">&#34;spring&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">interface</span> <span style="color:#00f;font-weight:bold">MapStructConverter</span> <span style="color:#666">{</span>
 <span style="color:#666">}</span>
 </code></pre></div><p><code>@Autowired</code> 注入调用更方便。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Autowired</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Autowired</span>
 <span style="color:#008000;font-weight:bold">private</span> MapStructConverter mapStructConverter<span style="color:#666">;</span>
 
 DestinationCode destinationCode <span style="color:#666">=</span> mapStructConverter<span style="color:#666">.</span><span style="color:#7d9029">convert</span><span style="color:#666">(</span>sourceCode<span style="color:#666">);</span>

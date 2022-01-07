@@ -549,7 +549,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <li><code>-w</code>：保存为文件</li>
 </ul>
 <p>由于工作中既需要将 tcpdump 的结果打印，又需要将结果保存供 Wireshark 分析，搜索许久后终于实现了。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">tcpdump -s <span style="color:#666">0</span> -U -w - | tee target.<span style="color:#008000;font-weight:bold">$(</span>date +%Y-%m-%d-%H-%M-%S<span style="color:#008000;font-weight:bold">)</span>.pcap | tcpdump -r -
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">tcpdump -s <span style="color:#666">0</span> -U -w - | tee target.<span style="color:#008000;font-weight:bold">$(</span>date +%Y-%m-%d-%H-%M-%S<span style="color:#008000;font-weight:bold">)</span>.pcap | tcpdump -r -
 </code></pre></div><p><center><img src="https://dsm01pap001files.storage.live.com/y4mM2NLbzm5DfS6jvX_cbvJjgw_ALjSKDDZxIySehgHyEAx3llL3pMzXAH99MiGQH7KRzOiRGGC-oVddz6ReDA4-xVnBXgnD9Ej97hNqH2qyXA8-rA_OLUTNAefaC1lUT80VJC0T8MgeECoFhGOx1xYKM-k0BTlrTP4BC4BeTAhoQvSPvo3rZOYFeMCOTibnlDw?width=708&height=383&cropmode=none" /></center></p>
 <p>其中：</p>
 <ul>
@@ -567,7 +567,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <li><code>nsenter</code> 命令在宿主机上进入容器的网络空间</li>
 </ol>
 <p>第 2 种 方法参考底部链接，我个人更喜欢第 3 种方法，详细命令如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#408080;font-style:italic"># 获取容器进程 pid</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#408080;font-style:italic"># 获取容器进程 pid</span>
 docker inspect --format <span style="color:#666">{{</span>.State.Pid<span style="color:#666">}}</span> ContainerId
 
 <span style="color:#408080;font-style:italic"># 进入容器的网络空间</span>

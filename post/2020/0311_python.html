@@ -486,7 +486,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <h1 id="代码">代码</h1>
 <p>就 200 行代码，直接贴出来了，不放到 Github 上了。</p>
 <p><em>附锤子阅读APP下载 <a href="https://www.smartisan.com/apps/#/reader">链接</a></em></p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">requests</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">requests</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">sys</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">getopt</span>
 
@@ -545,7 +545,7 @@ TEMP_FILE <span style="color:#666">=</span> <span style="color:#ba2121">&#39;res
         site_name <span style="color:#666">=</span> site_json[<span style="color:#ba2121">&#39;name&#39;</span>]
         <span style="color:#008000;font-weight:bold">return</span> site_id, site_name
     <span style="color:#008000;font-weight:bold">else</span>:
-        <span style="color:#008000;font-weight:bold">return</span> None, None
+        <span style="color:#008000;font-weight:bold">return</span> <span style="color:#008000;font-weight:bold">None</span>, <span style="color:#008000;font-weight:bold">None</span>
 
 
 <span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">search_titles</span>(site_id, offset, page_size, search_name, match_level):
@@ -614,11 +614,11 @@ TEMP_FILE <span style="color:#666">=</span> <span style="color:#ba2121">&#39;res
     <span style="color:#008000;font-weight:bold">try</span>:
         opts, args <span style="color:#666">=</span> getopt<span style="color:#666">.</span>getopt(sys<span style="color:#666">.</span>argv[<span style="color:#666">1</span>:], <span style="color:#ba2121">&#39;hs:k:n:m:o:&#39;</span>, [<span style="color:#ba2121">&#39;help=&#39;</span>])
     <span style="color:#008000;font-weight:bold">except</span> getopt<span style="color:#666">.</span>GetoptError:
-        <span style="color:#008000;font-weight:bold">print</span>(<span style="color:#ba2121">&#39;Error ! Use -h or --help to show this help message&#39;</span>)
+        <span style="color:#008000">print</span>(<span style="color:#ba2121">&#39;Error ! Use -h or --help to show this help message&#39;</span>)
         sys<span style="color:#666">.</span>exit(<span style="color:#666">2</span>)
     <span style="color:#008000;font-weight:bold">for</span> opt, arg <span style="color:#a2f;font-weight:bold">in</span> opts:
         <span style="color:#008000;font-weight:bold">if</span> opt <span style="color:#a2f;font-weight:bold">in</span> (<span style="color:#ba2121">&#39;-h&#39;</span>, <span style="color:#ba2121">&#39;--help&#39;</span>):
-            <span style="color:#008000;font-weight:bold">print</span>(get_args<span style="color:#666">.</span>__doc__)
+            <span style="color:#008000">print</span>(get_args<span style="color:#666">.</span>__doc__)
             sys<span style="color:#666">.</span>exit(<span style="color:#666">0</span>)
         <span style="color:#008000;font-weight:bold">elif</span> opt <span style="color:#666">==</span> <span style="color:#ba2121">&#39;-s&#39;</span>:
             site <span style="color:#666">=</span> arg
@@ -638,9 +638,9 @@ TEMP_FILE <span style="color:#666">=</span> <span style="color:#ba2121">&#39;res
     <span style="color:#408080;font-style:italic"># 查找订阅号site_id</span>
     site_id, site_name <span style="color:#666">=</span> search_site(site)
     <span style="color:#008000;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> site_id:
-        <span style="color:#008000;font-weight:bold">print</span>(<span style="color:#ba2121">&#34;订阅号不存在&#34;</span>)
-        <span style="color:#008000">exit</span>(<span style="color:#666">0</span>)
-    <span style="color:#008000;font-weight:bold">print</span>(<span style="color:#ba2121">&#39;正在搜索 {} 的文章&#39;</span><span style="color:#666">.</span>format(site_name))
+        <span style="color:#008000">print</span>(<span style="color:#ba2121">&#34;订阅号不存在&#34;</span>)
+        exit(<span style="color:#666">0</span>)
+    <span style="color:#008000">print</span>(<span style="color:#ba2121">&#39;正在搜索 </span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#ba2121"> 的文章&#39;</span><span style="color:#666">.</span>format(site_name))
 
     <span style="color:#408080;font-style:italic"># 获取当前订阅号文章总数，计算遍历最高次数</span>
     count <span style="color:#666">=</span> get_article_count(site_id)
@@ -656,20 +656,20 @@ TEMP_FILE <span style="color:#666">=</span> <span style="color:#ba2121">&#39;res
 
     <span style="color:#408080;font-style:italic"># 输出</span>
     <span style="color:#008000;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> search_list:
-        <span style="color:#008000;font-weight:bold">print</span>(<span style="color:#ba2121">&#34;无搜索结果&#34;</span>)
-        <span style="color:#008000">exit</span>(<span style="color:#666">0</span>)
+        <span style="color:#008000">print</span>(<span style="color:#ba2121">&#34;无搜索结果&#34;</span>)
+        exit(<span style="color:#666">0</span>)
     <span style="color:#008000;font-weight:bold">else</span>:
         search_list <span style="color:#666">=</span> search_list[:num]
         <span style="color:#008000;font-weight:bold">if</span> output <span style="color:#666">==</span> <span style="color:#666">1</span>:
             <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> search_list:
-                <span style="color:#008000;font-weight:bold">print</span>(<span style="color:#ba2121">&#39;{0} {1}&#39;</span><span style="color:#666">.</span>format(i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;title&#39;</span>), i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;origin_url&#39;</span>)))
+                <span style="color:#008000">print</span>(<span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">{0}</span><span style="color:#ba2121"> </span><span style="color:#b68;font-weight:bold">{1}</span><span style="color:#ba2121">&#39;</span><span style="color:#666">.</span>format(i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;title&#39;</span>), i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;origin_url&#39;</span>)))
         <span style="color:#008000;font-weight:bold">elif</span> output <span style="color:#666">==</span> <span style="color:#666">2</span>:
             <span style="color:#008000;font-weight:bold">with</span> <span style="color:#008000">open</span>(TEMP_FILE, <span style="color:#ba2121">&#39;w&#39;</span>, encoding<span style="color:#666">=</span><span style="color:#ba2121">&#39;utf-8&#39;</span>) <span style="color:#008000;font-weight:bold">as</span> f:
                 <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> search_list:
-                    f<span style="color:#666">.</span>write(<span style="color:#ba2121">&#39;[{}]({})&#39;</span><span style="color:#666">.</span>format(i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;title&#39;</span>), i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;origin_url&#39;</span>)))
+                    f<span style="color:#666">.</span>write(<span style="color:#ba2121">&#39;[</span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#ba2121">](</span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#ba2121">)&#39;</span><span style="color:#666">.</span>format(i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;title&#39;</span>), i<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;origin_url&#39;</span>)))
                     f<span style="color:#666">.</span>write(<span style="color:#ba2121">&#39;</span><span style="color:#b62;font-weight:bold">\r\n</span><span style="color:#ba2121">&#39;</span>)
                     f<span style="color:#666">.</span>write(<span style="color:#ba2121">&#39;</span><span style="color:#b62;font-weight:bold">\r\n</span><span style="color:#ba2121">&#39;</span>)
-            <span style="color:#008000;font-weight:bold">print</span>(<span style="color:#ba2121">&#39;结果已成功写入 {} 中&#39;</span><span style="color:#666">.</span>format(TEMP_FILE))
+            <span style="color:#008000">print</span>(<span style="color:#ba2121">&#39;结果已成功写入 </span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#ba2121"> 中&#39;</span><span style="color:#666">.</span>format(TEMP_FILE))
 
 
 <span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">main</span>():

@@ -474,7 +474,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <h1 id="实现">实现</h1>
 <p>Apache Commons 包中的 Tailer 类实现了这个，一旦了解了这个类，实现起来就简单了。直接贴代码了。</p>
 <p><strong>websocket 入口</strong></p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.apache.commons.io.input.Tailer</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.apache.commons.io.input.Tailer</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.apache.commons.io.input.TailerListener</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.slf4j.Logger</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.slf4j.LoggerFactory</span><span style="color:#666">;</span>
@@ -549,7 +549,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#666">}</span>
 
 </code></pre></div><p><strong>继承 Tailer</strong></p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.apache.commons.io.input.TailerListenerAdapter</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.apache.commons.io.input.TailerListenerAdapter</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.slf4j.Logger</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.slf4j.LoggerFactory</span><span style="color:#666">;</span>
 

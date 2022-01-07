@@ -679,23 +679,23 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                     <h1 id="调用">调用</h1>
 <h2 id="value-注解调用">Value 注解调用</h2>
 <p>例如，YAML 文件中有个自定义配置。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.1</span><span style="color:#bbb">
 </span></code></pre></div><p>使用 <code>@Value</code> 注解调用。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.beans.factory.annotation.Value</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.beans.factory.annotation.Value</span><span style="color:#666">;</span>
 
 <span style="color:#a2f">@Value</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;${myconfig.model-server-url}&#34;</span><span style="color:#666">)</span>
 <span style="color:#008000;font-weight:bold">private</span> String modelServerUrl<span style="color:#666">;</span>
 </code></pre></div><p>变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。</p>
 <h2 id="configurationproperties-注解调用">ConfigurationProperties 注解调用</h2>
 <p>当参数较多时，可以使用 <code>@ConfigurationProperties</code> 将其绑定到一个类中。例如</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.1</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">servers</span>:<span style="color:#bbb"> 
 </span><span style="color:#bbb">    </span>- www.abc.test.com<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- www.xyz.test.com<span style="color:#bbb">
 </span></code></pre></div><p>配置类代码如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.boot.context.properties.ConfigurationProperties</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.boot.context.properties.EnableConfigurationProperties</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.context.annotation.Configuration</span><span style="color:#666">;</span>
@@ -717,7 +717,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </code></pre></div><p>其中 <code>@Configuration</code> 和 <code>@EnableConfigurationProperties</code> 可以用 <code>@Component</code> 代替，前面那种注解更精确些。</p>
 <p>YAML 文件中参数匹配很宽松，下划线 <code>_</code> 和 <code>-</code> 和驼峰都能够匹配到，官方建议使用 <code>-</code>。</p>
 <p>调用时直接通过 <code>@Autowired</code> 注入即可，例如</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Autowired</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Autowired</span>
 <span style="color:#008000;font-weight:bold">private</span> YAMLConfig yamlConfig<span style="color:#666">;</span>
 
 <span style="color:#a2f">@GetMapping</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;/hello&#34;</span><span style="color:#666">)</span>
@@ -729,11 +729,11 @@ String <span style="color:#00f">hello</span><span style="color:#666">(){</span>
 <p>通常线上环境和测试环境的配置会有不同，有时候搞混的话，部署到线上才发觉，这时又得重新打包了。若是配置写在 YAML 文件中，可以使用命令行参数进行配置更改。</p>
 <h2 id="命令行直接配置">命令行直接配置</h2>
 <p>如上述例中参数想要替换成 127.0.0.2，启动命令如下；</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">java -jar demo.jar --myconfig.model-server-url<span style="color:#666">=</span>127.0.0.2
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">java -jar demo.jar --myconfig.model-server-url<span style="color:#666">=</span>127.0.0.2
 </code></pre></div><p>可以看到有很多地方可以配置，那么这些肯定会有个优先级，这种命令行的形式应该是最高的，目前没有深入了解。</p>
 <h2 id="单文件多配置">单文件多配置</h2>
 <p>上述命令行直接配置的方式肯定不适用于参数多的情况，这时就需要用到了 <code>profile</code> 参数，例如：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">profiles</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">active</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#00f;font-weight:bold">---</span><span style="color:#bbb">
@@ -751,20 +751,20 @@ String <span style="color:#00f">hello</span><span style="color:#666">(){</span>
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">server-name</span>:<span style="color:#bbb"> </span>prod<span style="color:#bbb">
 </span><span style="color:#bbb">
 </span></code></pre></div><p>这里 <code>---</code> 表示新文档的开始，所以其实是三个环境写到一起。一开始的默认配置是选择 test，如果想要换成 prod，则启动命令更改如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">java -jar demo.jar --spring.profiles.active<span style="color:#666">=</span>prod
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">java -jar demo.jar --spring.profiles.active<span style="color:#666">=</span>prod
 </code></pre></div><h2 id="多文件多配置">多文件多配置</h2>
 <p>当配置越来越多时，还是分开不同文件更好些，Spring Boot 秉承着 <strong>约定优于配置</strong> 的理念，如果按照其规范来，会相当便利。</p>
 <p>如上述例子可以分为文件 <code>application.yml</code>、文件 <code>application-test.yml</code> 和文件 <code>application-prod.yml</code>。</p>
 <p><strong>application.yml</strong>：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">profiles</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">active</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
 </span></code></pre></div><p><strong>application-test.yml</strong>：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.1</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">server-name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
 </span></code></pre></div><p><strong>application-prod.yml</strong>：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">myconfig</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">model-server-url</span>:<span style="color:#bbb"> </span><span style="color:#666">127.0.0.2</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">server-name</span>:<span style="color:#bbb"> </span>prod<span style="color:#bbb">
 </span></code></pre></div><h1 id="尾巴">尾巴</h1>

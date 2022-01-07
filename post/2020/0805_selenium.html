@@ -704,25 +704,25 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p><em><strong>环境变量的配置也是 Firefox 安装目录，而不需要到文件</strong></em>。这里坑了好久，一直报找不到驱动的错误，原因是写成了 <code>C:\Program Files\Mozilla Firefox\geckdriver.exe</code>。</p>
 <h2 id="2-请求网站">2. 请求网站</h2>
 <p>以掘金网站博客 <a href="https://juejin.im/post/6857394127064006663">cxuan读者的外包面试之旅</a> 为例。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">driver <span style="color:#666">=</span> webdriver<span style="color:#666">.</span>Firefox()
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">driver <span style="color:#666">=</span> webdriver<span style="color:#666">.</span>Firefox()
 driver<span style="color:#666">.</span>get(<span style="color:#ba2121">&#34;https://juejin.im/post/6857394127064006663&#34;</span>)
 </code></pre></div><p>此时没有问题的话，浏览器会自动打开网站。</p>
 <h2 id="3-滚动加载">3. 滚动加载</h2>
 <p>此时若直接获取图片，只会获取获取到一两张。因为大多数网站采用 Ajax 方式，页面滚动到图片才加载，所有就需要模拟页面滚动了。<code>execute_script</code> 方法调用 js 可实现滚动操作。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#408080;font-style:italic"># 获取内容高度</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#408080;font-style:italic"># 获取内容高度</span>
 all_height <span style="color:#666">=</span> driver<span style="color:#666">.</span>execute_script(<span style="color:#ba2121">&#34;return document.body.scrollHeight&#34;</span>)
 <span style="color:#408080;font-style:italic"># 循环往下滚动，每次滚1024高，间隔1秒</span>
 scroll_height <span style="color:#666">=</span> <span style="color:#666">1024</span>
 <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#008000">range</span>(<span style="color:#008000">int</span>(all_height<span style="color:#666">/</span>scroll_height)):
-    driver<span style="color:#666">.</span>execute_script(<span style="color:#ba2121">&#34;window.scrollTo(0, {0});&#34;</span><span style="color:#666">.</span>format(i<span style="color:#666">*</span>scroll_height))
+    driver<span style="color:#666">.</span>execute_script(<span style="color:#ba2121">&#34;window.scrollTo(0, </span><span style="color:#b68;font-weight:bold">{0}</span><span style="color:#ba2121">);&#34;</span><span style="color:#666">.</span>format(i<span style="color:#666">*</span>scroll_height))
     time<span style="color:#666">.</span>sleep(<span style="color:#666">1</span>)
 </code></pre></div><p>如果遇到无限加载的页面，可以参考 stackoverflow 的 <a href="https://stackoverflow.com/questions/20986631/how-can-i-scroll-a-web-page-using-selenium-webdriver-in-python">回答</a>。代码如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">SCROLL_PAUSE_TIME <span style="color:#666">=</span> <span style="color:#666">0.5</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">SCROLL_PAUSE_TIME <span style="color:#666">=</span> <span style="color:#666">0.5</span>
 
 <span style="color:#408080;font-style:italic"># Get scroll height</span>
 last_height <span style="color:#666">=</span> driver<span style="color:#666">.</span>execute_script(<span style="color:#ba2121">&#34;return document.body.scrollHeight&#34;</span>)
 
-<span style="color:#008000;font-weight:bold">while</span> True:
+<span style="color:#008000;font-weight:bold">while</span> <span style="color:#008000;font-weight:bold">True</span>:
     <span style="color:#408080;font-style:italic"># Scroll down to bottom</span>
     driver<span style="color:#666">.</span>execute_script(<span style="color:#ba2121">&#34;window.scrollTo(0, document.body.scrollHeight);&#34;</span>)
 
@@ -736,7 +736,7 @@ last_height <span style="color:#666">=</span> driver<span style="color:#666">.</
     last_height <span style="color:#666">=</span> new_height
 </code></pre></div><h2 id="4-查找元素">4. 查找元素</h2>
 <p>图片加载完成后，就可以定位元素找到图片地址了。这里知识和之前学 Scrapy 的差不多。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#408080;font-style:italic"># 定位到文章节点</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#408080;font-style:italic"># 定位到文章节点</span>
 image_content <span style="color:#666">=</span> driver<span style="color:#666">.</span>find_element_by_css_selector(<span style="color:#ba2121">&#34;.article&#34;</span>)
 <span style="color:#408080;font-style:italic"># 获取文章内img标签</span>
 image_elems <span style="color:#666">=</span> image_content<span style="color:#666">.</span>find_elements_by_css_selector(<span style="color:#ba2121">&#34;img&#34;</span>)
@@ -747,7 +747,7 @@ image_list <span style="color:#666">=</span> []
     image_list<span style="color:#666">.</span>append(i<span style="color:#666">.</span>get_attribute(<span style="color:#ba2121">&#34;src&#34;</span>))
 </code></pre></div><h2 id="5-调用右键">5. 调用右键</h2>
 <p><code>ActionChains</code> 方法可调用右键。右键之前需先定位到元素。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">driver <span style="color:#666">=</span> webdriver<span style="color:#666">.</span>Firefox()
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">driver <span style="color:#666">=</span> webdriver<span style="color:#666">.</span>Firefox()
 driver<span style="color:#666">.</span>get(<span style="color:#ba2121">&#34;https://img-blog.csdnimg.cn/20191104151241389.png&#34;</span>)
 actionChains <span style="color:#666">=</span> ActionChains(driver)
 
@@ -767,9 +767,9 @@ driver<span style="color:#666">.</span>close()
 <li><code>hotkey()</code> 可以传递几个键字符串，这些字符串将按顺序按下，然后以相反的顺序释放</li>
 </ul>
 <p>如火狐的另存为在第三个位置，只需要按方向键下三次，然后回车即可跳出保存对话框。代码如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pyautogui<span style="color:#666">.</span>press([<span style="color:#ba2121">&#39;down&#39;</span>,<span style="color:#ba2121">&#39;down&#39;</span>, <span style="color:#ba2121">&#39;down&#39;</span>, <span style="color:#ba2121">&#39;enter&#39;</span>])
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pyautogui<span style="color:#666">.</span>press([<span style="color:#ba2121">&#39;down&#39;</span>,<span style="color:#ba2121">&#39;down&#39;</span>, <span style="color:#ba2121">&#39;down&#39;</span>, <span style="color:#ba2121">&#39;enter&#39;</span>])
 </code></pre></div><p>由于是图片地址，本 DEMO 其实只需要键入 <code>Ctrl + s</code> 就可以跳出保存对话框。代码如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#408080;font-style:italic"># 浏览器另存为保存图片</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#408080;font-style:italic"># 浏览器另存为保存图片</span>
 <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> image_list:
     driver<span style="color:#666">.</span>get(i)
 
@@ -782,7 +782,7 @@ driver<span style="color:#666">.</span>close()
 
     pyautogui<span style="color:#666">.</span>sleep(<span style="color:#666">1</span>)
 </code></pre></div><p>整体代码如下：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">selenium</span> <span style="color:#008000;font-weight:bold">import</span> webdriver
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">selenium</span> <span style="color:#008000;font-weight:bold">import</span> webdriver
 <span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">selenium.webdriver.common.keys</span> <span style="color:#008000;font-weight:bold">import</span> Keys
 <span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">selenium.webdriver</span> <span style="color:#008000;font-weight:bold">import</span> ActionChains
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">pyautogui</span>
@@ -799,7 +799,7 @@ driver<span style="color:#666">.</span>close()
     <span style="color:#408080;font-style:italic"># 循环往下滚动，每次滚1024高，间隔1秒</span>
     scroll_height <span style="color:#666">=</span> <span style="color:#666">1024</span>
     <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#008000">range</span>(<span style="color:#008000">int</span>(all_height<span style="color:#666">/</span>scroll_height)):
-        driver<span style="color:#666">.</span>execute_script(<span style="color:#ba2121">&#34;window.scrollTo(0, {0});&#34;</span><span style="color:#666">.</span>format(i<span style="color:#666">*</span>scroll_height))
+        driver<span style="color:#666">.</span>execute_script(<span style="color:#ba2121">&#34;window.scrollTo(0, </span><span style="color:#b68;font-weight:bold">{0}</span><span style="color:#ba2121">);&#34;</span><span style="color:#666">.</span>format(i<span style="color:#666">*</span>scroll_height))
         time<span style="color:#666">.</span>sleep(<span style="color:#666">1</span>)
 
     <span style="color:#408080;font-style:italic"># 定位到文章节点</span>
@@ -809,7 +809,7 @@ driver<span style="color:#666">.</span>close()
     <span style="color:#408080;font-style:italic"># 图片链接存放到list中</span>
     image_list <span style="color:#666">=</span> []
     <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> image_elems:
-        <span style="color:#008000;font-weight:bold">print</span>(i<span style="color:#666">.</span>get_attribute(<span style="color:#ba2121">&#34;src&#34;</span>))
+        <span style="color:#008000">print</span>(i<span style="color:#666">.</span>get_attribute(<span style="color:#ba2121">&#34;src&#34;</span>))
         image_list<span style="color:#666">.</span>append(i<span style="color:#666">.</span>get_attribute(<span style="color:#ba2121">&#34;src&#34;</span>))
 
     <span style="color:#408080;font-style:italic"># 浏览器另存为保存图片</span>

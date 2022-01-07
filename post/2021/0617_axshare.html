@@ -731,7 +731,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p>最后用了 Samba。Linux 上配置好后，Windows 映射成网络驱动器，然后在 Axure 分享链接时，选择本地此驱动器即可上传到服务器上。具体操作如下。</p>
 <h2 id="linux-安装-samba">Linux 安装 Samba</h2>
 <p>公司的 Wiki 项目已经用到了 Samba，所以没有亲自安装，直接配置：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cfg" data-lang="cfg"><span style="color:#008000;font-weight:bold">[axure]</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cfg" data-lang="cfg"><span style="color:#008000;font-weight:bold">[axure]</span>
         <span style="color:#7d9029">comment</span> <span style="color:#666">=</span> <span style="color:#ba2121">share for axure
 </span><span style="color:#ba2121">        path = /root/server_axure/html
 </span><span style="color:#ba2121">        public = yes
@@ -752,7 +752,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p><center><img src="https://dsm01pap001files.storage.live.com/y4mWoVupHdhCuJVXR_EEN8ONtFQmEzhyCSBtI_ho5_hko-UAy8n1Yn3kMwjMY8aQCgJ87WwxYA2QHvDJWpRstGv7VfGoORuRNWvsM-bptJBvk7ApR-ZxyLpDYlB3Hy7H83hiG1zSErk1vje9O2yJX0JmZoDsVLOyG6PoQxt6X-BdqPINL8kQJddZZn80Xq-Xd4x?width=1308&height=837&cropmode=none" height="450" /></center></p>
 <h1 id="搭建-web-端">搭建 Web 端</h1>
 <p>此时，已成功将原型图 html 文件上传到服务器上，只要搭建一个 web 服务器就可以访问了。如本例中采用的是 Docker + Nginx 配置：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">version: <span style="color:#ba2121">&#39;3&#39;</span><span style="">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">version: <span style="color:#ba2121">&#39;3&#39;</span><span style="">
 </span><span style=""></span>services:<span style="">
 </span><span style=""></span>  web:<span style="">
 </span><span style=""></span>    image: <span style="color:#ba2121">&#34;nginx:latest&#34;</span><span style="">
@@ -762,7 +762,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </span><span style=""></span>    container_name: axure_web<span style="">
 </span><span style=""></span>    ports:<span style="">
 </span><span style=""></span>      - <span style="color:#ba2121">&#34;12345:8080&#34;</span><span style="">
-</span></code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#008000;font-weight:bold">server</span> {
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#008000;font-weight:bold">server</span> {
   <span style="color:#008000;font-weight:bold">listen</span> <span style="color:#666">8080</span>;
   <span style="color:#008000;font-weight:bold">root</span> <span style="color:#ba2121">/usr/share/nginx/html</span>;
 
@@ -775,7 +775,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p>但是手动修改链接总归不够好，所以想看实现一个逻辑，当产品经理把原型图放入到指定文件夹中， 服务器能自动读取所添加的原型图，然后在首页展示。</p>
 <p>这个需求我问了下前端，前端断然否决，说不可能，前端无法访问服务器的。</p>
 <p>本来也打算写一个后台实现这个需求的，因为谷歌也没有找到结果。但是在配置 Nginx 的时候突然想到其有一个参数 <code>autoindex on</code>，可实现目录浏览功能。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#008000;font-weight:bold">server</span> {
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#008000;font-weight:bold">server</span> {
   <span style="color:#008000;font-weight:bold">location</span> <span style="color:#ba2121">/project/</span> {
     <span style="color:#008000;font-weight:bold">autoindex</span> <span style="color:#800">on</span>;
   }
@@ -783,7 +783,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </code></pre></div><p><center><img src="https://dsm01pap001files.storage.live.com/y4mnHkddENsSkpb-sdl62jyA9isp1ewGyug_O5FkzWQQp_ix-Hs9MQYxpp4BYs0Fv2d7HtRtB1iw-h5oILIaUEJSlj-nw9rgpWR7qRlsVjFflNmTmB43MAbywvwB-WvUYCNcJz9FAnAdX7xnVkD_8irfhA2da29mvG2t08IxDpczOA8U3N8ARwwpY7gaPALvAps?width=1210&height=492&cropmode=none" height="300" /></center></p>
 <p><strong>有希望！既然是个网址，前端是否可以通过 js 获取，解析网页，获取想要的目录文件呢！</strong></p>
 <p>研究良久，实现如下（本人是后端&hellip;&hellip;随意写的，前端大神肯定有更好的写法）：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#008000;font-weight:bold">script</span>&gt;
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#008000;font-weight:bold">script</span>&gt;
   <span style="color:#008000;font-weight:bold">function</span> loadDoc() {
     <span style="color:#008000;font-weight:bold">var</span> xhttp <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> XMLHttpRequest();
     xhttp.onreadystatechange <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> () {
@@ -823,7 +823,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p>最后，将原先的列表下的所有子模块删除，改为调用循环方法。</p>
 </li>
 </ol>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#008000;font-weight:bold">script</span>&gt;
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#008000;font-weight:bold">script</span>&gt;
   <span style="color:#008000;font-weight:bold">function</span> jqueryAdd(name) {
     <span style="color:#008000;font-weight:bold">var</span> child <span style="color:#666">=</span> $(<span style="color:#ba2121">`
 </span><span style="color:#ba2121">  &lt;div class=&#34;el-col el-col-6&#34; style=&#34;padding-left: 20px; padding-right: 20px;&#34;&gt;
@@ -855,6 +855,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <ul>
 <li><a href="https://blog.csdn.net/baidu_26678247/article/details/103157532">Linux 局域网内共享｜SameWorld</a></li>
 <li><a href="https://stackoverflow.com/questions/10585029/parse-an-html-string-with-js#55046067">Parse an HTML string with JS｜stackoverflow</a></li>
+<li><a href="https://stackoverflow.com/questions/31274329/get-list-of-filenames-in-folder-with-javascript/68115534#68115534">Get list of filenames in folder with Javascript｜stackoverflow</a></li>
 </ul>
 
                     
@@ -868,8 +869,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts">
-			Next<br>No newer posts.
+                <a class="newer-posts" href="https://helloqb.xyz/post/2022/0107_software.html">
+			Next<br>软件安装分享
                 </a>
                 
                 

@@ -612,12 +612,12 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p>开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。</p>
 <h1 id="配置">配置</h1>
 <p><code>pom.xml</code> 文件中添加依赖。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#008000;font-weight:bold">&lt;dependency&gt;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#008000;font-weight:bold">&lt;dependency&gt;</span>
     <span style="color:#008000;font-weight:bold">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#008000;font-weight:bold">&lt;/groupId&gt;</span>
     <span style="color:#008000;font-weight:bold">&lt;artifactId&gt;</span>spring-boot-starter-amqp<span style="color:#008000;font-weight:bold">&lt;/artifactId&gt;</span>
 <span style="color:#008000;font-weight:bold">&lt;/dependency&gt;</span>
 </code></pre></div><p><code>application.yml</code> 文件中添加配置开启确认。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">rabbitmq</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">host</span>:<span style="color:#bbb"> </span><span style="color:#666">192.168.0.102</span><span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">port</span>:<span style="color:#bbb"> </span><span style="color:#666">5672</span><span style="color:#bbb">
@@ -630,7 +630,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">mandatory</span>:<span style="color:#bbb"> </span><span style="color:#008000;font-weight:bold">true</span><span style="color:#bbb">
 </span></code></pre></div><h1 id="重写方法">重写方法</h1>
 <p><code>RabbitTemplate.ConfirmCallback</code> 确认消息是否到达交换机， <code>RabbitTemplate.ReturnCallback</code> 确认消息是否到达队列中。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.slf4j.Logger</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.slf4j.Logger</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.slf4j.LoggerFactory</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.amqp.core.Message</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.amqp.rabbit.connection.CorrelationData</span><span style="color:#666">;</span>
@@ -673,7 +673,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
 </code></pre></div><h1 id="交换机和队列绑定">交换机和队列绑定</h1>
 <p><code>Exchange</code> 交换机需要通过 <code>routingKey</code> 才能将消息传递到 <code>Queue</code> 队列中（本文只用到 <code>direct</code> 类型，其实无需绑定，<code>fanout</code>、<code>topic</code> 类型才需要）。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.context.annotation.Configuration</span><span style="color:#666">;</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.context.annotation.Configuration</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.amqp.core.Binding</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.amqp.core.BindingBuilder</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.springframework.amqp.core.DirectExchange</span><span style="color:#666">;</span>
@@ -705,7 +705,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <span style="color:#666">}</span>
 </code></pre></div><h1 id="发送">发送</h1>
 <p>传递 <code>CorrelationData</code> 类，包含消息唯一标识（<code>AmqpTemplate</code> 类无法传递，之前一直用的这个，死活找不到方法）。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
 <span style="color:#a2f">@Component</span>
 <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">TestScheduled</span> <span style="color:#666">{</span>
 
@@ -722,7 +722,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
 </code></pre></div><h1 id="接收">接收</h1>
 <p>用 <code>Message</code> 类接收。目前我用的是 String 传输，可以配置成 JSON 传输更好些。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">com.alibaba.fastjson.JSON</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">com.alibaba.fastjson.JSONException</span><span style="color:#666">;</span>
 <span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">com.alibaba.fastjson.JSONObject</span><span style="color:#666">;</span>

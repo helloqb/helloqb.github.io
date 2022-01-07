@@ -6,9 +6,132 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Jan 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>软件安装分享</title>
+        <link>https://helloqb.xyz/post/2022/0107_software.html</link>
+        <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2022/0107_software.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2022/0107_software.html -&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Shadowsocks：&lt;/strong&gt; 如何使用 systemd 注册为系统服务；如何手动添加规则&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aria2：&lt;/strong&gt; Mac 如何快速启动；Windows 如何实现开机后台自启&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;shadowsocks&#34;&gt;Shadowsocks&lt;/h1&gt;
+&lt;h2 id=&#34;安装-rust-版本-server&#34;&gt;安装 Rust 版本 Server&lt;/h2&gt;
+&lt;p&gt;libev 版本好像不迭代了，所以我使用 &lt;a href=&#34;https://github.com/shadowsocks/shadowsocks-rust/releases&#34;&gt;shadowsocks-rust&lt;/a&gt; 版本。&lt;/p&gt;
+&lt;p&gt;下载二进制文件解压：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;wget https://github.com/shadowsocks/...v1.12.5.x86_64-unknown-linux-gnu.tar.xz
+tar -xvf shadowsocks-v1.12.5.x86_64-unknown-linux-gnu.tar.xz -C /usr/local/bin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;编辑配置文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir -p /etc/shadowsocks-rust &lt;span style=&#34;color:#666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; touch &lt;span style=&#34;color:#19177c&#34;&gt;$_&lt;/span&gt;/config.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;server&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0.0.0.0&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;server_port&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#666&#34;&gt;19419&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;password&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;***&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;method&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;aes-256-gcm&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;mode&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;tcp_and_udp&amp;#34;&lt;/span&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;直接启动命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用上述命令启动后，不太好维护，比如停止的话还得使用 &lt;code&gt;kill&lt;/code&gt; 命令，通过 systemd 启动可以更好的管理。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-properties&#34; data-lang=&#34;properties&#34;&gt;[Unit]
+Description=shadowsocks-rust service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json
+ExecStop=/usr/bin/killall ssserver
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=ssserver
+User=nobody
+Group=nogroup
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将上述配置新建到 &lt;code&gt;/etc/systemd/system/shadowsocks-rust.service&lt;/code&gt;, 注册并启动服务：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 注册服务&lt;/span&gt;
+systemctl daemon-reload
+systemctl &lt;span style=&#34;color:#008000&#34;&gt;enable&lt;/span&gt; shadowsocks-rust
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 启动&lt;/span&gt;
+systemctl start shadowsocks-rust
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 停止&lt;/span&gt;
+systemctl stop shadowsocks-rust
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 查询状态&lt;/span&gt;
+systemctl status shadowsocks-rust
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;自定义规则&#34;&gt;自定义规则&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;右键手动从 GFWList 更新本地 PAC&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;||&lt;/code&gt; 表示此域名下的地址经过代理，如 &lt;code&gt;||bandwagonhost.com^&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;规则前添加 &lt;code&gt;@@&lt;/code&gt; 表示此域名下的地址不经过代理，如 &lt;code&gt;@@||baidu.com^&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;aria2&#34;&gt;Aria2&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;可视化窗口：&lt;a href=&#34;https://github.com/mayswind/AriaNg/releases&#34;&gt;AriaNg&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Chrome 插件：&lt;a href=&#34;https://github.com/jae-jae/camtd&#34;&gt;Camtd - Aria2下载管理器&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Chrome 插件（推荐）：&lt;a href=&#34;https://chrome.google.com/webstore/detail/aria2-for-chrome/mpkodccbngfoacfalldjimigbofkhgjn&#34;&gt;Aria2 for Chrome&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;配置&#34;&gt;配置&lt;/h2&gt;
+&lt;p&gt;目录结构&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;├── Aria2
+│   ├── aria2.conf
+│   ├── aria2.session
+│   └── downloads
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中 &lt;code&gt;aria2.session&lt;/code&gt; 为空文件，用来重新加载任务；&lt;code&gt;downloads&lt;/code&gt; 为下载存放目录；&lt;code&gt;aria2.conf&lt;/code&gt; 为参数配置文件，配置如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-properties&#34; data-lang=&#34;properties&#34;&gt;### Basic ###
+dir=./downloads
+input-file=./aria2.session
+save-session=./aria2.session
+save-session-interval=60
+continue=true
+
+### Adcanced ###
+disk-cache=64M
+file-allocation=none
+# daemon=true
+quiet=true
+
+### RPC ###
+enable-rpc=true
+rpc-allow-origin-all=true
+rpc-listen-all=true
+
+### HTTP/FTP ###
+max-connection-per-server=16
+min-split-size=8M
+split=32
+user-agent=Transmission/2.77
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;mac-启动&#34;&gt;Mac 启动&lt;/h2&gt;
+&lt;p&gt;推荐 brew 方式安装。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;brew install aria2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 先进入 Aria2 目录&lt;/span&gt;
+aria2c --conf-path&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;aria2.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;如何快捷启动&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Mac 系统的 &lt;code&gt;快捷指令&lt;/code&gt; 程序可以很好的用来当作启动器。编写如下，&lt;/p&gt;
+&lt;p&gt;&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mek4I7WP0VWu0sqjLIK3PT8hTCnK_IQiKYVxtZuGMiuPj_vglxHa5D8ibbF6xIfHtM4--1lPOGxhFHSQTsXeJcnfVXhBAB71-7E4VdB9Xh_9pK-2I56uUImAJN-scl7OUGMzdVXdcMUbBYfqfwz-5zBjDS2v-JCRktyK8PJlwU0H-u1qH-gJ7HSgwSedfgEsv?width=1024&amp;height=369&amp;cropmode=none&#34; width=&#34;600px&#34; /&gt; &lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;注意，直接使用 &lt;code&gt;Aria2&lt;/code&gt; 命令会报错，可能需要添加执行目录吧。用完整路径可以跑通。&lt;/p&gt;
+&lt;p&gt;编写好后，固定到菜单栏，启动非常方便。&lt;/p&gt;
+&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4m-uCSYlULJ7rjIEIdwqMKXjwrVFI81c_Q4V7nJsIB394f_a9C8L9eArVOuW-oOXvUE8lRisbl4V6arXS20vk0rO3sQ5VlsOQTAAbJTdgBJ5lam3esyJBLHHatFLh3qPWIsAUdku2k9--t9UesQIPub_ap9P6ZhhbCuqnKioos3nmRhx7tNcKvBv2Ma_mbZ4Nx?width=1024&amp;height=390&amp;cropmode=none&#34; width=&#34;600px&#34; /&gt; &lt;/center&gt;
+&lt;h2 id=&#34;windows-启动&#34;&gt;Windows 启动&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/aria2/aria2/releases&#34;&gt;官网&lt;/a&gt; 直接下载 exe 文件放到同目录下，启动命令，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 先进入 Aria2 目录&lt;/span&gt;
+aria2c.exe --conf-path&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;aria2.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;如何实现开机自启&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先编写脚本 &lt;code&gt;HideRun.vbs&lt;/code&gt; 实现隐藏窗口启动，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;CreateObject&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;.Run &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;aria2c.exe --conf-=patharia2.conf&amp;#34;&lt;/span&gt;,0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后在 &lt;code&gt;用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup&lt;/code&gt; 目录中创建此脚本的快捷方式即可。&lt;/p&gt;
+- https://helloqb.xyz/post/2022/0107_software.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -30,7 +153,7 @@
 &lt;p&gt;最后用了 Samba。Linux 上配置好后，Windows 映射成网络驱动器，然后在 Axure 分享链接时，选择本地此驱动器即可上传到服务器上。具体操作如下。&lt;/p&gt;
 &lt;h2 id=&#34;linux-安装-samba&#34;&gt;Linux 安装 Samba&lt;/h2&gt;
 &lt;p&gt;公司的 Wiki 项目已经用到了 Samba，所以没有亲自安装，直接配置：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cfg&#34; data-lang=&#34;cfg&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[axure]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cfg&#34; data-lang=&#34;cfg&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[axure]&lt;/span&gt;
         &lt;span style=&#34;color:#7d9029&#34;&gt;comment&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;share for axure
 &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        path = /root/server_axure/html
 &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;        public = yes
@@ -51,7 +174,7 @@
 &lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mWoVupHdhCuJVXR_EEN8ONtFQmEzhyCSBtI_ho5_hko-UAy8n1Yn3kMwjMY8aQCgJ87WwxYA2QHvDJWpRstGv7VfGoORuRNWvsM-bptJBvk7ApR-ZxyLpDYlB3Hy7H83hiG1zSErk1vje9O2yJX0JmZoDsVLOyG6PoQxt6X-BdqPINL8kQJddZZn80Xq-Xd4x?width=1308&amp;height=837&amp;cropmode=none&#34; height=&#34;450&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
 &lt;h1 id=&#34;搭建-web-端&#34;&gt;搭建 Web 端&lt;/h1&gt;
 &lt;p&gt;此时，已成功将原型图 html 文件上传到服务器上，只要搭建一个 web 服务器就可以访问了。如本例中采用的是 Docker + Nginx 配置：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-docker&#34; data-lang=&#34;docker&#34;&gt;version: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;3&amp;#39;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-docker&#34; data-lang=&#34;docker&#34;&gt;version: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;3&amp;#39;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;services:&lt;span style=&#34;&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;  web:&lt;span style=&#34;&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;    image: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;nginx:latest&amp;#34;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
@@ -61,7 +184,7 @@
 &lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;    container_name: axure_web&lt;span style=&#34;&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;    ports:&lt;span style=&#34;&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;&#34;&gt;&lt;/span&gt;      - &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;12345:8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server&lt;/span&gt; {
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server&lt;/span&gt; {
   &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;8080&lt;/span&gt;;
   &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;root&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;/usr/share/nginx/html&lt;/span&gt;;
 
@@ -74,7 +197,7 @@
 &lt;p&gt;但是手动修改链接总归不够好，所以想看实现一个逻辑，当产品经理把原型图放入到指定文件夹中， 服务器能自动读取所添加的原型图，然后在首页展示。&lt;/p&gt;
 &lt;p&gt;这个需求我问了下前端，前端断然否决，说不可能，前端无法访问服务器的。&lt;/p&gt;
 &lt;p&gt;本来也打算写一个后台实现这个需求的，因为谷歌也没有找到结果。但是在配置 Nginx 的时候突然想到其有一个参数 &lt;code&gt;autoindex on&lt;/code&gt;，可实现目录浏览功能。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server&lt;/span&gt; {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server&lt;/span&gt; {
   &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;/project/&lt;/span&gt; {
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;autoindex&lt;/span&gt; &lt;span style=&#34;color:#800&#34;&gt;on&lt;/span&gt;;
   }
@@ -82,7 +205,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mnHkddENsSkpb-sdl62jyA9isp1ewGyug_O5FkzWQQp_ix-Hs9MQYxpp4BYs0Fv2d7HtRtB1iw-h5oILIaUEJSlj-nw9rgpWR7qRlsVjFflNmTmB43MAbywvwB-WvUYCNcJz9FAnAdX7xnVkD_8irfhA2da29mvG2t08IxDpczOA8U3N8ARwwpY7gaPALvAps?width=1210&amp;height=492&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;有希望！既然是个网址，前端是否可以通过 js 获取，解析网页，获取想要的目录文件呢！&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;研究良久，实现如下（本人是后端&amp;hellip;&amp;hellip;随意写的，前端大神肯定有更好的写法）：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
   &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; loadDoc() {
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; xhttp &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; XMLHttpRequest();
     xhttp.onreadystatechange &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; () {
@@ -122,7 +245,7 @@
 &lt;p&gt;最后，将原先的列表下的所有子模块删除，改为调用循环方法。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;script&lt;/span&gt;&amp;gt;
   &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; jqueryAdd(name) {
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; child &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; $(&lt;span style=&#34;color:#ba2121&#34;&gt;`
 &lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;  &amp;lt;div class=&amp;#34;el-col el-col-6&amp;#34; style=&amp;#34;padding-left: 20px; padding-right: 20px;&amp;#34;&amp;gt;
@@ -154,6 +277,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/baidu_26678247/article/details/103157532&#34;&gt;Linux 局域网内共享｜SameWorld&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/10585029/parse-an-html-string-with-js#55046067&#34;&gt;Parse an HTML string with JS｜stackoverflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/31274329/get-list-of-filenames-in-folder-with-javascript/68115534#68115534&#34;&gt;Get list of filenames in folder with Javascript｜stackoverflow&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2021/0617_axshare.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
@@ -173,7 +297,7 @@
 &lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
 &lt;p&gt;Apache Commons 包中的 Tailer 类实现了这个，一旦了解了这个类，实现起来就简单了。直接贴代码了。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;websocket 入口&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.apache.commons.io.input.Tailer&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.apache.commons.io.input.Tailer&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.apache.commons.io.input.TailerListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
@@ -248,7 +372,7 @@
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;继承 Tailer&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.apache.commons.io.input.TailerListenerAdapter&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.apache.commons.io.input.TailerListenerAdapter&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
@@ -304,7 +428,7 @@
 &lt;li&gt;&lt;code&gt;-w&lt;/code&gt;：保存为文件&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;由于工作中既需要将 tcpdump 的结果打印，又需要将结果保存供 Wireshark 分析，搜索许久后终于实现了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;tcpdump -s &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt; -U -w - | tee target.&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;$(&lt;/span&gt;date +%Y-%m-%d-%H-%M-%S&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;)&lt;/span&gt;.pcap | tcpdump -r -
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;tcpdump -s &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt; -U -w - | tee target.&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;$(&lt;/span&gt;date +%Y-%m-%d-%H-%M-%S&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;)&lt;/span&gt;.pcap | tcpdump -r -
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mM2NLbzm5DfS6jvX_cbvJjgw_ALjSKDDZxIySehgHyEAx3llL3pMzXAH99MiGQH7KRzOiRGGC-oVddz6ReDA4-xVnBXgnD9Ej97hNqH2qyXA8-rA_OLUTNAefaC1lUT80VJC0T8MgeECoFhGOx1xYKM-k0BTlrTP4BC4BeTAhoQvSPvo3rZOYFeMCOTibnlDw?width=708&amp;height=383&amp;cropmode=none&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
 &lt;p&gt;其中：&lt;/p&gt;
 &lt;ul&gt;
@@ -322,7 +446,7 @@
 &lt;li&gt;&lt;code&gt;nsenter&lt;/code&gt; 命令在宿主机上进入容器的网络空间&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;第 2 种 方法参考底部链接，我个人更喜欢第 3 种方法，详细命令如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取容器进程 pid&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取容器进程 pid&lt;/span&gt;
 docker inspect --format &lt;span style=&#34;color:#666&#34;&gt;{{&lt;/span&gt;.State.Pid&lt;span style=&#34;color:#666&#34;&gt;}}&lt;/span&gt; ContainerId
 
 &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 进入容器的网络空间&lt;/span&gt;
@@ -364,7 +488,7 @@ nsenter -n --target pid
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
 &lt;p&gt;工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//全局异常处理类
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//全局异常处理类
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@RestControllerAdvice&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;GlobalExceptionHandler&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;extends&lt;/span&gt; ResponseEntityExceptionHandler &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
@@ -372,7 +496,7 @@ nsenter -n --target pid
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;baseHandler&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;BaseException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
     &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//接口
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//接口
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/transfer/company&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;@RequestBody&lt;/span&gt; AdminTransferCompanyVO vo&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt;
                               BindingResult bindingResult&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
@@ -380,7 +504,7 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;bindingResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;hasErrors&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; bindingResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getFieldError&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getDefaultMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
     &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//参数实体类
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//参数实体类
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;AdminTransferCompanyVO&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
     &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;客户 ID 不能为空&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
@@ -389,7 +513,7 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer targetCustomerId&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
     &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;管理员 ID 不能为空&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer operationCustomerId&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//统一返回响应
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//统一返回响应
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;S2VJSONResult&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer code&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//状态码
@@ -417,7 +541,7 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
 &lt;p&gt;这里遇到个坑，同事写的全局处理类继承了 &lt;code&gt;ResponseEntityExceptionHandler&lt;/code&gt;，而我要特定捕捉的异常都在这里面，所以我一开始的时候，老是报重复处理异常的错误。。。&lt;/p&gt;
 &lt;h2 id=&#34;1-处理-requestparam-和-pathvariable-方式&#34;&gt;1. 处理 RequestParam 和 PathVariable 方式&lt;/h2&gt;
 &lt;p&gt;Controller 层代码示例如下，将需要的约束添加到 &lt;code&gt;@RequestParam&lt;/code&gt; 注解的前面，此时需要在类上添加注解 &lt;code&gt;@Validated&lt;/code&gt; 才能实现验证。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Controller&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Controller&lt;/span&gt;
 &lt;span style=&#34;color:#a2f&#34;&gt;@RequestMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/report1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#a2f&#34;&gt;@ResponseBody&lt;/span&gt;
 &lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt;
@@ -433,16 +557,16 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 200&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
     &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种情况会抛出 &lt;code&gt;ConstraintViolationException&lt;/code&gt; 异常。Spring 会处理这种异常并抛出报错信息，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2021-02-02 11:34:45&amp;#34;&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;500&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;error&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Internal Server Error&amp;#34;&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test1.id: 最大不能超过3&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test2.id: 别瞎填！&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;path&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/pcg/report1/test1&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// &amp;#34;message&amp;#34;: &amp;#34;test2.id: 别瞎填！&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;path&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/pcg/report1/test1&amp;#34;&lt;/span&gt;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到 &lt;code&gt;message&lt;/code&gt; 字段中有较为完整的报错信息，可以直接拿来用。统一异常处理代码如下，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.ConstraintViolationException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.ConstraintViolationException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * 处理 @RequestParam @PathVariable 参数验证失败
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  *
@@ -457,7 +581,7 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;）&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另外，用户也存在参数 key 都不传的情况，这个时候的异常也需要捕捉。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.web.bind.MissingServletRequestParameterException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.web.bind.MissingServletRequestParameterException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
     &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;     * 处理 @RequestParam 参数验证失败（整个不传）
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;     * @param e
@@ -469,23 +593,23 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;）&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
     &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;封装报错信息，统一返回响应的结果如下，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;400&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;isSuccess&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;,
-    &lt;span style=&#34;&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（test1.id: 最大不能超过3）&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（test2.id: 别瞎填！）&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// &amp;#34;message&amp;#34;: &amp;#34;参数验证未通过（test1.id: 最大不能超过3）&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数验证未通过（test2.id: 别瞎填！）&amp;#34;&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;基本实现了我想要的结果，不需要通过 &lt;code&gt;BindingResult&lt;/code&gt;，只需要添加注解就可以校验参数，并且不写 &lt;code&gt;message&lt;/code&gt; 也可以返回较为清楚的报错信息。&lt;/p&gt;
 &lt;p&gt;但是这只是传参的一种情况，其他的情况抛出的异常还不一样，需要再次处理。&lt;/p&gt;
 &lt;h2 id=&#34;2-处理实体类接收&#34;&gt;2. 处理实体类接收&lt;/h2&gt;
 &lt;p&gt;接口传入很多参数的时候，通常代码会用实体类接收。Controller 层代码示例如下，这种情况无需在类上添加注解 &lt;code&gt;@Validated&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
     S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt; ReportVO vo&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 200&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;vo&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
     &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;实体类添加相应的约束，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.constraints.NotEmpty&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.constraints.NotNull&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;java.io.Serializable&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
@@ -499,7 +623,7 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String baseinfoSqrxm&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种情况会抛出 &lt;code&gt;BindException&lt;/code&gt; 异常。Spring 仍然会处理这种异常并抛出报错信息，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;2021-02-02 13:58:18&amp;#34;&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;400&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;error&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Bad Request&amp;#34;&lt;/span&gt;,
@@ -534,7 +658,7 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;path&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/pcg/report1/test3&amp;#34;&lt;/span&gt;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到 &lt;code&gt;defaultMessage&lt;/code&gt; 中有相应的报错信息，但是不够完整，可以将字段名 &lt;code&gt;field&lt;/code&gt; 一起拼接后作为报错信息，统一异常处理代码如下，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.validation.BindException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.validation.BindException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * 处理实体校验失败（multipart/form-data、x-www-form-urlencoded）
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  *
@@ -552,21 +676,21 @@ S2VJSONResult &lt;span style=&#34;color:#00f&#34;&gt;transferCompany&lt;/span&gt
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 400&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; message&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中，&lt;code&gt;e.getBindingResult()&lt;/code&gt; 中会有所有的参数报错信息，对我来说感觉一个就够了，所以我只取了一个，统一错误响应后的结果为，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#666&#34;&gt;400&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;isSuccess&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;,
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数 baseinfoSqrxm 有误，baseinfoSqrxm 不能为空&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;参数 cgeId 有误，不能为null&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// &amp;#34;message&amp;#34;: &amp;#34;参数 cgeId 有误，不能为null&amp;#34;,
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;null&lt;/span&gt;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;3-处理-requestbody-情况&#34;&gt;3. 处理 RequestBody 情况&lt;/h2&gt;
 &lt;p&gt;RequestBody 情况和上面很类似，但抛出的异常不一样，仍然需要单独处理。Controller 层代码示例如下，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test4&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;@RequestBody&lt;/span&gt; ReportVO vo&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ok&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;vo&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种情况会抛出 &lt;code&gt;MethodArgumentNotValidException&lt;/code&gt; 异常。默认报错消息同 &lt;code&gt;BindException&lt;/code&gt;，处理方式基本一致。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.web.bind.MethodArgumentNotValidException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.web.bind.MethodArgumentNotValidException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/**
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  * 处理 @RequestBody 参数验证失败（application/json）
 &lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;  *
@@ -586,7 +710,7 @@ S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这三种情况基本涵盖了传参的所有方式，后面若是有遗漏的情况，也是同样的原理，再加上就好了。&lt;/p&gt;
 &lt;h2 id=&#34;4-处理集合&#34;&gt;4. 处理集合&lt;/h2&gt;
 &lt;p&gt;参数是集合如 list 的时候，@Validated 失效，但 @Valid 可以支持。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.Valid&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.Valid&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;Object&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;batchUpdate&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@RequestBody&lt;/span&gt; List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Valid&lt;/span&gt; ProductModuleVO&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; list&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
     productModuleService&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;batchUpdate&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;list&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
@@ -595,11 +719,11 @@ S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时，抛出的异常为 ConstraintViolationException，和第 1 种情况相同。&lt;/p&gt;
 &lt;h2 id=&#34;5-处理文件上传大小异常&#34;&gt;5. 处理文件上传大小异常&lt;/h2&gt;
 &lt;p&gt;可能由于没有继承 &lt;code&gt;ResponseEntityExceptionHandler&lt;/code&gt;，若是项目配置了文件上传大小限制，当超出时，系统没有捕捉异常，需要手动捕捉。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;servlet&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;multipart&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;max-file-size&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;10MB&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.web.multipart.MaxUploadSizeExceededException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.web.multipart.MaxUploadSizeExceededException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Value&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
 &lt;span style=&#34;color:#a2f&#34;&gt;@Value&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;${spring.servlet.multipart.max-file-size}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
@@ -621,7 +745,7 @@ S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;校验失败立即返回&#34;&gt;校验失败立即返回&lt;/h1&gt;
 &lt;p&gt;上述三种默认情况都是校验全部字段后再返回报错信息，可以通过配置实现当一个参数校验有误时立即返回，提高效率。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.hibernate.validator.HibernateValidator&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.hibernate.validator.HibernateValidator&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Bean&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
@@ -650,15 +774,15 @@ S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;validated-验证组&#34;&gt;Validated 验证组&lt;/h1&gt;
 &lt;p&gt;接口通常有新增和更新，它们字段一致但是约束可能不同，若想要利用同一个实体类，可以通过组的方式实现共用。注意 &lt;code&gt;@Valid&lt;/code&gt; 不支持组只有 &lt;code&gt;@Validated&lt;/code&gt; 可以。&lt;/p&gt;
 &lt;p&gt;首先新增两个接口组，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.groups.Default&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.groups.Default&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ValidGroupCreate&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Default &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.groups.Default&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.validation.groups.Default&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ValidGroupUpdate&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Default &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我继承了 &lt;code&gt;Default.class&lt;/code&gt; 默认分组，可以实现参数没有标明组的情况时，也可以使用组。可以减少一些代码量。&lt;/p&gt;
 &lt;p&gt;实体类添加约束如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ReportVO&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Serializable &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;ReportVO&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Serializable &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 
     &lt;span style=&#34;color:#a2f&#34;&gt;@NotNull&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer cgeId&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
@@ -672,7 +796,7 @@ S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&
     &lt;span style=&#34;color:#a2f&#34;&gt;@NotEmpty&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;groups &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;ValidGroupCreate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; ValidGroupUpdate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;})&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String baseinfoHyzk&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;再然后 Controller 层指定组即可，不填的话则是默认分组，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/test3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;test3&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Validated&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;ValidGroupUpdate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; ReportVO vo&lt;span style=&#34;color:#666&#34;&gt;){&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; 200&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;vo&lt;span style=&#34;color:#666&#34;&gt;));&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
@@ -749,17 +873,17 @@ S2VJSONResult&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;String&
 &lt;h2 id=&#34;server-端安装&#34;&gt;Server 端安装&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/fatedier/frp/releases&#34;&gt;官网&lt;/a&gt; 下载对应系统的版本，我的 VPS 是 linux x64，所以选用的是版本是 &lt;code&gt;frp_0.34.1_linux_amd64.tar.gz&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;下载后解压文件夹，将 &lt;code&gt;frps.ini&lt;/code&gt; 和 &lt;code&gt;frps&lt;/code&gt; 文件拷贝到服务器上，运行即可。示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 后台运行，输出默认重定向到当前目录下 nohup.out 文件&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 后台运行，输出默认重定向到当前目录下 nohup.out 文件&lt;/span&gt;
 nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp;
 &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 后台运行，不记录输出信息 &lt;/span&gt;
 nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp;&amp;gt; /dev/null &amp;amp;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;frps.ini&lt;/code&gt; 文件中 &lt;code&gt;bind_port = 7000&lt;/code&gt; 表示默认监听端口为 7000，需要安全组策略允许入站和出站。&lt;/p&gt;
 &lt;h2 id=&#34;client-端安装&#34;&gt;Client 端安装&lt;/h2&gt;
 &lt;p&gt;下载 Windows 端的版本 &lt;code&gt;frp_0.34.1_windows_amd64.zip&lt;/code&gt;，也只需要两个文件 &lt;code&gt;frpc.ini&lt;/code&gt; 和 &lt;code&gt;frpc.exe&lt;/code&gt;。运行示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 文件所在目录下&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 文件所在目录下&lt;/span&gt;
 frpc.exe -c frpc.ini
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;frps.ini&lt;/code&gt; 文件的示例：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;35.***.**.216&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;7000&lt;/span&gt;
 
@@ -785,13 +909,13 @@ frpc.exe -c frpc.ini
 &lt;p&gt;&lt;strong&gt;应用开机启动&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;创建该文件的快捷方式到 &lt;code&gt;用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup&lt;/code&gt; 目录下，即可实现开机自动运行。&lt;/p&gt;
 &lt;p&gt;后台启动后，想要查看进程的话，&lt;code&gt;Windows PowerShell&lt;/code&gt; 查看进程和删除进程的命令如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#008000&#34;&gt;Get-Process&lt;/span&gt; -name frp*
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#008000&#34;&gt;Get-Process&lt;/span&gt; -name frp*
 &lt;span style=&#34;color:#008000&#34;&gt;Stop-Process&lt;/span&gt; -name frpc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;frp-进阶&#34;&gt;frp 进阶&lt;/h1&gt;
 &lt;h2 id=&#34;stcp-模式安全&#34;&gt;stcp 模式（安全）&lt;/h2&gt;
 &lt;p&gt;tcp 暴露的端口，任何设备都可以访问，有较大的安全隐患。为此 frp 提供了 stcp 模式。&lt;/p&gt;
 &lt;p&gt;被访问端配置示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;35.***.**.216&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;7000&lt;/span&gt;
 
@@ -801,7 +925,7 @@ frpc.exe -c frpc.ini
 &lt;span style=&#34;color:#7d9029&#34;&gt;local_ip&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;127.0.0.1&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;local_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;3389&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;访问端配置示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;35.***.**.216&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;7000&lt;/span&gt;
 
@@ -817,11 +941,11 @@ frpc.exe -c frpc.ini
 &lt;h2 id=&#34;xtcp-模式高效&#34;&gt;xtcp 模式（高效）&lt;/h2&gt;
 &lt;p&gt;xtcp 模式是点对点模式，实现不通过服务器中转流量的方式来访问内网服务。使用方式同 stcp 类似，需要在两边都部署上 frpc 用于建立直接的连接。&lt;/p&gt;
 &lt;p&gt;服务端需要额外配置监听一个 UDP 端口。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;bind_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;7000&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;bind_udp_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;7001&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;被访问端配置示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;35.***.**.216&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;7000&lt;/span&gt;
 
@@ -831,7 +955,7 @@ frpc.exe -c frpc.ini
 &lt;span style=&#34;color:#7d9029&#34;&gt;local_ip&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;127.0.0.1&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;local_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;3389&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;访问端配置示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;[common]&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_addr&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;35.***.**.216&lt;/span&gt;
 &lt;span style=&#34;color:#7d9029&#34;&gt;server_port&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;7000&lt;/span&gt;
 
@@ -859,39 +983,39 @@ frpc.exe -c frpc.ini
         <description>哲学家 https://helloqb.xyz/post/2020/1028_fastjson.html -&lt;h1 id=&#34;jsonobject-互转&#34;&gt;JSONObject 互转&lt;/h1&gt;
 &lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mdBx8XpmSPr91JS2LVgwIIFuBU5Cd5o8n_GT_dDs2Sim12WVx34JixADFfQbrikACIfDV1iAjTOlsTGamSvM80ztlp0f59TMtE-pQOKQP5SyfueVHVEqEEO8Z9bv3AnUUjYzS2jRfu6iu-qczIu1keRGv4om0zPKnTwl4SA7L3ZBpxBHyJlPZpbHMFNZBCwPV?width=1236&amp;height=854&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;h2 id=&#34;string-to-jsonobject&#34;&gt;String to JSONObject&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONObject j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONObject j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;jsonobject-to-string&#34;&gt;JSONObject to String&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;转成字符串时默认会将 &lt;code&gt;null&lt;/code&gt; 值去掉，若想要保留，需要添加 &lt;code&gt;SerializerFeature.WriteMapNullValue&lt;/code&gt; 参数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SerializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SerializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;string-to-javabean&#34;&gt;String to JavaBean&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;T t &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;T t &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;javabean-to-string&#34;&gt;JavaBean to String&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;t&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;t&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同样，若想要保留 &lt;code&gt;null&lt;/code&gt; 值，需要添加 &lt;code&gt;SerializerFeature.WriteMapNullValue&lt;/code&gt; 参数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;t&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; erializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;t&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; erializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;jsonobject-to-javabean&#34;&gt;JSONObject to JavaBean&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;T t &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJavaObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;T t &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJavaObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;javabean-to-jsonobject&#34;&gt;JavaBean to JSONObject&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONObject j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JSONObject&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSON&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;t&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONObject j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JSONObject&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSON&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;t&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;jsonarray-互转&#34;&gt;JSONArray 互转&lt;/h1&gt;
 &lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4m9fI67f8yfjAvDW7NNRqIlV399ZX24B4awFth3u6qKYnsQ9Pl2QIfO0uNstmitpiQ48-Q3AA0nTLVTqR4H1qc5gUSKOjaR1ILkFhIQJJ3iBBAponsaSMulh3qZakNejdmEBzfa5PvpG-GpXBgt5r3oCGDRwbhoCVqqg9NQtEksZGiUlPHlrgDC5oP_9M-XVtK?width=1196&amp;height=847&amp;cropmode=none&#34; height=&#34;500&#34; /&gt;&lt;/center&gt;&lt;p&gt;
 &lt;h2 id=&#34;string-to-jsonarray&#34;&gt;String to JSONArray&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONArray j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseArray&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONArray j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseArray&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;jsonarray-to-string&#34;&gt;JSONArray to String&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同样，若想要保留 &lt;code&gt;null&lt;/code&gt; 值，需要添加 &lt;code&gt;SerializerFeature.WriteMapNullValue&lt;/code&gt; 参数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SerializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SerializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;string-to-javalist&#34;&gt;String to JavaList&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseArray&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;parseArray&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;javalist-to-string&#34;&gt;JavaList to String&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;list&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;list&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同样，若想要保留 &lt;code&gt;null&lt;/code&gt; 值，需要添加 &lt;code&gt;SerializerFeature.WriteMapNullValue&lt;/code&gt; 参数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;list&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; erializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;String str &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;list&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; erializerFeature&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;WriteMapNullValue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;jsonarray-to-javalist&#34;&gt;JSONArray to JavaList&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJavaList&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;List&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJavaList&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;javalist-to-jsonarray&#34;&gt;JavaList to JSONArray&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONArray j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JSONArray&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSON&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;list&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;JSONArray j &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;JSONArray&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; JSON&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toJSON&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;list&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://helloqb.xyz/post/2020/1028_fastjson.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
@@ -906,23 +1030,23 @@ frpc.exe -c frpc.ini
         <description>哲学家 https://helloqb.xyz/post/2020/0907_yaml.html -&lt;h1 id=&#34;调用&#34;&gt;调用&lt;/h1&gt;
 &lt;h2 id=&#34;value-注解调用&#34;&gt;Value 注解调用&lt;/h2&gt;
 &lt;p&gt;例如，YAML 文件中有个自定义配置。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用 &lt;code&gt;@Value&lt;/code&gt; 注解调用。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Value&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Value&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
 &lt;span style=&#34;color:#a2f&#34;&gt;@Value&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;${myconfig.model-server-url}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; String modelServerUrl&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。&lt;/p&gt;
 &lt;h2 id=&#34;configurationproperties-注解调用&#34;&gt;ConfigurationProperties 注解调用&lt;/h2&gt;
 &lt;p&gt;当参数较多时，可以使用 &lt;code&gt;@ConfigurationProperties&lt;/code&gt; 将其绑定到一个类中。例如&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;servers&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; 
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- www.abc.test.com&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- www.xyz.test.com&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;配置类代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.context.properties.ConfigurationProperties&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.context.properties.EnableConfigurationProperties&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
@@ -944,7 +1068,7 @@ frpc.exe -c frpc.ini
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;@Configuration&lt;/code&gt; 和 &lt;code&gt;@EnableConfigurationProperties&lt;/code&gt; 可以用 &lt;code&gt;@Component&lt;/code&gt; 代替，前面那种注解更精确些。&lt;/p&gt;
 &lt;p&gt;YAML 文件中参数匹配很宽松，下划线 &lt;code&gt;_&lt;/code&gt; 和 &lt;code&gt;-&lt;/code&gt; 和驼峰都能够匹配到，官方建议使用 &lt;code&gt;-&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;调用时直接通过 &lt;code&gt;@Autowired&lt;/code&gt; 注入即可，例如&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; YAMLConfig yamlConfig&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
 &lt;span style=&#34;color:#a2f&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
@@ -956,11 +1080,11 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
 &lt;p&gt;通常线上环境和测试环境的配置会有不同，有时候搞混的话，部署到线上才发觉，这时又得重新打包了。若是配置写在 YAML 文件中，可以使用命令行参数进行配置更改。&lt;/p&gt;
 &lt;h2 id=&#34;命令行直接配置&#34;&gt;命令行直接配置&lt;/h2&gt;
 &lt;p&gt;如上述例中参数想要替换成 127.0.0.2，启动命令如下；&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;java -jar demo.jar --myconfig.model-server-url&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;127.0.0.2
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;java -jar demo.jar --myconfig.model-server-url&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;127.0.0.2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到有很多地方可以配置，那么这些肯定会有个优先级，这种命令行的形式应该是最高的，目前没有深入了解。&lt;/p&gt;
 &lt;h2 id=&#34;单文件多配置&#34;&gt;单文件多配置&lt;/h2&gt;
 &lt;p&gt;上述命令行直接配置的方式肯定不适用于参数多的情况，这时就需要用到了 &lt;code&gt;profile&lt;/code&gt; 参数，例如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;active&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
@@ -978,20 +1102,20 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;prod&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里 &lt;code&gt;---&lt;/code&gt; 表示新文档的开始，所以其实是三个环境写到一起。一开始的默认配置是选择 test，如果想要换成 prod，则启动命令更改如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;java -jar demo.jar --spring.profiles.active&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;prod
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;java -jar demo.jar --spring.profiles.active&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;prod
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;多文件多配置&#34;&gt;多文件多配置&lt;/h2&gt;
 &lt;p&gt;当配置越来越多时，还是分开不同文件更好些，Spring Boot 秉承着 &lt;strong&gt;约定优于配置&lt;/strong&gt; 的理念，如果按照其规范来，会相当便利。&lt;/p&gt;
 &lt;p&gt;如上述例子可以分为文件 &lt;code&gt;application.yml&lt;/code&gt;、文件 &lt;code&gt;application-test.yml&lt;/code&gt; 和文件 &lt;code&gt;application-prod.yml&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;application.yml&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;profiles&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;active&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;application-test.yml&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;test&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;application-prod.yml&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;myconfig&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;model-server-url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;127.0.0.2&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;server-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;prod&lt;span style=&#34;color:#bbb&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;尾巴&#34;&gt;尾巴&lt;/h1&gt;
@@ -1016,7 +1140,7 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
 &lt;p&gt;项目中遇到数据库返回的字段不想全部返回给前端，一个一个 setter 挺麻烦，不够优雅。市面上有挺多映射框架如 &lt;code&gt;Dozer&lt;/code&gt;，&lt;code&gt;Orika&lt;/code&gt;，&lt;code&gt;MapStruct&lt;/code&gt;，&lt;code&gt;ModelMapper&lt;/code&gt;，&lt;code&gt;JMapper&lt;/code&gt; 等，其中 &lt;code&gt;MapStruct&lt;/code&gt; 只是代码生成器，使用纯 Java 的方法调用源对象和目标对象之间进行映射，并非 Java 反射机制，所以其性能最好。&lt;/p&gt;
 &lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Maven 依赖&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;...
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;...
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;org.mapstruct.version&amp;gt;&lt;/span&gt;1.3.1.Final&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/org.mapstruct.version&amp;gt;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
@@ -1051,7 +1175,7 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;
 ...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果项目中有用到 &lt;code&gt;lombok&lt;/code&gt; 的话，&lt;code&gt;MapStruct&lt;/code&gt; 也支持，添加如下即可。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;annotationProcessorPaths&amp;gt;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;annotationProcessorPaths&amp;gt;&lt;/span&gt;
     &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.projectlombok&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
         &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;lombok&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
@@ -1060,7 +1184,7 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/annotationProcessorPaths&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;普通调用&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;MapStruct&lt;/code&gt; 定义非常简单，因为它完全基于代码生成。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.mapstruct.Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.mapstruct.Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.mapstruct.Mapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
 &lt;span style=&#34;color:#a2f&#34;&gt;@Mapper&lt;/span&gt;
@@ -1075,14 +1199,14 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
     DestinationCode &lt;span style=&#34;color:#00f&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SourceCode sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;调用也很简单。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; MapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;MAPPER&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; MapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;MAPPER&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Spring 注解调用&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Spring 项目的话可以如下参数实现依赖注入。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;componentModel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;spring&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;componentModel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;spring&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;MapStructConverter&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
 &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;@Autowired&lt;/code&gt; 注入调用更方便。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
 &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; MapStructConverter mapStructConverter&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
 
 DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; mapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
@@ -1095,161 +1219,6 @@ DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/spa
 &lt;li&gt;&lt;a href=&#34;https://github.com/mapstruct/mapstruct&#34;&gt;mapstruct github&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0821_mapstruct.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Selenium 模拟浏览器另存为</title>
-        <link>https://helloqb.xyz/post/2020/0805_selenium.html</link>
-        <pubDate>Wed, 05 Aug 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0805_selenium.html</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0805_selenium.html -&lt;h1 id=&#34;缘由&#34;&gt;缘由&lt;/h1&gt;
-&lt;p&gt;开发一个下载图片的爬虫，原网站时不时变动，导致爬虫经常会挂掉，尤其在最终下载图片的环节。想着模拟浏览器另存为的方式可能会更健壮些，不那么容易挂。另外也一直想学习下 Selenium。&lt;/p&gt;
-&lt;h1 id=&#34;selenium&#34;&gt;Selenium&lt;/h1&gt;
-&lt;h2 id=&#34;1-驱动和环境&#34;&gt;1. 驱动和环境&lt;/h2&gt;
-&lt;p&gt;使用的是 Python 环境，Selenium 的安装直接 &lt;code&gt;pip install selenium&lt;/code&gt; 即可。&lt;/p&gt;
-&lt;p&gt;浏览器使用的是 Firefox，驱动是 &lt;a href=&#34;https://github.com/mozilla/geckodriver&#34;&gt;geckdriver&lt;/a&gt;。将下载后的文件放入到 Firefox 安装目录下，如 &lt;code&gt;C:\Program Files\Mozilla Firefox&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;环境变量的配置也是 Firefox 安装目录，而不需要到文件&lt;/strong&gt;&lt;/em&gt;。这里坑了好久，一直报找不到驱动的错误，原因是写成了 &lt;code&gt;C:\Program Files\Mozilla Firefox\geckdriver.exe&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;2-请求网站&#34;&gt;2. 请求网站&lt;/h2&gt;
-&lt;p&gt;以掘金网站博客 &lt;a href=&#34;https://juejin.im/post/6857394127064006663&#34;&gt;cxuan读者的外包面试之旅&lt;/a&gt; 为例。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;driver &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; webdriver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;Firefox()
-driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://juejin.im/post/6857394127064006663&amp;#34;&lt;/span&gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时没有问题的话，浏览器会自动打开网站。&lt;/p&gt;
-&lt;h2 id=&#34;3-滚动加载&#34;&gt;3. 滚动加载&lt;/h2&gt;
-&lt;p&gt;此时若直接获取图片，只会获取获取到一两张。因为大多数网站采用 Ajax 方式，页面滚动到图片才加载，所有就需要模拟页面滚动了。&lt;code&gt;execute_script&lt;/code&gt; 方法调用 js 可实现滚动操作。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取内容高度&lt;/span&gt;
-all_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 循环往下滚动，每次滚1024高，间隔1秒&lt;/span&gt;
-scroll_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1024&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(all_height&lt;span style=&#34;color:#666&#34;&gt;/&lt;/span&gt;scroll_height)):
-    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;window.scrollTo(0, {0});&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;scroll_height))
-    time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果遇到无限加载的页面，可以参考 stackoverflow 的 &lt;a href=&#34;https://stackoverflow.com/questions/20986631/how-can-i-scroll-a-web-page-using-selenium-webdriver-in-python&#34;&gt;回答&lt;/a&gt;。代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;SCROLL_PAUSE_TIME &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;0.5&lt;/span&gt;
-
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Get scroll height&lt;/span&gt;
-last_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;while&lt;/span&gt; True:
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Scroll down to bottom&lt;/span&gt;
-    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;window.scrollTo(0, document.body.scrollHeight);&amp;#34;&lt;/span&gt;)
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Wait to load page&lt;/span&gt;
-    time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(SCROLL_PAUSE_TIME)
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# Calculate new scroll height and compare with last scroll height&lt;/span&gt;
-    new_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; new_height &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; last_height:
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;break&lt;/span&gt;
-    last_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; new_height
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-查找元素&#34;&gt;4. 查找元素&lt;/h2&gt;
-&lt;p&gt;图片加载完成后，就可以定位元素找到图片地址了。这里知识和之前学 Scrapy 的差不多。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 定位到文章节点&lt;/span&gt;
-image_content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_element_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;.article&amp;#34;&lt;/span&gt;)
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取文章内img标签&lt;/span&gt;
-image_elems &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; image_content&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_elements_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;img&amp;#34;&lt;/span&gt;)
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片链接存放到list中&lt;/span&gt;
-image_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_elems:
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# print(i.get_attribute(&amp;#34;src&amp;#34;))&lt;/span&gt;
-    image_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get_attribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;src&amp;#34;&lt;/span&gt;))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-调用右键&#34;&gt;5. 调用右键&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;ActionChains&lt;/code&gt; 方法可调用右键。右键之前需先定位到元素。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;driver &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; webdriver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;Firefox()
-driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://img-blog.csdnimg.cn/20191104151241389.png&amp;#34;&lt;/span&gt;)
-actionChains &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; ActionChains(driver)
-
-body &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_element_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;body &amp;gt; img&amp;#34;&lt;/span&gt;)
-actionChains&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;context_click(body)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;perform()
-
-time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;)
-driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后就没有然后了。&lt;/p&gt;
-&lt;p&gt;Selenium 好像对页面而无法右键菜单进行操作，网上也搜了好久，应该得联合 js 操作，感觉挺麻烦的。后来找到了 &lt;code&gt;PyAutoGUI&lt;/code&gt; 这个库。&lt;/p&gt;
-&lt;h1 id=&#34;pyautogui&#34;&gt;PyAutoGUI&lt;/h1&gt;
-&lt;p&gt;安装直接 &lt;code&gt;pip install pyautogui&lt;/code&gt; 即可。&lt;/p&gt;
-&lt;p&gt;使用超级简单：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;write()&lt;/code&gt; 写入字符&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;press()&lt;/code&gt; 按下按键，相当于 &lt;code&gt;keyDown()&lt;/code&gt; 和 &lt;code&gt;keyUp()&lt;/code&gt; 的包装&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;hotkey()&lt;/code&gt; 可以传递几个键字符串，这些字符串将按顺序按下，然后以相反的顺序释放&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如火狐的另存为在第三个位置，只需要按方向键下三次，然后回车即可跳出保存对话框。代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;press([&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;enter&amp;#39;&lt;/span&gt;])
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;由于是图片地址，本 DEMO 其实只需要键入 &lt;code&gt;Ctrl + s&lt;/code&gt; 就可以跳出保存对话框。代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 浏览器另存为保存图片&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_list:
-    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(i)
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片地址，直接 ctrl+s，不用另存为&lt;/span&gt;
-    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;hotkey(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;ctrl&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;s&amp;#39;&lt;/span&gt;)
-    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 采用时间戳命名，防止名称重复弹出确认框&lt;/span&gt;
-    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#008000&#34;&gt;str&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;time() &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1000&lt;/span&gt;)), interval&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0.1&lt;/span&gt;)
-    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;press(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;enter&amp;#39;&lt;/span&gt;)
-
-    pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;整体代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;selenium&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; webdriver
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;selenium.webdriver.common.keys&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; Keys
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;selenium.webdriver&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; ActionChains
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;pyautogui&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;time&lt;/span&gt;
-
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;driver_JJ&lt;/span&gt;():
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 请求网站&lt;/span&gt;
-    driver &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; webdriver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;Firefox()
-    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;https://juejin.im/post/6857394127064006663&amp;#34;&lt;/span&gt;)
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取内容高度&lt;/span&gt;
-    all_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;return document.body.scrollHeight&amp;#34;&lt;/span&gt;)
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 循环往下滚动，每次滚1024高，间隔1秒&lt;/span&gt;
-    scroll_height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1024&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(all_height&lt;span style=&#34;color:#666&#34;&gt;/&lt;/span&gt;scroll_height)):
-        driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute_script(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;window.scrollTo(0, {0});&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(i&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;scroll_height))
-        time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 定位到文章节点&lt;/span&gt;
-    image_content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_element_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;.article&amp;#34;&lt;/span&gt;)
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 获取文章内img标签&lt;/span&gt;
-    image_elems &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; image_content&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;find_elements_by_css_selector(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;img&amp;#34;&lt;/span&gt;)
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片链接存放到list中&lt;/span&gt;
-    image_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_elems:
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;print&lt;/span&gt;(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get_attribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;src&amp;#34;&lt;/span&gt;))
-        image_list&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(i&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get_attribute(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;src&amp;#34;&lt;/span&gt;))
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 浏览器另存为保存图片&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; image_list:
-        driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(i)
-
-        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 图片地址，直接 ctrl+s，不用另存为&lt;/span&gt;
-        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;hotkey(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;ctrl&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;s&amp;#39;&lt;/span&gt;)
-        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
-        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 采用时间戳命名，防止名称重复弹出确认框&lt;/span&gt;
-        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#008000&#34;&gt;str&lt;/span&gt;(&lt;span style=&#34;color:#008000&#34;&gt;int&lt;/span&gt;(time&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;time() &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1000&lt;/span&gt;)), interval&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0.1&lt;/span&gt;)
-        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;press(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;enter&amp;#39;&lt;/span&gt;)
-
-        pyautogui&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
-
-    driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
-
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main&lt;/span&gt;():
-    driver_JJ()
-
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-    main()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;关联阅读&#34;&gt;关联阅读&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://pyautogui.readthedocs.io/en/latest/keyboard.html&#34;&gt;PyAutoGUI文档&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://selenium-python-zh.readthedocs.io/en/latest/index.html#&#34;&gt;Selenium with Python中文翻译文档&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0805_selenium.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

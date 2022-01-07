@@ -635,7 +635,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p>使用 <code>$1</code> 代替某一组。</p>
 <p>如替换隐藏手机号中间四位，查找正则为 <code>(\d{3})(\d*)(\d{4})</code>，替换为 <code>$1****$3</code>。</p>
 <p>Java 端也采用此方法。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">// 手机号隐藏中间4位：
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">// 手机号隐藏中间4位：
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> String <span style="color:#00f">hidePhone</span><span style="color:#666">(</span>String phone<span style="color:#666">){</span>
   <span style="color:#008000;font-weight:bold">return</span> phone<span style="color:#666">.</span><span style="color:#7d9029">replaceAll</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;(\\d{3})(\\d*)(\\d{4})&#34;</span><span style="color:#666">,</span> <span style="color:#ba2121">&#34;$1****$3&#34;</span><span style="color:#666">);</span>
 <span style="color:#666">}</span>
