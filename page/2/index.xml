@@ -6,9 +6,102 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 07 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>MapStruct 实现 Java Bean 映射</title>
+        <link>https://helloqb.xyz/post/2020/0821_mapstruct.html</link>
+        <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0821_mapstruct.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0821_mapstruct.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+&lt;p&gt;项目中遇到数据库返回的字段不想全部返回给前端，一个一个 setter 挺麻烦，不够优雅。市面上有挺多映射框架如 &lt;code&gt;Dozer&lt;/code&gt;，&lt;code&gt;Orika&lt;/code&gt;，&lt;code&gt;MapStruct&lt;/code&gt;，&lt;code&gt;ModelMapper&lt;/code&gt;，&lt;code&gt;JMapper&lt;/code&gt; 等，其中 &lt;code&gt;MapStruct&lt;/code&gt; 只是代码生成器，使用纯 Java 的方法调用源对象和目标对象之间进行映射，并非 Java 反射机制，所以其性能最好。&lt;/p&gt;
+&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Maven 依赖&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;...
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;org.mapstruct.version&amp;gt;&lt;/span&gt;1.3.1.Final&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/org.mapstruct.version&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+...
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.mapstruct&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mapstruct&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${org.mapstruct.version}&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+...
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.maven.plugins&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;maven-compiler-plugin&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;3.8.1&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;source&amp;gt;&lt;/span&gt;1.8&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/source&amp;gt;&lt;/span&gt;
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;target&amp;gt;&lt;/span&gt;1.8&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/target&amp;gt;&lt;/span&gt;
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;annotationProcessorPaths&amp;gt;&lt;/span&gt;
+                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;
+                        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.mapstruct&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+                        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mapstruct-processor&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+                        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${org.mapstruct.version}&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/path&amp;gt;&lt;/span&gt;
+                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/annotationProcessorPaths&amp;gt;&lt;/span&gt;
+            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果项目中有用到 &lt;code&gt;lombok&lt;/code&gt; 的话，&lt;code&gt;MapStruct&lt;/code&gt; 也支持，添加如下即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;annotationProcessorPaths&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.projectlombok&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;lombok&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${lombok.version}&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/path&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/annotationProcessorPaths&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;普通调用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;MapStruct&lt;/code&gt; 定义非常简单，因为它完全基于代码生成。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.mapstruct.Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.mapstruct.Mapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@Mapper&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;MapStructConverter&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+    MapStructConverter MAPPER &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; Mappers&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getMapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;MapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+ 
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Mapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;source &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; target &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;orderStatus&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
+    Order &lt;span style=&#34;color:#00f&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SourceOrder sourceOrder&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+ 
+    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
+    DestinationCode &lt;span style=&#34;color:#00f&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SourceCode sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;调用也很简单。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; MapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;MAPPER&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Spring 注解调用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Spring 项目的话可以如下参数实现依赖注入。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;componentModel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;spring&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;MapStructConverter&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;@Autowired&lt;/code&gt; 注入调用更方便。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; MapStructConverter mapStructConverter&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; mapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;尾巴&#34;&gt;尾巴&lt;/h1&gt;
+&lt;p&gt;其实这个问题困扰我很久了，之前一直想着用多态方式实现，没找到解决方法后也就用一个一个 setter 方式实现，现在想来很懒，以后还是多思考，多找找轮子，尽可能少写垃圾代码。&lt;/p&gt;
+&lt;p&gt;参考：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.baeldung.com/java-performance-mapping-frameworks&#34;&gt;Performance of Java Mapping&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mapstruct.org/documentation/stable/reference/html/&#34;&gt;MapStruct 1.3.1.Final Reference Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mapstruct/mapstruct&#34;&gt;mapstruct github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://helloqb.xyz/post/2020/0821_mapstruct.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
@@ -748,131 +841,6 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
 &lt;p&gt;大功告成，当然可根据自己喜好选择样式，添加相关文字等。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://51hota.dm.files.1drv.com/y4m5etRuVzlJgeR9p7lFrGdFuTvyPjAyaJvx50_mmJhYBXwq6qD87LfDvLnAY24Lb7eUvhqv9E0EVuJL1PZxIgqlsHiPjOUt7oQfmzs3Dwwzxe7pzgL1YhIFCs1eQmwLkgPVwkwwNSNUuCOJx55bLCpVADcF0xryHRgVQYTucl8vFB5tt6-W2g-Pk1xKz9BcFmWSuRE__6WUuSxKbAVGVZVXQ?width=1919&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 - https://helloqb.xyz/post/2020/0603_ps.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Spring 定时任务</title>
-        <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
-        <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0602_cron.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
-&lt;p&gt;本文主要记录下 cron 表达式的用法，方便下次使用。&lt;/p&gt;
-&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
-&lt;p&gt;程序主入口添加 &lt;code&gt;@SpringBootApplication&lt;/code&gt; 和 &lt;code&gt;@EnableScheduling&lt;/code&gt; 注解以启动定时任务。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.SpringApplication&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.autoconfigure.SpringBootApplication&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.scheduling.annotation.EnableScheduling&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@SpringBootApplication&lt;/span&gt;
-&lt;span style=&#34;color:#a2f&#34;&gt;@EnableScheduling&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;SchedulingTasksApplication&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-	&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-		SpringApplication&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SchedulingTasksApplication&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-	&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后方法上添加 &lt;code&gt;@Scheduled&lt;/code&gt; 注解就行了。当然类注解 &lt;code&gt;@Component&lt;/code&gt; 也必不可少。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 5000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;reportCurrentTime&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-  System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; Date&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;定时调度&#34;&gt;定时调度&lt;/h1&gt;
-&lt;h2 id=&#34;fixeddelay&#34;&gt;fixedDelay&lt;/h2&gt;
-&lt;p&gt;毫秒单位，以上一个调用的完成时间开始计算。&lt;/p&gt;
-&lt;p&gt;如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-    LocalDateTime localDateTime &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;start &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; localDateTime&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        Thread&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;sleep&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2000&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;end &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;start 2020-06-02T15:49:59.650
-end 2020-06-02T15:50:01.651
-start 2020-06-02T15:50:04.653
-end 2020-06-02T15:50:06.653
-start 2020-06-02T15:50:09.654
-end 2020-06-02T15:50:11.655
-start 2020-06-02T15:50:14.657
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;fixedrate&#34;&gt;fixedRate&lt;/h2&gt;
-&lt;p&gt;需要固定速率，则使用 &lt;code&gt;fixedRate&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedRate &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-    LocalDateTime localDateTime &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;start &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; localDateTime&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        Thread&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;sleep&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2000&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;end &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;start 2020-06-02T15:58:03.563
-end 2020-06-02T15:58:05.563
-start 2020-06-02T15:58:06.563
-end 2020-06-02T15:58:08.563
-start 2020-06-02T15:58:09.563
-end 2020-06-02T15:58:11.563
-start 2020-06-02T15:58:12.563
-end 2020-06-02T15:58:14.563
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是若上个任务耗时超过间隔，则下一次也需要在等待，等到结束后下一次立刻执行。&lt;/p&gt;
-&lt;p&gt;如等待 7 秒后结果如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;start 2020-06-02T16:02:37.726
-end 2020-06-02T16:02:44.727
-start 2020-06-02T16:02:44.727
-end 2020-06-02T16:02:51.727
-start 2020-06-02T16:02:51.727
-end 2020-06-02T16:02:58.727
-start 2020-06-02T16:02:58.727
-end 2020-06-02T16:03:05.728
-start 2020-06-02T16:03:05.728
-
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;initialdelay&#34;&gt;initialDelay&lt;/h2&gt;
-&lt;p&gt;默认项目启动立即执行定时任务，若想要延迟，使用 &lt;code&gt;initialDelay&lt;/code&gt; 参数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;initialDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 10000&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; fixedRate &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2020-06-02 16:09:00.487 [main] INFO  LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
-start 2020-06-02T16:09:10.467
-end 2020-06-02T16:09:15.468
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;cron-表达式&#34;&gt;cron 表达式&lt;/h2&gt;
-&lt;p&gt;用法太多了，每次项目用到就记一下吧。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;表达式&lt;/th&gt;
-&lt;th&gt;描述&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;1 2 3 * * ? *&lt;/td&gt;
-&lt;td&gt;每天 3 点 2 分 1 秒执行&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;1 2 3 L * ? *&lt;/td&gt;
-&lt;td&gt;每月最后一天 3 点 2 分 1 秒执行&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;1 2 3 4 * ? *&lt;/td&gt;
-&lt;td&gt;每月 4 号 3 点 2 分 1 秒执行&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;0 0 12 ? * WED&lt;/td&gt;
-&lt;td&gt;每周三执行&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-- https://helloqb.xyz/post/2020/0602_cron.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

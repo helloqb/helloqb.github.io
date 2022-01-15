@@ -7,22 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 07 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Smartisan</title>
+      <link>https://helloqb.xyz/tags/smartisan.html</link>
+      <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/tags/smartisan.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Aria2</title>
       <link>https://helloqb.xyz/tags/aria2.html</link>
       <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/tags/aria2.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Shadowsocks</title>
-      <link>https://helloqb.xyz/tags/shadowsocks.html</link>
-      <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/tags/shadowsocks.html</guid>
       <description></description>
     </item>
     
@@ -203,15 +203,6 @@
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/tags/script.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Smartisan</title>
-      <link>https://helloqb.xyz/tags/smartisan.html</link>
-      <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/tags/smartisan.html</guid>
       <description></description>
     </item>
     

@@ -7,19 +7,38 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 07 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>软件安装分享</title>
+      <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
+      <link>https://helloqb.xyz/post/2022/0112_tv.html</link>
+      <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2022/0112_tv.html</guid>
+      <description>前言 家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。
+遥控 其实本可以没有这篇文章，因为 TNT 系统已经够成熟了，连上键鼠完全可以像电脑一样操作，当作机顶盒播放视频绰绰有余。但是客厅里摆一套键鼠总觉得不够优雅，所以想着可不可以实现像遥控器操控机顶盒那样。
+手机遥控 第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。
+Android 9.0 + 蓝牙 HID Android 9.0 自带将手机作为输入设备的功能，遥控助手 和 妙妙触控 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。
+局域网遥控 KDE Connect 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&amp;hellip;&amp;hellip;）
+  官方软件遥控 国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。
+目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。
+  遥控器 软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。
+  官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。
+软件体验 Kodi Kodi 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。
+中文设置 支持中文，但是直接设置会乱码，需要先修改字体；</description>
+    </item>
+    
+    <item>
+      <title>下载利器 Aria2 使用分享</title>
       <link>https://helloqb.xyz/post/2022/0107_software.html</link>
       <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2022/0107_software.html</guid>
-      <description>摘要  Shadowsocks： 如何使用 systemd 注册为系统服务；如何手动添加规则 Aria2： Mac 如何快速启动；Windows 如何实现开机后台自启  Shadowsocks 安装 Rust 版本 Server libev 版本好像不迭代了，所以我使用 shadowsocks-rust 版本。
-下载二进制文件解压：
-wget https://github.com/shadowsocks/...v1.12.5.x86_64-unknown-linux-gnu.tar.xz tar -xvf shadowsocks-v1.12.5.x86_64-unknown-linux-gnu.tar.xz -C /usr/local/bin 编辑配置文件：
-mkdir -p /etc/shadowsocks-rust &amp;amp;&amp;amp; touch $_/config.json { &amp;#34;server&amp;#34;:&amp;#34;0.0.0.0&amp;#34;, &amp;#34;server_port&amp;#34;:19419, &amp;#34;password&amp;#34;:&amp;#34;***&amp;#34;, &amp;#34;method&amp;#34;:&amp;#34;aes-256-gcm&amp;#34;, &amp;#34;mode&amp;#34;:&amp;#34;tcp_and_udp&amp;#34; } 直接启动命令：
-/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json &amp;amp; 使用上述命令启动后，不太好维护，比如停止的话还得使用 kill 命令，通过 systemd 启动可以更好的管理。
-[Unit] Description=shadowsocks-rust service After=network.target [Service] ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json ExecStop=/usr/bin/killall ssserver Restart=always RestartSec=10 StandardOutput=syslog StandardError=syslog SyslogIdentifier=ssserver User=nobody Group=nogroup [Install] WantedBy=multi-user.</description>
+      <description>摘要  Mac 如何快速启动 Aria2 Windows 如何实现开机后台自启 Aria2  Aria2 官网 对其的定义：
+ aria2 是一个轻量级的多协议和多源命令行 下载工具。它支持 HTTP/HTTPS、FTP、SFTP、 BitTorrent 和 Metalink。aria2 可以通过内置的 JSON-RPC 和 XML-RPC接口进行操作。
+ 用到的插件：
+ 可视化窗口：AriaNg Chrome 插件：Camtd - Aria2下载管理器 Chrome 插件（推荐）：Aria2 for Chrome  配置 新建目录结构：
+├── Aria2 │ ├── aria2.conf │ ├── aria2.session │ └── downloads 其中 aria2.session 为空文件，用来重新加载任务；downloads 为下载存放目录；aria2.conf 为参数配置文件，配置如下：
+### Basic ### dir=./downloads input-file=./aria2.session save-session=./aria2.session save-session-interval=60 continue=true ### Adcanced ### disk-cache=64M file-allocation=none # daemon=true quiet=true ### RPC ### enable-rpc=true rpc-allow-origin-all=true rpc-listen-all=true ### HTTP/FTP ### max-connection-per-server=16 min-split-size=8M split=32 user-agent=Transmission/2.</description>
     </item>
     
     <item>

@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html><head>
+<title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="连接显示器就变成大屏操作系统的 Smartisan TNT OS，感觉很适合用作机顶盒。">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/journal.min.5e8f3f653e9f6ce67bf72ff8ee6fee69decf7b5639a3ae7f8344750ad4e065b1.css" integrity="sha256-Xo8/ZT6fbOZ79y/47m/uad7Pe1Y5o65/g0R1CtTgZbE=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://helloqb.xyz/scss/dark-mode.min.bdfa63b2e89903517dcbb1032b537d54cff3f425c19d008a78dfe49e6cd07ced.css" integrity="sha256-vfpjsuiZA1F9y7EDK1N9VM/z9CXBnQCKeN/knmzQfO0=" media="screen">
+
+
+<script src="https://helloqb.xyz//js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="https://helloqb.xyz//js/toc-collapse.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '64eac7e04ef1c9c58977',
+  clientSecret: '230d5636dc1e4810ca4e7af9090a20ab1c5a1e74',
+  repo: 'helloqb.github.io',
+  owner: 'helloqb',
+  admin: ['helloqb'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://helloqb.xyz/">
+    
+        <div class="nav-title">
+            哲学家
+        </div>
+        
+        <div class="nav-subtitle">
+            怕什么真理无穷，进一寸有进一寸的欢喜
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/post">
+                归档
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#遥控-nav`)" id="遥控-nav">
+									遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e6%89%8b%e6%9c%ba%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#手机遥控-nav`)" id="手机遥控-nav">
+									手机遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#android-90--%e8%93%9d%e7%89%99-hid" onclick="onNavClick(`#android-90--蓝牙-hid-nav`)" id="android-90--蓝牙-hid-nav">
+									Android 9.0 &#43; 蓝牙 HID
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b1%80%e5%9f%9f%e7%bd%91%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#局域网遥控-nav`)" id="局域网遥控-nav">
+									局域网遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ae%98%e6%96%b9%e8%bd%af%e4%bb%b6%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#官方软件遥控-nav`)" id="官方软件遥控-nav">
+									官方软件遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e9%81%a5%e6%8e%a7%e5%99%a8" onclick="onNavClick(`#遥控器-nav`)" id="遥控器-nav">
+									遥控器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6%e4%bd%93%e9%aa%8c" onclick="onNavClick(`#软件体验-nav`)" id="软件体验-nav">
+									软件体验
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#kodi" onclick="onNavClick(`#kodi-nav`)" id="kodi-nav">
+									Kodi
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e4%b8%ad%e6%96%87%e8%ae%be%e7%bd%ae" onclick="onNavClick(`#中文设置-nav`)" id="中文设置-nav">
+									中文设置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%89%8b%e6%9c%ba%e8%bf%9c%e7%a8%8b%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#手机远程遥控-nav`)" id="手机远程遥控-nav">
+									手机远程遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#dlna-%e6%92%ad%e6%94%be" onclick="onNavClick(`#dlna-播放-nav`)" id="dlna-播放-nav">
+									DLNA 播放
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%92%ad%e6%94%be%e7%94%b5%e8%a7%86" onclick="onNavClick(`#播放电视-nav`)" id="播放电视-nav">
+									播放电视
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%92%ad%e6%94%be-netflix" onclick="onNavClick(`#播放-netflix-nav`)" id="播放-netflix-nav">
+									播放 Netflix
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#youtube" onclick="onNavClick(`#youtube-nav`)" id="youtube-nav">
+									YouTube
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b6%e4%bb%96%e4%bd%93%e9%aa%8c%e5%a5%bd%e7%9a%84%e8%bd%af%e4%bb%b6" onclick="onNavClick(`#其他体验好的软件-nav`)" id="其他体验好的软件-nav">
+									其他体验好的软件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%88%90%e6%9e%9c%e6%bc%94%e7%a4%ba" onclick="onNavClick(`#成果演示-nav`)" id="成果演示-nav">
+									成果演示
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/post">
+                    归档
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#遥控-nav`)" id="遥控-nav">
+									遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e6%89%8b%e6%9c%ba%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#手机遥控-nav`)" id="手机遥控-nav">
+									手机遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#android-90--%e8%93%9d%e7%89%99-hid" onclick="onNavClick(`#android-90--蓝牙-hid-nav`)" id="android-90--蓝牙-hid-nav">
+									Android 9.0 &#43; 蓝牙 HID
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b1%80%e5%9f%9f%e7%bd%91%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#局域网遥控-nav`)" id="局域网遥控-nav">
+									局域网遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ae%98%e6%96%b9%e8%bd%af%e4%bb%b6%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#官方软件遥控-nav`)" id="官方软件遥控-nav">
+									官方软件遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e9%81%a5%e6%8e%a7%e5%99%a8" onclick="onNavClick(`#遥控器-nav`)" id="遥控器-nav">
+									遥控器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6%e4%bd%93%e9%aa%8c" onclick="onNavClick(`#软件体验-nav`)" id="软件体验-nav">
+									软件体验
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#kodi" onclick="onNavClick(`#kodi-nav`)" id="kodi-nav">
+									Kodi
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e4%b8%ad%e6%96%87%e8%ae%be%e7%bd%ae" onclick="onNavClick(`#中文设置-nav`)" id="中文设置-nav">
+									中文设置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%89%8b%e6%9c%ba%e8%bf%9c%e7%a8%8b%e9%81%a5%e6%8e%a7" onclick="onNavClick(`#手机远程遥控-nav`)" id="手机远程遥控-nav">
+									手机远程遥控
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#dlna-%e6%92%ad%e6%94%be" onclick="onNavClick(`#dlna-播放-nav`)" id="dlna-播放-nav">
+									DLNA 播放
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%92%ad%e6%94%be%e7%94%b5%e8%a7%86" onclick="onNavClick(`#播放电视-nav`)" id="播放电视-nav">
+									播放电视
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%92%ad%e6%94%be-netflix" onclick="onNavClick(`#播放-netflix-nav`)" id="播放-netflix-nav">
+									播放 Netflix
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#youtube" onclick="onNavClick(`#youtube-nav`)" id="youtube-nav">
+									YouTube
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b6%e4%bb%96%e4%bd%93%e9%aa%8c%e5%a5%bd%e7%9a%84%e8%bd%af%e4%bb%b6" onclick="onNavClick(`#其他体验好的软件-nav`)" id="其他体验好的软件-nav">
+									其他体验好的软件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%88%90%e6%9e%9c%e6%bc%94%e7%a4%ba" onclick="onNavClick(`#成果演示-nav`)" id="成果演示-nav">
+									成果演示
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://helloqb.xyz/">
+            哲学家
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://helloqb.xyz/">
+        <div class="single-column-header-title">哲学家</div>
+        
+        <div class="single-column-header-subtitle">怕什么真理无穷，进一寸有进一寸的欢喜</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://dsm01pap001files.storage.live.com/y4mlN6UDh9CtV1x-QpJPHoE_rG8lreb_9OAi124oJgM2KBN_JnU6YpDkyteii7JyD-NiK6sI-iF6UMZ8-7ZGWSkpWTwa2An7gDoaqQhBwDnjMDgYvFD8mkwyJKhopTLR6pvTeOrJr0wKjrH2z5hdO3D_lVZHJWmt2-XCT8zmrfdg5keg-EYddfNMHNM1fi8JCKK?width=2160&amp;height=1080&amp;cropmode=none')"
+                    
+                
+            >
+                <div class="post-title">
+                    Smartisan TNT 连接遥控器变成超强机顶盒
+                    
+                    <div class="post-subtitle">
+                        连接显示器就变成大屏操作系统的 Smartisan TNT OS，感觉很适合用作机顶盒。
+                    </div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2022-01-13 00:00
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/">[Android]</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/smartisan">Smartisan</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="前言">前言</h1>
+<p>家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。</p>
+<h1 id="遥控">遥控</h1>
+<p>其实本可以没有这篇文章，因为 TNT 系统已经够成熟了，连上键鼠完全可以像电脑一样操作，当作机顶盒播放视频绰绰有余。但是客厅里摆一套键鼠总觉得不够优雅，所以想着可不可以实现像遥控器操控机顶盒那样。</p>
+<h2 id="手机遥控">手机遥控</h2>
+<p>第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。</p>
+<h3 id="android-90--蓝牙-hid">Android 9.0 + 蓝牙 HID</h3>
+<p>Android 9.0 自带将手机作为输入设备的功能，<a href="http://www.wnkong.com/">遥控助手</a> 和 <a href="https://www.coolapk.com/apk/com.opq.wonderfultouch">妙妙触控</a> 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。</p>
+<h3 id="局域网遥控">局域网遥控</h3>
+<p><a href="https://kdeconnect.kde.org/">KDE Connect</a> 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&hellip;&hellip;）</p>
+<center> <img src="https://dsm01pap001files.storage.live.com/y4muy7RGGElVGHs-QWJYYCLxY7cjQz2ifVP6w_pyj7L1isrKwIcHOpsqbbw1dJrfzlSxg5ImuQcRC6iVIzJvPZFboFhw6EWghK_c5iSx4l3k19GS_8-RW1XZBeiPYTby-Mkqn0zs_EmFcvYQUcLq9LS4F1kOQhVsWXsZATHOh-ngf1Yn8_-rsLgk7gty_qB_aa0?width=465&height=1024&cropmode=none" height="400" /> </center>
+<h3 id="官方软件遥控">官方软件遥控</h3>
+<p>国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。</p>
+<p>目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。</p>
+<center> <img src="https://dsm01pap001files.storage.live.com/y4mte03NwJkP5aQaDcrCzWL2QyA6I9R5dFjs2aCwKlpxz3kiAipcWwGoPnrCKEfNLlAzGqh6li8NbLO9oGLW_mStivOkw938XLXLHV_Nhgqpg41NTy8C_ZsYJwcjc2mO9n1nql8LIkvUCMnxMNFCFMOad72oNoimwJxASkuOxRmwXgsawLL6opqdxEXVPHwFVAJ?width=473&height=1024&cropmode=none" height="400" /> </center>
+<h2 id="遥控器">遥控器</h2>
+<p>软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。</p>
+<center> <img src="https://dsm01pap001files.storage.live.com/y4mLTVCoACWeufHAoynAbyYaFmKJBSb9VYfa02PSqQNDm2uUxM3PyVz-CFWD3pjvFRZMgchTVbHlJQh2D5I_5ba6MFYqp_X8e649hVcmoVpw-bPcTvQF5LxJ9Zr-UJSpXM8XFGNmVaWs7DTMdSVoGrMdqRZzgcrYg-la9XD0xLAoV-MBeSpyvACmGWVz--yvauZ?width=1100&height=1100&cropmode=none" height="400" /> </center>
+<p>官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。</p>
+<h1 id="软件体验">软件体验</h1>
+<h2 id="kodi">Kodi</h2>
+<p><a href="https://kodi.tv/">Kodi</a> 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。</p>
+<h3 id="中文设置">中文设置</h3>
+<p>支持中文，但是直接设置会乱码，需要先修改字体；</p>
+<ol>
+<li>Settings -&gt; Interface -&gt; Skin -&gt; Fonts，设置为 <code>Aria based</code>；</li>
+</ol>
+<center> <img src="https://dsm01pap001files.storage.live.com/y4mcwYZ3Syw1z-0BagamBFBGExAi0uMd3sNZRLJhgIABZ6TeBUjooYeyAzq5PhaTtw5COLM3pgqqf0fifnvYyGhbXiHU9r97RsiEoOTS5NUMzB7xCL1xvrqNlkLGzRnu8zgw9rgBa23Y8hiqvFb9ICbV4zmAEonhNzLqAb8R4n2qcxMGo5qy2rQiqmvurWXNHKj?width=1024&height=493&cropmode=none" height="300" /> </center><p>
+<ol start="2">
+<li>Settings -&gt; Interface -&gt; Regional -&gt; Language，设置为 <code>Chinese (Simple)</code>；</li>
+</ol>
+<center> <img src="https://dsm01pap001files.storage.live.com/y4mGQZPExboJtOXBUWvx3uLQWLYdF5u9bIyES5Gis5TBWrF374YakptmWkkg7Rl-Ua0N9eVXg-IDmu5zgKXxby1dU5zn3zzPKT9bKMVUp-SDwETAVHRXmpGGSxuI6OadX6Tnb5rucmhLNFELp-En7Kss-uTbvIBRrU3A94PM3Ngjjje_ux1a8Uz4N1QSI3XWPOo?width=1024&height=493&cropmode=none" height="300" /> </center>
+<h3 id="手机远程遥控">手机远程遥控</h3>
+<p>官方的遥控软件 Kore 体验也非常好，Android 和 IOS 都支持，而且很多第三方的遥控软件也都会支持 Kodi，以 Android 为例：</p>
+<ol>
+<li>设置 -&gt; 服务 -&gt; 控制；允许通过 HTTP 远程控制，端口号建议改成非常用端口如 18080；</li>
+</ol>
+<center><img src="https://dsm01pap001files.storage.live.com/y4mkyAmWNgI0xfgxCwrT1G_4s2Mkdb__sq_ttD35fum2CS4c02P2LmdRtCMaeRYGaJiAk7eVatdPMtVJ7BggyAD_Ya1ElZnfJwLRBc9tMhQ53NtwgLyxDNW-3u9GuT3uVf5QA9EkrE_pSR9dswRivmAFzPde265RF3e-iLLVi6k1WiFWmhFmkRPTTL7iSgzvVEf?width=1024&height=493&cropmode=none" height="300" /></center><p>
+<ol start="2">
+<li>Google Play 下载 <a href="https://play.google.com/store/apps/details?id=org.xbmc.kore">Kore</a>，需要在同一局域网下，软件会自动识别出设备连接；</li>
+</ol>
+<center> <img src="https://dsm01pap001files.storage.live.com/y4m1gqrINjlUua7LpJVAujkN72AigMO3-2sXRjKLfyaAq9-ELjA7WGj_AaxTButO5D9WUI5Lo6IoMdvx7XUr-UlE8_lmUEwReWOQCWhruQckPUFiPPc8IkZTzSBXEmxAgNcR85KZJ_L_3pF85VshLgo6-B6HdbOab-jn_alA-0ZP8aYWKZhwUdfI5bbYbTFMXre?width=465&height=1024&cropmode=none" height="400" /> </center>
+<h3 id="dlna-播放">DLNA 播放</h3>
+<p>首先需要设置里打开此功能：</p>
+<ol>
+<li>设置 -&gt; 服务 -&gt; UPnP/DLNA，启用 UPnP 支持；</li>
+</ol>
+<center><img src="https://dsm01pap001files.storage.live.com/y4mE7obu8c8rJOcKjjzVqw8V9sPkNdP8pGZhOlRFRpqIl7uGQN9u9SWyBquuLFzkZmx618OEFv86RWKwNPjpcL4wtqOfXAW6anbPxqwwk5qp0huOMT35LGGsYMbt-CSDPXvXgd5Qhm9WILqeTZimEe--Rd84yxwEXJ2ZBOh1uLBX_ARqiho113J4JVA0TTZbbbZ?width=1024&height=493&cropmode=none" height="300" /></center><p>
+<ol start="2">
+<li>电影 -&gt; 添加视频源 -&gt; UPnp 设备；局域网内的设备就会自动展示出来；</li>
+</ol>
+<center><img src="https://dsm01pap001files.storage.live.com/y4mCuqESSXbjffO1m06YrEzHHYgbX4FfQJ2fZnPJ-NfBoh3xQGFgtNMcWF8EZHvdYwgC8hppiy7HgDSa02LEmXfZu0RwljZyowEayL4liQM3oBa4GtJuVGS3AAhk9CugpQgOMuGedrLba3lozvkVUhtgWYg_n1GBOWRIi5aWRsCby_ei9yGaD0CaJx8y4YR28UU?width=1024&height=493&cropmode=none" height="300" /></center>
+<h3 id="播放电视">播放电视</h3>
+<p>首先需要下载 IPTV 客户端插件，<code>插件 -&gt; PVR 客户端 -&gt; PVR IPTV Simple Client</code>；</p>
+<p>播放电视首先需要电视源，GitHub 上有很多这类项目，我用的是这个 <a href="https://github.com/iptv-org/iptv">链接</a>，国外源也可以播放，但是也听不懂，所以就选择中文分类的列表导入。</p>
+<p>在插件中，设置选择远程路径，输入 <code>https://iptv-org.github.io/iptv/languages/zho.m3u</code>。</p>
+<center><img src="https://dsm01pap001files.storage.live.com/y4mAZjP8zW9YPs0xBiKaLEJi5G2d74ppwFgV5Zhb--RL_51CrTRr5St_PaCd9xnRch3sDEn2yEQYmXEQkybm1ytLhLELBCXdSvA_vKCFSHobXRYz8a0mk_GM_N1FKS1neoVUcfabCX3Fo7hFn_RycIOyGqxMWRLey_iNtQFKMmLVy-e1u3XKbEQ3BBstkVmPMZD?width=1024&height=493&cropmode=none" height="300" /></center><p>
+<p>等待加载片刻，电视频道里就会出现查询到的频道里。如果加载不出来，可能是 GitHub 国内访问太慢，可以将此文件下载到手机上，然后在插件中设置本地路径，导入即可。</p>
+<center><img src="https://dsm01pap001files.storage.live.com/y4mnAZ5YIubTIOapaQ5dhj36o_QyyggxU5iEU4pfdD7zEyahJuERgYx9eS9XtAcNxXLq_W1s0OkTDedl-J4AXOgsv6u0BWQ5U7t254RXS8H0-18PFra1caX6vadcoAwZWJOfMIaCb1sFgMPLbPZjU_Zj7E2bpvs0_xq_nIuocsHeZ7AS40hRlEScUrEkU02G1zu?width=1024&height=493&cropmode=none" height="300" /></center>
+<h3 id="播放-netflix">播放 Netflix</h3>
+<p>Kodi 官方库中没有此插件，可能是版权的原因吧。但是民间自有大神，名为 Stefano Gottardo 的开发人员开发了 <a href="https://github.com/CastagnaIT/plugin.video.netflix">Netflix 插件</a>，测试可用。安装步骤稍微复杂些：</p>
+<ol>
+<li>python 脚本生成 Key；</li>
+<li>下载第三方源插件，选择插件从 zip 文件中导入；</li>
+<li>选择从第三方库安装 Netflix 插件；</li>
+<li>点击 Netflix，使用身份密钥登陆；</li>
+</ol>
+<center><img src="https://dsm01pap001files.storage.live.com/y4m207gpID7ntoXJnUgQ_PcETsMddHvGI063QkOZtZ8vthyxT8UlXmUIt3UAmfRdi--gELPl76QkHxnpyTDcxUdWn_RU1si3_VQMpKeJSOVaZXbpcsVS95KLpc3qIrdKdjFPhoo6PpI9ZUuMex7C2PzU6W7nL6ytSlVxfjDS4Jzlg3RLtBsf_eqv8eNhhVPZIBG?width=1024&height=493&cropmode=none" height="300" /></center>
+<h2 id="youtube">YouTube</h2>
+<p>YouTube 使用有三种方法：</p>
+<p><strong>1. 直接安装 APP</strong></p>
+<p>其实 TNT 系统已经兼容 YouTube 了，打开会展开为平板模式，但是无法通过遥控器进行按键操作，所以作为次要选择。</p>
+<p><strong>2. Kobi 安装 插件</strong></p>
+<p>另外想到的方案，就是 Kobi 插件了，这种方案肯定可行，而且体验也会不错，毕竟融入到 Kobi 平台里了。</p>
+<p><strong>3. SmartTube Next</strong></p>
+<p>最后想到的是 <code>YouTube TV</code>，既然是 TV 版本，肯定会兼容遥控器，遗憾的是官方只支持盒子安装，无法在手机上安装。</p>
+<p>网上搜了下，竟然找到了一个代替 <code>YouTube TV</code> 的第三方软件 <a href="https://github.com/yuliskov/SmartTubeNext">SmartTube Next</a>。兼容遥控器，使用起来体验很好，唯一有点不好的是每进入下一个页面，系统就会生成一个独立的窗口。</p>
+<center><img src="https://dsm01pap001files.storage.live.com/y4mFSSOzd0YCXAwxsP-LxD9QqewSWpmfp9vqdpSHVQxhvhvYsYtesiOIYygEBLhDxrcFVsiD3kGVkb5CDcrFOoolUbZucHFBmp8KyYdzoZ1_v-Mr-ZqpNIHkwQT1ATYToJRpkeeKpsK4QkbwONcDB1rw4Wa9uDKLRwKDy80IOiSrTB5yOpPNbQblcNilaeQ0qfy?width=1024&height=683&cropmode=none" height="300" /></center>
+<h2 id="其他体验好的软件">其他体验好的软件</h2>
+<p>支持遥控器按钮操作：</p>
+<ul>
+<li>MX Player</li>
+</ul>
+<p>适配 TNT 全屏：</p>
+<ul>
+<li>YouTube Kids</li>
+<li>Google Drive</li>
+<li>哔哩哔哩等各大视频网站的 TV 版</li>
+</ul>
+<h1 id="成果演示">成果演示</h1>
+<p>遥控器操作 TNT 的演示视频：</p>
+<center> <iframe src="//player.bilibili.com/player.html?aid=765710883&bvid=BV1ur4y1i7Yb&cid=484833826&page=1" width = "666" height="444"> </iframe> </center>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2022-01-13</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://helloqb.xyz/post/2022/0107_software.html">
+			Previous<br>下载利器 Aria2 使用分享
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	©DRay. 本站遵循 CC-BY-NC 4.0 协议
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            }
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+</script>
+
+<script src="https://helloqb.xyz//js/journal.js"></script>
+    </body>
+</html>

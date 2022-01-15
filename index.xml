@@ -6,111 +6,168 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 07 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     
     
         <item>
-        <title>软件安装分享</title>
+        <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
+        <link>https://helloqb.xyz/post/2022/0112_tv.html</link>
+        <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2022/0112_tv.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2022/0112_tv.html -&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。&lt;/p&gt;
+&lt;h1 id=&#34;遥控&#34;&gt;遥控&lt;/h1&gt;
+&lt;p&gt;其实本可以没有这篇文章，因为 TNT 系统已经够成熟了，连上键鼠完全可以像电脑一样操作，当作机顶盒播放视频绰绰有余。但是客厅里摆一套键鼠总觉得不够优雅，所以想着可不可以实现像遥控器操控机顶盒那样。&lt;/p&gt;
+&lt;h2 id=&#34;手机遥控&#34;&gt;手机遥控&lt;/h2&gt;
+&lt;p&gt;第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。&lt;/p&gt;
+&lt;h3 id=&#34;android-90--蓝牙-hid&#34;&gt;Android 9.0 + 蓝牙 HID&lt;/h3&gt;
+&lt;p&gt;Android 9.0 自带将手机作为输入设备的功能，&lt;a href=&#34;http://www.wnkong.com/&#34;&gt;遥控助手&lt;/a&gt; 和 &lt;a href=&#34;https://www.coolapk.com/apk/com.opq.wonderfultouch&#34;&gt;妙妙触控&lt;/a&gt; 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。&lt;/p&gt;
+&lt;h3 id=&#34;局域网遥控&#34;&gt;局域网遥控&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kdeconnect.kde.org/&#34;&gt;KDE Connect&lt;/a&gt; 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&amp;hellip;&amp;hellip;）&lt;/p&gt;
+&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4muy7RGGElVGHs-QWJYYCLxY7cjQz2ifVP6w_pyj7L1isrKwIcHOpsqbbw1dJrfzlSxg5ImuQcRC6iVIzJvPZFboFhw6EWghK_c5iSx4l3k19GS_8-RW1XZBeiPYTby-Mkqn0zs_EmFcvYQUcLq9LS4F1kOQhVsWXsZATHOh-ngf1Yn8_-rsLgk7gty_qB_aa0?width=465&amp;height=1024&amp;cropmode=none&#34; height=&#34;400&#34; /&gt; &lt;/center&gt;
+&lt;h3 id=&#34;官方软件遥控&#34;&gt;官方软件遥控&lt;/h3&gt;
+&lt;p&gt;国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。&lt;/p&gt;
+&lt;p&gt;目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。&lt;/p&gt;
+&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mte03NwJkP5aQaDcrCzWL2QyA6I9R5dFjs2aCwKlpxz3kiAipcWwGoPnrCKEfNLlAzGqh6li8NbLO9oGLW_mStivOkw938XLXLHV_Nhgqpg41NTy8C_ZsYJwcjc2mO9n1nql8LIkvUCMnxMNFCFMOad72oNoimwJxASkuOxRmwXgsawLL6opqdxEXVPHwFVAJ?width=473&amp;height=1024&amp;cropmode=none&#34; height=&#34;400&#34; /&gt; &lt;/center&gt;
+&lt;h2 id=&#34;遥控器&#34;&gt;遥控器&lt;/h2&gt;
+&lt;p&gt;软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。&lt;/p&gt;
+&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mLTVCoACWeufHAoynAbyYaFmKJBSb9VYfa02PSqQNDm2uUxM3PyVz-CFWD3pjvFRZMgchTVbHlJQh2D5I_5ba6MFYqp_X8e649hVcmoVpw-bPcTvQF5LxJ9Zr-UJSpXM8XFGNmVaWs7DTMdSVoGrMdqRZzgcrYg-la9XD0xLAoV-MBeSpyvACmGWVz--yvauZ?width=1100&amp;height=1100&amp;cropmode=none&#34; height=&#34;400&#34; /&gt; &lt;/center&gt;
+&lt;p&gt;官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。&lt;/p&gt;
+&lt;h1 id=&#34;软件体验&#34;&gt;软件体验&lt;/h1&gt;
+&lt;h2 id=&#34;kodi&#34;&gt;Kodi&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://kodi.tv/&#34;&gt;Kodi&lt;/a&gt; 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。&lt;/p&gt;
+&lt;h3 id=&#34;中文设置&#34;&gt;中文设置&lt;/h3&gt;
+&lt;p&gt;支持中文，但是直接设置会乱码，需要先修改字体；&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Settings -&amp;gt; Interface -&amp;gt; Skin -&amp;gt; Fonts，设置为 &lt;code&gt;Aria based&lt;/code&gt;；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mcwYZ3Syw1z-0BagamBFBGExAi0uMd3sNZRLJhgIABZ6TeBUjooYeyAzq5PhaTtw5COLM3pgqqf0fifnvYyGhbXiHU9r97RsiEoOTS5NUMzB7xCL1xvrqNlkLGzRnu8zgw9rgBa23Y8hiqvFb9ICbV4zmAEonhNzLqAb8R4n2qcxMGo5qy2rQiqmvurWXNHKj?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt; &lt;/center&gt;&lt;p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Settings -&amp;gt; Interface -&amp;gt; Regional -&amp;gt; Language，设置为 &lt;code&gt;Chinese (Simple)&lt;/code&gt;；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mGQZPExboJtOXBUWvx3uLQWLYdF5u9bIyES5Gis5TBWrF374YakptmWkkg7Rl-Ua0N9eVXg-IDmu5zgKXxby1dU5zn3zzPKT9bKMVUp-SDwETAVHRXmpGGSxuI6OadX6Tnb5rucmhLNFELp-En7Kss-uTbvIBRrU3A94PM3Ngjjje_ux1a8Uz4N1QSI3XWPOo?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt; &lt;/center&gt;
+&lt;h3 id=&#34;手机远程遥控&#34;&gt;手机远程遥控&lt;/h3&gt;
+&lt;p&gt;官方的遥控软件 Kore 体验也非常好，Android 和 IOS 都支持，而且很多第三方的遥控软件也都会支持 Kodi，以 Android 为例：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;设置 -&amp;gt; 服务 -&amp;gt; 控制；允许通过 HTTP 远程控制，端口号建议改成非常用端口如 18080；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mkyAmWNgI0xfgxCwrT1G_4s2Mkdb__sq_ttD35fum2CS4c02P2LmdRtCMaeRYGaJiAk7eVatdPMtVJ7BggyAD_Ya1ElZnfJwLRBc9tMhQ53NtwgLyxDNW-3u9GuT3uVf5QA9EkrE_pSR9dswRivmAFzPde265RF3e-iLLVi6k1WiFWmhFmkRPTTL7iSgzvVEf?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;&lt;p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Google Play 下载 &lt;a href=&#34;https://play.google.com/store/apps/details?id=org.xbmc.kore&#34;&gt;Kore&lt;/a&gt;，需要在同一局域网下，软件会自动识别出设备连接；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;center&gt; &lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4m1gqrINjlUua7LpJVAujkN72AigMO3-2sXRjKLfyaAq9-ELjA7WGj_AaxTButO5D9WUI5Lo6IoMdvx7XUr-UlE8_lmUEwReWOQCWhruQckPUFiPPc8IkZTzSBXEmxAgNcR85KZJ_L_3pF85VshLgo6-B6HdbOab-jn_alA-0ZP8aYWKZhwUdfI5bbYbTFMXre?width=465&amp;height=1024&amp;cropmode=none&#34; height=&#34;400&#34; /&gt; &lt;/center&gt;
+&lt;h3 id=&#34;dlna-播放&#34;&gt;DLNA 播放&lt;/h3&gt;
+&lt;p&gt;首先需要设置里打开此功能：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;设置 -&amp;gt; 服务 -&amp;gt; UPnP/DLNA，启用 UPnP 支持；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mE7obu8c8rJOcKjjzVqw8V9sPkNdP8pGZhOlRFRpqIl7uGQN9u9SWyBquuLFzkZmx618OEFv86RWKwNPjpcL4wtqOfXAW6anbPxqwwk5qp0huOMT35LGGsYMbt-CSDPXvXgd5Qhm9WILqeTZimEe--Rd84yxwEXJ2ZBOh1uLBX_ARqiho113J4JVA0TTZbbbZ?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;&lt;p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;电影 -&amp;gt; 添加视频源 -&amp;gt; UPnp 设备；局域网内的设备就会自动展示出来；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mCuqESSXbjffO1m06YrEzHHYgbX4FfQJ2fZnPJ-NfBoh3xQGFgtNMcWF8EZHvdYwgC8hppiy7HgDSa02LEmXfZu0RwljZyowEayL4liQM3oBa4GtJuVGS3AAhk9CugpQgOMuGedrLba3lozvkVUhtgWYg_n1GBOWRIi5aWRsCby_ei9yGaD0CaJx8y4YR28UU?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;
+&lt;h3 id=&#34;播放电视&#34;&gt;播放电视&lt;/h3&gt;
+&lt;p&gt;首先需要下载 IPTV 客户端插件，&lt;code&gt;插件 -&amp;gt; PVR 客户端 -&amp;gt; PVR IPTV Simple Client&lt;/code&gt;；&lt;/p&gt;
+&lt;p&gt;播放电视首先需要电视源，GitHub 上有很多这类项目，我用的是这个 &lt;a href=&#34;https://github.com/iptv-org/iptv&#34;&gt;链接&lt;/a&gt;，国外源也可以播放，但是也听不懂，所以就选择中文分类的列表导入。&lt;/p&gt;
+&lt;p&gt;在插件中，设置选择远程路径，输入 &lt;code&gt;https://iptv-org.github.io/iptv/languages/zho.m3u&lt;/code&gt;。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mAZjP8zW9YPs0xBiKaLEJi5G2d74ppwFgV5Zhb--RL_51CrTRr5St_PaCd9xnRch3sDEn2yEQYmXEQkybm1ytLhLELBCXdSvA_vKCFSHobXRYz8a0mk_GM_N1FKS1neoVUcfabCX3Fo7hFn_RycIOyGqxMWRLey_iNtQFKMmLVy-e1u3XKbEQ3BBstkVmPMZD?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;&lt;p&gt;
+&lt;p&gt;等待加载片刻，电视频道里就会出现查询到的频道里。如果加载不出来，可能是 GitHub 国内访问太慢，可以将此文件下载到手机上，然后在插件中设置本地路径，导入即可。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mnAZ5YIubTIOapaQ5dhj36o_QyyggxU5iEU4pfdD7zEyahJuERgYx9eS9XtAcNxXLq_W1s0OkTDedl-J4AXOgsv6u0BWQ5U7t254RXS8H0-18PFra1caX6vadcoAwZWJOfMIaCb1sFgMPLbPZjU_Zj7E2bpvs0_xq_nIuocsHeZ7AS40hRlEScUrEkU02G1zu?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;
+&lt;h3 id=&#34;播放-netflix&#34;&gt;播放 Netflix&lt;/h3&gt;
+&lt;p&gt;Kodi 官方库中没有此插件，可能是版权的原因吧。但是民间自有大神，名为 Stefano Gottardo 的开发人员开发了 &lt;a href=&#34;https://github.com/CastagnaIT/plugin.video.netflix&#34;&gt;Netflix 插件&lt;/a&gt;，测试可用。安装步骤稍微复杂些：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;python 脚本生成 Key；&lt;/li&gt;
+&lt;li&gt;下载第三方源插件，选择插件从 zip 文件中导入；&lt;/li&gt;
+&lt;li&gt;选择从第三方库安装 Netflix 插件；&lt;/li&gt;
+&lt;li&gt;点击 Netflix，使用身份密钥登陆；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4m207gpID7ntoXJnUgQ_PcETsMddHvGI063QkOZtZ8vthyxT8UlXmUIt3UAmfRdi--gELPl76QkHxnpyTDcxUdWn_RU1si3_VQMpKeJSOVaZXbpcsVS95KLpc3qIrdKdjFPhoo6PpI9ZUuMex7C2PzU6W7nL6ytSlVxfjDS4Jzlg3RLtBsf_eqv8eNhhVPZIBG?width=1024&amp;height=493&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;
+&lt;h2 id=&#34;youtube&#34;&gt;YouTube&lt;/h2&gt;
+&lt;p&gt;YouTube 使用有三种方法：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 直接安装 APP&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;其实 TNT 系统已经兼容 YouTube 了，打开会展开为平板模式，但是无法通过遥控器进行按键操作，所以作为次要选择。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Kobi 安装 插件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;另外想到的方案，就是 Kobi 插件了，这种方案肯定可行，而且体验也会不错，毕竟融入到 Kobi 平台里了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. SmartTube Next&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;最后想到的是 &lt;code&gt;YouTube TV&lt;/code&gt;，既然是 TV 版本，肯定会兼容遥控器，遗憾的是官方只支持盒子安装，无法在手机上安装。&lt;/p&gt;
+&lt;p&gt;网上搜了下，竟然找到了一个代替 &lt;code&gt;YouTube TV&lt;/code&gt; 的第三方软件 &lt;a href=&#34;https://github.com/yuliskov/SmartTubeNext&#34;&gt;SmartTube Next&lt;/a&gt;。兼容遥控器，使用起来体验很好，唯一有点不好的是每进入下一个页面，系统就会生成一个独立的窗口。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&#34;https://dsm01pap001files.storage.live.com/y4mFSSOzd0YCXAwxsP-LxD9QqewSWpmfp9vqdpSHVQxhvhvYsYtesiOIYygEBLhDxrcFVsiD3kGVkb5CDcrFOoolUbZucHFBmp8KyYdzoZ1_v-Mr-ZqpNIHkwQT1ATYToJRpkeeKpsK4QkbwONcDB1rw4Wa9uDKLRwKDy80IOiSrTB5yOpPNbQblcNilaeQ0qfy?width=1024&amp;height=683&amp;cropmode=none&#34; height=&#34;300&#34; /&gt;&lt;/center&gt;
+&lt;h2 id=&#34;其他体验好的软件&#34;&gt;其他体验好的软件&lt;/h2&gt;
+&lt;p&gt;支持遥控器按钮操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MX Player&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;适配 TNT 全屏：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;YouTube Kids&lt;/li&gt;
+&lt;li&gt;Google Drive&lt;/li&gt;
+&lt;li&gt;哔哩哔哩等各大视频网站的 TV 版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;成果演示&#34;&gt;成果演示&lt;/h1&gt;
+&lt;p&gt;遥控器操作 TNT 的演示视频：&lt;/p&gt;
+&lt;center&gt; &lt;iframe src=&#34;//player.bilibili.com/player.html?aid=765710883&amp;bvid=BV1ur4y1i7Yb&amp;cid=484833826&amp;page=1&#34; width = &#34;666&#34; height=&#34;444&#34;&gt; &lt;/iframe&gt; &lt;/center&gt;- https://helloqb.xyz/post/2022/0112_tv.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>下载利器 Aria2 使用分享</title>
         <link>https://helloqb.xyz/post/2022/0107_software.html</link>
         <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
         
         <guid>https://helloqb.xyz/post/2022/0107_software.html</guid>
         <description>哲学家 https://helloqb.xyz/post/2022/0107_software.html -&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Shadowsocks：&lt;/strong&gt; 如何使用 systemd 注册为系统服务；如何手动添加规则&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Aria2：&lt;/strong&gt; Mac 如何快速启动；Windows 如何实现开机后台自启&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;shadowsocks&#34;&gt;Shadowsocks&lt;/h1&gt;
-&lt;h2 id=&#34;安装-rust-版本-server&#34;&gt;安装 Rust 版本 Server&lt;/h2&gt;
-&lt;p&gt;libev 版本好像不迭代了，所以我使用 &lt;a href=&#34;https://github.com/shadowsocks/shadowsocks-rust/releases&#34;&gt;shadowsocks-rust&lt;/a&gt; 版本。&lt;/p&gt;
-&lt;p&gt;下载二进制文件解压：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;wget https://github.com/shadowsocks/...v1.12.5.x86_64-unknown-linux-gnu.tar.xz
-tar -xvf shadowsocks-v1.12.5.x86_64-unknown-linux-gnu.tar.xz -C /usr/local/bin
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;编辑配置文件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir -p /etc/shadowsocks-rust &lt;span style=&#34;color:#666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; touch &lt;span style=&#34;color:#19177c&#34;&gt;$_&lt;/span&gt;/config.json
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;server&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0.0.0.0&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;server_port&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#666&#34;&gt;19419&lt;/span&gt;,
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;password&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;***&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;method&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;aes-256-gcm&amp;#34;&lt;/span&gt;,
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;#34;mode&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;tcp_and_udp&amp;#34;&lt;/span&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;直接启动命令：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用上述命令启动后，不太好维护，比如停止的话还得使用 &lt;code&gt;kill&lt;/code&gt; 命令，通过 systemd 启动可以更好的管理。&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-properties&#34; data-lang=&#34;properties&#34;&gt;[Unit]
-Description=shadowsocks-rust service
-After=network.target
-
-[Service]
-ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json
-ExecStop=/usr/bin/killall ssserver
-Restart=always
-RestartSec=10
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=ssserver
-User=nobody
-Group=nogroup
-
-[Install]
-WantedBy=multi-user.target
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将上述配置新建到 &lt;code&gt;/etc/systemd/system/shadowsocks-rust.service&lt;/code&gt;, 注册并启动服务：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 注册服务&lt;/span&gt;
-systemctl daemon-reload
-systemctl &lt;span style=&#34;color:#008000&#34;&gt;enable&lt;/span&gt; shadowsocks-rust
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 启动&lt;/span&gt;
-systemctl start shadowsocks-rust
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 停止&lt;/span&gt;
-systemctl stop shadowsocks-rust
-&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# 查询状态&lt;/span&gt;
-systemctl status shadowsocks-rust
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;自定义规则&#34;&gt;自定义规则&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;右键手动从 GFWList 更新本地 PAC&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;||&lt;/code&gt; 表示此域名下的地址经过代理，如 &lt;code&gt;||bandwagonhost.com^&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;规则前添加 &lt;code&gt;@@&lt;/code&gt; 表示此域名下的地址不经过代理，如 &lt;code&gt;@@||baidu.com^&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Mac 如何快速启动 Aria2&lt;/li&gt;
+&lt;li&gt;Windows 如何实现开机后台自启 Aria2&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;aria2&#34;&gt;Aria2&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://aria2.github.io/&#34;&gt;官网&lt;/a&gt; 对其的定义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;aria2 是一个轻量级的多协议和多源命令行 下载工具。它支持 HTTP/HTTPS、FTP、SFTP、 BitTorrent 和 Metalink。aria2 可以通过内置的 JSON-RPC 和 XML-RPC接口进行操作。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;用到的插件：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;可视化窗口：&lt;a href=&#34;https://github.com/mayswind/AriaNg/releases&#34;&gt;AriaNg&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Chrome 插件：&lt;a href=&#34;https://github.com/jae-jae/camtd&#34;&gt;Camtd - Aria2下载管理器&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Chrome 插件（推荐）：&lt;a href=&#34;https://chrome.google.com/webstore/detail/aria2-for-chrome/mpkodccbngfoacfalldjimigbofkhgjn&#34;&gt;Aria2 for Chrome&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;配置&#34;&gt;配置&lt;/h2&gt;
-&lt;p&gt;目录结构&lt;/p&gt;
+&lt;p&gt;新建目录结构：&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;├── Aria2
 │   ├── aria2.conf
 │   ├── aria2.session
 │   └── downloads
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中 &lt;code&gt;aria2.session&lt;/code&gt; 为空文件，用来重新加载任务；&lt;code&gt;downloads&lt;/code&gt; 为下载存放目录；&lt;code&gt;aria2.conf&lt;/code&gt; 为参数配置文件，配置如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-properties&#34; data-lang=&#34;properties&#34;&gt;### Basic ###
-dir=./downloads
-input-file=./aria2.session
-save-session=./aria2.session
-save-session-interval=60
-continue=true
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;### Basic ###&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;dir&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;./downloads&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;input-file&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;./aria2.session&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;save-session&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;./aria2.session&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;save-session-interval&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;60&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;continue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;true&lt;/span&gt;
 
-### Adcanced ###
-disk-cache=64M
-file-allocation=none
-# daemon=true
-quiet=true
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;### Adcanced ###&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;disk-cache&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;64M&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;file-allocation&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;none&lt;/span&gt;
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;# daemon=true&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;quiet&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;true&lt;/span&gt;
 
-### RPC ###
-enable-rpc=true
-rpc-allow-origin-all=true
-rpc-listen-all=true
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;### RPC ###&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;enable-rpc&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;true&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;rpc-allow-origin-all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;true&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;rpc-listen-all&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;true&lt;/span&gt;
 
-### HTTP/FTP ###
-max-connection-per-server=16
-min-split-size=8M
-split=32
-user-agent=Transmission/2.77
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;mac-启动&#34;&gt;Mac 启动&lt;/h2&gt;
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;### HTTP/FTP ###&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;max-connection-per-server&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;16&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;min-split-size&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;8M&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;split&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;32&lt;/span&gt;
+&lt;span style=&#34;color:#7d9029&#34;&gt;user-agent&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;Transmission/2.77&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对于每个参数的含义，可以下载 &lt;a href=&#34;https://github.com/mayswind/AriaNg/releases&#34;&gt;AriaNg&lt;/a&gt;，上面有完整的描述。&lt;/p&gt;
+&lt;h2 id=&#34;mac-启动&#34;&gt;Mac 启动&lt;/h2&gt;
 &lt;p&gt;推荐 brew 方式安装。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;brew install aria2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动命令：&lt;/p&gt;
@@ -128,7 +185,7 @@ aria2c --conf-path&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;aria2.con
 aria2c.exe --conf-path&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;aria2.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;如何实现开机自启&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;首先编写脚本 &lt;code&gt;HideRun.vbs&lt;/code&gt; 实现隐藏窗口启动，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;CreateObject&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;.Run &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;aria2c.exe --conf-=patharia2.conf&amp;#34;&lt;/span&gt;,0
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;CreateObject&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;.Run &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;aria2c.exe --conf-path=aria2.conf&amp;#34;&lt;/span&gt;,0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后在 &lt;code&gt;用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup&lt;/code&gt; 目录中创建此脚本的快捷方式即可。&lt;/p&gt;
 - https://helloqb.xyz/post/2022/0107_software.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
@@ -1126,99 +1183,6 @@ String &lt;span style=&#34;color:#00f&#34;&gt;hello&lt;/span&gt;&lt;span style=&
 &lt;li&gt;&lt;a href=&#34;https://www.hangge.com/blog/cache/detail_2459.html&#34;&gt;SpringBoot - 配置文件application.yml使用详解&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0907_yaml.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>MapStruct 实现 Java Bean 映射</title>
-        <link>https://helloqb.xyz/post/2020/0821_mapstruct.html</link>
-        <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0821_mapstruct.html</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0821_mapstruct.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
-&lt;p&gt;项目中遇到数据库返回的字段不想全部返回给前端，一个一个 setter 挺麻烦，不够优雅。市面上有挺多映射框架如 &lt;code&gt;Dozer&lt;/code&gt;，&lt;code&gt;Orika&lt;/code&gt;，&lt;code&gt;MapStruct&lt;/code&gt;，&lt;code&gt;ModelMapper&lt;/code&gt;，&lt;code&gt;JMapper&lt;/code&gt; 等，其中 &lt;code&gt;MapStruct&lt;/code&gt; 只是代码生成器，使用纯 Java 的方法调用源对象和目标对象之间进行映射，并非 Java 反射机制，所以其性能最好。&lt;/p&gt;
-&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;Maven 依赖&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;...
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;org.mapstruct.version&amp;gt;&lt;/span&gt;1.3.1.Final&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/org.mapstruct.version&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
-...
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.mapstruct&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mapstruct&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${org.mapstruct.version}&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
-...
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.maven.plugins&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;maven-compiler-plugin&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;3.8.1&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
-                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;source&amp;gt;&lt;/span&gt;1.8&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/source&amp;gt;&lt;/span&gt;
-                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;target&amp;gt;&lt;/span&gt;1.8&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/target&amp;gt;&lt;/span&gt;
-                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;annotationProcessorPaths&amp;gt;&lt;/span&gt;
-                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;
-                        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.mapstruct&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-                        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mapstruct-processor&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-                        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${org.mapstruct.version}&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-                    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/path&amp;gt;&lt;/span&gt;
-                &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/annotationProcessorPaths&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;
-...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果项目中有用到 &lt;code&gt;lombok&lt;/code&gt; 的话，&lt;code&gt;MapStruct&lt;/code&gt; 也支持，添加如下即可。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;annotationProcessorPaths&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.projectlombok&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;lombok&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${lombok.version}&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/path&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/annotationProcessorPaths&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;普通调用&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;MapStruct&lt;/code&gt; 定义非常简单，因为它完全基于代码生成。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.mapstruct.Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.mapstruct.Mapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@Mapper&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;MapStructConverter&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-    MapStructConverter MAPPER &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; Mappers&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getMapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;MapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
- 
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Mapping&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;source &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; target &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;orderStatus&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
-    Order &lt;span style=&#34;color:#00f&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SourceOrder sourceOrder&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
- 
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
-    DestinationCode &lt;span style=&#34;color:#00f&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SourceCode sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;调用也很简单。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; MapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;MAPPER&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Spring 注解调用&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Spring 项目的话可以如下参数实现依赖注入。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Mapper&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;componentModel &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;spring&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;MapStructConverter&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;@Autowired&lt;/code&gt; 注入调用更方便。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; MapStructConverter mapStructConverter&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-DestinationCode destinationCode &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; mapStructConverter&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;sourceCode&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;尾巴&#34;&gt;尾巴&lt;/h1&gt;
-&lt;p&gt;其实这个问题困扰我很久了，之前一直想着用多态方式实现，没找到解决方法后也就用一个一个 setter 方式实现，现在想来很懒，以后还是多思考，多找找轮子，尽可能少写垃圾代码。&lt;/p&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.baeldung.com/java-performance-mapping-frameworks&#34;&gt;Performance of Java Mapping&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://mapstruct.org/documentation/stable/reference/html/&#34;&gt;MapStruct 1.3.1.Final Reference Guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/mapstruct/mapstruct&#34;&gt;mapstruct github&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0821_mapstruct.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

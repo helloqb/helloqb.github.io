@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>软件安装分享</title>
+<title>下载利器 Aria2 使用分享</title>
 
 
 
@@ -10,7 +10,7 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="不定时更新自用软件安装流程及使用技巧。">
+<meta name="description" content="">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
@@ -204,68 +204,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#shadowsocks" onclick="onNavClick(`#shadowsocks-nav`)" id="shadowsocks-nav">
-									Shadowsocks
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								<ul class="collapse" data-toggle="collapse">
-							
-						
-						
-							<li>
-								<a href="#%e5%ae%89%e8%a3%85-rust-%e7%89%88%e6%9c%ac-server" onclick="onNavClick(`#安装-rust-版本-server-nav`)" id="安装-rust-版本-server-nav">
-									安装 Rust 版本 Server
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e8%87%aa%e5%ae%9a%e4%b9%89%e8%a7%84%e5%88%99" onclick="onNavClick(`#自定义规则-nav`)" id="自定义规则-nav">
-									自定义规则
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-							
-								</ul>
-							
-						
-						
-						
-							<li>
 								<a href="#aria2" onclick="onNavClick(`#aria2-nav`)" id="aria2-nav">
 									Aria2
 								</a>
@@ -447,68 +385,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#shadowsocks" onclick="onNavClick(`#shadowsocks-nav`)" id="shadowsocks-nav">
-									Shadowsocks
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								<ul class="collapse" data-toggle="collapse">
-							
-						
-						
-							<li>
-								<a href="#%e5%ae%89%e8%a3%85-rust-%e7%89%88%e6%9c%ac-server" onclick="onNavClick(`#安装-rust-版本-server-nav`)" id="安装-rust-版本-server-nav">
-									安装 Rust 版本 Server
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e8%87%aa%e5%ae%9a%e4%b9%89%e8%a7%84%e5%88%99" onclick="onNavClick(`#自定义规则-nav`)" id="自定义规则-nav">
-									自定义规则
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-							
-								</ul>
-							
-						
-						
-						
-							<li>
 								<a href="#aria2" onclick="onNavClick(`#aria2-nav`)" id="aria2-nav">
 									Aria2
 								</a>
@@ -633,11 +509,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
             >
                 <div class="post-title">
-                    软件安装分享
-                    
-                    <div class="post-subtitle">
-                        不定时更新自用软件安装流程及使用技巧。
-                    </div>
+                    下载利器 Aria2 使用分享
                     
                     <div class="post-meta">
                         
@@ -655,9 +527,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                         
                             <i class="material-icons" style="">label</i>
                             
-                                <a href="/tags/shadowsocks">Shadowsocks</a>
-                                &nbsp;
-                            
                                 <a href="/tags/aria2">Aria2</a>
                                 &nbsp;
                             
@@ -673,97 +542,52 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                     <h1 id="摘要">摘要</h1>
 <ul>
-<li><strong>Shadowsocks：</strong> 如何使用 systemd 注册为系统服务；如何手动添加规则</li>
-<li><strong>Aria2：</strong> Mac 如何快速启动；Windows 如何实现开机后台自启</li>
-</ul>
-<h1 id="shadowsocks">Shadowsocks</h1>
-<h2 id="安装-rust-版本-server">安装 Rust 版本 Server</h2>
-<p>libev 版本好像不迭代了，所以我使用 <a href="https://github.com/shadowsocks/shadowsocks-rust/releases">shadowsocks-rust</a> 版本。</p>
-<p>下载二进制文件解压：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">wget https://github.com/shadowsocks/...v1.12.5.x86_64-unknown-linux-gnu.tar.xz
-tar -xvf shadowsocks-v1.12.5.x86_64-unknown-linux-gnu.tar.xz -C /usr/local/bin
-</code></pre></div><p>编辑配置文件：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">mkdir -p /etc/shadowsocks-rust <span style="color:#666">&amp;&amp;</span> touch <span style="color:#19177c">$_</span>/config.json
-</code></pre></div><div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#008000;font-weight:bold">&#34;server&#34;</span>:<span style="color:#ba2121">&#34;0.0.0.0&#34;</span>,
-    <span style="color:#008000;font-weight:bold">&#34;server_port&#34;</span>:<span style="color:#666">19419</span>,
-    <span style="color:#008000;font-weight:bold">&#34;password&#34;</span>:<span style="color:#ba2121">&#34;***&#34;</span>,
-    <span style="color:#008000;font-weight:bold">&#34;method&#34;</span>:<span style="color:#ba2121">&#34;aes-256-gcm&#34;</span>,
-    <span style="color:#008000;font-weight:bold">&#34;mode&#34;</span>:<span style="color:#ba2121">&#34;tcp_and_udp&#34;</span>
-}
-</code></pre></div><p>直接启动命令：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json &amp;
-</code></pre></div><p>使用上述命令启动后，不太好维护，比如停止的话还得使用 <code>kill</code> 命令，通过 systemd 启动可以更好的管理。</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">[Unit]
-Description=shadowsocks-rust service
-After=network.target
-
-[Service]
-ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks-rust/config.json
-ExecStop=/usr/bin/killall ssserver
-Restart=always
-RestartSec=10
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=ssserver
-User=nobody
-Group=nogroup
-
-[Install]
-WantedBy=multi-user.target
-</code></pre><p>将上述配置新建到 <code>/etc/systemd/system/shadowsocks-rust.service</code>, 注册并启动服务：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#408080;font-style:italic"># 注册服务</span>
-systemctl daemon-reload
-systemctl <span style="color:#008000">enable</span> shadowsocks-rust
-<span style="color:#408080;font-style:italic"># 启动</span>
-systemctl start shadowsocks-rust
-<span style="color:#408080;font-style:italic"># 停止</span>
-systemctl stop shadowsocks-rust
-<span style="color:#408080;font-style:italic"># 查询状态</span>
-systemctl status shadowsocks-rust
-</code></pre></div><h2 id="自定义规则">自定义规则</h2>
-<ul>
-<li>右键手动从 GFWList 更新本地 PAC</li>
-<li><code>||</code> 表示此域名下的地址经过代理，如 <code>||bandwagonhost.com^</code></li>
-<li>规则前添加 <code>@@</code> 表示此域名下的地址不经过代理，如 <code>@@||baidu.com^</code></li>
+<li>Mac 如何快速启动 Aria2</li>
+<li>Windows 如何实现开机后台自启 Aria2</li>
 </ul>
 <h1 id="aria2">Aria2</h1>
+<p><a href="https://aria2.github.io/">官网</a> 对其的定义：</p>
+<blockquote>
+<p>aria2 是一个轻量级的多协议和多源命令行 下载工具。它支持 HTTP/HTTPS、FTP、SFTP、 BitTorrent 和 Metalink。aria2 可以通过内置的 JSON-RPC 和 XML-RPC接口进行操作。</p>
+</blockquote>
+<p>用到的插件：</p>
 <ul>
 <li>可视化窗口：<a href="https://github.com/mayswind/AriaNg/releases">AriaNg</a></li>
 <li>Chrome 插件：<a href="https://github.com/jae-jae/camtd">Camtd - Aria2下载管理器</a></li>
 <li>Chrome 插件（推荐）：<a href="https://chrome.google.com/webstore/detail/aria2-for-chrome/mpkodccbngfoacfalldjimigbofkhgjn">Aria2 for Chrome</a></li>
 </ul>
 <h2 id="配置">配置</h2>
-<p>目录结构</p>
+<p>新建目录结构：</p>
 <pre tabindex="0"><code>├── Aria2
 │   ├── aria2.conf
 │   ├── aria2.session
 │   └── downloads
 </code></pre><p>其中 <code>aria2.session</code> 为空文件，用来重新加载任务；<code>downloads</code> 为下载存放目录；<code>aria2.conf</code> 为参数配置文件，配置如下：</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">### Basic ###
-dir=./downloads
-input-file=./aria2.session
-save-session=./aria2.session
-save-session-interval=60
-continue=true
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#408080;font-style:italic">### Basic ###</span>
+<span style="color:#7d9029">dir</span><span style="color:#666">=</span><span style="color:#ba2121">./downloads</span>
+<span style="color:#7d9029">input-file</span><span style="color:#666">=</span><span style="color:#ba2121">./aria2.session</span>
+<span style="color:#7d9029">save-session</span><span style="color:#666">=</span><span style="color:#ba2121">./aria2.session</span>
+<span style="color:#7d9029">save-session-interval</span><span style="color:#666">=</span><span style="color:#ba2121">60</span>
+<span style="color:#7d9029">continue</span><span style="color:#666">=</span><span style="color:#ba2121">true</span>
 
-### Adcanced ###
-disk-cache=64M
-file-allocation=none
-# daemon=true
-quiet=true
+<span style="color:#408080;font-style:italic">### Adcanced ###</span>
+<span style="color:#7d9029">disk-cache</span><span style="color:#666">=</span><span style="color:#ba2121">64M</span>
+<span style="color:#7d9029">file-allocation</span><span style="color:#666">=</span><span style="color:#ba2121">none</span>
+<span style="color:#408080;font-style:italic"># daemon=true</span>
+<span style="color:#7d9029">quiet</span><span style="color:#666">=</span><span style="color:#ba2121">true</span>
 
-### RPC ###
-enable-rpc=true
-rpc-allow-origin-all=true
-rpc-listen-all=true
+<span style="color:#408080;font-style:italic">### RPC ###</span>
+<span style="color:#7d9029">enable-rpc</span><span style="color:#666">=</span><span style="color:#ba2121">true</span>
+<span style="color:#7d9029">rpc-allow-origin-all</span><span style="color:#666">=</span><span style="color:#ba2121">true</span>
+<span style="color:#7d9029">rpc-listen-all</span><span style="color:#666">=</span><span style="color:#ba2121">true</span>
 
-### HTTP/FTP ###
-max-connection-per-server=16
-min-split-size=8M
-split=32
-user-agent=Transmission/2.77
-</code></pre><h2 id="mac-启动">Mac 启动</h2>
+<span style="color:#408080;font-style:italic">### HTTP/FTP ###</span>
+<span style="color:#7d9029">max-connection-per-server</span><span style="color:#666">=</span><span style="color:#ba2121">16</span>
+<span style="color:#7d9029">min-split-size</span><span style="color:#666">=</span><span style="color:#ba2121">8M</span>
+<span style="color:#7d9029">split</span><span style="color:#666">=</span><span style="color:#ba2121">32</span>
+<span style="color:#7d9029">user-agent</span><span style="color:#666">=</span><span style="color:#ba2121">Transmission/2.77</span>
+</code></pre></div><p>对于每个参数的含义，可以下载 <a href="https://github.com/mayswind/AriaNg/releases">AriaNg</a>，上面有完整的描述。</p>
+<h2 id="mac-启动">Mac 启动</h2>
 <p>推荐 brew 方式安装。</p>
 <div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">brew install aria2
 </code></pre></div><p>启动命令：</p>
@@ -781,7 +605,7 @@ aria2c --conf-path<span style="color:#666">=</span>aria2.conf
 aria2c.exe --conf-path<span style="color:#666">=</span>aria2.conf
 </code></pre></div><p><strong>如何实现开机自启</strong></p>
 <p>首先编写脚本 <code>HideRun.vbs</code> 实现隐藏窗口启动，</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">CreateObject<span style="color:#666">(</span><span style="color:#ba2121">&#34;WScript.Shell&#34;</span><span style="color:#666">)</span>.Run <span style="color:#ba2121">&#34;aria2c.exe --conf-=patharia2.conf&#34;</span>,0
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">CreateObject<span style="color:#666">(</span><span style="color:#ba2121">&#34;WScript.Shell&#34;</span><span style="color:#666">)</span>.Run <span style="color:#ba2121">&#34;aria2c.exe --conf-path=aria2.conf&#34;</span>,0
 </code></pre></div><p>然后在 <code>用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code> 目录中创建此脚本的快捷方式即可。</p>
 
                     
@@ -795,8 +619,8 @@ aria2c.exe --conf-path<span style="color:#666">=</span>aria2.conf
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts">
-			Next<br>No newer posts.
+                <a class="newer-posts" href="https://helloqb.xyz/post/2022/0112_tv.html">
+			Next<br>Smartisan TNT 连接遥控器变成超强机顶盒
                 </a>
                 
                 
