@@ -7,20 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/excel/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>EXCEL 技巧之 - 小技巧</title>
-      <link>https://helloqb.xyz/post/2020/1120_excel.html</link>
-      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2020/1120_excel.html</guid>
-      <description>单元格间隔一行  编写左图，选中，往下拖动形成右图。  
-开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量  
-开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行  
-得到最终结果，如下。  
-待 </description>
-    </item>
-    
+    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/excel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>EXCEL 技巧之 - VLOOKUP 函数</title>
       <link>https://helloqb.xyz/post/2020/0604_vlookup.html</link>
@@ -67,6 +54,19 @@
 将汇总列格式刷到合并列。
 4. 删除分类汇总
 数据（菜单栏） -&amp;gt; 分类汇总 -&amp;gt; 全部删除。</description>
+    </item>
+    
+    <item>
+      <title>EXCEL 技巧之 - 小技巧</title>
+      <link>https://helloqb.xyz/post/2020/1120_excel.html</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/1120_excel.html</guid>
+      <description>单元格间隔一行  编写左图，选中，往下拖动形成右图。  
+开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量  
+开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行  
+得到最终结果，如下。  
+待 </description>
     </item>
     
   </channel>

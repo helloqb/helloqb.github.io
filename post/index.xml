@@ -7,38 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
-      <link>https://helloqb.xyz/post/2022/0112_tv.html</link>
-      <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
+      <title>后端接口校验参数异常统一处理</title>
+      <link>https://helloqb.xyz/post/2021/0201_validate.html</link>
+      <pubDate>Tue, 28 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2022/0112_tv.html</guid>
-      <description>前言 家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。
-遥控 其实本可以没有这篇文章，因为 TNT 系统已经够成熟了，连上键鼠完全可以像电脑一样操作，当作机顶盒播放视频绰绰有余。但是客厅里摆一套键鼠总觉得不够优雅，所以想着可不可以实现像遥控器操控机顶盒那样。
-手机遥控 第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。
-Android 9.0 + 蓝牙 HID Android 9.0 自带将手机作为输入设备的功能，遥控助手 和 妙妙触控 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。
-局域网遥控 KDE Connect 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&amp;hellip;&amp;hellip;）
-  官方软件遥控 国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。
-目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。
-  遥控器 软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。
-  官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。
-软件体验 Kodi Kodi 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。
-中文设置 支持中文，但是直接设置会乱码，需要先修改字体；</description>
+      <guid>https://helloqb.xyz/post/2021/0201_validate.html</guid>
+      <description>补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
+ 前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
+//全局异常处理类 @RestControllerAdvice public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { @ExceptionHandler(value = BaseException.class) public S2VJSONResult baseHandler(BaseException e) { return S2VJSONResult.msg(false, 400, e.getMessage()); } //接口 @PostMapping(&amp;#34;/transfer/company&amp;#34;) S2VJSONResult transferCompany(@Validated @RequestBody AdminTransferCompanyVO vo, BindingResult bindingResult) { if (bindingResult.hasErrors()) { return S2VJSONResult.msg(false, 400, bindingResult.getFieldError().getDefaultMessage()); } //参数实体类 public class AdminTransferCompanyVO { @NotNull(message = &amp;#34;客户 ID 不能为空&amp;#34;) private List&amp;lt;Integer&amp;gt; companyIds; @NotNull(message = &amp;#34;目标客户经理 ID 不能为空&amp;#34;) private Integer targetCustomerId; @NotNull(message = &amp;#34;管理员 ID 不能为空&amp;#34;) private Integer operationCustomerId; //统一返回响应 public class S2VJSONResult&amp;lt;T&amp;gt; { private Integer code;//状态码  private Boolean isSuccess;//状态  private String message;//消息  private T data;//数据对象  public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; all(Boolean success, Integer code,String message,T data) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message, data); } public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; msg(Boolean success, Integer code,String message) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message); } 整理了一下其思路，大概如下：</description>
     </item>
     
     <item>
-      <title>下载利器 Aria2 使用分享</title>
-      <link>https://helloqb.xyz/post/2022/0107_software.html</link>
-      <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
+      <title>进一步了解 RabbitMQ 跨语言通讯</title>
+      <link>https://helloqb.xyz/post/2021/0728_rabbitmq.html</link>
+      <pubDate>Wed, 28 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2022/0107_software.html</guid>
-      <description>摘要  Mac 如何快速启动 Aria2 Windows 如何实现开机后台自启 Aria2  Aria2 官网 对其的定义：
- aria2 是一个轻量级的多协议和多源命令行 下载工具。它支持 HTTP/HTTPS、FTP、SFTP、 BitTorrent 和 Metalink。aria2 可以通过内置的 JSON-RPC 和 XML-RPC接口进行操作。
- 用到的插件：
- 可视化窗口：AriaNg Chrome 插件：Camtd - Aria2下载管理器 Chrome 插件（推荐）：Aria2 for Chrome  配置 新建目录结构：
-├── Aria2 │ ├── aria2.conf │ ├── aria2.session │ └── downloads 其中 aria2.session 为空文件，用来重新加载任务；downloads 为下载存放目录；aria2.conf 为参数配置文件，配置如下：
-### Basic ### dir=./downloads input-file=./aria2.session save-session=./aria2.session save-session-interval=60 continue=true ### Adcanced ### disk-cache=64M file-allocation=none # daemon=true quiet=true ### RPC ### enable-rpc=true rpc-allow-origin-all=true rpc-listen-all=true ### HTTP/FTP ### max-connection-per-server=16 min-split-size=8M split=32 user-agent=Transmission/2.</description>
+      <guid>https://helloqb.xyz/post/2021/0728_rabbitmq.html</guid>
+      <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
+配置 pom.xml 文件中添加依赖。
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
+spring:rabbitmq:host:192.168.0.102port:5672username:adminpassword:adminvirtual-host:slpublisher-confirm-type:correlatedpublisher-returns:truetemplate:mandatory:true重写方法 RabbitTemplate.ConfirmCallback 确认消息是否到达交换机， RabbitTemplate.ReturnCallback 确认消息是否到达队列中。
+import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.amqp.core.Message; import org.springframework.amqp.rabbit.connection.CorrelationData; import org.springframework.amqp.rabbit.core.RabbitTemplate; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.stereotype.Component; import javax.annotation.PostConstruct; @Component public class CustomRabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback { private static final Logger LOG = LoggerFactory.getLogger(CustomRabbitSend.class); @Autowired private RabbitTemplate rabbitTemplate; @PostConstruct public void init(){ rabbitTemplate.setConfirmCallback(this); rabbitTemplate.setReturnCallback(this); } @Override public void confirm(CorrelationData correlationData, boolean b, String s) { //到达Exchange交换机，会调用此方法  if (!</description>
     </item>
     
     <item>
@@ -84,27 +75,28 @@ tcpdump -s 0 -U -w - | tee target.$(date +%Y-%m-%d-%H-%M-%S).pcap | tcpdump -r -
     </item>
     
     <item>
-      <title>后端接口校验参数异常统一处理</title>
-      <link>https://helloqb.xyz/post/2021/0201_validate.html</link>
-      <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+      <title>RabbitMQ 实现跨语言通信</title>
+      <link>https://helloqb.xyz/post/2021/0515_rabbitmq.html</link>
+      <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0201_validate.html</guid>
-      <description>2021-06-01 补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
- 前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
-//全局异常处理类 @RestControllerAdvice public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { @ExceptionHandler(value = BaseException.class) public S2VJSONResult baseHandler(BaseException e) { return S2VJSONResult.msg(false, 400, e.getMessage()); } //接口 @PostMapping(&amp;#34;/transfer/company&amp;#34;) S2VJSONResult transferCompany(@Validated @RequestBody AdminTransferCompanyVO vo, BindingResult bindingResult) { if (bindingResult.hasErrors()) { return S2VJSONResult.msg(false, 400, bindingResult.getFieldError().getDefaultMessage()); } //参数实体类 public class AdminTransferCompanyVO { @NotNull(message = &amp;#34;客户 ID 不能为空&amp;#34;) private List&amp;lt;Integer&amp;gt; companyIds; @NotNull(message = &amp;#34;目标客户经理 ID 不能为空&amp;#34;) private Integer targetCustomerId; @NotNull(message = &amp;#34;管理员 ID 不能为空&amp;#34;) private Integer operationCustomerId; //统一返回响应 public class S2VJSONResult&amp;lt;T&amp;gt; { private Integer code;//状态码  private Boolean isSuccess;//状态  private String message;//消息  private T data;//数据对象  public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; all(Boolean success, Integer code,String message,T data) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message, data); } public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; msg(Boolean success, Integer code,String message) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message); } 整理了一下其思路，大概如下：</description>
+      <guid>https://helloqb.xyz/post/2021/0515_rabbitmq.html</guid>
+      <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
+其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
+三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
+String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;}; proc = Runtime.getRuntime().exec(command);// 执行py文件 ProcessBuilder 可以是列表，官方推荐 ProcessBuilder。
+List&amp;lt;String&amp;gt; command = new ArrayList&amp;lt;&amp;gt;(); command.add(&amp;#34;python&amp;#34;); command.add(&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;); ProcessBuilder pb = new ProcessBuilder(command); proc = pb.start(); Process 提供 InputStream 和 ErrorStream 接收返回结果；为方便起见，可以将错误流重定向到输入流。
+pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream())); 若需要立即获取其返回结果，需要用 waitFor() 方法。
+//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止 code = proc.waitFor(); 坑不坑：
+ Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。 作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。 返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。 目前只尝试了 Java 调用 Python，反过来感觉很难。  完整代码如下：</description>
     </item>
     
     <item>
-      <title>EXCEL 技巧之 - 小技巧</title>
-      <link>https://helloqb.xyz/post/2020/1120_excel.html</link>
-      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      <title>SpringMVC 下载文本实现边转码边下载</title>
+      <link>https://helloqb.xyz/post/2021/0304_java.html</link>
+      <pubDate>Thu, 04 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/1120_excel.html</guid>
-      <description>单元格间隔一行  编写左图，选中，往下拖动形成右图。  
-开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量  
-开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行  
-得到最终结果，如下。  
-待 </description>
+      <guid>https://helloqb.xyz/post/2021/0304_java.html</guid>
+      <description></description>
     </item>
     
     <item>
@@ -177,19 +169,6 @@ driver = webdriver.Firefox() driver.get(&amp;#34;https://juejin.im/post/68573941
 3. 滚动加载 此时若直接获取图片，只会获取获取到一两张。因为大多数网站采用 Ajax 方式，页面滚动到图片才加载，所有就需要模拟页面滚动了。execute_script 方法调用 js 可实现滚动操作。
 # 获取内容高度 all_height = driver.execute_script(&amp;#34;return document.body.scrollHeight&amp;#34;) # 循环往下滚动，每次滚1024高，间隔1秒 scroll_height = 1024 for i in range(int(all_height/scroll_height)): driver.execute_script(&amp;#34;window.scrollTo(0, {0});&amp;#34;.format(i*scroll_height)) time.sleep(1) 如果遇到无限加载的页面，可以参考 stackoverflow 的 回答。代码如下：
 SCROLL_PAUSE_TIME = 0.</description>
-    </item>
-    
-    <item>
-      <title>进一步了解 RabbitMQ 跨语言通讯</title>
-      <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
-      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
-      <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
-配置 pom.xml 文件中添加依赖。
-&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
-spring:rabbitmq:host:192.168.0.102port:5672username:adminpassword:adminvirtual-host:slpublisher-confirm-type:correlatedpublisher-returns:truetemplate:mandatory:true重写方法 RabbitTemplate.ConfirmCallback 确认消息是否到达交换机， RabbitTemplate.ReturnCallback 确认消息是否到达队列中。
-import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.amqp.core.Message; import org.springframework.amqp.rabbit.connection.CorrelationData; import org.springframework.amqp.rabbit.core.RabbitTemplate; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.stereotype.Component; import javax.annotation.PostConstruct; @Component public class CustomRabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback { private static final Logger LOG = LoggerFactory.getLogger(CustomRabbitSend.class); @Autowired private RabbitTemplate rabbitTemplate; @PostConstruct public void init(){ rabbitTemplate.setConfirmCallback(this); rabbitTemplate.setReturnCallback(this); } @Override public void confirm(CorrelationData correlationData, boolean b, String s) { //到达Exchange交换机，会调用此方法  if (!</description>
     </item>
     
     <item>
@@ -324,32 +303,16 @@ Java 端也采用此方法。
     
     <item>
       <title>Spring 定时任务</title>
-      <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
+      <link>https://helloqb.xyz/post/2021/0602_cron.html</link>
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
+      <guid>https://helloqb.xyz/post/2021/0602_cron.html</guid>
       <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
 配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
 import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。
 @Scheduled(fixedDelay = 5000) public void reportCurrentTime() { System.out.println(new Date()); } 定时调度 fixedDelay 毫秒单位，以上一个调用的完成时间开始计算。
 如间隔 3 秒，每个任务耗时 2 秒：
 @Scheduled(fixedDelay = 3000) public void errorSpiderRerun(){ LocalDateTime localDateTime = LocalDateTime.now(); System.out.println(&amp;#34;start &amp;#34; + localDateTime); try { Thread.</description>
-    </item>
-    
-    <item>
-      <title>RabbitMQ 实现跨语言通信</title>
-      <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
-      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
-      <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
-其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
-三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
-String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;}; proc = Runtime.getRuntime().exec(command);// 执行py文件 ProcessBuilder 可以是列表，官方推荐 ProcessBuilder。
-List&amp;lt;String&amp;gt; command = new ArrayList&amp;lt;&amp;gt;(); command.add(&amp;#34;python&amp;#34;); command.add(&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;); ProcessBuilder pb = new ProcessBuilder(command); proc = pb.start(); Process 提供 InputStream 和 ErrorStream 接收返回结果；为方便起见，可以将错误流重定向到输入流。
-pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream())); 若需要立即获取其返回结果，需要用 waitFor() 方法。
-//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止 code = proc.waitFor(); 坑不坑：
- Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。 作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。 返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。 目前只尝试了 Java 调用 Python，反过来感觉很难。  完整代码如下：</description>
     </item>
     
     <item>
@@ -381,15 +344,6 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
     </item>
     
     <item>
-      <title>SpringMVC 下载文本实现边转码边下载</title>
-      <link>https://helloqb.xyz/post/2020/0304_java.html</link>
-      <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2020/0304_java.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>个人笔记 - Git</title>
       <link>https://helloqb.xyz/post/2020/0301_git.html</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
@@ -401,6 +355,52 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
  打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。  参考： https://blog.csdn.net/caoshiying/article/details/80131761
 查看单个文件提交历史 两种情况：
  选定项目的变更历史，即 git log &amp;lt;path&amp;gt;。 按行审阅选定项目，即 git blame &amp;lt;path&amp;gt;。  在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</description>
+    </item>
+    
+    <item>
+      <title>EXCEL 技巧之 - 小技巧</title>
+      <link>https://helloqb.xyz/post/2020/1120_excel.html</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/1120_excel.html</guid>
+      <description>单元格间隔一行  编写左图，选中，往下拖动形成右图。  
+开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量  
+开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行  
+得到最终结果，如下。  
+待 </description>
+    </item>
+    
+    <item>
+      <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
+      <link>https://helloqb.xyz/post/2022/0112_tv.html</link>
+      <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2022/0112_tv.html</guid>
+      <description>前言 家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。
+遥控 其实本可以没有这篇文章，因为 TNT 系统已经够成熟了，连上键鼠完全可以像电脑一样操作，当作机顶盒播放视频绰绰有余。但是客厅里摆一套键鼠总觉得不够优雅，所以想着可不可以实现像遥控器操控机顶盒那样。
+手机遥控 第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。
+Android 9.0 + 蓝牙 HID Android 9.0 自带将手机作为输入设备的功能，遥控助手 和 妙妙触控 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。
+局域网遥控 KDE Connect 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&amp;hellip;&amp;hellip;）
+  官方软件遥控 国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。
+目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。
+  遥控器 软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。
+  官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。
+软件体验 Kodi Kodi 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。
+中文设置 支持中文，但是直接设置会乱码，需要先修改字体；</description>
+    </item>
+    
+    <item>
+      <title>下载利器 Aria2 使用分享</title>
+      <link>https://helloqb.xyz/post/2022/0107_software.html</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2022/0107_software.html</guid>
+      <description>摘要  Mac 如何快速启动 Aria2 Windows 如何实现开机后台自启 Aria2  Aria2 官网 对其的定义：
+ aria2 是一个轻量级的多协议和多源命令行 下载工具。它支持 HTTP/HTTPS、FTP、SFTP、 BitTorrent 和 Metalink。aria2 可以通过内置的 JSON-RPC 和 XML-RPC接口进行操作。
+ 用到的插件：
+ 可视化窗口：AriaNg Chrome 插件：Camtd - Aria2下载管理器 Chrome 插件（推荐）：Aria2 for Chrome  配置 新建目录结构：
+├── Aria2 │ ├── aria2.conf │ ├── aria2.session │ └── downloads 其中 aria2.session 为空文件，用来重新加载任务；downloads 为下载存放目录；aria2.conf 为参数配置文件，配置如下：
+### Basic ### dir=./downloads input-file=./aria2.session save-session=./aria2.session save-session-interval=60 continue=true ### Adcanced ### disk-cache=64M file-allocation=none # daemon=true quiet=true ### RPC ### enable-rpc=true rpc-allow-origin-all=true rpc-listen-all=true ### HTTP/FTP ### max-connection-per-server=16 min-split-size=8M split=32 user-agent=Transmission/2.</description>
     </item>
     
     <item>

@@ -6,7 +6,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Dec 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -256,163 +256,6 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
 &lt;li&gt;&lt;a href=&#34;https://selenium-python-zh.readthedocs.io/en/latest/index.html#&#34;&gt;Selenium with Python中文翻译文档&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://helloqb.xyz/post/2020/0805_selenium.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>进一步了解 RabbitMQ 跨语言通讯</title>
-        <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
-        <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
-        <description>哲学家 https://helloqb.xyz/post/2020/0728_rabbitmq.html -&lt;h1 id=&#34;进一步了解&#34;&gt;进一步了解&lt;/h1&gt;
-&lt;p&gt;开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。&lt;/p&gt;
-&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;pom.xml&lt;/code&gt; 文件中添加依赖。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-amqp&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;application.yml&lt;/code&gt; 文件中添加配置开启确认。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;spring&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;rabbitmq&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;192.168.0.102&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;port&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;5672&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;username&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;password&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;virtual-host&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;sl&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;publisher-confirm-type&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;correlated&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;publisher-returns&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;template&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;mandatory&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;重写方法&#34;&gt;重写方法&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;RabbitTemplate.ConfirmCallback&lt;/code&gt; 确认消息是否到达交换机， &lt;code&gt;RabbitTemplate.ReturnCallback&lt;/code&gt; 确认消息是否到达队列中。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Message&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.connection.CorrelationData&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.core.RabbitTemplate&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.stereotype.Component&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;javax.annotation.PostConstruct&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;CustomRabbitSend&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;implements&lt;/span&gt; RabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ConfirmCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; RabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;ReturnCallback&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; Logger LOG &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LoggerFactory&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getLogger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CustomRabbitSend&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; RabbitTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@PostConstruct&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;init&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setConfirmCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;setReturnCallback&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;confirm&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CorrelationData correlationData&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;boolean&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//到达Exchange交换机，会调用此方法
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(!&lt;/span&gt;b&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-            LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;error&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;消息发送异常!&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-            LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;发送者收到确认，correlationData={} ,ack={}, cause={}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; correlationData&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getId&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(),&lt;/span&gt; b&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;returnedMessage&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Message message&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;int&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s1&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; String s2&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//没有到达Queue队列中，会调用此方法
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;        LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;returnedMessage ===&amp;gt; replyCode={} ,replyText={} ,exchange={} ,routingKey={}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s1&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; s2&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;交换机和队列绑定&#34;&gt;交换机和队列绑定&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Exchange&lt;/code&gt; 交换机需要通过 &lt;code&gt;routingKey&lt;/code&gt; 才能将消息传递到 &lt;code&gt;Queue&lt;/code&gt; 队列中（本文只用到 &lt;code&gt;direct&lt;/code&gt; 类型，其实无需绑定，&lt;code&gt;fanout&lt;/code&gt;、&lt;code&gt;topic&lt;/code&gt; 类型才需要）。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Binding&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.BindingBuilder&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.DirectExchange&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Queue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.context.annotation.Bean&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@Configuration&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;DirectRabbitConfig&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//队列
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; Queue &lt;span style=&#34;color:#00f&#34;&gt;customDirectQueue&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; Queue&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testQueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//Direct交换机
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; DirectExchange &lt;span style=&#34;color:#00f&#34;&gt;customDirectExchange&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; DirectExchange&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testDirectExchange&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;//将队列和交换机绑定
-&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;@Bean&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; Binding &lt;span style=&#34;color:#00f&#34;&gt;bindingDirect&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; BindingBuilder&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;bind&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;customDirectQueue&lt;span style=&#34;color:#666&#34;&gt;()).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;to&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;customDirectExchange&lt;span style=&#34;color:#666&#34;&gt;()).&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testRoutingKey&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;发送&#34;&gt;发送&lt;/h1&gt;
-&lt;p&gt;传递 &lt;code&gt;CorrelationData&lt;/code&gt; 类，包含消息唯一标识（&lt;code&gt;AmqpTemplate&lt;/code&gt; 类无法传递，之前一直用的这个，死活找不到方法）。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
-&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;TestScheduled&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Autowired&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; RabbitTemplate rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
-        String content &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;test rabbit and now &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
-        CorrelationData cId &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; CorrelationData&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;unique key&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-        rabbitTemplate&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;convertAndSend&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testDirectExchange&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testRoutingKey&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; content&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; cId&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;接收&#34;&gt;接收&lt;/h1&gt;
-&lt;p&gt;用 &lt;code&gt;Message&lt;/code&gt; 类接收。目前我用的是 String 传输，可以配置成 JSON 传输更好些。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSON&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSONException&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;com.alibaba.fastjson.JSONObject&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.Logger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.slf4j.LoggerFactory&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.core.Message&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.amqp.rabbit.annotation.RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.stereotype.Component&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#a2f&#34;&gt;@Component&lt;/span&gt;
-&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;CustomRabbitReceiver&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;final&lt;/span&gt; Logger LOG &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LoggerFactory&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getLogger&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;CustomRabbitReceiver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#a2f&#34;&gt;@RabbitListener&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;queues &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;testQueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;listen&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;Message message&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
-        String body &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; String&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;message&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;getBody&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
-        LOG&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;receiver from python:&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; body&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;谁的锅&#34;&gt;谁的锅&lt;/h1&gt;
-&lt;p&gt;加了验证后，Java 端没有丢失，另一端消息也确实拿掉了，研究可能是多线程的问题，之前用的是 &lt;code&gt;pika&lt;/code&gt;，官方说多线程不安全，后续可以改为 &lt;code&gt;rabbitpy&lt;/code&gt; 更安全。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;关联阅读&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://rabbitpy.readthedocs.io/en/latest/index.html#&#34;&gt;rabbitpy documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://helloqb.xyz/post/2020/0515_rabbitmq/&#34;&gt;RabbitMQ 实现跨语言通信&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/qq_35387940/article/details/100514134&#34;&gt;Springboot 整合RabbitMq ，用心看完这一篇就够了&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.spring.io/spring-amqp/reference/html/&#34;&gt;Spring AMQP&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://helloqb.xyz/post/2020/0728_rabbitmq.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     
@@ -841,6 +684,131 @@ driver&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
 &lt;p&gt;大功告成，当然可根据自己喜好选择样式，添加相关文字等。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://51hota.dm.files.1drv.com/y4m5etRuVzlJgeR9p7lFrGdFuTvyPjAyaJvx50_mmJhYBXwq6qD87LfDvLnAY24Lb7eUvhqv9E0EVuJL1PZxIgqlsHiPjOUt7oQfmzs3Dwwzxe7pzgL1YhIFCs1eQmwLkgPVwkwwNSNUuCOJx55bLCpVADcF0xryHRgVQYTucl8vFB5tt6-W2g-Pk1xKz9BcFmWSuRE__6WUuSxKbAVGVZVXQ?width=1919&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
 - https://helloqb.xyz/post/2020/0603_ps.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>Spring 定时任务</title>
+        <link>https://helloqb.xyz/post/2021/0602_cron.html</link>
+        <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2021/0602_cron.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2021/0602_cron.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+&lt;p&gt;本文主要记录下 cron 表达式的用法，方便下次使用。&lt;/p&gt;
+&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
+&lt;p&gt;程序主入口添加 &lt;code&gt;@SpringBootApplication&lt;/code&gt; 和 &lt;code&gt;@EnableScheduling&lt;/code&gt; 注解以启动定时任务。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.SpringApplication&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.boot.autoconfigure.SpringBootApplication&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;org.springframework.scheduling.annotation.EnableScheduling&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#a2f&#34;&gt;@SpringBootApplication&lt;/span&gt;
+&lt;span style=&#34;color:#a2f&#34;&gt;@EnableScheduling&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;SchedulingTasksApplication&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#666&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+		SpringApplication&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;SchedulingTasksApplication&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后方法上添加 &lt;code&gt;@Scheduled&lt;/code&gt; 注解就行了。当然类注解 &lt;code&gt;@Component&lt;/code&gt; 也必不可少。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 5000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;reportCurrentTime&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+  System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; Date&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;定时调度&#34;&gt;定时调度&lt;/h1&gt;
+&lt;h2 id=&#34;fixeddelay&#34;&gt;fixedDelay&lt;/h2&gt;
+&lt;p&gt;毫秒单位，以上一个调用的完成时间开始计算。&lt;/p&gt;
+&lt;p&gt;如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
+    LocalDateTime localDateTime &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;start &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; localDateTime&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        Thread&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;sleep&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2000&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;end &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;start 2020-06-02T15:49:59.650
+end 2020-06-02T15:50:01.651
+start 2020-06-02T15:50:04.653
+end 2020-06-02T15:50:06.653
+start 2020-06-02T15:50:09.654
+end 2020-06-02T15:50:11.655
+start 2020-06-02T15:50:14.657
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;fixedrate&#34;&gt;fixedRate&lt;/h2&gt;
+&lt;p&gt;需要固定速率，则使用 &lt;code&gt;fixedRate&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;如间隔 3 秒，每个任务耗时 2 秒：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;fixedRate &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#b00040&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#00f&#34;&gt;errorSpiderRerun&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(){&lt;/span&gt;
+    LocalDateTime localDateTime &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;start &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; localDateTime&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        Thread&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;sleep&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;2000&lt;span style=&#34;color:#666&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;InterruptedException e&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;
+        e&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;printStackTrace&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+    System&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;end &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; LocalDateTime&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#7d9029&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;start 2020-06-02T15:58:03.563
+end 2020-06-02T15:58:05.563
+start 2020-06-02T15:58:06.563
+end 2020-06-02T15:58:08.563
+start 2020-06-02T15:58:09.563
+end 2020-06-02T15:58:11.563
+start 2020-06-02T15:58:12.563
+end 2020-06-02T15:58:14.563
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是若上个任务耗时超过间隔，则下一次也需要在等待，等到结束后下一次立刻执行。&lt;/p&gt;
+&lt;p&gt;如等待 7 秒后结果如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;start 2020-06-02T16:02:37.726
+end 2020-06-02T16:02:44.727
+start 2020-06-02T16:02:44.727
+end 2020-06-02T16:02:51.727
+start 2020-06-02T16:02:51.727
+end 2020-06-02T16:02:58.727
+start 2020-06-02T16:02:58.727
+end 2020-06-02T16:03:05.728
+start 2020-06-02T16:03:05.728
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;initialdelay&#34;&gt;initialDelay&lt;/h2&gt;
+&lt;p&gt;默认项目启动立即执行定时任务，若想要延迟，使用 &lt;code&gt;initialDelay&lt;/code&gt; 参数。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#a2f&#34;&gt;@Scheduled&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;(&lt;/span&gt;initialDelay &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 10000&lt;span style=&#34;color:#666&#34;&gt;,&lt;/span&gt; fixedRate &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; 3000&lt;span style=&#34;color:#666&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2020-06-02 16:09:00.487 [main] INFO  LabelApplication - Started LabelApplication in 4.901 seconds (JVM running for 5.689)  
+start 2020-06-02T16:09:10.467
+end 2020-06-02T16:09:15.468
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;cron-表达式&#34;&gt;cron 表达式&lt;/h2&gt;
+&lt;p&gt;用法太多了，每次项目用到就记一下吧。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1 2 3 * * ? *&lt;/td&gt;
+&lt;td&gt;每天 3 点 2 分 1 秒执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1 2 3 L * ? *&lt;/td&gt;
+&lt;td&gt;每月最后一天 3 点 2 分 1 秒执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1 2 3 4 * ? *&lt;/td&gt;
+&lt;td&gt;每月 4 号 3 点 2 分 1 秒执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0 0 12 ? * WED&lt;/td&gt;
+&lt;td&gt;每周三执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+- https://helloqb.xyz/post/2021/0602_cron.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
         </item>
     
     

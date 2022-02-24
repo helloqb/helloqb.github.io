@@ -7,14 +7,14 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/spring-web/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/spring-web/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>后端接口校验参数异常统一处理</title>
       <link>https://helloqb.xyz/post/2021/0201_validate.html</link>
-      <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 28 Dec 2021 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2021/0201_validate.html</guid>
-      <description>2021-06-01 补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
+      <description>补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
  前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
 //全局异常处理类 @RestControllerAdvice public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { @ExceptionHandler(value = BaseException.class) public S2VJSONResult baseHandler(BaseException e) { return S2VJSONResult.msg(false, 400, e.getMessage()); } //接口 @PostMapping(&amp;#34;/transfer/company&amp;#34;) S2VJSONResult transferCompany(@Validated @RequestBody AdminTransferCompanyVO vo, BindingResult bindingResult) { if (bindingResult.hasErrors()) { return S2VJSONResult.msg(false, 400, bindingResult.getFieldError().getDefaultMessage()); } //参数实体类 public class AdminTransferCompanyVO { @NotNull(message = &amp;#34;客户 ID 不能为空&amp;#34;) private List&amp;lt;Integer&amp;gt; companyIds; @NotNull(message = &amp;#34;目标客户经理 ID 不能为空&amp;#34;) private Integer targetCustomerId; @NotNull(message = &amp;#34;管理员 ID 不能为空&amp;#34;) private Integer operationCustomerId; //统一返回响应 public class S2VJSONResult&amp;lt;T&amp;gt; { private Integer code;//状态码  private Boolean isSuccess;//状态  private String message;//消息  private T data;//数据对象  public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; all(Boolean success, Integer code,String message,T data) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message, data); } public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; msg(Boolean success, Integer code,String message) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message); } 整理了一下其思路，大概如下：</description>
     </item>
