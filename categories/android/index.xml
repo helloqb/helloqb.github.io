@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Mon, 13 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/android/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/categories/android/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
       <link>https://helloqb.xyz/post/2022/0112_tv.html</link>
-      <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2022/0112_tv.html</guid>
       <description>前言 家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。
@@ -19,12 +19,13 @@
 手机遥控 第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。
 Android 9.0 + 蓝牙 HID Android 9.0 自带将手机作为输入设备的功能，遥控助手 和 妙妙触控 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。
 局域网遥控 KDE Connect 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&amp;hellip;&amp;hellip;）
-  官方软件遥控 国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。
+官方软件遥控 国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。
 目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。
-  遥控器 软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。
-  官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。
+遥控器 软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。
+官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。
 软件体验 Kodi Kodi 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。
-中文设置 支持中文，但是直接设置会乱码，需要先修改字体；</description>
+中文设置 支持中文，但是直接设置会乱码，需要先修改字体；
+Settings -&amp;gt; Interface -&amp;gt; Skin -&amp;gt; Fonts，设置为 Aria based； Settings -&amp;gt; Interface -&amp;gt; Regional -&amp;gt; Language，设置为 Chinese (Simple)； 手机远程遥控 官方的遥控软件 Kore 体验也非常好，Android 和 IOS 都支持，而且很多第三方的遥控软件也都会支持 Kodi，以 Android 为例：</description>
     </item>
     
   </channel>

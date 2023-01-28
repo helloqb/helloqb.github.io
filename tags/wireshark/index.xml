@@ -15,11 +15,11 @@
       
       <guid>https://helloqb.xyz/post/2021/0531_tcpdump.html</guid>
       <description>tcpdump 抓包并保存到文件中 常见命令：
- -i eth0：指明 eth0 网卡 host hostname：截获指定 hostname 发出和接收的所有数据 src：截获发出的所有数据 dst：截获接收的所有数据 -w：保存为文件  由于工作中既需要将 tcpdump 的结果打印，又需要将结果保存供 Wireshark 分析，搜索许久后终于实现了。
-tcpdump -s 0 -U -w - | tee target.$(date +%Y-%m-%d-%H-%M-%S).pcap | tcpdump -r - 
-其中：
- -w：告诉 tcpdump 将二进制数据写入 stdout -s 0：抓取完整的数据包 tee：将该二进制数据写入文件并写入其自己的 stdout -r：告诉第二个 tcpdump 从它的数据中获取它的数据 stdin -U：使数据包在收到后立即写入  docker 容器内抓包 项目采用 docker 部署的时候，若不指明网卡则可能得不到想要的结果，有三种方法：
- 直接进入容器 找到容器对应的虚拟网卡，参数 -i 指明网卡 nsenter 命令在宿主机上进入容器的网络空间  第 2 种 方法参考底部链接，我个人更喜欢第 3 种方法，详细命令如下：</description>
+-i eth0：指明 eth0 网卡 host hostname：截获指定 hostname 发出和接收的所有数据 src：截获发出的所有数据 dst：截获接收的所有数据 -w：保存为文件 由于工作中既需要将 tcpdump 的结果打印，又需要将结果保存供 Wireshark 分析，搜索许久后终于实现了。
+tcpdump -s 0 -U -w - | tee target.$(date +%Y-%m-%d-%H-%M-%S).pcap | tcpdump -r - 其中：
+-w：告诉 tcpdump 将二进制数据写入 stdout -s 0：抓取完整的数据包 tee：将该二进制数据写入文件并写入其自己的 stdout -r：告诉第二个 tcpdump 从它的数据中获取它的数据 stdin -U：使数据包在收到后立即写入 docker 容器内抓包 项目采用 docker 部署的时候，若不指明网卡则可能得不到想要的结果，有三种方法：
+直接进入容器 找到容器对应的虚拟网卡，参数 -i 指明网卡 nsenter 命令在宿主机上进入容器的网络空间 第 2 种 方法参考底部链接，我个人更喜欢第 3 种方法，详细命令如下：
+# 获取容器进程 pid docker inspect --format {{.</description>
     </item>
     
   </channel>

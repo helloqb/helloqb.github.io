@@ -24,10 +24,10 @@ import org.mapstruct.Mapper; import org.mapstruct.Mapping; @Mapper public interf
     
     <item>
       <title>Spring 定时任务</title>
-      <link>https://helloqb.xyz/post/2021/0602_cron.html</link>
+      <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0602_cron.html</guid>
+      <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
       <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
 配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
 import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。

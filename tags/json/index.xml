@@ -14,9 +14,9 @@
       <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2020/1028_fastjson.html</guid>
-      <description>JSONObject 互转  String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
+      <description>JSONObject 互转 String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
 String str = j.toString(SerializerFeature.WriteMapNullValue); String to JavaBean T t = JSON.parseObject(str, T.class); JavaBean to String String str = JSON.toJSONString(t); 同样，若想要保留 null 值，需要添加 SerializerFeature.WriteMapNullValue 参数。
-String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转  String to JSONArray JSONArray j = JSON.</description>
+String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转 String to JSONArray JSONArray j = JSON.</description>
     </item>
     
   </channel>

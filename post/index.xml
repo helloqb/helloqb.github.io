@@ -7,29 +7,39 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Tue, 28 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>后端接口校验参数异常统一处理</title>
-      <link>https://helloqb.xyz/post/2021/0201_validate.html</link>
-      <pubDate>Tue, 28 Dec 2021 00:00:00 +0000</pubDate>
+      <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
+      <link>https://helloqb.xyz/post/2022/0112_tv.html</link>
+      <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0201_validate.html</guid>
-      <description>补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
- 前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
-//全局异常处理类 @RestControllerAdvice public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { @ExceptionHandler(value = BaseException.class) public S2VJSONResult baseHandler(BaseException e) { return S2VJSONResult.msg(false, 400, e.getMessage()); } //接口 @PostMapping(&amp;#34;/transfer/company&amp;#34;) S2VJSONResult transferCompany(@Validated @RequestBody AdminTransferCompanyVO vo, BindingResult bindingResult) { if (bindingResult.hasErrors()) { return S2VJSONResult.msg(false, 400, bindingResult.getFieldError().getDefaultMessage()); } //参数实体类 public class AdminTransferCompanyVO { @NotNull(message = &amp;#34;客户 ID 不能为空&amp;#34;) private List&amp;lt;Integer&amp;gt; companyIds; @NotNull(message = &amp;#34;目标客户经理 ID 不能为空&amp;#34;) private Integer targetCustomerId; @NotNull(message = &amp;#34;管理员 ID 不能为空&amp;#34;) private Integer operationCustomerId; //统一返回响应 public class S2VJSONResult&amp;lt;T&amp;gt; { private Integer code;//状态码  private Boolean isSuccess;//状态  private String message;//消息  private T data;//数据对象  public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; all(Boolean success, Integer code,String message,T data) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message, data); } public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; msg(Boolean success, Integer code,String message) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message); } 整理了一下其思路，大概如下：</description>
+      <guid>https://helloqb.xyz/post/2022/0112_tv.html</guid>
+      <description>前言 家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。
+遥控 其实本可以没有这篇文章，因为 TNT 系统已经够成熟了，连上键鼠完全可以像电脑一样操作，当作机顶盒播放视频绰绰有余。但是客厅里摆一套键鼠总觉得不够优雅，所以想着可不可以实现像遥控器操控机顶盒那样。
+手机遥控 第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。
+Android 9.0 + 蓝牙 HID Android 9.0 自带将手机作为输入设备的功能，遥控助手 和 妙妙触控 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。
+局域网遥控 KDE Connect 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&amp;hellip;&amp;hellip;）
+官方软件遥控 国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。
+目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。
+遥控器 软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。
+官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。
+软件体验 Kodi Kodi 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。
+中文设置 支持中文，但是直接设置会乱码，需要先修改字体；
+Settings -&amp;gt; Interface -&amp;gt; Skin -&amp;gt; Fonts，设置为 Aria based； Settings -&amp;gt; Interface -&amp;gt; Regional -&amp;gt; Language，设置为 Chinese (Simple)； 手机远程遥控 官方的遥控软件 Kore 体验也非常好，Android 和 IOS 都支持，而且很多第三方的遥控软件也都会支持 Kodi，以 Android 为例：</description>
     </item>
     
     <item>
-      <title>进一步了解 RabbitMQ 跨语言通讯</title>
-      <link>https://helloqb.xyz/post/2021/0728_rabbitmq.html</link>
-      <pubDate>Wed, 28 Jul 2021 00:00:00 +0000</pubDate>
+      <title>下载利器 Aria2 使用分享</title>
+      <link>https://helloqb.xyz/post/2022/0107_software.html</link>
+      <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0728_rabbitmq.html</guid>
-      <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
-配置 pom.xml 文件中添加依赖。
-&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
-spring:rabbitmq:host:192.168.0.102port:5672username:adminpassword:adminvirtual-host:slpublisher-confirm-type:correlatedpublisher-returns:truetemplate:mandatory:true重写方法 RabbitTemplate.ConfirmCallback 确认消息是否到达交换机， RabbitTemplate.ReturnCallback 确认消息是否到达队列中。
-import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.amqp.core.Message; import org.springframework.amqp.rabbit.connection.CorrelationData; import org.springframework.amqp.rabbit.core.RabbitTemplate; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.stereotype.Component; import javax.annotation.PostConstruct; @Component public class CustomRabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback { private static final Logger LOG = LoggerFactory.getLogger(CustomRabbitSend.class); @Autowired private RabbitTemplate rabbitTemplate; @PostConstruct public void init(){ rabbitTemplate.setConfirmCallback(this); rabbitTemplate.setReturnCallback(this); } @Override public void confirm(CorrelationData correlationData, boolean b, String s) { //到达Exchange交换机，会调用此方法  if (!</description>
+      <guid>https://helloqb.xyz/post/2022/0107_software.html</guid>
+      <description>摘要 Mac 如何快速启动 Aria2 Windows 如何实现开机后台自启 Aria2 Aria2 官网 对其的定义：
+aria2 是一个轻量级的多协议和多源命令行 下载工具。它支持 HTTP/HTTPS、FTP、SFTP、 BitTorrent 和 Metalink。aria2 可以通过内置的 JSON-RPC 和 XML-RPC接口进行操作。
+用到的插件：
+可视化窗口：AriaNg Chrome 插件：Camtd - Aria2下载管理器 Chrome 插件（推荐）：Aria2 for Chrome 配置 新建目录结构：
+├── Aria2 │ ├── aria2.conf │ ├── aria2.session │ └── downloads 其中 aria2.session 为空文件，用来重新加载任务；downloads 为下载存放目录；aria2.conf 为参数配置文件，配置如下：
+### Basic ### dir=./downloads input-file=./aria2.session save-session=./aria2.session save-session-interval=60 continue=true ### Adcanced ### disk-cache=64M file-allocation=none # daemon=true quiet=true ### RPC ### enable-rpc=true rpc-allow-origin-all=true rpc-listen-all=true ### HTTP/FTP ### max-connection-per-server=16 min-split-size=8M split=32 user-agent=Transmission/2.</description>
     </item>
     
     <item>
@@ -40,7 +50,7 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframew
       <guid>https://helloqb.xyz/post/2021/0617_axshare.html</guid>
       <description>前言 知道 Axure 导出的原型图是静态 html 文件后，思路就清晰了，在本地搭建一个 web 服务器即可局域网之间访问。
 但在正式搭建的时候，还是遇到些棘手的问题，先列举出来，读者可以提前思考下：
- 产品经理如何用自己的电脑（通常 Windows）将共享的文件导出到服务器上（通常 Linux 上）； 可不可以搭建一个首页，前端自动识别服务器里存在的原型项目并展示在首页；  Samba 共享文件 在如何将 Windows 的文件导出到 Linux 上时，也纠结了几种方法，如用 svn 同步文件，或者 sftp 传输文件。但想到产品经理又不是我们这些敲代码的，对这些不熟悉。所以想要使用一种尽量没有学习成本的方法。
+产品经理如何用自己的电脑（通常 Windows）将共享的文件导出到服务器上（通常 Linux 上）； 可不可以搭建一个首页，前端自动识别服务器里存在的原型项目并展示在首页； Samba 共享文件 在如何将 Windows 的文件导出到 Linux 上时，也纠结了几种方法，如用 svn 同步文件，或者 sftp 传输文件。但想到产品经理又不是我们这些敲代码的，对这些不熟悉。所以想要使用一种尽量没有学习成本的方法。
 最后用了 Samba。Linux 上配置好后，Windows 映射成网络驱动器，然后在 Axure 分享链接时，选择本地此驱动器即可上传到服务器上。具体操作如下。
 Linux 安装 Samba 公司的 Wiki 项目已经用到了 Samba，所以没有亲自安装，直接配置：
 [axure] comment = share for axure path = /root/server_axure/html public = yes security = user map to guest = Bad User guest ok = yes guest account = ftp browseable = yes writable = yes create mask = 0777 directory mask = 0777 配置文件在 /etc/samba/smb.</description>
@@ -57,7 +67,7 @@ Linux 安装 Samba 公司的 Wiki 项目已经用到了 Samba，所以没有亲�
 要注意的是，2.4 之前不支持中文。Commons 包较为常见，一开始我没有考虑版本，拿着 2.4 的包用，结果乱码，且没有相关参数指定编码，一度打算舍弃它。
 实现 Apache Commons 包中的 Tailer 类实现了这个，一旦了解了这个类，实现起来就简单了。直接贴代码了。
 websocket 入口
-import org.apache.commons.io.input.Tailer; import org.apache.commons.io.input.TailerListener; import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.stereotype.Component; import javax.websocket.OnClose; import javax.websocket.OnError; import javax.websocket.OnOpen; import javax.websocket.Session; import javax.websocket.server.PathParam; import javax.websocket.server.ServerEndpoint; import java.io.File; import java.util.concurrent.atomic.AtomicInteger; /** * websocket */ @ServerEndpoint(&amp;#34;/websocket/log/{sid}&amp;#34;) @Component public class WebSocketServerLog { private static Logger LOG = LoggerFactory.getLogger(WebSocketServerLog.class); private static AtomicInteger onlineCount = new AtomicInteger(0); private Tailer tailer; //接收sid  private String sid=&amp;#34;&amp;#34;; /** * 连接建立成功调用的方法 */ @OnOpen public void onOpen(Session session, @PathParam(&amp;#34;sid&amp;#34;) String sid) { addOnlineCount(); this.</description>
+import org.apache.commons.io.input.Tailer; import org.apache.commons.io.input.TailerListener; import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.stereotype.Component; import javax.websocket.OnClose; import javax.websocket.OnError; import javax.websocket.OnOpen; import javax.websocket.Session; import javax.websocket.server.PathParam; import javax.websocket.server.ServerEndpoint; import java.io.File; import java.util.concurrent.atomic.AtomicInteger; /** * websocket */ @ServerEndpoint(&amp;#34;/websocket/log/{sid}&amp;#34;) @Component public class WebSocketServerLog { private static Logger LOG = LoggerFactory.getLogger(WebSocketServerLog.class); private static AtomicInteger onlineCount = new AtomicInteger(0); private Tailer tailer; //接收sid private String sid=&amp;#34;&amp;#34;; /** * 连接建立成功调用的方法 */ @OnOpen public void onOpen(Session session, @PathParam(&amp;#34;sid&amp;#34;) String sid) { addOnlineCount(); this.</description>
     </item>
     
     <item>
@@ -67,36 +77,31 @@ import org.apache.commons.io.input.Tailer; import org.apache.commons.io.input.Ta
       
       <guid>https://helloqb.xyz/post/2021/0531_tcpdump.html</guid>
       <description>tcpdump 抓包并保存到文件中 常见命令：
- -i eth0：指明 eth0 网卡 host hostname：截获指定 hostname 发出和接收的所有数据 src：截获发出的所有数据 dst：截获接收的所有数据 -w：保存为文件  由于工作中既需要将 tcpdump 的结果打印，又需要将结果保存供 Wireshark 分析，搜索许久后终于实现了。
-tcpdump -s 0 -U -w - | tee target.$(date +%Y-%m-%d-%H-%M-%S).pcap | tcpdump -r - 
-其中：
- -w：告诉 tcpdump 将二进制数据写入 stdout -s 0：抓取完整的数据包 tee：将该二进制数据写入文件并写入其自己的 stdout -r：告诉第二个 tcpdump 从它的数据中获取它的数据 stdin -U：使数据包在收到后立即写入  docker 容器内抓包 项目采用 docker 部署的时候，若不指明网卡则可能得不到想要的结果，有三种方法：
- 直接进入容器 找到容器对应的虚拟网卡，参数 -i 指明网卡 nsenter 命令在宿主机上进入容器的网络空间  第 2 种 方法参考底部链接，我个人更喜欢第 3 种方法，详细命令如下：</description>
+-i eth0：指明 eth0 网卡 host hostname：截获指定 hostname 发出和接收的所有数据 src：截获发出的所有数据 dst：截获接收的所有数据 -w：保存为文件 由于工作中既需要将 tcpdump 的结果打印，又需要将结果保存供 Wireshark 分析，搜索许久后终于实现了。
+tcpdump -s 0 -U -w - | tee target.$(date +%Y-%m-%d-%H-%M-%S).pcap | tcpdump -r - 其中：
+-w：告诉 tcpdump 将二进制数据写入 stdout -s 0：抓取完整的数据包 tee：将该二进制数据写入文件并写入其自己的 stdout -r：告诉第二个 tcpdump 从它的数据中获取它的数据 stdin -U：使数据包在收到后立即写入 docker 容器内抓包 项目采用 docker 部署的时候，若不指明网卡则可能得不到想要的结果，有三种方法：
+直接进入容器 找到容器对应的虚拟网卡，参数 -i 指明网卡 nsenter 命令在宿主机上进入容器的网络空间 第 2 种 方法参考底部链接，我个人更喜欢第 3 种方法，详细命令如下：
+# 获取容器进程 pid docker inspect --format {{.</description>
     </item>
     
     <item>
-      <title>RabbitMQ 实现跨语言通信</title>
-      <link>https://helloqb.xyz/post/2021/0515_rabbitmq.html</link>
-      <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
+      <title>后端接口校验参数异常统一处理</title>
+      <link>https://helloqb.xyz/post/2021/0201_validate.html</link>
+      <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0515_rabbitmq.html</guid>
-      <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
-其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
-三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
-String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;}; proc = Runtime.getRuntime().exec(command);// 执行py文件 ProcessBuilder 可以是列表，官方推荐 ProcessBuilder。
-List&amp;lt;String&amp;gt; command = new ArrayList&amp;lt;&amp;gt;(); command.add(&amp;#34;python&amp;#34;); command.add(&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;); ProcessBuilder pb = new ProcessBuilder(command); proc = pb.start(); Process 提供 InputStream 和 ErrorStream 接收返回结果；为方便起见，可以将错误流重定向到输入流。
-pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream())); 若需要立即获取其返回结果，需要用 waitFor() 方法。
-//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止 code = proc.waitFor(); 坑不坑：
- Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。 作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。 返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。 目前只尝试了 Java 调用 Python，反过来感觉很难。  完整代码如下：</description>
+      <guid>https://helloqb.xyz/post/2021/0201_validate.html</guid>
+      <description>2021-06-01 补充：捕捉文件上传大小限制的异常和参数 key 都不传的情况。
+前言 工作的项目中，先前的同事其实已经实现了参数校验异常统一处理。部分实现代码如下。
+//全局异常处理类 @RestControllerAdvice public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { @ExceptionHandler(value = BaseException.class) public S2VJSONResult baseHandler(BaseException e) { return S2VJSONResult.msg(false, 400, e.getMessage()); } //接口 @PostMapping(&amp;#34;/transfer/company&amp;#34;) S2VJSONResult transferCompany(@Validated @RequestBody AdminTransferCompanyVO vo, BindingResult bindingResult) { if (bindingResult.hasErrors()) { return S2VJSONResult.msg(false, 400, bindingResult.getFieldError().getDefaultMessage()); } //参数实体类 public class AdminTransferCompanyVO { @NotNull(message = &amp;#34;客户 ID 不能为空&amp;#34;) private List&amp;lt;Integer&amp;gt; companyIds; @NotNull(message = &amp;#34;目标客户经理 ID 不能为空&amp;#34;) private Integer targetCustomerId; @NotNull(message = &amp;#34;管理员 ID 不能为空&amp;#34;) private Integer operationCustomerId; //统一返回响应 public class S2VJSONResult&amp;lt;T&amp;gt; { private Integer code;//状态码 private Boolean isSuccess;//状态 private String message;//消息 private T data;//数据对象 public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; all(Boolean success, Integer code,String message,T data) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message, data); } public static &amp;lt;T&amp;gt; S2VJSONResult&amp;lt;T&amp;gt; msg(Boolean success, Integer code,String message) { return new S2VJSONResult&amp;lt;&amp;gt;(success, code, message); } 整理了一下其思路，大概如下：</description>
     </item>
     
     <item>
-      <title>SpringMVC 下载文本实现边转码边下载</title>
-      <link>https://helloqb.xyz/post/2021/0304_java.html</link>
-      <pubDate>Thu, 04 Mar 2021 00:00:00 +0000</pubDate>
+      <title>EXCEL 技巧之 - 小技巧</title>
+      <link>https://helloqb.xyz/post/2020/1120_excel.html</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0304_java.html</guid>
-      <description></description>
+      <guid>https://helloqb.xyz/post/2020/1120_excel.html</guid>
+      <description>单元格间隔一行 编写左图，选中，往下拖动形成右图。 开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量 开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行 得到最终结果，如下。 待 </description>
     </item>
     
     <item>
@@ -106,11 +111,11 @@ pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new Buffer
       
       <guid>https://helloqb.xyz/post/2020/1102_frp.html</guid>
       <description>前言 远程控制软件有用过 TeamViewer、向日葵、Chrome Remote Desktop 等，TeamViewer 的稳定性流畅性最好，但是后台挂久了，会被检测商业用途，需要付费，那价格实在没法交个朋友。向日葵 挺好的，但是对国产软件向来有些警惕，不敢给予太高的权限。Chrome Remote Desktop 国内没法使用无人值守访问。Windows 自带的远程桌面不能连接非局域网内的用户，公网 IP 对于租客来说也没法弄，后来了解了内网穿透技术，正好解决了问题。
-简单使用  frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。
- frp 实现需要具有公网 IP 节点的中转站，我用的是谷歌云，公司也用了内网穿透技术，用的是腾讯云，比较后发现公司速度更快。
+简单使用 frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。
+frp 实现需要具有公网 IP 节点的中转站，我用的是谷歌云，公司也用了内网穿透技术，用的是腾讯云，比较后发现公司速度更快。
 Server 端安装 官网 下载对应系统的版本，我的 VPS 是 linux x64，所以选用的是版本是 frp_0.34.1_linux_amd64.tar.gz。
 下载后解压文件夹，将 frps.ini 和 frps 文件拷贝到服务器上，运行即可。示例如下：
-# 后台运行，输出默认重定向到当前目录下 nohup.out 文件 nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp; # 后台运行，不记录输出信息  nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp;&amp;gt; /dev/null &amp;amp; 其中 frps.ini 文件中 bind_port = 7000 表示默认监听端口为 7000，需要安全组策略允许入站和出站。
+# 后台运行，输出默认重定向到当前目录下 nohup.out 文件 nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp; # 后台运行，不记录输出信息 nohup /root/frp/frps -c /root/frp/frps.ini &amp;amp;&amp;gt; /dev/null &amp;amp; 其中 frps.ini 文件中 bind_port = 7000 表示默认监听端口为 7000，需要安全组策略允许入站和出站。
 Client 端安装 下载 Windows 端的版本 frp_0.</description>
     </item>
     
@@ -120,9 +125,9 @@ Client 端安装 下载 Windows 端的版本 frp_0.</description>
       <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2020/1028_fastjson.html</guid>
-      <description>JSONObject 互转  String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
+      <description>JSONObject 互转 String to JSONObject JSONObject j = JSON.parseObject(str); JSONObject to String String str = j.toJSONString(); 转成字符串时默认会将 null 值去掉，若想要保留，需要添加 SerializerFeature.WriteMapNullValue 参数。
 String str = j.toString(SerializerFeature.WriteMapNullValue); String to JavaBean T t = JSON.parseObject(str, T.class); JavaBean to String String str = JSON.toJSONString(t); 同样，若想要保留 null 值，需要添加 SerializerFeature.WriteMapNullValue 参数。
-String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转  String to JSONArray JSONArray j = JSON.</description>
+String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObject to JavaBean T t = j.toJavaObject(T.class); JavaBean to JSONObject JSONObject j = (JSONObject) JSON.toJSON(t); JSONArray 互转 String to JSONArray JSONArray j = JSON.</description>
     </item>
     
     <item>
@@ -132,12 +137,11 @@ String str = JSON.toJSONString(t, erializerFeature.WriteMapNullValue); JSONObjec
       
       <guid>https://helloqb.xyz/post/2020/0907_yaml.html</guid>
       <description>调用 Value 注解调用 例如，YAML 文件中有个自定义配置。
-myconfig:model-server-url:127.0.0.1使用 @Value 注解调用。
+myconfig: model-server-url: 127.0.0.1 使用 @Value 注解调用。
 import org.springframework.beans.factory.annotation.Value; @Value(&amp;#34;${myconfig.model-server-url}&amp;#34;) private String modelServerUrl; 变量少的情况，代码相对简单，但当变量被多次调用的情况下，可以考虑用类包装一下，下面的就是采用这种逻辑。
 ConfigurationProperties 注解调用 当参数较多时，可以使用 @ConfigurationProperties 将其绑定到一个类中。例如
-myconfig:model-server-url:127.0.0.1servers:- www.abc.test.com- www.xyz.test.com配置类代码如下：
-import org.springframework.boot.context.properties.ConfigurationProperties; import org.springframework.boot.context.properties.EnableConfigurationProperties; import org.springframework.context.annotation.Configuration; /** * yaml config * */ @Configuration @EnableConfigurationProperties @ConfigurationProperties(prefix = &amp;#34;myconfig&amp;#34;) public class YAMLConfig { private String modelServerUrl; private List&amp;lt;String&amp;gt; servers = new ArrayList&amp;lt;&amp;gt;(); // standard getters and setters } 其中 @Configuration 和 @EnableConfigurationProperties 可以用 @Component 代替，前面那种注解更精确些。
-YAML 文件中参数匹配很宽松，下划线 _ 和 - 和驼峰都能够匹配到，官方建议使用 -。</description>
+myconfig: model-server-url: 127.0.0.1 servers: - www.abc.test.com - www.xyz.test.com 配置类代码如下：
+import org.springframework.boot.context.properties.ConfigurationProperties; import org.springframework.boot.context.properties.EnableConfigurationProperties; import org.springframework.context.annotation.Configuration; /** * yaml config * */ @Configuration @EnableConfigurationProperties @ConfigurationProperties(prefix = &amp;#34;myconfig&amp;#34;) public class YAMLConfig { private String modelServerUrl; private List&amp;lt;String&amp;gt; servers = new ArrayList&amp;lt;&amp;gt;(); // standard getters and setters } 其中 @Configuration 和 @EnableConfigurationProperties 可以用 @Component 代替，前面那种注解更精确些。</description>
     </item>
     
     <item>
@@ -172,6 +176,19 @@ SCROLL_PAUSE_TIME = 0.</description>
     </item>
     
     <item>
+      <title>进一步了解 RabbitMQ 跨语言通讯</title>
+      <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
+      <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
+配置 pom.xml 文件中添加依赖。
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
+spring: rabbitmq: host: 192.168.0.102 port: 5672 username: admin password: admin virtual-host: sl publisher-confirm-type: correlated publisher-returns: true template: mandatory: true 重写方法 RabbitTemplate.ConfirmCallback 确认消息是否到达交换机， RabbitTemplate.ReturnCallback 确认消息是否到达队列中。
+import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.amqp.core.Message; import org.springframework.amqp.rabbit.connection.CorrelationData; import org.springframework.amqp.rabbit.core.RabbitTemplate; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.stereotype.Component; import javax.annotation.PostConstruct; @Component public class CustomRabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback { private static final Logger LOG = LoggerFactory.getLogger(CustomRabbitSend.class); @Autowired private RabbitTemplate rabbitTemplate; @PostConstruct public void init(){ rabbitTemplate.</description>
+    </item>
+    
+    <item>
       <title>耳机初烧之旅</title>
       <link>https://helloqb.xyz/post/2020/0713_headphone.html</link>
       <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
@@ -179,28 +196,30 @@ SCROLL_PAUSE_TIME = 0.</description>
       <guid>https://helloqb.xyz/post/2020/0713_headphone.html</guid>
       <description>入门穷烧 大三，不知何事引起，对耳机产生兴趣，可能是看到论坛们一堆 高音甜，中音准，低音沉 的分析，感觉他们从里面获得了很大的满足，所以也想尝试一下。
 鉴于一直以来耳机不都是十块钱的印象，只能将价位定位在了一两百。瞄准两款 AKG420 和 JVC HA-S500。HA-S500 在网上的形容词是 白菜神器，说外国某论坛关于此耳机盖了很多层楼。AKG420 名声更大，知乎初烧推荐里几乎都有这款。巧了，宿舍串门的时候正好看到同学在用，试了下，佩戴舒适，低音有氛围，颜值低调却在线，很喜欢，现在想来还是想拥有一部。
- 可能是得不到的永远在骚动，我最终选择了 HA-S500 。怀着无比激动的心情收到后，很爱惜，很享受，什么高音低音的也瞬间都感觉有了，经常晚上关灯听很久。现在想来，脑放的成分居多，此耳机声音同价位一般，唯一可以吹的是它的质量，拿到手里感觉就是特别结实，一度让我对日本制造印象特别好。现在为止已经换了两个耳套，它仍然硬硬的，躺着抽屉里，等我偶然间想起。
- 后来又买了 潜99 和 爱华 AIWA HP-M38，潜99 入耳式的没啥印象，HP-M38 还有些印象，因为很轻，佩戴很舒服，而 HA-S500 特别夹耳。
- 再烧 又不知何事引起，想再烧下耳机，也了解到好耳机真的需要上放，而上放对于我这种简约派来说想想都麻烦，需要把歌曲导进导出的，没法直接用手机听。所以我下了个决定，只直推试听，不行就不再烧。 有了工资后，定位当然也高了，盖得排行里，锁定了接近三千价位的歌德 SR325e。但三千毕竟不少，淘宝上找到个商家可以试听，每天 50，遂下单。等待期间看到了魅族 HiFi 解码耳放这么个小玩意，说能使手机推力变大，也下单了。
- 拿到后，没感觉多少惊喜，有效果，但不值得花三千，算了，退单，再也不烧。
+可能是得不到的永远在骚动，我最终选择了 HA-S500 。怀着无比激动的心情收到后，很爱惜，很享受，什么高音低音的也瞬间都感觉有了，经常晚上关灯听很久。现在想来，脑放的成分居多，此耳机声音同价位一般，唯一可以吹的是它的质量，拿到手里感觉就是特别结实，一度让我对日本制造印象特别好。现在为止已经换了两个耳套，它仍然硬硬的，躺着抽屉里，等我偶然间想起。
+后来又买了 潜99 和 爱华 AIWA HP-M38，潜99 入耳式的没啥印象，HP-M38 还有些印象，因为很轻，佩戴很舒服，而 HA-S500 特别夹耳。
+再烧 又不知何事引起，想再烧下耳机，也了解到好耳机真的需要上放，而上放对于我这种简约派来说想想都麻烦，需要把歌曲导进导出的，没法直接用手机听。所以我下了个决定，只直推试听，不行就不再烧。 有了工资后，定位当然也高了，盖得排行里，锁定了接近三千价位的歌德 SR325e。但三千毕竟不少，淘宝上找到个商家可以试听，每天 50，遂下单。等待期间看到了魅族 HiFi 解码耳放这么个小玩意，说能使手机推力变大，也下单了。
+拿到后，没感觉多少惊喜，有效果，但不值得花三千，算了，退单，再也不烧。
 可心里总是还有欲望，别人怎么能听得这么爽，我是木耳吗，难道真得上放才行?
 退单后，依旧在论坛贴吧瞎逛，忽然发现了个新词 USB独占。大概意思是：
- “Android 系统为了兼容不同 APP 音频同时输出，需要使用 Mixer(混音模块)将这些声音混在一起后输出，Android 混音输出的采样率固定为 48k，如果某个 APP 输出的声音格式和混音输出结果不一样，就需要 SRC（采样率转换），这对音质是一个大大的损伤。而在独占模式下，APP 会把数字信号直接送给 USB 系统，通过 USB 接口送给数字耳机。”
- 这个理论又勾起了我的欲望。但是 SR325e 已经被退了，想来好久都没买耳机了，再买一个耳机用吧，等着 HA-S500 用坏怕是不可能了。
+“Android 系统为了兼容不同 APP 音频同时输出，需要使用 Mixer(混音模块)将这些声音混在一起后输出，Android 混音输出的采样率固定为 48k，如果某个 APP 输出的声音格式和混音输出结果不一样，就需要 SRC（采样率转换），这对音质是一个大大的损伤。而在独占模式下，APP 会把数字信号直接送给 USB 系统，通过 USB 接口送给数字耳机。”
+这个理论又勾起了我的欲望。但是 SR325e 已经被退了，想来好久都没买耳机了，再买一个耳机用吧，等着 HA-S500 用坏怕是不可能了。
 逛了一番后，买了 HIFIMAN SUNDARA。我靠，真的是独占的原因！！！
- 欲望被彻底勾起，先是觉得 SUNDARA 低频差点劲，二手了 DT990 和 DT1350，DT1350 山洞音没感觉，DT990 解析好，人声远，低频足，但齿音更重。不行，还是不够完美。接着逛，reddit 上 HD58X 呼声很高，国内竟然没有专卖店，学了下海淘，竟然比想象中简单的多。一个月后才拿到手，没有期待的好，但也有所提升。</description>
+欲望被彻底勾起，先是觉得 SUNDARA 低频差点劲，二手了 DT990 和 DT1350，DT1350 山洞音没感觉，DT990 解析好，人声远，低频足，但齿音更重。不行，还是不够完美。接着逛，reddit 上 HD58X 呼声很高，国内竟然没有专卖店，学了下海淘，竟然比想象中简单的多。一个月后才拿到手，没有期待的好，但也有所提升。</description>
     </item>
     
     <item>
-      <title>使用 BigDecimal 和 DecimalFormat 计算</title>
+      <title>使用 BigDecimal 计算及其格式化</title>
       <link>https://helloqb.xyz/post/2020/0707_decimal.html</link>
       <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2020/0707_decimal.html</guid>
-      <description>介绍 本文主要记录下 BigDecimal 和 DecimalFormat 类的用法，方便下次使用。
- BigDecimal 可以更精确的进行小数点运算。 DecimalFormat 可以更好的进行与科学计算法之间的换算和保留有效数字。  BigDecimal 加减乘除等 import java.math.BigDecimal; new BigDecimal(&amp;#34;3.1&amp;#34;).add(new BigDecimal(&amp;#34;1.2&amp;#34;));//加 new BigDecimal(&amp;#34;3.1&amp;#34;).subtract(new BigDecimal(&amp;#34;1.2&amp;#34;));//减 new BigDecimal(&amp;#34;3.1&amp;#34;).multiply(new BigDecimal(&amp;#34;1.2&amp;#34;));//乘 new BigDecimal(&amp;#34;3.1&amp;#34;).divide(new BigDecimal(&amp;#34;1.2&amp;#34;), 2);//除 new BigDecimal(&amp;#34;3.1&amp;#34;).max(new BigDecimal(&amp;#34;1.2&amp;#34;));//最大值 new BigDecimal(&amp;#34;3.1&amp;#34;).compareTo(new BigDecimal(&amp;#34;1.2&amp;#34;));//比较 四舍五入 BigDecimal.ROUND_UP：不降低计算值的大小(和正负无关)
+      <description>2023-01-28 补充：toString 和 MessageFormat 等方法。
+介绍 本文主要记录下 BigDecimal 和 DecimalFormat 类的用法，方便下次使用。
+BigDecimal 可以更精确的进行小数点运算。 DecimalFormat 可以更好的进行与科学计算法之间的换算和保留有效数字。 BigDecimal 加减乘除等 import java.math.BigDecimal; new BigDecimal(&amp;#34;3.1&amp;#34;).add(new BigDecimal(&amp;#34;1.2&amp;#34;));//加 new BigDecimal(&amp;#34;3.1&amp;#34;).subtract(new BigDecimal(&amp;#34;1.2&amp;#34;));//减 new BigDecimal(&amp;#34;3.1&amp;#34;).multiply(new BigDecimal(&amp;#34;1.2&amp;#34;));//乘 new BigDecimal(&amp;#34;3.1&amp;#34;).divide(new BigDecimal(&amp;#34;1.2&amp;#34;), 2);//除 new BigDecimal(&amp;#34;3.1&amp;#34;).max(new BigDecial(&amp;#34;1.2&amp;#34;));//最大值 new BigDecimal(&amp;#34;3.1&amp;#34;).min(new BigDecial(&amp;#34;1.2&amp;#34;));//最小值 new BigDecimal(&amp;#34;3.1&amp;#34;).abs();//绝对值 new BigDecimal(&amp;#34;3.1&amp;#34;).compareTo(new BigDecimal(&amp;#34;1.2&amp;#34;));//比较 注意：
+BigDecimal 必须为有理数，所以除法最好设置小数位数，否则可能会报错。 四舍五入 BigDecimal.ROUND_UP：不降低计算值的大小(和正负无关)
 //不降低计算值的大小（不考虑负号） new BigDecimal(&amp;#34;1.345&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //1.35 new BigDecimal(&amp;#34;1.346&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //1.35 new BigDecimal(&amp;#34;-1.345&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //-1.35 new BigDecimal(&amp;#34;-1.346&amp;#34;).setScale(2, BigDecimal.ROUND_UP); //-1.35 BigDecimal.ROUND_DOWN：不增加计算值的大小(和正负无关)
-//不增加计算值的大小（不考虑负号） new BigDecimal(&amp;#34;1.345&amp;#34;).setScale(2, BigDecimal.ROUND_DOWN); //1.34 new BigDecimal(&amp;#34;1.346&amp;#34;).setScale(2, BigDecimal.ROUND_DOWN); //1.34 new BigDecimal(&amp;#34;-1.345&amp;#34;).setScale(2, BigDecimal.ROUND_DOWN); //-1.34 new BigDecimal(&amp;#34;-1.346&amp;#34;).setScale(2, BigDecimal.</description>
+//不增加计算值的大小（不考虑负号） new BigDecimal(&amp;#34;1.345&amp;#34;).setScale(2, BigDecimal.</description>
     </item>
     
     <item>
@@ -210,8 +229,8 @@ SCROLL_PAUSE_TIME = 0.</description>
       
       <guid>https://helloqb.xyz/post/2020/0615_jupyter.html</guid>
       <description>Jupyter 作为 Python 笔记相当不错，可以实时运行代码。在此备份。其中 html 版本 用于在线浏览，ipynb 版本 用于导出到 Jupyter 中运行。
-函数  加载 sklearn 公共数据集 返回 df2 按照 df1 的 id 排序 数据通用预处理  &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt;
-其他  Difference between map, applymap and apply methods in Pandas. &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt;  </description>
+函数 加载 sklearn 公共数据集 返回 df2 按照 df1 的 id 排序 数据通用预处理 &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt;
+其他 Difference between map, applymap and apply methods in Pandas. &amp;lt;html 版本&amp;gt; &amp;lt;ipynb 版本&amp;gt; </description>
     </item>
     
     <item>
@@ -220,15 +239,15 @@ SCROLL_PAUSE_TIME = 0.</description>
       <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2020/0605_regex.html</guid>
-      <description>介绍  正则表达式（Regex）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。 &amp;ndash; 维基百科
- Jupyter 版 例子在 Jupyter Notebook 中展示更清晰些，所以就直接上传了 Jupyter 版本的。&amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;
+      <description>介绍 正则表达式（Regex）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。 &amp;ndash; 维基百科
+Jupyter 版 例子在 Jupyter Notebook 中展示更清晰些，所以就直接上传了 Jupyter 版本的。&amp;lt;html版本&amp;gt; &amp;lt;原始版本&amp;gt;
 这是A 用法 文本编辑器替换 使用 $1 代替某一组。
 如替换隐藏手机号中间四位，查找正则为 (\d{3})(\d*)(\d{4})，替换为 $1****$3。
 Java 端也采用此方法。
 // 手机号隐藏中间4位： public static String hidePhone(String phone){ return phone.replaceAll(&amp;#34;(\\d{3})(\\d*)(\\d{4})&amp;#34;, &amp;#34;$1****$3&amp;#34;); } 常用正则表达式 中文：[\u4e00-\u9fa5]
 匹配某个字符在最后一次出现的位置：[^字符]+$
 匹配不在引号里的逗号：,(?=([^\&amp;quot;&#39;]*[\&amp;quot;&#39;][^\&amp;quot;&#39;]*[\&amp;quot;&#39;])*[^\&amp;quot;&#39;]*$)
-概括字符集    字符 含义     \d [0-9]   \D [^0-9]   \w [A-Za-z0-9_]   \W [^A-Za-z0-9_]   \s 空白字符   \S 非空白字符   .</description>
+概括字符集 字符 含义 \d [0-9] \D [^0-9] \w [A-Za-z0-9_] \W [^A-Za-z0-9_] \s 空白字符 \S 非空白字符 . 匹配除换行符\n之外其他所有字符 \t 匹配 TAB 键 推荐 regexper 这个网站可以帮助你更直观的展示正则表达式的逻辑。</description>
     </item>
     
     <item>
@@ -238,24 +257,26 @@ Java 端也采用此方法。
       
       <guid>https://helloqb.xyz/post/2020/0604_vlookup.html</guid>
       <description>官方文档 VLOOKUP（查阅值、包含查阅值的区域、包含返回值的区域中的列号、近似匹配（TRUE）或完全匹配（FALSE））。其中：
-  要查找的值，也被称为查阅值。
-  查阅值所在的区域。 请记住，查阅值应该始终位于所在区域的第一列，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。
-  区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。
-  （可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。
-  实现 如下表格，想要知道左边哪些是已婚人士。
- 1. 输入 VLOOKUP
+要查找的值，也被称为查阅值。
+查阅值所在的区域。 请记住，查阅值应该始终位于所在区域的第一列，这样 VLOOKUP 才能正常工作。 例如，如果查阅值位于单元格 C2 内，那么您的区域应该以 C 开头。
+区域中包含返回值的列号。 例如，如果指定 B2： D11 作为区域，则应将 B 作为第一列，将 C 作为第二列进行计数，依此类推。
+（可选）如果需要返回值的近似匹配，可以指定 TRUE；如果需要返回值的精确匹配，则指定 FALSE。 如果没有指定任何内容，默认值将始终为 TRUE 或近似匹配。
+实现 如下表格，想要知道左边哪些是已婚人士。
+1. 输入 VLOOKUP
 在上表 2B 单元格内输入 =VLOOKUP(。
 2. 选择查找值
 括号后第一个参数选中 2A，然后输入英文逗号。
- 3. 选择查找区域
+3. 选择查找区域
 括号后第二个参数选中 F:G 列，然后输入英文逗号。
 如果不选中整列，而是只是选中有数据部分如 F2:G4 列，则后续下拉拖动方式此参数会随之变化，导致没有得出想要的结果。
 全选时注意首行会不会影响结果。
- 4. 其他参数
+4. 其他参数
 第三个参数是匹配查阅区域的第几列，最后为是否精确匹配。
 最后整个公式为 =VLOOKUP(A2,F:G,1,FALSE)。
 5. 复制公式
-此时只是第一个单元格的结果，采用下拉拖动方式或者复制粘贴方式将公式复制到列中其他的单元格中。这两种方式粘贴的公式都会行自动变化。</description>
+此时只是第一个单元格的结果，采用下拉拖动方式或者复制粘贴方式将公式复制到列中其他的单元格中。这两种方式粘贴的公式都会行自动变化。
+6. 获取其他单元格
+第二列数据改下第三个参数为 2 就行了。</description>
     </item>
     
     <item>
@@ -267,7 +288,7 @@ Java 端也采用此方法。
       <description>需求 需求其实很简单，就是合并单元格，行数少的情况下一个一个点就行了，但是行数多的情况下就麻烦了，秉承着重复性工作一定能被计算机代替的想法，翻阅很久找到了方法，在此分享。
 实现 1. 数据（菜单栏） -&amp;gt; 分类汇总
 其中：
- 分类字段：需要合并的列，本例中为身份； 汇总方式：无关，默认即可； 选定汇总项：同分类字段； 替换当前分类汇总：无关，默认即可； 每组数据分页：不选； 汇总结果显示在数据下方：选中  2. 汇总列合并空值单元格
+分类字段：需要合并的列，本例中为身份； 汇总方式：无关，默认即可； 选定汇总项：同分类字段； 替换当前分类汇总：无关，默认即可； 每组数据分页：不选； 汇总结果显示在数据下方：选中 2. 汇总列合并空值单元格
 对生成的汇总列进行空值定位，并合并空值单元格。操作如下：
 汇总列第一行填 1 -&amp;gt; 选中汇总列 -&amp;gt; 开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：空值 -&amp;gt; 合并后居中
 3. 间隔一行（非必须）
@@ -296,23 +317,39 @@ Java 端也采用此方法。
 4. 切割图层
 以变换后的图层作为选区，分别左上、左下、右上、右下复制图层。
 操作：
- 对齐：选中两个图层，点击菜单栏图层里的对齐，左对齐，然后再顶部对齐；  载入选区：按住 Ctrl，并点击白色图层的缩略图； 复制图层：点击背景图层，点击 Ctrl + J，将所选区域复制到新图层中；  同样方式左下、右上、右下生成另外三个图层；  5. 增加图层样式
+对齐：选中两个图层，点击菜单栏图层里的对齐，左对齐，然后再顶部对齐； 载入选区：按住 Ctrl，并点击白色图层的缩略图； 复制图层：点击背景图层，点击 Ctrl + J，将所选区域复制到新图层中； 同样方式左下、右上、右下生成另外三个图层； 5. 增加图层样式
 操作：
- 双击图层打开图层样式，选择投影，距离和大小设置为 20 像素； 右键图层拷贝图层样式，然后复制到另外三个图层中；  大功告成，当然可根据自己喜好选择样式，添加相关文字等。</description>
+双击图层打开图层样式，选择投影，距离和大小设置为 20 像素； 右键图层拷贝图层样式，然后复制到另外三个图层中； 大功告成，当然可根据自己喜好选择样式，添加相关文字等。</description>
     </item>
     
     <item>
       <title>Spring 定时任务</title>
-      <link>https://helloqb.xyz/post/2021/0602_cron.html</link>
+      <link>https://helloqb.xyz/post/2020/0602_cron.html</link>
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0602_cron.html</guid>
+      <guid>https://helloqb.xyz/post/2020/0602_cron.html</guid>
       <description>介绍 本文主要记录下 cron 表达式的用法，方便下次使用。
 配置 程序主入口添加 @SpringBootApplication 和 @EnableScheduling 注解以启动定时任务。
 import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; import org.springframework.scheduling.annotation.EnableScheduling; @SpringBootApplication @EnableScheduling public class SchedulingTasksApplication { public static void main(String[] args) { SpringApplication.run(SchedulingTasksApplication.class); } } 然后方法上添加 @Scheduled 注解就行了。当然类注解 @Component 也必不可少。
 @Scheduled(fixedDelay = 5000) public void reportCurrentTime() { System.out.println(new Date()); } 定时调度 fixedDelay 毫秒单位，以上一个调用的完成时间开始计算。
 如间隔 3 秒，每个任务耗时 2 秒：
 @Scheduled(fixedDelay = 3000) public void errorSpiderRerun(){ LocalDateTime localDateTime = LocalDateTime.now(); System.out.println(&amp;#34;start &amp;#34; + localDateTime); try { Thread.</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ 实现跨语言通信</title>
+      <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
+      <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
+其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
+三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
+String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;}; proc = Runtime.getRuntime().exec(command);// 执行py文件 ProcessBuilder 可以是列表，官方推荐 ProcessBuilder。
+List&amp;lt;String&amp;gt; command = new ArrayList&amp;lt;&amp;gt;(); command.add(&amp;#34;python&amp;#34;); command.add(&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;); ProcessBuilder pb = new ProcessBuilder(command); proc = pb.start(); Process 提供 InputStream 和 ErrorStream 接收返回结果；为方便起见，可以将错误流重定向到输入流。
+pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream())); 若需要立即获取其返回结果，需要用 waitFor() 方法。
+//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止 code = proc.waitFor(); 坑不坑：
+Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。 作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。 返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。 目前只尝试了 Java 调用 Python，反过来感觉很难。 完整代码如下：</description>
     </item>
     
     <item>
@@ -324,11 +361,12 @@ import org.springframework.boot.SpringApplication; import org.springframework.bo
       <description>认识 常言道，不装扩展的浏览器只能发挥它 40% 的能力。而扩展中不得不提的神器就是 油猴脚本。
 相对扩展来说，它更轻量，只作用于指定网站，占用内存少。所以在脚本和扩展实现相同功能的情况下，我都是优先选用脚本。
 个人认为油猴脚本就是一串 Javascript 代码，因而前端工程师很容易上手。作为后端工程师的我。。。应该也比较容易上手吧。开干！
-脚本编写 开发环境  Chrome：可以更方便的定位 DOM。 暴力猴：有个为此站点查找脚本的功能，很方便。  需求 如果你像我一样，只是想在某个页面添加一个按钮，实现快速跳转的功能。而自己又非前端，后面的内容应该会帮到你。示例 js 很简单，前端大神的话直接无视看下元数据块的内容就行了。
+脚本编写 开发环境 Chrome：可以更方便的定位 DOM。 暴力猴：有个为此站点查找脚本的功能，很方便。 需求 如果你像我一样，只是想在某个页面添加一个按钮，实现快速跳转的功能。而自己又非前端，后面的内容应该会帮到你。示例 js 很简单，前端大神的话直接无视看下元数据块的内容就行了。
 以 torrentz2 网站为例，该网站磁力链接无法跳转，现在实现点击某一按钮后跳转到谷歌或者弹出磁力链接。
 元数据块（Metadata Block） 用暴力猴新建脚本时，会默认创建基础的元数据块。
 // ==UserScript== // @name New script - torrentz2.eu // @namespace Violentmonkey Scripts // @match *://torrentz2.eu/* // @grant none // @version 1.0 // @author - // @description 2020/5/9 下午4:13:37 // ==/UserScript== 其中：
- name：名称 namespace：命名空间，正式发布时需要 match：脚本适用网站，另外有个 include 用法差不多，官网说这个匹配规则更安全些 grant：控制特定 api 的使用，不常用，none 即可 version：版本 author：作者 description：描述  其余我用到的有：</description>
+name：名称 namespace：命名空间，正式发布时需要 match：脚本适用网站，另外有个 include 用法差不多，官网说这个匹配规则更安全些 grant：控制特定 api 的使用，不常用，none 即可 version：版本 author：作者 description：描述 其余我用到的有：
+// ==UserScript== // @require http://ajax.</description>
     </item>
     
     <item>
@@ -337,10 +375,19 @@ import org.springframework.boot.SpringApplication; import org.springframework.bo
       <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://helloqb.xyz/post/2020/0311_python.html</guid>
-      <description>缘由  之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。 锤子阅读不支持文章搜索，有时候想要找个文章难。 划水好无聊。  脚本调用 使用 Python3 编写，单个文件，无第三方库。结果有命令行和文本两种输出方式，具体参数如下：
- -h 帮助文档 -s 订阅号名称 -k 搜索关键词，不填返回最新的文章 -n 返回文章数，默认10 -m 搜索匹配等级，默认1匹配标题 2匹配标题和摘要 -o 输出方式， 默认1命令行输出 2写入本地文件到当前目录  代码 就 200 行代码，直接贴出来了，不放到 Github 上了。
+      <description>缘由 之前找大象公会一篇文章，在公众号里被屏蔽了，发现锤子阅读里的竟然还可以看，可能存到自己的服务器上了吧。以后文章封了可以在这里找找。 锤子阅读不支持文章搜索，有时候想要找个文章难。 划水好无聊。 脚本调用 使用 Python3 编写，单个文件，无第三方库。结果有命令行和文本两种输出方式，具体参数如下：
+-h 帮助文档 -s 订阅号名称 -k 搜索关键词，不填返回最新的文章 -n 返回文章数，默认10 -m 搜索匹配等级，默认1匹配标题 2匹配标题和摘要 -o 输出方式， 默认1命令行输出 2写入本地文件到当前目录 代码 就 200 行代码，直接贴出来了，不放到 Github 上了。
 附锤子阅读APP下载 链接
-import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;result.md&amp;#39; def api_site_articles(site_id, offset, page_size): &amp;#34;&amp;#34;&amp;#34;订阅号文章列表的接口json返回结果 :param site_id: :param offset: :param page_size: :return: &amp;#34;&amp;#34;&amp;#34; params = { &amp;#39;site_id&amp;#39;: site_id, &amp;#39;offset&amp;#39;: offset, &amp;#39;page_size&amp;#39;: page_size } url = r&amp;#39;http://reader.</description>
+import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;result.md&amp;#39; def api_site_articles(site_id, offset, page_size): &amp;#34;&amp;#34;&amp;#34;订阅号文章列表的接口json返回结果 :param site_id: :param offset: :param page_size: :return: &amp;#34;&amp;#34;&amp;#34; params = { &amp;#39;site_id&amp;#39;: site_id, &amp;#39;offset&amp;#39;: offset, &amp;#39;page_size&amp;#39;: page_size } url = r&amp;#39;http://reader.smartisan.com/index.php?r=article/getList&amp;#39; response = requests.</description>
+    </item>
+    
+    <item>
+      <title>SpringMVC 下载文本实现边转码边下载</title>
+      <link>https://helloqb.xyz/post/2020/0304_java.html</link>
+      <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2020/0304_java.html</guid>
+      <description></description>
     </item>
     
     <item>
@@ -350,57 +397,10 @@ import requests import sys import getopt PAGE_SIZE = 100 TEMP_FILE = &amp;#39;re
       
       <guid>https://helloqb.xyz/post/2020/0301_git.html</guid>
       <description>SSH 客户端 Putty 和 OpenSSH 的互相转换 原本只需要用 ssh-keygen 生成密钥到 .ssh 目录，然后打开 id_rsa.pub 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。
-
 **1. 使用 puTTY 生成 Key** 1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件； 2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件； 3. 同时将生成器页面上的 Key 复制到云服务器上即可。 2. 使用已有的 id_rsa 导入到 puTTY
- 打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。  参考： https://blog.csdn.net/caoshiying/article/details/80131761
+打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。 参考： https://blog.csdn.net/caoshiying/article/details/80131761
 查看单个文件提交历史 两种情况：
- 选定项目的变更历史，即 git log &amp;lt;path&amp;gt;。 按行审阅选定项目，即 git blame &amp;lt;path&amp;gt;。  在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</description>
-    </item>
-    
-    <item>
-      <title>EXCEL 技巧之 - 小技巧</title>
-      <link>https://helloqb.xyz/post/2020/1120_excel.html</link>
-      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2020/1120_excel.html</guid>
-      <description>单元格间隔一行  编写左图，选中，往下拖动形成右图。  
-开始(菜单栏) -&amp;gt; 查找和选择 -&amp;gt; 定位条件：常量  
-开始(菜单栏) -&amp;gt; 插入 -&amp;gt; 插入工作表行  
-得到最终结果，如下。  
-待 </description>
-    </item>
-    
-    <item>
-      <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
-      <link>https://helloqb.xyz/post/2022/0112_tv.html</link>
-      <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2022/0112_tv.html</guid>
-      <description>前言 家里的机顶盒是电信的，基本全部限制死了，无法安装第三方 APP，更别说看 Netflix 了，本来想着闲鱼淘一个二手破解的机顶盒玩玩，突然想到闲置的坚果 R1 及其备受争议的 TNT 大屏操作系统，好像还挺适合当机顶盒用的。
-遥控 其实本可以没有这篇文章，因为 TNT 系统已经够成熟了，连上键鼠完全可以像电脑一样操作，当作机顶盒播放视频绰绰有余。但是客厅里摆一套键鼠总觉得不够优雅，所以想着可不可以实现像遥控器操控机顶盒那样。
-手机遥控 第一个想法就是，如果有一个软件，可以将一个手机作为另外一个手机的输入设备，那么其实就可以摆脱键鼠了。
-Android 9.0 + 蓝牙 HID Android 9.0 自带将手机作为输入设备的功能，遥控助手 和 妙妙触控 都是利用此原理，但是遗憾的是国内大部分手机都阉割蓝牙 HID 功能，像我手上的 OPPO 就不行，用了别人的荣耀手机，可以实现，但是触控容易断，体验较差。
-局域网遥控 KDE Connect 利用局域网实现手机对手机之间遥控，体验不错，较为灵敏，但遗憾的是不兼容 TNT，即使在连接显示器的情况下，也是只能操作手机。期待以后兼容（希望太小了&amp;hellip;&amp;hellip;）
-  官方软件遥控 国内大部分视频 APP 都会有个投屏功能，手机上找到想看的视频，点击投屏就可以投到已安装相应 TV 版的盒子上了。
-目前来说，B 站的体验较好，有一个全局投屏的功能，一开始连接上之后，后面每个视频都会自动在 TV 上播放。
-  遥控器 软件层面的遥控试了一圈都不行，本来想着买个迷你版的键鼠，逛了一下，竟然找到一个支持鼠标功能的遥控器。
-  官方明确说支持 Android 手机，支持蓝牙配对，买回来试了下，完美支持，甚至支持 TNT 的语音功能，但是得是在插入键盘的情况下😳，可能插入键盘系统才会作映射吧。
-软件体验 Kodi Kodi 是一款开源媒体播放器，有庞大的附加组件社区，是机顶盒的热门软件。支持本地所有类型的媒体，支持 DLNA/SMB 远程播放，支持 IPTV 电视流播放。国外主流的视频网站插件 Netfilx、Youtube 都有，国内的优酷、B 站也有，只是更新维护不够。
-中文设置 支持中文，但是直接设置会乱码，需要先修改字体；</description>
-    </item>
-    
-    <item>
-      <title>下载利器 Aria2 使用分享</title>
-      <link>https://helloqb.xyz/post/2022/0107_software.html</link>
-      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://helloqb.xyz/post/2022/0107_software.html</guid>
-      <description>摘要  Mac 如何快速启动 Aria2 Windows 如何实现开机后台自启 Aria2  Aria2 官网 对其的定义：
- aria2 是一个轻量级的多协议和多源命令行 下载工具。它支持 HTTP/HTTPS、FTP、SFTP、 BitTorrent 和 Metalink。aria2 可以通过内置的 JSON-RPC 和 XML-RPC接口进行操作。
- 用到的插件：
- 可视化窗口：AriaNg Chrome 插件：Camtd - Aria2下载管理器 Chrome 插件（推荐）：Aria2 for Chrome  配置 新建目录结构：
-├── Aria2 │ ├── aria2.conf │ ├── aria2.session │ └── downloads 其中 aria2.session 为空文件，用来重新加载任务；downloads 为下载存放目录；aria2.conf 为参数配置文件，配置如下：
-### Basic ### dir=./downloads input-file=./aria2.session save-session=./aria2.session save-session-interval=60 continue=true ### Adcanced ### disk-cache=64M file-allocation=none # daemon=true quiet=true ### RPC ### enable-rpc=true rpc-allow-origin-all=true rpc-listen-all=true ### HTTP/FTP ### max-connection-per-server=16 min-split-size=8M split=32 user-agent=Transmission/2.</description>
+选定项目的变更历史，即 git log &amp;lt;path&amp;gt;。 按行审阅选定项目，即 git blame &amp;lt;path&amp;gt;。 在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</description>
     </item>
     
     <item>
@@ -411,11 +411,12 @@ Android 9.0 + 蓝牙 HID Android 9.0 自带将手机作为输入设备的功能�
       <guid>https://helloqb.xyz/post/2020/0101_hugo.html</guid>
       <description>下载运行 主要操作：文件下载解压，添加环境变量即可。
 文档链接
- 下载 安装 Github 自动托管：先删除public文件再运行脚本  测试成功：hugo version, hugo help
+下载 安装 Github 自动托管：先删除public文件再运行脚本 测试成功：hugo version, hugo help
 其他操作有：
- hugo server 本地调试 hugo server -D 本地调试（显示隐藏文件） hugo server -t theme 指定主题调试 hugo 生成静态文件  主题下载 喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor
+hugo server 本地调试 hugo server -D 本地调试（显示隐藏文件） hugo server -t theme 指定主题调试 hugo 生成静态文件 主题下载 喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor
 git submodule 方式下载主题
- 拉取主题 git submodule add url themes/diary 更新主题：进入子模块 git pull 或者 git submodule update --remote --merge  新项目准备工作  git rm &amp;ndash;cached public -f git submodule add git@github.com:helloqb/helloqb.github.io.git public chmod 777 deploy.sh ./deploy.sh  配置 支持 html 标签</description>
+拉取主题 git submodule add url themes/diary 更新主题：进入子模块 git pull 或者 git submodule update --remote --merge 新项目准备工作 git rm &amp;ndash;cached public -f git submodule add git@github.com:helloqb/helloqb.github.io.git public chmod 777 deploy.sh ./deploy.sh 配置 支持 html 标签
+[markup.goldmark.renderer] unsafe = true # enable raw HTML in Markdown 图片居中</description>
     </item>
     
   </channel>

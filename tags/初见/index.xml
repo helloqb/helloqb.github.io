@@ -17,11 +17,12 @@
       <description>认识 常言道，不装扩展的浏览器只能发挥它 40% 的能力。而扩展中不得不提的神器就是 油猴脚本。
 相对扩展来说，它更轻量，只作用于指定网站，占用内存少。所以在脚本和扩展实现相同功能的情况下，我都是优先选用脚本。
 个人认为油猴脚本就是一串 Javascript 代码，因而前端工程师很容易上手。作为后端工程师的我。。。应该也比较容易上手吧。开干！
-脚本编写 开发环境  Chrome：可以更方便的定位 DOM。 暴力猴：有个为此站点查找脚本的功能，很方便。  需求 如果你像我一样，只是想在某个页面添加一个按钮，实现快速跳转的功能。而自己又非前端，后面的内容应该会帮到你。示例 js 很简单，前端大神的话直接无视看下元数据块的内容就行了。
+脚本编写 开发环境 Chrome：可以更方便的定位 DOM。 暴力猴：有个为此站点查找脚本的功能，很方便。 需求 如果你像我一样，只是想在某个页面添加一个按钮，实现快速跳转的功能。而自己又非前端，后面的内容应该会帮到你。示例 js 很简单，前端大神的话直接无视看下元数据块的内容就行了。
 以 torrentz2 网站为例，该网站磁力链接无法跳转，现在实现点击某一按钮后跳转到谷歌或者弹出磁力链接。
 元数据块（Metadata Block） 用暴力猴新建脚本时，会默认创建基础的元数据块。
 // ==UserScript== // @name New script - torrentz2.eu // @namespace Violentmonkey Scripts // @match *://torrentz2.eu/* // @grant none // @version 1.0 // @author - // @description 2020/5/9 下午4:13:37 // ==/UserScript== 其中：
- name：名称 namespace：命名空间，正式发布时需要 match：脚本适用网站，另外有个 include 用法差不多，官网说这个匹配规则更安全些 grant：控制特定 api 的使用，不常用，none 即可 version：版本 author：作者 description：描述  其余我用到的有：</description>
+name：名称 namespace：命名空间，正式发布时需要 match：脚本适用网站，另外有个 include 用法差不多，官网说这个匹配规则更安全些 grant：控制特定 api 的使用，不常用，none 即可 version：版本 author：作者 description：描述 其余我用到的有：
+// ==UserScript== // @require http://ajax.</description>
     </item>
     
     <item>
@@ -32,11 +33,12 @@
       <guid>https://helloqb.xyz/post/2020/0101_hugo.html</guid>
       <description>下载运行 主要操作：文件下载解压，添加环境变量即可。
 文档链接
- 下载 安装 Github 自动托管：先删除public文件再运行脚本  测试成功：hugo version, hugo help
+下载 安装 Github 自动托管：先删除public文件再运行脚本 测试成功：hugo version, hugo help
 其他操作有：
- hugo server 本地调试 hugo server -D 本地调试（显示隐藏文件） hugo server -t theme 指定主题调试 hugo 生成静态文件  主题下载 喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor
+hugo server 本地调试 hugo server -D 本地调试（显示隐藏文件） hugo server -t theme 指定主题调试 hugo 生成静态文件 主题下载 喜欢主题有：Mainroad、hugo-theme-even、Diary、harbor
 git submodule 方式下载主题
- 拉取主题 git submodule add url themes/diary 更新主题：进入子模块 git pull 或者 git submodule update --remote --merge  新项目准备工作  git rm &amp;ndash;cached public -f git submodule add git@github.com:helloqb/helloqb.github.io.git public chmod 777 deploy.sh ./deploy.sh  配置 支持 html 标签</description>
+拉取主题 git submodule add url themes/diary 更新主题：进入子模块 git pull 或者 git submodule update --remote --merge 新项目准备工作 git rm &amp;ndash;cached public -f git submodule add git@github.com:helloqb/helloqb.github.io.git public chmod 777 deploy.sh ./deploy.sh 配置 支持 html 标签
+[markup.goldmark.renderer] unsafe = true # enable raw HTML in Markdown 图片居中</description>
     </item>
     
   </channel>

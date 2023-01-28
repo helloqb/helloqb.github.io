@@ -7,26 +7,26 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Wed, 28 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>进一步了解 RabbitMQ 跨语言通讯</title>
-      <link>https://helloqb.xyz/post/2021/0728_rabbitmq.html</link>
-      <pubDate>Wed, 28 Jul 2021 00:00:00 +0000</pubDate>
+      <link>https://helloqb.xyz/post/2020/0728_rabbitmq.html</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0728_rabbitmq.html</guid>
+      <guid>https://helloqb.xyz/post/2020/0728_rabbitmq.html</guid>
       <description>进一步了解 开发中遇到了 RabbitMQ 丢失的情况，另外一端一直说是我的 Java 端的问题，无奈做了验证，本文的主要内容也就是这个：如何验证消息发送成功。
 配置 pom.xml 文件中添加依赖。
 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-amqp&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; application.yml 文件中添加配置开启确认。
-spring:rabbitmq:host:192.168.0.102port:5672username:adminpassword:adminvirtual-host:slpublisher-confirm-type:correlatedpublisher-returns:truetemplate:mandatory:true重写方法 RabbitTemplate.ConfirmCallback 确认消息是否到达交换机， RabbitTemplate.ReturnCallback 确认消息是否到达队列中。
-import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.amqp.core.Message; import org.springframework.amqp.rabbit.connection.CorrelationData; import org.springframework.amqp.rabbit.core.RabbitTemplate; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.stereotype.Component; import javax.annotation.PostConstruct; @Component public class CustomRabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback { private static final Logger LOG = LoggerFactory.getLogger(CustomRabbitSend.class); @Autowired private RabbitTemplate rabbitTemplate; @PostConstruct public void init(){ rabbitTemplate.setConfirmCallback(this); rabbitTemplate.setReturnCallback(this); } @Override public void confirm(CorrelationData correlationData, boolean b, String s) { //到达Exchange交换机，会调用此方法  if (!</description>
+spring: rabbitmq: host: 192.168.0.102 port: 5672 username: admin password: admin virtual-host: sl publisher-confirm-type: correlated publisher-returns: true template: mandatory: true 重写方法 RabbitTemplate.ConfirmCallback 确认消息是否到达交换机， RabbitTemplate.ReturnCallback 确认消息是否到达队列中。
+import org.slf4j.Logger; import org.slf4j.LoggerFactory; import org.springframework.amqp.core.Message; import org.springframework.amqp.rabbit.connection.CorrelationData; import org.springframework.amqp.rabbit.core.RabbitTemplate; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.stereotype.Component; import javax.annotation.PostConstruct; @Component public class CustomRabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback { private static final Logger LOG = LoggerFactory.getLogger(CustomRabbitSend.class); @Autowired private RabbitTemplate rabbitTemplate; @PostConstruct public void init(){ rabbitTemplate.</description>
     </item>
     
     <item>
       <title>RabbitMQ 实现跨语言通信</title>
-      <link>https://helloqb.xyz/post/2021/0515_rabbitmq.html</link>
-      <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
+      <link>https://helloqb.xyz/post/2020/0515_rabbitmq.html</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://helloqb.xyz/post/2021/0515_rabbitmq.html</guid>
+      <guid>https://helloqb.xyz/post/2020/0515_rabbitmq.html</guid>
       <description>需求场景 做项目时遇到需要 Java 和 Python 通信的场景，摸索到了三种解决方案，并都正式在项目中实施过、踩坑过、改进过、整个推翻替换过。
 其中 RabbitMQ 是我最终的方案，所以会重点阐述，其中略带提一下。
 三种方式的实现 1. 直接调用 有 ProcessBuilder 和 Runtime.exec() 两种方法，用法差不多，都可以传一个字符串数组。
@@ -34,7 +34,7 @@ String[] command = new String[]{&amp;#34;python&amp;#34;, &amp;#34;C:\\Users\\le
 List&amp;lt;String&amp;gt; command = new ArrayList&amp;lt;&amp;gt;(); command.add(&amp;#34;python&amp;#34;); command.add(&amp;#34;C:\\Users\\lenovo\\Desktop\\java2python.py&amp;#34;); ProcessBuilder pb = new ProcessBuilder(command); proc = pb.start(); Process 提供 InputStream 和 ErrorStream 接收返回结果；为方便起见，可以将错误流重定向到输入流。
 pb.redirectErrorStream(true);//错误流重定向 BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream())); 若需要立即获取其返回结果，需要用 waitFor() 方法。
 //导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止 code = proc.waitFor(); 坑不坑：
- Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。 作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。 返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。 目前只尝试了 Java 调用 Python，反过来感觉很难。  完整代码如下：</description>
+Java 自带，开发方便（这个很重要&amp;hellip;&amp;hellip;老板就给你两天时间你能怎么办）。 作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。 返回结果难以接收。可以通过输入流或者写入文件读取，但是都很不好。 目前只尝试了 Java 调用 Python，反过来感觉很难。 完整代码如下：</description>
     </item>
     
   </channel>

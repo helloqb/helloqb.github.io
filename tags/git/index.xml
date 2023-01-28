@@ -15,11 +15,10 @@
       
       <guid>https://helloqb.xyz/post/2020/0301_git.html</guid>
       <description>SSH 客户端 Putty 和 OpenSSH 的互相转换 原本只需要用 ssh-keygen 生成密钥到 .ssh 目录，然后打开 id_rsa.pub 文件复制就行了，但是由于 Sourcetree 默认是 PuTTY，小白的我被迫研究了 PuTTY 的用法。
-
 **1. 使用 puTTY 生成 Key** 1. 打开生成器，点击 `Generate`，成功后点击 `Save private key` 生成后缀名为 `.ppk` 的文件； 2. Pageant 客户端（通常在托管图标里）点击 `Add Key` 导入刚才生成的 ppk 文件； 3. 同时将生成器页面上的 Key 复制到云服务器上即可。 2. 使用已有的 id_rsa 导入到 puTTY
- 打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。  参考： https://blog.csdn.net/caoshiying/article/details/80131761
+打开生成器，点击状态栏 Conversions 中 Import Key 导入私钥 .id_rsa 文件； 同上 Save private key 然后导入。 参考： https://blog.csdn.net/caoshiying/article/details/80131761
 查看单个文件提交历史 两种情况：
- 选定项目的变更历史，即 git log &amp;lt;path&amp;gt;。 按行审阅选定项目，即 git blame &amp;lt;path&amp;gt;。  在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</description>
+选定项目的变更历史，即 git log &amp;lt;path&amp;gt;。 按行审阅选定项目，即 git blame &amp;lt;path&amp;gt;。 在 Sourcetree 中，右键想要查看的文件就会出现上述两种选项。</description>
     </item>
     
   </channel>

@@ -24,43 +24,40 @@
 
 
 
-<script src="/vendor/js/jquery.min.js" ></script>
-<script src="/vendor/js/popper.min.js" ></script>
-<script src="/vendor/js/bootstrap.min.js" ></script>
-<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
-
-
-
-
-
-
-<link rel="stylesheet" href="https://helloqb.xyz/scss/journal.min.5e8f3f653e9f6ce67bf72ff8ee6fee69decf7b5639a3ae7f8344750ad4e065b1.css" integrity="sha256-Xo8/ZT6fbOZ79y/47m/uad7Pe1Y5o65/g0R1CtTgZbE=" media="screen">
-
-
-
-<link rel="stylesheet" href="https://helloqb.xyz/scss/dark-mode.min.bdfa63b2e89903517dcbb1032b537d54cff3f425c19d008a78dfe49e6cd07ced.css" integrity="sha256-vfpjsuiZA1F9y7EDK1N9VM/z9CXBnQCKeN/knmzQfO0=" media="screen">
-
-
-<script src="https://helloqb.xyz//js/loadCSS.js"></script>
-<script>
-  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
-</script>
-
 
 
 
   
-    <script src="https://helloqb.xyz//js/toc-collapse.js"></script>
-  
+
+
+
+
+
+
+<link rel="stylesheet" href="/scss/journal.min.c5d92f380bf10f6849c7ac487c7df2b22c081e0851e5339224f1ae29210b20d2.css" integrity="sha256-xdkvOAvxD2hJx6xIfH3ysiwIHghR5TOSJPGuKSELINI=" media="screen">
+
+
+
+<link rel="stylesheet" href="/scss/dark-mode.min.9f8d8c2df9285089d141edd4a50cb7506c7948e6ab79a29968dced1bd0ab7d22.css" integrity="sha256-n42MLfkoUInRQe3UpQy3UGx5SOareaKZaNztG9CrfSI=" media="screen">
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css"><link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
 
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="/vendor/js/md5.min.js"></script>
-<script>
+<script src="/vendor/js/md5.min.js"></script><script>
   var gitalk = new Gitalk({
   clientID: '64eac7e04ef1c9c58977',
   clientSecret: '230d5636dc1e4810ca4e7af9090a20ab1c5a1e74',
@@ -82,9 +79,13 @@
 
 
 
+
+
+
+
 </head>
 <body>
-    	<div id="app"><div ref="sideContainer" class="side-container">
+    	<div id="app"><div id="sideContainer" class="side-container">
     
     <a class="a-block nav-head false" href="https://helloqb.xyz/">
     
@@ -149,7 +150,7 @@
 
     <div class="nav-footer">
         
-Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
 <br>
 Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
@@ -161,7 +162,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
     </div>
     
-</div><div ref="extraContainer" class="extra-container">
+</div><div id="extraContainer" class="extra-container">
     
     
     <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
@@ -221,7 +222,9 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							
-								<ul class="collapse" data-toggle="collapse">
+								
+									<ul>
+								
 							
 						
 						
@@ -279,7 +282,9 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							
-								<ul class="collapse" data-toggle="collapse">
+								
+									<ul>
+								
 							
 						
 						
@@ -365,19 +370,16 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             </i>
         </a>
         
-        <a class="pagination-action" v-on:click="toggleDarkMode">
-            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
-                brightness_4
-            </i>
-            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
-                brightness_7
-            </i>
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
         </a>
         
         
     </div>
 </div>
-<div class="single-column-drawer-container" ref="drawer"
+<div class="single-column-drawer-container" id="drawer"
      v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
     <div class="drawer-content">
         <div class="drawer-menu">
@@ -484,7 +486,9 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							
-								<ul class="collapse" data-toggle="collapse">
+								
+									<ul>
+								
 							
 						
 						
@@ -542,7 +546,9 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							
-								<ul class="collapse" data-toggle="collapse">
+								
+									<ul>
+								
 							
 						
 						
@@ -625,32 +631,29 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
     </div>
 </div>
 <transition name="fade">
-    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
 </transition>
-<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
-    <div ref="navBackground" class="nav-background"></div>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
     <div class="container container-narrow nav-content">
         <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
             <i class="material-icons">
                 menu
             </i>
         </button>
-        <a ref="navTitle" class="navbar-brand" href="https://helloqb.xyz/">
+        <a id="navTitle" class="navbar-brand" href="https://helloqb.xyz/">
             哲学家
         </a>
         
-        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
-            <i class="material-icons" v-if="isDarkMode">
-                brightness_4
-            </i>
-            <i class="material-icons" v-else="isDarkMode">
-                brightness_7
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
             </i>
         </button>
         
     </div>
 </nav>
-<div class="single-column-header-container" ref="pageHead"
+<div class="single-column-header-container" id="pageHead"
      v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
     <a href="https://helloqb.xyz/">
         <div class="single-column-header-title">哲学家</div>
@@ -662,7 +665,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </div>
 
             <div id="content">
-<div ref="streamContainer" class="stream-container">
+                <div id="streamContainer" class="stream-container">
+
     <div class="post-list-container post-list-container-shadow">
         <div class="post">
             
@@ -714,21 +718,21 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <h1 id="三种方式的实现">三种方式的实现</h1>
 <h2 id="1-直接调用">1. 直接调用</h2>
 <p>有 <code>ProcessBuilder</code> 和 <code>Runtime.exec()</code> 两种方法，用法差不多，都可以传一个字符串数组。</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String<span style="color:#666">[]</span> command <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> String<span style="color:#666">[]{</span><span style="color:#ba2121">&#34;python&#34;</span><span style="color:#666">,</span> <span style="color:#ba2121">&#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;</span><span style="color:#666">};</span>
-proc <span style="color:#666">=</span> Runtime<span style="color:#666">.</span><span style="color:#7d9029">getRuntime</span><span style="color:#666">().</span><span style="color:#7d9029">exec</span><span style="color:#666">(</span>command<span style="color:#666">);</span><span style="color:#408080;font-style:italic">// 执行py文件
-</span></code></pre></div><p><code>ProcessBuilder</code> 可以是列表，官方推荐 <code>ProcessBuilder</code>。</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">List<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> command <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ArrayList<span style="color:#666">&lt;&gt;();</span>
-command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&#34;</span><span style="color:#666">);</span>
-command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;</span><span style="color:#666">);</span>
-ProcessBuilder pb <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ProcessBuilder<span style="color:#666">(</span>command<span style="color:#666">);</span>
-proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span style="color:#7d9029">start</span><span style="color:#666">();</span>
-</code></pre></div><p><code>Process</code> 提供 <code>InputStream</code> 和 <code>ErrorStream</code> 接收返回结果；为方便起见，可以将错误流重定向到输入流。</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">pb<span style="color:#666">.</span><span style="color:#7d9029">redirectErrorStream</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">);</span><span style="color:#408080;font-style:italic">//错误流重定向
-</span><span style="color:#408080;font-style:italic"></span>BufferedReader in <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> BufferedReader<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> InputStreamReader<span style="color:#666">(</span>proc<span style="color:#666">.</span><span style="color:#7d9029">getInputStream</span><span style="color:#666">()));</span>
-</code></pre></div><p>若需要立即获取其返回结果，需要用 <code>waitFor()</code> 方法。</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
-</span><span style="color:#408080;font-style:italic"></span>code <span style="color:#666">=</span> proc<span style="color:#666">.</span><span style="color:#7d9029">waitFor</span><span style="color:#666">();</span>
-</code></pre></div><p><strong>坑不坑：</strong></p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String<span style="color:#666">[]</span> command <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> String<span style="color:#666">[]{</span><span style="color:#ba2121">&#34;python&#34;</span><span style="color:#666">,</span> <span style="color:#ba2121">&#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;</span><span style="color:#666">};</span>
+</span></span><span style="display:flex;"><span>proc <span style="color:#666">=</span> Runtime<span style="color:#666">.</span><span style="color:#7d9029">getRuntime</span><span style="color:#666">().</span><span style="color:#7d9029">exec</span><span style="color:#666">(</span>command<span style="color:#666">);</span><span style="color:#408080;font-style:italic">// 执行py文件
+</span></span></span></code></pre></div><p><code>ProcessBuilder</code> 可以是列表，官方推荐 <code>ProcessBuilder</code>。</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> command <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ArrayList<span style="color:#666">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&#34;</span><span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;</span><span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>ProcessBuilder pb <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ProcessBuilder<span style="color:#666">(</span>command<span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span style="color:#7d9029">start</span><span style="color:#666">();</span>
+</span></span></code></pre></div><p><code>Process</code> 提供 <code>InputStream</code> 和 <code>ErrorStream</code> 接收返回结果；为方便起见，可以将错误流重定向到输入流。</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>pb<span style="color:#666">.</span><span style="color:#7d9029">redirectErrorStream</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">);</span><span style="color:#408080;font-style:italic">//错误流重定向
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>BufferedReader in <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> BufferedReader<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> InputStreamReader<span style="color:#666">(</span>proc<span style="color:#666">.</span><span style="color:#7d9029">getInputStream</span><span style="color:#666">()));</span>
+</span></span></code></pre></div><p>若需要立即获取其返回结果，需要用 <code>waitFor()</code> 方法。</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#408080;font-style:italic">//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>code <span style="color:#666">=</span> proc<span style="color:#666">.</span><span style="color:#7d9029">waitFor</span><span style="color:#666">();</span>
+</span></span></code></pre></div><p><strong>坑不坑：</strong></p>
 <ul>
 <li>Java 自带，开发方便（这个很重要&hellip;&hellip;老板就给你两天时间你能怎么办）。</li>
 <li>作为一个进程开启，效率低，好在是官方类，使用时感觉控制的还行。</li>
@@ -736,41 +740,41 @@ proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span 
 <li>目前只尝试了 Java 调用 Python，反过来感觉很难。</li>
 </ul>
 <p>完整代码如下：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Test</span>
-<span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">java2pythonTest</span><span style="color:#666">(){</span>
-  <span style="color:#b00040">int</span> code <span style="color:#666">=</span> 1<span style="color:#666">;</span>
-  Process proc<span style="color:#666">;</span>
-  <span style="color:#008000;font-weight:bold">try</span> <span style="color:#666">{</span>
-    <span style="color:#408080;font-style:italic">// Runtime.getRuntime()
-</span><span style="color:#408080;font-style:italic">//			String[] command = new String[]{&#34;python&#34;, &#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;};
-</span><span style="color:#408080;font-style:italic">//      proc = Runtime.getRuntime().exec(command);// 执行py文件
-</span><span style="color:#408080;font-style:italic"></span>
-    List<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> command <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ArrayList<span style="color:#666">&lt;&gt;();</span>
-    command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&#34;</span><span style="color:#666">);</span>
-    command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;</span><span style="color:#666">);</span>
-    ProcessBuilder pb <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ProcessBuilder<span style="color:#666">(</span>command<span style="color:#666">);</span>
-    pb<span style="color:#666">.</span><span style="color:#7d9029">redirectErrorStream</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">);</span><span style="color:#408080;font-style:italic">//错误流重定向
-</span><span style="color:#408080;font-style:italic"></span>    proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span style="color:#7d9029">start</span><span style="color:#666">();</span>
-
-    <span style="color:#408080;font-style:italic">//用输入输出流来截取结果
-</span><span style="color:#408080;font-style:italic"></span>    BufferedReader in <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> BufferedReader<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> InputStreamReader<span style="color:#666">(</span>proc<span style="color:#666">.</span><span style="color:#7d9029">getInputStream</span><span style="color:#666">(),</span> <span style="color:#ba2121">&#34;gbk&#34;</span><span style="color:#666">));</span>
-    String line <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">null</span><span style="color:#666">;</span>
-    <span style="color:#008000;font-weight:bold">while</span> <span style="color:#666">((</span>line <span style="color:#666">=</span> in<span style="color:#666">.</span><span style="color:#7d9029">readLine</span><span style="color:#666">())</span> <span style="color:#666">!=</span> <span style="color:#008000;font-weight:bold">null</span><span style="color:#666">)</span> <span style="color:#666">{</span>
-      System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&gt; &#34;</span> <span style="color:#666">+</span> line<span style="color:#666">);</span>
-    <span style="color:#666">}</span>
-    in<span style="color:#666">.</span><span style="color:#7d9029">close</span><span style="color:#666">();</span>
-
-    <span style="color:#408080;font-style:italic">//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
-</span><span style="color:#408080;font-style:italic"></span>    code <span style="color:#666">=</span> proc<span style="color:#666">.</span><span style="color:#7d9029">waitFor</span><span style="color:#666">();</span>
-    System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&gt; wait for code: &#34;</span> <span style="color:#666">+</span> code<span style="color:#666">);</span>
-
-  <span style="color:#666">}</span> <span style="color:#008000;font-weight:bold">catch</span> <span style="color:#666">(</span>IOException e<span style="color:#666">)</span> <span style="color:#666">{</span>
-    e<span style="color:#666">.</span><span style="color:#7d9029">printStackTrace</span><span style="color:#666">();</span>
-  <span style="color:#666">}</span> <span style="color:#008000;font-weight:bold">catch</span> <span style="color:#666">(</span>InterruptedException e<span style="color:#666">)</span> <span style="color:#666">{</span>
-    e<span style="color:#666">.</span><span style="color:#7d9029">printStackTrace</span><span style="color:#666">();</span>
-  <span style="color:#666">}</span>
-<span style="color:#666">}</span>
-</code></pre></div><h2 id="2-通过-api-通信">2. 通过 API 通信</h2>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a2f">@Test</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">java2pythonTest</span><span style="color:#666">(){</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#b00040">int</span> code <span style="color:#666">=</span> <span style="color:#666">1</span><span style="color:#666">;</span>
+</span></span><span style="display:flex;"><span>  Process proc<span style="color:#666">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#008000;font-weight:bold">try</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">// Runtime.getRuntime()
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic">//			String[] command = new String[]{&#34;python&#34;, &#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;};
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic">//      proc = Runtime.getRuntime().exec(command);// 执行py文件
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    List<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> command <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ArrayList<span style="color:#666">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>    command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&#34;</span><span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>    command<span style="color:#666">.</span><span style="color:#7d9029">add</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;C:\\Users\\lenovo\\Desktop\\java2python.py&#34;</span><span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>    ProcessBuilder pb <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> ProcessBuilder<span style="color:#666">(</span>command<span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>    pb<span style="color:#666">.</span><span style="color:#7d9029">redirectErrorStream</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">true</span><span style="color:#666">);</span><span style="color:#408080;font-style:italic">//错误流重定向
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span style="color:#7d9029">start</span><span style="color:#666">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">//用输入输出流来截取结果
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    BufferedReader in <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> BufferedReader<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> InputStreamReader<span style="color:#666">(</span>proc<span style="color:#666">.</span><span style="color:#7d9029">getInputStream</span><span style="color:#666">(),</span> <span style="color:#ba2121">&#34;gbk&#34;</span><span style="color:#666">));</span>
+</span></span><span style="display:flex;"><span>    String line <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">null</span><span style="color:#666">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">while</span> <span style="color:#666">((</span>line <span style="color:#666">=</span> in<span style="color:#666">.</span><span style="color:#7d9029">readLine</span><span style="color:#666">())</span> <span style="color:#666">!=</span> <span style="color:#008000;font-weight:bold">null</span><span style="color:#666">)</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>      System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&gt; &#34;</span> <span style="color:#666">+</span> line<span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#666">}</span>
+</span></span><span style="display:flex;"><span>    in<span style="color:#666">.</span><span style="color:#7d9029">close</span><span style="color:#666">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">//导致当前线程等待，如有必要，直到由此Process对象表示的进程已终止
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    code <span style="color:#666">=</span> proc<span style="color:#666">.</span><span style="color:#7d9029">waitFor</span><span style="color:#666">();</span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;python&gt; wait for code: &#34;</span> <span style="color:#666">+</span> code<span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#666">}</span> <span style="color:#008000;font-weight:bold">catch</span> <span style="color:#666">(</span>IOException e<span style="color:#666">)</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>    e<span style="color:#666">.</span><span style="color:#7d9029">printStackTrace</span><span style="color:#666">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#666">}</span> <span style="color:#008000;font-weight:bold">catch</span> <span style="color:#666">(</span>InterruptedException e<span style="color:#666">)</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>    e<span style="color:#666">.</span><span style="color:#7d9029">printStackTrace</span><span style="color:#666">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#666">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span>
+</span></span></code></pre></div><h2 id="2-通过-api-通信">2. 通过 API 通信</h2>
 <p>两端都启动为一个 Web 项目，Java 端可以采用 <code>Spring Boot</code> 框架，Python 端用 <code>Flask</code> 框架。然后通过 <code>Spring Cloud</code> 来连接。</p>
 <p>由于 <code>Spring Cloud</code> 非本人搭建，就不讲了。当然，你也没必要非要使用。</p>
 <p><strong>坑不坑：</strong></p>
@@ -797,100 +801,100 @@ proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span 
 <h3 id="java-端实现">Java 端实现</h3>
 <p><strong>配置</strong></p>
 <p>我采用 <code>Spring Boot</code> 框架，自带 <code>Spring AMQP</code> 兼容 RabbitMQ，很方便推荐使用。直接在 yml 文件中配置相关参数。</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">rabbitmq</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">host</span>:<span style="color:#bbb"> </span><span style="color:#666">192.168.0.102</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">port</span>:<span style="color:#bbb"> </span><span style="color:#666">5672</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">username</span>:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">password</span>:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">virtual-host</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
-</span></code></pre></div><p><strong>发送消息</strong></p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">spring</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">rabbitmq</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">host</span>:<span style="color:#bbb"> </span><span style="color:#666">192.168.0.102</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">port</span>:<span style="color:#bbb"> </span><span style="color:#666">5672</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">username</span>:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">password</span>:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">virtual-host</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span></span></span></code></pre></div><p><strong>发送消息</strong></p>
 <p>AmqpTemplate 类用于发送消息，我写了个定时 3 秒发送时间：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@Component</span>
-<span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">TestScheduled</span> <span style="color:#666">{</span>
-
-    <span style="color:#408080;font-style:italic">//rabbitMQ Queue
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> <span style="color:#008000;font-weight:bold">final</span> String PYTHON2JAVA <span style="color:#666">=</span> <span style="color:#ba2121">&#34;python2java&#34;</span><span style="color:#666">;</span>
-    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> <span style="color:#008000;font-weight:bold">final</span> String JAVA2PYTHON <span style="color:#666">=</span> <span style="color:#ba2121">&#34;java2python&#34;</span><span style="color:#666">;</span>
-
-    <span style="color:#a2f">@Autowired</span>
-    <span style="color:#008000;font-weight:bold">private</span> AmqpTemplate rabbitTemplate<span style="color:#666">;</span>
-
-    <span style="color:#a2f">@Scheduled</span><span style="color:#666">(</span>fixedDelay <span style="color:#666">=</span> 3000<span style="color:#666">)</span>
-    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">errorSpiderRerun</span><span style="color:#666">(){</span>
-        String now <span style="color:#666">=</span> LocalDateTime<span style="color:#666">.</span><span style="color:#7d9029">now</span><span style="color:#666">().</span><span style="color:#7d9029">toString</span><span style="color:#666">();</span>
-        String content <span style="color:#666">=</span> <span style="color:#ba2121">&#34;java2python and now &#34;</span> <span style="color:#666">+</span> now<span style="color:#666">;</span>
-        System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span>content<span style="color:#666">);</span>
-        rabbitTemplate<span style="color:#666">.</span><span style="color:#7d9029">convertAndSend</span><span style="color:#666">(</span>JAVA2PYTHON<span style="color:#666">,</span> content<span style="color:#666">);</span>
-    <span style="color:#666">}</span>
-<span style="color:#666">}</span>
-</code></pre></div><p>如果没有客户端接收的话，会一直在队列中，Web 页面下可以看到：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a2f">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">TestScheduled</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">//rabbitMQ Queue
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> <span style="color:#008000;font-weight:bold">final</span> String PYTHON2JAVA <span style="color:#666">=</span> <span style="color:#ba2121">&#34;python2java&#34;</span><span style="color:#666">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> <span style="color:#008000;font-weight:bold">final</span> String JAVA2PYTHON <span style="color:#666">=</span> <span style="color:#ba2121">&#34;java2python&#34;</span><span style="color:#666">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">private</span> AmqpTemplate rabbitTemplate<span style="color:#666">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f">@Scheduled</span><span style="color:#666">(</span>fixedDelay <span style="color:#666">=</span> <span style="color:#666">3000</span><span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">errorSpiderRerun</span><span style="color:#666">(){</span>
+</span></span><span style="display:flex;"><span>        String now <span style="color:#666">=</span> LocalDateTime<span style="color:#666">.</span><span style="color:#7d9029">now</span><span style="color:#666">().</span><span style="color:#7d9029">toString</span><span style="color:#666">();</span>
+</span></span><span style="display:flex;"><span>        String content <span style="color:#666">=</span> <span style="color:#ba2121">&#34;java2python and now &#34;</span> <span style="color:#666">+</span> now<span style="color:#666">;</span>
+</span></span><span style="display:flex;"><span>        System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span>content<span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>        rabbitTemplate<span style="color:#666">.</span><span style="color:#7d9029">convertAndSend</span><span style="color:#666">(</span>JAVA2PYTHON<span style="color:#666">,</span> content<span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#666">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span>
+</span></span></code></pre></div><p>如果没有客户端接收的话，会一直在队列中，Web 页面下可以看到：</p>
 <p><img src="https://2lhota.dm.files.1drv.com/y4mJzu23NfL92LZyK4mv2xfcPaF1I41GtqfFnGK9bHFXt7oiYN3IdXhY2PtTqBZ4OwZH7eJECqQrB5BgiQONGxYGUGfgDl4Zuax9aLTfAfK8gE0jbDihMJRGmkarzl5Fubt-Uw9sEPqfrTzblJ3uYm8z8u_Ety07JT6qrwERGA858juJE8A5gqq75UPXL-JNIeNDfq5SK-DzQEz8xJMV21Fuw?width=1873&height=805&cropmode=none" /></p>
 <p><strong>接收消息</strong></p>
 <p>接收消息也非常简单，只需要添加 <code>@RabbitListener</code> 注解即可。</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a2f">@RabbitListener</span><span style="color:#666">(</span>queues <span style="color:#666">=</span> PYTHON2JAVA<span style="color:#666">)</span>
-<span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">listen</span><span style="color:#666">(</span>String message<span style="color:#666">)</span> <span style="color:#666">{</span>
-    System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span>message<span style="color:#666">);</span>
-<span style="color:#666">}</span>
-</code></pre></div><h3 id="python-端实现">Python 端实现</h3>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a2f">@RabbitListener</span><span style="color:#666">(</span>queues <span style="color:#666">=</span> PYTHON2JAVA<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">listen</span><span style="color:#666">(</span>String message<span style="color:#666">)</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#666">.</span><span style="color:#7d9029">out</span><span style="color:#666">.</span><span style="color:#7d9029">println</span><span style="color:#666">(</span>message<span style="color:#666">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span>
+</span></span></code></pre></div><h3 id="python-端实现">Python 端实现</h3>
 <p>Python 端需要安装第三方库 <code>pika</code>。</p>
 <p><strong>建立连接</strong></p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">get_connect</span>():
-    <span style="color:#ba2121">&#34;&#34;&#34;
-</span><span style="color:#ba2121">    连接
-</span><span style="color:#ba2121">    :return: 
-</span><span style="color:#ba2121">    &#34;&#34;&#34;</span>
-    config_pika_username <span style="color:#666">=</span> <span style="color:#ba2121">&#34;admin&#34;</span>
-    cofig_pika_password <span style="color:#666">=</span> <span style="color:#ba2121">&#34;admin&#34;</span>
-    config_pika_host <span style="color:#666">=</span> <span style="color:#ba2121">&#34;192.168.0.102&#34;</span>
-    config_pika_port <span style="color:#666">=</span> <span style="color:#666">5672</span>
-    config_pika_virtual_host <span style="color:#666">=</span> <span style="color:#ba2121">&#34;test&#34;</span>
-    cred <span style="color:#666">=</span> pika<span style="color:#666">.</span>PlainCredentials(config_pika_username, cofig_pika_password)
-    connection <span style="color:#666">=</span> pika<span style="color:#666">.</span>BlockingConnection(
-        pika<span style="color:#666">.</span>ConnectionParameters(
-            host<span style="color:#666">=</span>config_pika_host,
-            port<span style="color:#666">=</span>config_pika_port,
-            virtual_host<span style="color:#666">=</span>config_pika_virtual_host,
-            credentials<span style="color:#666">=</span>cred,
-            heartbeat<span style="color:#666">=</span><span style="color:#666">0</span>
-        ))
-    <span style="color:#008000;font-weight:bold">return</span> connection
-</code></pre></div><p><strong>定义回调函数</strong></p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">callback</span>(ch, method, properties, body):
-    <span style="color:#008000">print</span>(body)
-</code></pre></div><p><strong>等待接收</strong></p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">get_connect</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    连接
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    :return: 
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    config_pika_username <span style="color:#666">=</span> <span style="color:#ba2121">&#34;admin&#34;</span>
+</span></span><span style="display:flex;"><span>    cofig_pika_password <span style="color:#666">=</span> <span style="color:#ba2121">&#34;admin&#34;</span>
+</span></span><span style="display:flex;"><span>    config_pika_host <span style="color:#666">=</span> <span style="color:#ba2121">&#34;192.168.0.102&#34;</span>
+</span></span><span style="display:flex;"><span>    config_pika_port <span style="color:#666">=</span> <span style="color:#666">5672</span>
+</span></span><span style="display:flex;"><span>    config_pika_virtual_host <span style="color:#666">=</span> <span style="color:#ba2121">&#34;test&#34;</span>
+</span></span><span style="display:flex;"><span>    cred <span style="color:#666">=</span> pika<span style="color:#666">.</span>PlainCredentials(config_pika_username, cofig_pika_password)
+</span></span><span style="display:flex;"><span>    connection <span style="color:#666">=</span> pika<span style="color:#666">.</span>BlockingConnection(
+</span></span><span style="display:flex;"><span>        pika<span style="color:#666">.</span>ConnectionParameters(
+</span></span><span style="display:flex;"><span>            host<span style="color:#666">=</span>config_pika_host,
+</span></span><span style="display:flex;"><span>            port<span style="color:#666">=</span>config_pika_port,
+</span></span><span style="display:flex;"><span>            virtual_host<span style="color:#666">=</span>config_pika_virtual_host,
+</span></span><span style="display:flex;"><span>            credentials<span style="color:#666">=</span>cred,
+</span></span><span style="display:flex;"><span>            heartbeat<span style="color:#666">=</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>        ))
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">return</span> connection
+</span></span></code></pre></div><p><strong>定义回调函数</strong></p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">callback</span>(ch, method, properties, body):
+</span></span><span style="display:flex;"><span>    <span style="color:#008000">print</span>(body)
+</span></span></code></pre></div><p><strong>等待接收</strong></p>
 <p>运行此方法，等待接收。</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">build</span>():
-    <span style="color:#ba2121">&#34;&#34;&#34;
-</span><span style="color:#ba2121">    start_consuming
-</span><span style="color:#ba2121">    :return: 
-</span><span style="color:#ba2121">    &#34;&#34;&#34;</span>
-    channel <span style="color:#666">=</span> get_connect()<span style="color:#666">.</span>channel()
-    channel<span style="color:#666">.</span>queue_declare(queue<span style="color:#666">=</span><span style="color:#ba2121">&#39;java2python&#39;</span>, durable<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">True</span>)
-    channel<span style="color:#666">.</span>basic_consume(queue<span style="color:#666">=</span><span style="color:#ba2121">&#39;java2python&#39;</span>,
-                          auto_ack<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">True</span>,
-                          on_message_callback<span style="color:#666">=</span>callback)
-    <span style="color:#008000">print</span>(<span style="color:#ba2121">&#39; consumer_start&#39;</span>)
-    channel<span style="color:#666">.</span>start_consuming()
-
-<span style="color:#008000;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#ba2121">&#39;__main__&#39;</span>:
-    build()
-</code></pre></div><p><strong>发送消息</strong></p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">producer</span>():
-    <span style="color:#ba2121">&#39;&#39;&#39;
-</span><span style="color:#ba2121">    生产者
-</span><span style="color:#ba2121">    :param rabbit_body: 发送内容
-</span><span style="color:#ba2121">    &#39;&#39;&#39;</span>
-    <span style="color:#408080;font-style:italic"># 创建通道</span>
-    connection <span style="color:#666">=</span> get_connect()
-    channel <span style="color:#666">=</span> connection<span style="color:#666">.</span>channel()
-    channel<span style="color:#666">.</span>queue_declare(queue<span style="color:#666">=</span><span style="color:#ba2121">&#39;python2java&#39;</span>, durable<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">True</span>)
-
-    <span style="color:#408080;font-style:italic"># 发送内容</span>
-    message <span style="color:#666">=</span> <span style="color:#ba2121">&#34;python2java and now &#34;</span> <span style="color:#666">+</span> <span style="color:#008000">str</span>(datetime<span style="color:#666">.</span>now())
-    <span style="color:#008000">print</span>(message)
-    channel<span style="color:#666">.</span>basic_publish(exchange<span style="color:#666">=</span><span style="color:#ba2121">&#39;&#39;</span>, routing_key<span style="color:#666">=</span><span style="color:#ba2121">&#39;python2java&#39;</span>, body<span style="color:#666">=</span>message)
-</code></pre></div><p><strong>坑不坑：</strong></p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">build</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    start_consuming
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    :return: 
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    channel <span style="color:#666">=</span> get_connect()<span style="color:#666">.</span>channel()
+</span></span><span style="display:flex;"><span>    channel<span style="color:#666">.</span>queue_declare(queue<span style="color:#666">=</span><span style="color:#ba2121">&#39;java2python&#39;</span>, durable<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">True</span>)
+</span></span><span style="display:flex;"><span>    channel<span style="color:#666">.</span>basic_consume(queue<span style="color:#666">=</span><span style="color:#ba2121">&#39;java2python&#39;</span>,
+</span></span><span style="display:flex;"><span>                          auto_ack<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">True</span>,
+</span></span><span style="display:flex;"><span>                          on_message_callback<span style="color:#666">=</span>callback)
+</span></span><span style="display:flex;"><span>    <span style="color:#008000">print</span>(<span style="color:#ba2121">&#39; consumer_start&#39;</span>)
+</span></span><span style="display:flex;"><span>    channel<span style="color:#666">.</span>start_consuming()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#ba2121">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    build()
+</span></span></code></pre></div><p><strong>发送消息</strong></p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">producer</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    生产者
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    :param rabbit_body: 发送内容
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    &#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 创建通道</span>
+</span></span><span style="display:flex;"><span>    connection <span style="color:#666">=</span> get_connect()
+</span></span><span style="display:flex;"><span>    channel <span style="color:#666">=</span> connection<span style="color:#666">.</span>channel()
+</span></span><span style="display:flex;"><span>    channel<span style="color:#666">.</span>queue_declare(queue<span style="color:#666">=</span><span style="color:#ba2121">&#39;python2java&#39;</span>, durable<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 发送内容</span>
+</span></span><span style="display:flex;"><span>    message <span style="color:#666">=</span> <span style="color:#ba2121">&#34;python2java and now &#34;</span> <span style="color:#666">+</span> <span style="color:#008000">str</span>(datetime<span style="color:#666">.</span>now())
+</span></span><span style="display:flex;"><span>    <span style="color:#008000">print</span>(message)
+</span></span><span style="display:flex;"><span>    channel<span style="color:#666">.</span>basic_publish(exchange<span style="color:#666">=</span><span style="color:#ba2121">&#39;&#39;</span>, routing_key<span style="color:#666">=</span><span style="color:#ba2121">&#39;python2java&#39;</span>, body<span style="color:#666">=</span>message)
+</span></span></code></pre></div><p><strong>坑不坑：</strong></p>
 <ul>
 <li>非长连接方式，效率相对接口方式更高。</li>
 <li>如果项目所用框架如 <code>Spring Boot</code> 已经集成的话，开发会很方便。</li>
@@ -910,13 +914,13 @@ proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span 
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://helloqb.xyz/post/2020/0602_cron.html">
+                <a class="newer-posts" href="/post/2020/0602_cron.html">
 			Next<br>Spring 定时任务
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://helloqb.xyz/post/2020/0507_monkey.html">
+                <a class="older-posts" href="/post/2020/0507_monkey.html">
 			Previous<br>油猴脚本初探
                 </a>
                 
@@ -932,13 +936,17 @@ proc <span style="color:#666">=</span> pb<span style="color:#666">.</span><span 
 
 
 
+
+
+
             </div>
         </div>
     </div>
-</div>
 
+
+                    </div>
             </div><div id="single-column-footer">
-Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
 <br>
 Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
@@ -949,106 +957,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 	
 </div>
             </div>
-    <script>
-let app;
-
-app = new Vue({
-    el: '#app',
-    data: {
-        scrollY: 0,
-        navOpacity: 0,
-        isDrawerOpen: false,
-        mounted: false,
-        isDarkMode: false
-    },
-    methods: {
-            sgn(t, x) {
-                let k = 1. / (1. - 2 * t);
-                if (x <= t) return 0;
-                else if (x >= 1 - t) return 1;
-                else {
-                    return k * (x - t);
-                }
-            },
-            handleScroll() {
-                this.scrollY = window.scrollY;
-                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
-                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
-
-                if (this.navOpacity >= 1) {
-                    navBackground.style.opacity = 1;
-                    navTitle.style.opacity = 1;
-                } else {
-                    navBackground.style.opacity = 0;
-                    navTitle.style.opacity = 0;
-                }
-            },
-            handleResize() {
-                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
-                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
-            },
-            navBarHeight() {
-                return this.$refs.navBar.offsetHeight;
-            },
-            pageHeadHeight() {
-                return this.$refs.pageHead.offsetHeight;
-            },
-            toggleDrawer() {
-                this.isDrawerOpen = !this.isDrawerOpen;
-                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
-            },
-            closeDrawer() {
-                this.isDrawerOpen = false;
-                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
-            },
-            toggleDarkMode() {
-                this.isDarkMode = !this.isDarkMode;
-                if (this.isDarkMode==true){
-                    document.cookie = "night=1;path=/";
-                    document.body.classList.add("night");
-                } else {
-                    document.cookie = "night=0;path=/";
-                    document.body.classList.remove("night");
-                }
-            }
-    },
-    created() {
-        window.addEventListener('scroll', this.handleScroll);
-        window.addEventListener('resize', this.handleResize);
-        window._nonDesktop = function () {
-            let check = false;
-            (function (a) {
-                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
-            })(navigator.userAgent || navigator.vendor || window.opera);
-            return check;
-        };
-        
-        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        if (night==""){
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                
-            }
-        }else{
-            
-            if (night=="1") {
-                this.toggleDarkMode();
-            }
-        }
-    },
-    mounted() {
-        this.handleScroll();
-        this.handleResize();
-        this.mounted = true;
-
-        
-    },
-    destroyed() {
-        window.removeEventListener('scroll', this.handleScroll);
-        window.removeEventListener('resize', this.handleResize);
-    }
-});
-</script>
-
-<script src="https://helloqb.xyz//js/journal.js"></script>
-    </body>
+    
+    <script src="/js/journal.js"></script></body>
 </html>
