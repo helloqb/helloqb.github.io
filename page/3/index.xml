@@ -993,6 +993,21 @@ end 2020-06-02T16:09:15.468
     
     
         <item>
+        <title>在线小工具</title>
+        <link>https://helloqb.xyz/tool.html</link>
+        <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/tool.html</guid>
+        <description>哲学家 https://helloqb.xyz/tool.html -&lt;h1 id=&#34;密码框&#34;&gt;密码框&lt;/h1&gt;
+&lt;form action=&#34;https://helloqb.xyz/submit-password&#34; method=&#34;post&#34;&gt;
+    &lt;input type=&#34;password&#34; id=&#34;password&#34; name=&#34;new-password&#34; autocomplete=&#34;new-password&#34;&gt;
+&lt;/form&gt;
+- https://helloqb.xyz/tool.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
+    
+    
+    
+        <item>
         <title>自我介绍</title>
         <link>https://helloqb.xyz/about.html</link>
         <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
