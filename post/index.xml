@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 08 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://helloqb.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mac mini 原生实现旁路由</title>
+      <link>https://helloqb.xyz/post/2024/1208_macmini.html</link>
+      <pubDate>Sun, 08 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://helloqb.xyz/post/2024/1208_macmini.html</guid>
+      <description>启用ip转发
+编辑 /etc/sysctl.conf 文件，添加：
+net.inet.ip.forwarding=1 查看是否生效
+sysctl net.inet.ip.forwarding PF防火墙配置
+scrub-anchor &amp;#34;com.apple/*&amp;#34; nat-anchor &amp;#34;com.apple/*&amp;#34; rdr-anchor &amp;#34;com.apple/*&amp;#34; # 此处开始 rdr on en0 inet proto tcp to any port {80, 443, 53} -&amp;gt; 127.0.0.1 port 1080 pass out on en0 from any to any keep state pass in on en0 from any to any keep state # 此处结束 dummynet-anchor &amp;#34;com.apple/*&amp;#34; anchor &amp;#34;com.apple/*&amp;#34; load anchor &amp;#34;com.apple&amp;#34; from &amp;#34;/etc/pf.anchors/com.apple&amp;#34; # anchor &amp;#34;custom&amp;#34; # load anchor &amp;#34;custom&amp;#34; from &amp;#34;/etc/pf.</description>
+    </item>
+    
     <item>
       <title>Smartisan TNT 连接遥控器变成超强机顶盒</title>
       <link>https://helloqb.xyz/post/2022/0112_tv.html</link>

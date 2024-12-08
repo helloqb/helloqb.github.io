@@ -7,9 +7,58 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©DRay. 本站遵循 CC-BY-NC 4.0 协议</copyright>
-    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Dec 2024 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://helloqb.xyz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>四宫格办公壁纸制作</title>
+        <link>https://helloqb.xyz/post/2020/0603_ps.html</link>
+        <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://helloqb.xyz/post/2020/0603_ps.html</guid>
+        <description>哲学家 https://helloqb.xyz/post/2020/0603_ps.html -&lt;h1 id=&#34;介绍&#34;&gt;介绍&lt;/h1&gt;
+&lt;p&gt;以 Windows 自带纯色壁纸为基础，效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://31fnqa.dm.files.1drv.com/y4mPFyoM3lP_9rd-Vg1cstN75iwI2bXFcYyD5EMT5aYeMND199Uhbo3TvKSX3El_yT2DiiMLWbIDIJE5dg-IwNhjllVzxi97yPpFr7Zx9P_lczOSDYxdcnQ77ncpsezH6ITvxZtrdWUaYA7nyfZz2kr9dExDSJEmVKtPtg0TZdkmBCfHZzlHd4aPegP-keRBvZM6Tls9In5rRGjGrhjDGxzBA?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;流程&#34;&gt;流程&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;1. 用 Photoshop 打开壁纸&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;个人喜欢纯色壁纸，Windows10 上可通过背景设置为纯色壁纸后截屏得到。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://21hota.dm.files.1drv.com/y4mPZtvaCaLpHRBmtv3Dp5g0aNBFwpE3svq99M08Fa71_52A_4Kj2p3EpbDuzidrBnEsCOPUPXczsofo3HBsbmkv-ErqUB99uuM2HugEpfxNiaGTgiZG_FP5Maja1ass_fzQraojiYrduDrx7RaXv3eieRoVRlrKCTkDdX2IFipPEeexA4NdZbbqzVxoJw237bpqfqgmqHIUT3tOT2s1vqFvQ?width=1920&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 新建图层并填充为白色&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;操作： 图层（菜单栏）-&amp;gt; 新建 -&amp;gt; 图层 -&amp;gt; 编辑（菜单栏）-&amp;gt; 填充 -&amp;gt; 背景色&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3fhota.dm.files.1drv.com/y4meK5ev_0gzQVGaO-s8pRyhSqRaLkuHZegnssv6K68sWs1r1lZ_wW9OXu7xO9zSaHe-kTG-mvcHMn8bGYOP28ZlOfEKCBFALcgP_50f0n5y-DQLuTTG6-I_zDvqnBWD_jCOVYTjZcseoEtpq-HIMxw0G4AloLnhk9dMe6LJ4JkOhPqm2dTV5lffC-NQ-H4WJ55fpEJWAZw2AiIsThnRoPfIQ?width=1914&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 缩小一半长宽比&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;操作：编辑（菜单栏）-&amp;gt; 自由变换 -&amp;gt; W:49% H:49%&lt;/p&gt;
+&lt;p&gt;49% 也就是留了 2% 的缝隙，可根据自己喜好修改。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://3vhota.dm.files.1drv.com/y4mdd-w-RhQf8xV47ASDL01uDZ7wgQD_232jOUsAEyOxD1LIMeFo-0x-2ZGjS2ifpZKdVe7R3DNNe9TZxysD47udWnW-sqdrx4sC03UHddtx39yTOmG5rGm7NTg5UpaQ4ADzbkYMADlDHj0Z2btDus7ULMk2zn4vuvZxzNpRwJxwjO_1PrFduCGrslPWa09qrOghIIUDhb4Ik4OlhqHpkWY4A?width=1920&amp;height=1040&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 切割图层&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以变换后的图层作为选区，分别左上、左下、右上、右下复制图层。&lt;/p&gt;
+&lt;p&gt;操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对齐：选中两个图层，点击菜单栏图层里的对齐，左对齐，然后再顶部对齐；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://4ffnqa.dm.files.1drv.com/y4mlbXCFCPRabp5uAMcIbDFM4Refu91x1X6PhlMS_xW7rT8VLgZPdVJr2446AKpxC1IyOyBy3xKYj3Y0lYdcpzTo-n5gpy2Gnvq1VfYlosOWJSI3U9HKM_lq9c6eDxeS9P4gAY_2Tew34suApC9UJCrDMa3PFjkcDA4eMLP2DCSzItZQid_LlBR8AOe0RQGLfMM_5KqEcsxA_OvccOWFTxe2Q?width=1920&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;载入选区：按住 &lt;code&gt;Ctrl&lt;/code&gt;，并点击白色图层的缩略图；&lt;/li&gt;
+&lt;li&gt;复制图层：点击背景图层，点击 &lt;code&gt;Ctrl + J&lt;/code&gt;，将所选区域复制到新图层中；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://4vfnqa.dm.files.1drv.com/y4mebgrRn4sXRat0i8ikv7xk8sTkINQmXcAHgYoPs5COlZfnMgtXebQYDCzdZlju-C7fJNKpEw4MkViU46Tjr7W8A6hbJSWkiUVPDw-uWD17hOw0S8GTG5FnaUn21S9WlJ0cY9WhFMtyU9PFv6Lb_nA8jJbTwguMpjEKzHRqeoblBr-iUyq9_uyZeGTKToSvL96H9kF-sX2gIZuptCC2oqECg?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;同样方式左下、右上、右下生成另外三个图层；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://5lhota.dm.files.1drv.com/y4mSmzC0rmXrJCRQGZKM7DCF7vmmcw9iVQnjYp-d82IPsChzBX-aWqOW4DbUt2EHjROM6x9p4fsOo2lGs1FNX5-bMxGn6q2muR5C8kr1O7xoAg1pTni4YGDYjQkinxFT2nLoTRaxlXn90wEq9V9Dqf4AyXlim0zkKXqLkKoYjZCLtVGkIxTPTFgw-ZCTJgVJAuy0hr7rt7oULJkVzLNsR8ELw?width=1920&amp;height=1038&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. 增加图层样式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;双击图层打开图层样式，选择投影，距离和大小设置为 20 像素；&lt;/li&gt;
+&lt;li&gt;右键图层拷贝图层样式，然后复制到另外三个图层中；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;大功告成，当然可根据自己喜好选择样式，添加相关文字等。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://51hota.dm.files.1drv.com/y4m5etRuVzlJgeR9p7lFrGdFuTvyPjAyaJvx50_mmJhYBXwq6qD87LfDvLnAY24Lb7eUvhqv9E0EVuJL1PZxIgqlsHiPjOUt7oQfmzs3Dwwzxe7pzgL1YhIFCs1eQmwLkgPVwkwwNSNUuCOJx55bLCpVADcF0xryHRgVQYTucl8vFB5tt6-W2g-Pk1xKz9BcFmWSuRE__6WUuSxKbAVGVZVXQ?width=1919&amp;height=1039&amp;cropmode=none&#34; /&gt;&lt;/p&gt;
+- https://helloqb.xyz/post/2020/0603_ps.html - ©DRay. 本站遵循 CC-BY-NC 4.0 协议</description>
+        </item>
     
     
     
